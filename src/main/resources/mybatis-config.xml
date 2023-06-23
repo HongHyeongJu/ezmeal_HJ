@@ -8,8 +8,8 @@
         <typeAlias alias="SearchCondition" type="com.teamProject.ezmeal.domain.SearchCondition" />
         <typeAlias alias="CommentDto" type="com.teamProject.ezmeal.domain.CommentDto"/>
 <!--        cart , cartProduct 추가 필요-->
-        <typeAlias alias="CartDto" type="com.teamProject.ezmeal.domain.CartDto"/>
-        <typeAlias alias="CartProductDto" type="com.teamProject.ezmeal.domain.CartProductDto"/>
-
+<!--        <typeAlias alias="CartDto" type="com.teamProject.ezmeal.domain.CartDto"/>-->
+<!--        <typeAlias alias="CartProductDto" type="com.teamProject.ezmeal.domain.CartProductDto"/>-->
+        <typeAlias alias="MemberDto" type="com.teamProject.ezmeal.domain.MemberDto"/>
     </typeAliases>
 </configuration>
