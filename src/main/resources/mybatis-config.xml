@@ -10,6 +10,7 @@
 <!--        cart , cartProduct 추가 필요-->
         <typeAlias alias="CartDto" type="com.teamProject.ezmeal.domain.CartDto"/>
         <typeAlias alias="CartProductDto" type="com.teamProject.ezmeal.domain.CartProductDto"/>
+        <typeAlias alias="DeliveryAddressDto" type="com.teamProject.ezmeal.domain.DeliveryAddressDto"/>
 
     </typeAliases>
 </configuration>
