@@ -14,4 +14,13 @@ public interface CartDao {
 
     //
     List<CartProductDto> prodList(int mbrId) throws Exception;
+    List<CartProductDto> subProdList(int mbrId) throws Exception;
+    int subCount(int mbrId) throws Exception;
+
+    List<CartProductDto> prodColdList(int mbrId) throws Exception;
+    List<CartProductDto> prodIceList(int mbrId) throws Exception;
+    List<CartProductDto> prodOutSideList(int mbrId) throws Exception;
+
+    void updateSoldOut(int mbrId) throws Exception;
+
 }

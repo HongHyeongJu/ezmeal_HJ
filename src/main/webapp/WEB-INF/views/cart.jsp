@@ -10,66 +10,348 @@
 
 <html>
 <head>
-    <title>cart</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ezmeal - cart</title>
+    <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
-수행할 spring 작업
-<br/>
-1. 구독상품 or 일반상품 버튼을 누를 경우 -> cart table에서
-<br/> 1) 상품삭제가 된 것을 제외하고
-<br/> 2) 유형(구독, 일반)에 맞는 상품 나오도록 수행 -> react or JS로 비동기 작업 수행 <br/><br/>
 
-2. 전체 상품 목록을 보여주는 것 ->
-<br/> 1.의 유형의 상품 목록을 측정 * 상품수량과 별개
-<br/> -> 상품목록을 선택시, JS로 개수가 오르도록 한다. default는 모두 선택 <br/><br/>
+<main class="cart">
+    <div class="cart__name">
+        <h1>장바구니</h1>
+    </div>
+    <!-- cart__name 끝 -->
 
-3. product table과 join을 통해서 상품, 상품가격 (소비자가, 판매자가),
-<br/>옵션 존재시 상품과 join하지 않고 옵션에 바로 join 들어간다.
-<br/> 마지막으로 구독 상품일 경우 배송일자가 들어간다. <br/><br/>
+    <div class="cart__main">
+        <div class="cart__items">
+            <div class="cart__items_category">
+                <div class="cart__items_category_btns cart__items_category_type">
+                    <!-- TODO
+                      button에서 type을 이용한 db 변경하기 -->
+                    <form action="/cart/subscript" method="GET">
+                        <button type="submit" class="cart__items_category-btn">
+                            구독상품
+                        </button>
+                    </form>
+                    |
+                    <form action="/cart/general" method="GET">
+                        <button type="submit" class="cart__items_category-btn">
+                            일반상품
+                        </button>
+                    </form>
+                </div>
+                <!-- cart__items_category_btns cart__items_category_type 끝 -->
 
-4. 배송지는 회원fk를 이용해서 보여지는 것은 기본배소지 정보,
-<br/>배송지 변경을 통해서 배송지의 기본 배송지를 변경하는 logic도 수행한다. <br/><br/>
+                <div class="cart__items_category_btns cart__items_nav">
+                    <label class="cart__items_nav__choise">
+                        <input type="checkbox" class="cart__items_nav__checkbox"/>
+                        <span>전체선택 (0/${count}개) |</span>
+                    </label>
+                    <button class="cart__items_nav__btn_rm">선택삭제</button>
+                </div>
+                <!--cart__items_category_btns cart__items_nav 끝-->
+            </div>
+            <!--cart__items_category 끝-->
 
-5. 주문 버튼의 경우 상품이 존재하지 않을 시,
-<br/>선택 안할시 상품을 담아주세요 문구로 변경 -> JS <br/><br/><br/>
+            <div class="cart__items_list">
+                <!-- 냉장 ---------------------------------------------- -->
+                <c:if test="${not empty cartColdProducts}">
+                    <h4 class="cart__items_list-type">
+              <span>
+                <span><i class="fas fa-tint" style="color: #306ed9"></i></span>
+                냉장 상품
+              </span>
+                        <button class="cart__items_list__btn">
+                            <i class="fas fa-chevron-down" style="color: #8d9096"></i>
+                        </button>
+                    </h4>
+
+                    <!--cart__items_list-type 냉장 끝-->
+                    <ul class="cart__items__ul">
+                        <!--반복 시작 -->
+                        <c:forEach items="${cartColdProducts}" var="item">
+                            <!--냉장 식품 반복 시작 -->
+                            <li class="cart__item_list">
+                                <input type="checkbox"/>
+                                <a href="/productlist/${item.prod_cd}" class="cart__item_list__a">
+                                    <img src="img/goods.png"/>
+                                </a>
+                                <!--상품사진 끝-->
+                                <div class="cart__item_list_description">
+                                    <a href="/productlist/${item.prod_cd}">
+                                        <p>${item.name}</p>
+                                    </a>
+                                </div>
+                                <!--상품명 끝-->
+                                <div class="cart__item__btn">
+                                    <button type="button" aria-label="수량내리기" disabled>
+                                        -
+                                    </button>
+                                    <!--수량 1일 경우, disabled-->
+                                    <div>1</div>
+                                    <!--default value = 1-->
+                                    <button type="button" aria-label="수량올리기">+</button>
+                                    <!--db로부터 max 수량 받아오기 - ajax-->
+                                </div>
+                                <!--상품수량 끝-->
+
+                                <div class="cart__item_price">
+                  <span aria-label="할인 가격" data-testid="discount-price">
+                          ${item.sale_prc}
+                  </span>
+                                    <span aria-label="판매 가격" data-testid="product-price">
+                                            ${item.cnsmr_prc}
+                                    </span>
+                                </div>
+                                <!--상품 가격 끝-->
+
+                                <button type="button" data-testid="delete">
+                                    <span>x</span>
+                                </button>
+                                <!-- 삭제 버튼 끝 -->
+                            </li>
+                        </c:forEach>
+                        <!--반복 끝 -->
+                    </ul>
+                    <!-- 냉장 ul 끝 -->
+                </c:if>
+                <c:if test="${not empty cartIceProducts}">
+                    <!-- 냉동 ---------------------------------------------- -->
+                    <h4 class="cart__items_list-type">
+              <span>
+                <span><i class="fas fa-igloo" style="color: #306ed9"></i></span>
+                냉동 상품
+              </span>
+                        <button class="cart__items_list__btn">
+                            <i class="fas fa-chevron-down" style="color: #8d9096"></i>
+                        </button>
+                    </h4>
+                    <br/>
+
+                    <!--cart__items_list-type 냉동 끝-->
+                    <ul class="cart__items__ul">
+                        <c:forEach items="${cartIceProducts}" var="item">
+                            <!--냉동 식품 반복 시작 -->
+                            <li class="cart__item_list">
+                                <input type="checkbox"/>
+                                <!-- 상품상세 경로  ex) localhost:8080/goods/상품pk-->
+                                <a href="/productlist/${item.prod_cd}" class="cart__item_list__a">
+                                    <img src="img/goods.png"/>
+                                </a>
+                                <!--상품사진 끝-->
+                                <div class="cart__item_list_description">
+                                    <a href="/productlist/${item.prod_cd}">
+                                        <p>${item.name}</p>
+                                    </a>
+                                </div>
+                                <!--상품명 끝-->
+                                <div class="cart__item__btn">
+                                    <button type="button" aria-label="수량내리기" disabled>
+                                        -
+                                    </button>
+                                    <!--수량 1일 경우, disabled-->
+                                    <div>1</div>
+                                    <!--default value = 1-->
+                                    <button type="button" aria-label="수량올리기">+</button>
+                                    <!--db로부터 max 수량 받아오기 - ajax-->
+                                </div>
+                                <!--상품수량 끝-->
+
+                                <div class="cart__item_price">
+                  <span aria-label="할인 가격" data-testid="discount-price">
+                          ${item.sale_prc}
+                  </span>
+                                    <span aria-label="판매 가격" data-testid="product-price">
+                                            ${item.cnsmr_prc}
+
+                                    </span>
+                                </div>
+                                <!--상품 가격 끝-->
+
+                                <button type="button" data-testid="delete">
+                                    <span>x</span>
+                                </button>
+                            </li>
+                        </c:forEach>
+                        <!--반복 끝 -->
+                    </ul>
+                </c:if>
+                <!-- 냉동 ul 끝 -->
+
+                <!-- 상온 ---------------------------------------------- -->
+                <c:if test="${not empty cartOutSideProducts}">
+                    <h4 class="cart__items_list-type">
+              <span>
+                <span><i class="fas fa-sun" style="color: #ef8025"></i></span>
+                상온 상품
+              </span>
+                        <button class="cart__items_list__btn">
+                            <i class="fas fa-chevron-down" style="color: #8d9096"></i>
+                        </button>
+                    </h4>
+                    <br/>
+
+                    <!--cart__items_list-type 상온 끝-->
+                    <ul class="cart__items__ul">
+                        <!--상온 식품 반복 시작 -->
+                        <c:forEach items="${cartOutSideProducts}" var="item">
+                            <li class="cart__item_list">
+                                <input type="checkbox"/>
+                                <!--checkbox 꾸미는건 일단 나중에-->
+                                <a href="/productlist/${item.prod_cd}" class="cart__item_list__a">
+                                    <img src="img/goods.png"/>
+                                </a>
+                                <!--상품사진 끝-->
+                                <div class="cart__item_list_description">
+                                    <a href="/productlist/${item.prod_cd}">
+                                        <p>${item.name}</p>
+                                    </a>
+                                </div>
+                                <!--상품명 끝-->
+                                <div class="cart__item__btn">
+                                    <button type="button" aria-label="수량내리기" disabled>
+                                        -
+                                    </button>
+                                    <!--수량 1일 경우, disabled-->
+                                    <div>1</div>
+                                    <!--default value = 1-->
+                                    <button type="button" aria-label="수량올리기">+</button>
+                                    <!--db로부터 max 수량 받아오기 - ajax-->
+                                </div>
+                                <!--상품수량 끝-->
+
+                                <div class="cart__item_price">
+                  <span aria-label="할인 가격" data-testid="discount-price">
+                          ${item.sale_prc}
+                  </span>
+                                    <span aria-label="판매 가격" data-testid="product-price">
+                                            ${item.cnsmr_prc}
+                                    </span>
+                                </div>
+                                <!--상품 가격 끝-->
+
+                                <button type="button" data-testid="delete">
+                                    <span>x</span>
+                                </button>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </c:if>
+                <!-- 상온 ul 끝 -->
+            </div>
+            <!--cart__items_list 끝-->
+        </div>
+        <!--cart__items 끝-->
+
+        <div class="cart__benu">
+            <div class="dlvar">
+                <h3 class="dlvar_nm">
+                    <i class="fas fa-map-marker-alt"></i>배송지
+                </h3>
+                <div class="dlvar_detail">
+                    <div class="dlvar_destination">
+                        <p>${defaultAddress.desti} </p>
+                        <p>${defaultAddress.desti_dtl}</p>
+                        <p>TODO | login 안했을 시, 로그인 해주세요!</p>
+                    </div>
+                    <button class="dlvar_chg" type="button">
+                        <span>배송지 변경</span>
+                    </button>
+                </div>
+            </div>
+            <!--dlvar 끝-->
+
+            <div class="payment">
+                <div class="payment__prod">
+                    <span>상품금액</span>
+                    <span class="payment__prod_js">12000원</span>
+                </div>
+                <div class="payment__prod">
+                    <span>상품할인금액</span>
+                    <span class="payment__prod-dc_js">2000원</span>
+                </div>
+                <div class="payment__prod">
+                    <span>결제예정금액</span>
+                    <span class="payment__prod-expect_js">10000원</span>
+                </div>
+                <div class="payment__prod">
+                    <span>적립예정포인트</span>
+                    <span class="payment__prod-expect__point">10 point</span>
+                </div>
+            </div>
+            <!-- payment 끝 -->
+
+            <div class="payment-detail">
+                <button class="payment-detail__btn">
+                    주문하기 | 상품 없을 시, 상품을 담아주세요 (JS)
+                </button>
+                <ul class="payment-detail__content">
+                    <li class="payment-detail__content-li">
+                        쿠폰/적립금은 주문서에서 사용 가능합니다.
+                    </li>
+                    <li class="payment-detail__content-li">
+                        [주문완료] 상태일 경우에만 주문 취소 가능합니다.
+                    </li>
+                    <li class="payment-detail__content-li">
+                        [마이페이지 > 주문내역 상세페이지] 에서 직접 취소하실 수
+                        있습니다.
+                    </li>
+                    <li class="payment-detail__content-li">
+                        쿠폰, 적립금 사용 금액을 제외한 실 결제 금액 기준으로 최종
+                        산정됩니다.
+                    </li>
+                    <li class="payment-detail__content-li">
+                        상품별로 적립금 지급 기준이 다를 수 있습니다. (상품
+                        상세페이지에서 확인 가능합니다)
+                    </li>
+                </ul>
+            </div>
+            <!-- payment-detail 끝 -->
+        </div>
+        <!--cart__benu 끝-->
+    </div>
+    <!-- cart__main 끝 -->
+</main>
+<!--cart 끝-->
+<script
+        src="https://kit.fontawesome.com/6478f529f2.js"
+        crossorigin="anonymous"
+></script>
 
 
-추가 <br/>
-1. 나중에 추가적으로 수행할 것으로 품절 상품의 경우, 회색 처리하기 <br/>
+<%--------------------------------------------------------------------------------%>
 
-2. 상품이 아무것도 담겨있지 않을 경우,
-<br/> 삭제 상품이 3개 이하면 베스트 상품 보여주고,
-<br/>삭제 상품 3개 초과시 해당 상품 보여주기
+<%--<h1>받아온 data</h1>--%>
+<%--<h3>총 상품 개수</h3>--%>
+<%--<p>${count} 개</p>--%>
 
-<h1>받아온 data</h1>
-<h3>총 상품 개수</h3>
-<p>${count} 개</p>
-
-<h3>배송지</h3>
-<p>${defaultAddress.ncnm}</p>
-<p>${defaultAddress.rcpr} | ${defaultAddress.phone}</p>
-<p>${defaultAddress.desti} </p>
-<p>${defaultAddress.desti_dtl}</p>
+<%--<h3>배송지</h3>--%>
+<%--<p>${defaultAddress.ncnm}</p>--%>
+<%--<p>${defaultAddress.rcpr} | ${defaultAddress.phone}</p>--%>
+<%--<p>${defaultAddress.desti} </p>--%>
+<%--<p>${defaultAddress.desti_dtl}</p>--%>
 
 
-<ul>
-    냉장
-    <c:forEach var="product" items="${cartProducts}">
-        <c:if test="${product.typ eq '냉장'}">
+<%--<ul>--%>
+<%--    냉장--%>
+<%--    <c:forEach var="product" items="${cartProducts}">--%>
+<%--        <c:if test="${product.typ eq '냉장'}">--%>
 
-            <li>${product.name} | ${product.cnsmr_prc} | ${product.sale_prc} </li>
-        </c:if>
-    </c:forEach>
-</ul>
+<%--            <li>${product.name} | ${product.cnsmr_prc} | ${product.sale_prc} </li>--%>
+<%--        </c:if>--%>
+<%--    </c:forEach>--%>
+<%--</ul>--%>
 
-<ul>
-    냉동
-    <c:forEach var="product" items="${cartProducts}">
-        <c:if test="${product.typ eq '냉동'}">
-            <li>${product.name} | ${product.cnsmr_prc} | ${product.sale_prc} </li>
-        </c:if>
-    </c:forEach>
-</ul>
+<%--<ul>--%>
+<%--    냉동--%>
+<%--    <c:forEach var="product" items="${cartProducts}">--%>
+<%--        <c:if test="${product.typ eq '냉동'}">--%>
+<%--            <li>${product.name} | ${product.cnsmr_prc} | ${product.sale_prc} </li>--%>
+<%--        </c:if>--%>
+<%--    </c:forEach>--%>
+<%--</ul>--%>
+<%--------------------------------------------------------------------------------%>
 
 
 </body>

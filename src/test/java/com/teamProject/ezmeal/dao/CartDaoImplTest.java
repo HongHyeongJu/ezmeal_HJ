@@ -34,7 +34,7 @@ public class CartDaoImplTest {
     public void prodList() throws Exception {
         List<CartProductDto> strings = cartDao.prodList(1001);
         int size = strings.size();
-        assertEquals(3, size);
+        assertEquals(4, size);
         System.out.println("strings = " + strings);
     }
 
