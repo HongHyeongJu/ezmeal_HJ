@@ -1,0 +1,471 @@
+/* 제일 큰 div  */
+.cart {
+    /* layout 잡기 */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 156px 0 50px 0; /*상단 nav 공간 제공*/
+}
+
+/* 장바구니 title */
+.cart__name {
+    /* layout 잡기 */
+    width: 1050px;
+    height: 133px;
+    box-sizing: border-box; /* div의 크기를 고정 */
+    padding: 50px 0 48px;
+    /* detail 수행 */
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 35px;
+    text-align: center;
+}
+
+/* main 내부에 items와 benu 로 분리
+1. items: 상품 관련 정보
+2. benu: 배송지, 예상 결제 가격
+*/
+.cart__main {
+    /* layout 잡기 */
+    display: flex;
+    justify-content: space-between;
+    align-items: first baseline;
+    width: 1050px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* 1. items: 상품 관련 정보
+1.1. category
+1.2. 장바구니 상품들
+ */
+.cart__items {
+    /* layout 잡기 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 742px;
+    height: 942px;
+}
+
+/* 1.1 category
+1.1.1 구독상품 일반상품 버튼 : type
+1.1.2 전체선택 선택삭제 버튼 : nav
+*/
+.cart__items_category {
+    /* layout 잡기 */
+    display: flex;
+    flex-direction: column;
+    width: 742px;
+    height: 122.4px;
+    box-sizing: border-box;
+    padding: 18px, 10px, 16px, 2px; /* padding 특징 : 내부 div가 더 padding 적용보다 더 크면 적용 안됨 */
+}
+
+/*1.1.1 & 1.1.2 공통부분  */
+.cart__items_category_btns {
+    /* layout 잡기 */
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 742px;
+    height: 61px;
+    /* detail */
+    border-bottom: 1px solid gray;
+}
+
+/* 1.1.1 & 1.1.2 공통부분 : button 속정 */
+.cart__items_category_btns button {
+    /* button 기본 css 설정 제거 */
+    border: none;
+    background: inherit;
+    padding: 0;
+    margin: 0 5px;
+    /* btn과 내부 icon or span 동일 적용 */
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* 1.1.2 */
+.cart__items_nav {
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+/* 1.1.2 */
+.cart__items_nav__choise {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* 1.2. items list
+1.2.1. 냉장,냉동,상품 type란
+1.2.2. layout 공통 적용
+1.2.3. 상품
+*/
+.cart__items_list {
+    width: 742px;
+}
+
+/* 1.2.1. */
+.cart__items_list-type {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 742px;
+    height: 60px;
+    box-sizing: border-box;
+    padding: 15px 5px 15px 0px;
+}
+
+/* 1.2.1. */
+
+/* TODO
+button icon 누르면 위 아래로 변경되는 JS 수행 필요
+*/
+
+/* 1.2.1 냉장, 냉동, 상온 icon */
+
+.fas {
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+}
+
+/* 1.2.1 상품접고 열기 button */
+.cart__items_list__btn {
+    /* button 기본 css 설정 제거 */
+    border: none;
+    background: inherit;
+    padding: 0;
+    margin: 0;
+    /* btn과 내부 icon or span 동일 적용 */
+    display: flex;
+    align-items: center;
+}
+
+/* 1.2.2. border 적용 */
+/* ul border 생성 */
+.cart__items__ul {
+    border-bottom: 1px solid gray;
+}
+
+/* ul 내부 li border 반복 생성 */
+.cart__items__ul li {
+    /* 상품 목록 layout 잡기 */
+    width: 742px;
+    height: 118px;
+    box-sizing: border-box;
+    padding: 20px 0;
+    /* ul 내부 li border */
+    border-bottom: 0.1px solid rgb(216, 207, 207);
+}
+
+/* 마지막 li border 제거 */
+.cart__items__ul li:last-child {
+    border-bottom: none;
+}
+
+/* 1.2.3 상품 조지기 */
+
+.cart__item_list {
+    /* layout 잡기 */
+    display: flex;
+    align-items: center;
+}
+
+/* 상품 img 크기 조절 */
+.cart__item_list img {
+    width: 60px;
+    height: 78px;
+}
+
+/* 상품 img a tag */
+.cart__item_list__a {
+    margin-right: 20px;
+}
+
+.cart__item__btn {
+    /* layout 잡기 */
+    display: flex;
+    align-items: center;
+    /* button 기본 css 설정 제거 */
+    border: none;
+    background: inherit;
+    padding: 0;
+    margin: 0;
+    /* border */
+    border: solid;
+    border-width: 1px;
+    border-radius: 8px;
+}
+
+/* -, + 기호 */
+.cart__item__btn button {
+    /* layout 잡기 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* button 기본 css 설정 제거 */
+    border: none;
+    background: inherit;
+    padding: 0;
+    margin: 0;
+    /* button css 재설정 */
+    width: 27px;
+    height: 28px;
+    /* text size */
+    font-size: large;
+}
+
+/* 수량 */
+.cart__item__btn div {
+    width: 30px;
+    height: 28px;
+    /* text 중앙에 두기 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 상품명 */
+.cart__item_list_description {
+    width: 345px;
+    min-height: 40px;
+    margin-right: 20px;
+    /* 수직 중앙 정렬 */
+    display: flex;
+    align-items: center;
+}
+
+/* 소비자, 판매가 가격 */
+.cart__item_price {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 50px;
+    font-weight: bold;
+}
+
+/* 마지막 판매자 가격 선긋기 <- 할인 가격이 존재시에만 적용이 된다. */
+/* TODO
+JS를 이용해서 동적으로 판매자 가격 선긋기 수행
+예시 코드
+<div class="cart__item_price">
+  <span aria-label="할인 가격" data-testid="discount-price">
+    9000원
+  </span>
+  <span aria-label="판매 가격" data-testid="product-price">
+    10000원
+  </span>
+</div>
+
+<script>
+  // 할인된 가격이 존재하는지 확인
+  const discountPrice = document.querySelector('[data-testid="discount-price"]');
+  if (discountPrice) {
+    // 할인된 가격이 존재하면 마지막 span 요소에 클래스 추가
+    const productPrice = document.querySelector('[data-testid="product-price"]');
+    productPrice.classList.add('discounted');
+  }
+</script>
+
+<style>
+  .cart__item_price span:last-child.discounted {
+    color: gray;
+  }
+</style>
+*/
+.cart__item_price span:last-child {
+    text-decoration: line-through;
+    font-weight: 100;
+    font-size: small;
+    color: grey;
+}
+
+/* 삭제 버튼 수행 */
+.cart__item_list button {
+    border: none;
+    background: inherit;
+    padding: 0;
+    margin: 0;
+    /* btn과 내부 icon or span 동일 적용 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.cart__item_list button span {
+    font-weight: 100;
+    font-size: medium;
+    color: #8d9096;
+}
+
+/* 2. benu 
+2.1. 배송지 정보
+2.2. 결제 금액 정보
+2.3. 주문하기 버튼
+2.4. 약관 정보
+*/
+.cart__benu {
+    /* layout 잡기 */
+    display: flex;
+    flex-direction: column;
+    width: 284px;
+    box-sizing: border-box;
+    /* 배송지 benu 전체 적용 padding */
+    margin-left: 100px;
+    padding: 23px 19px 19px;
+    border: 0.1px solid rgb(188, 181, 181);
+    /* TODO 베너 움직이게 하기 */
+    /* position: fixed;
+    bottom: 50px;
+    right: 100px; */
+}
+
+/* 배송지 전체 div
+1. dlvar_detail
+2. dlvar_destination
+3. dlvar_change
+*/
+.dlvar {
+    /* layout 잡기 */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    width: 245px;
+    box-sizing: border-box;
+    padding-bottom: 20px;
+    border-bottom: 0.1px solid #28a745;
+}
+
+.dlvar_detail {
+    width: 244px;
+    height: 112px;
+    box-sizing: border-box;
+    padding-top: 12px;
+}
+
+.dlvar_destination {
+    width: 244px;
+    height: 64px;
+    box-sizing: border-box;
+    padding-bottom: 16px;
+}
+
+/* 공통 button
+배송지 변경 & 주문하기
+ */
+.dlvar_chg,
+.payment-detail__btn {
+    padding: 0 10px;
+    text-align: center;
+    overflow: hidden;
+    width: 100%;
+    height: 36px;
+    border-radius: 3px;
+    color: #28a745;
+    background-color: #fff;
+    border: 1px solid #28a745;
+    cursor: pointer;
+}
+
+/* 배송지 pin 고정 */
+.fa-map-marker-alt {
+    font-size: 15px;
+    width: 20px;
+    height: 20px;
+    color: #28a745;
+}
+
+.payment {
+    /* layout 잡기 */
+    text-align: center;
+    width: 245px;
+    box-sizing: border-box;
+    padding: 10px 0;
+}
+
+.payment__prod {
+    width: 244px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+/* 2nd chlid에 밑줄 긋기 위함 */
+.payment__prod:nth-child(2) {
+    padding-bottom: 5px;
+    border-bottom: 0.1px solid rgb(188, 181, 181);
+}
+
+.payment-detail {
+    /* layout 잡기 */
+    text-align: center;
+    margin-top: 10px;
+}
+
+.payment-detail__btn {
+    margin-bottom: 10px;
+}
+
+.payment-detail__content {
+    /* layout 잡기 */
+    text-align: justify;
+    font-size: xx-small;
+}
+
+/* 전체 체크박스 공통
+체크박스를 동그라미 체크표시로 변경
+ */
+
+/* checkbox 요소 - check 된 경우 */
+input[type="checkbox"] {
+    appearance: none;
+    border: 2px solid rgb(188, 181, 181);
+    outline: none;
+    margin: 0 12px 0 0;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    border-radius: 50%;
+    border-width: 1px;
+    cursor: pointer;
+}
+
+/* checkbox 요소 - check 된 경우 */
+input[type="checkbox"]:checked {
+    border: none;
+    background-color: #28a745; /* 선택된 상태일 때의 배경색 */
+}
+
+/* checkbox 내부 가상요소 - check 안된 경우 */
+input[type="checkbox"]::before {
+    content: "V";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* 기타 스타일 */
+    font-weight: 100;
+    font-size: 14px;
+    color: rgb(188, 181, 181);
+}
+
+/* checkbox 내부 가상요소 - check 된 경우 */
+input[type="checkbox"]:checked::before {
+    content: "V";
+    /* 선택된 상태일 때의 스타일 */
+    color: white;
+    background-color: #28a745;
+}
