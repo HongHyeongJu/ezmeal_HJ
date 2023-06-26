@@ -2,16 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.teamProject.ezmeal.dao.MemberMapper">
-    <select id="select" parameterType="int" resultType="MemberDto">
-        SELECT *
-        from tb_member
-        where lgin_id = #{lgin_id}
+<mapper namespace="tb_member">
+
+    <select id="lgin_pw" parameterType="String" resultType="String">
+        SELECT lgin_pw
+        FROM tb_member
+        WHERE lgin_id = #{loginId}
     </select>
 
-    <select id="selectAll" resultType="MemberDto">
-        SELECT *
-        from tb_member
+    <select id="mbr_id" parameterType="String" resultType="long">
+        SELECT mbr_id
+        FROM tb_member
+        WHERE lgin_id = #{loginId}
     </select>
 
 </mapper>
