@@ -23,56 +23,56 @@ public class CartDaoImpl implements CartDao {
 
     // soldout update
     @Override
-    public void updateSoldOut(int mbrId) throws Exception {
+    public void updateSoldOut(Long mbrId) throws Exception {
         session.update(namespace + "soldOut_yn", mbrId);
     }
 
     // cart seq를 구하는 query
     @Override
-    public int cartSeq(int mbrId) throws Exception {
+    public Long cartSeq(Long mbrId) throws Exception {
         return session.selectOne(namespace + "tb_cart_seq", mbrId);
     }
 
     // 1차 count 완료 -> 일반, 구독 상품 분류
     @Override
-    public int count(int mbrId) throws Exception {
-        int cartSeq = cartSeq(mbrId); // cart_seq
+    public int count(Long mbrId) throws Exception {
+        Long cartSeq = cartSeq(mbrId); // cart_seq
         return session.selectOne(namespace + "tb_cart_product-count", cartSeq);
     }
     @Override
-    public int subCount(int mbrId) throws Exception {
-        int cartSeq = cartSeq(mbrId); // cart_seq
+    public int subCount(Long mbrId) throws Exception {
+        Long cartSeq = cartSeq(mbrId); // cart_seq
         return session.selectOne(namespace + "tb_cart_subscript-count", cartSeq);
     }
 
     // 2개 일반, 구독
     @Override
-    public List<CartProductDto> prodList(int mbrId) throws Exception {
-        int cartSeq = cartSeq(mbrId);// cart_seq
+    public List<CartProductDto> prodList(Long mbrId) throws Exception {
+        Long cartSeq = cartSeq(mbrId);// cart_seq
         return session.selectList("tb_cart_product", cartSeq);
     }
     // 일반 상품 냉장, 냉동, 상온
     @Override
-    public List<CartProductDto> prodColdList(int mbrId) throws Exception {
-        int cartSeq = cartSeq(mbrId);// cart_seq
+    public List<CartProductDto> prodColdList(Long mbrId) throws Exception {
+        Long cartSeq = cartSeq(mbrId);// cart_seq
         return session.selectList("tb_cart_product_cold", cartSeq);
     }
 
     @Override
-    public List<CartProductDto> prodIceList(int mbrId) throws Exception {
-        int cartSeq = cartSeq(mbrId);// cart_seq
+    public List<CartProductDto> prodIceList(Long mbrId) throws Exception {
+        Long cartSeq = cartSeq(mbrId);// cart_seq
         return session.selectList("tb_cart_product_ice", cartSeq);
     }
 
     @Override
-    public List<CartProductDto> prodOutSideList(int mbrId) throws Exception {
-        int cartSeq = cartSeq(mbrId);// cart_seq
+    public List<CartProductDto> prodOutSideList(Long mbrId) throws Exception {
+        Long cartSeq = cartSeq(mbrId);// cart_seq
         return session.selectList("tb_cart_product_outside", cartSeq);
     }
 
     @Override
-    public List<CartProductDto> subProdList(int mbrId) throws Exception {
-        int cartSeq = cartSeq(mbrId);// cart_seq
+    public List<CartProductDto> subProdList(Long mbrId) throws Exception {
+        Long cartSeq = cartSeq(mbrId);// cart_seq
         return session.selectList("tb_cart_sub-product", cartSeq);
     }
 

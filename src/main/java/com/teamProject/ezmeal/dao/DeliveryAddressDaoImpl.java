@@ -14,12 +14,12 @@ public class DeliveryAddressDaoImpl implements DeliveryAddressDao {
     private static final String namespace = "tb_delivery_address.";
 
     @Override
-    public DeliveryAddressDto defaultAddress(int mbrId) throws Exception{
+    public DeliveryAddressDto defaultAddress(Long mbrId) throws Exception{
         return session.selectOne("defaultAddress", mbrId);
     }
 
     @Override
-    public List<DeliveryAddressDto> editAddress(int mbrId) throws Exception {
+    public List<DeliveryAddressDto> editAddress(Long mbrId) throws Exception {
         return session.selectList("editAddress", mbrId);
     }
 }

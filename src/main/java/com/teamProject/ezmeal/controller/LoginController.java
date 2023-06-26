@@ -20,7 +20,7 @@ public class LoginController {
     public String getLogin(@RequestParam(defaultValue = "/") String redirectURL, Model model) {
         // 로그인 후 직전페이지로 가기위한 queryString을 model에 넣어서 login.jsp의 post Action에 쿼리형태로 넣기
         model.addAttribute("redirectURL", redirectURL);
-        return "login_imk";
+        return "login";
     }
 
     @PostMapping("/login")

@@ -14,22 +14,22 @@ public class CartServiceImpl {
 
 
     // 일반, 냉동, 냉장, 상온 list로 담기
-    public List<CartProductDto> getProduct(int mbrId) throws Exception {
+    public List<CartProductDto> getProduct(Long mbrId) throws Exception {
         List<CartProductDto> cartProducts = cartDao.prodList(mbrId);
         String typ = cartProducts.get(0).getTyp();
         return cartProducts;
     }
 
     // 냉장
-    public List<CartProductDto> getColdProduct(int mbrId) throws Exception {
+    public List<CartProductDto> getColdProduct(Long mbrId) throws Exception {
         return cartDao.prodColdList(mbrId);
     }
     // 냉동
-    public List<CartProductDto> getIceProduct(int mbrId) throws Exception {
+    public List<CartProductDto> getIceProduct(Long mbrId) throws Exception {
         return cartDao.prodIceList(mbrId);
     }
     // 상온
-    public List<CartProductDto> getOutSideProduct(int mbrId) throws Exception {
+    public List<CartProductDto> getOutSideProduct(Long mbrId) throws Exception {
         return cartDao.prodOutSideList(mbrId);
     }
 }

@@ -22,6 +22,6 @@ public class CartServiceImplTest {
 
     @Test
     public void getProduct() throws Exception {
-        List<CartProductDto> product = cartService.getProduct(1001);
+        List<CartProductDto> product = cartService.getProduct(1001L);
     }
 }
