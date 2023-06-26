@@ -10,7 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -24,14 +27,12 @@ public class CartController {
 
 
     @GetMapping("/general")
-    public String subscript(Model model) {
+    public String subscript(@SessionAttribute(value = "memberId", required = false) Long memberId, Model model) {
+            Long mbrId = (memberId != null) ? memberId : 0L;
         try {
-            // session.get member id 해야한다.
-            // 임시로 1001을 직접 작성한다.
-            int mbrId = 1001;
             int count = cartDao.count(mbrId);
             // 품절 상태 업데이트
-            cartDao.updateSoldOut(1001);
+            cartDao.updateSoldOut(mbrId);
 
             List<CartProductDto> cartColdProducts = cartService.getColdProduct(mbrId);
             List<CartProductDto> cartIceProducts = cartService.getIceProduct(mbrId);
@@ -51,13 +52,12 @@ public class CartController {
         return "cart";
     }
     @GetMapping("/subscript")
-    public String general(Model model) {
+    public String general(@SessionAttribute(value = "memberId", required = false) Long memberId, Model model) {
+        Long mbrId = (memberId != null) ? memberId : 0L;
         try{
             // session.get member id 해야한다.
-            // 임시로 1001을 직접 작성한다.
-            int mbrId = 1001;
             int count = cartDao.subCount(mbrId);
-            cartDao.updateSoldOut(1001);
+            cartDao.updateSoldOut(mbrId);
 
             List<CartProductDto> cartSubProducts = cartDao.subProdList(mbrId);
             DeliveryAddressDto defaultAddress = deliveryAddressDao.defaultAddress(mbrId);

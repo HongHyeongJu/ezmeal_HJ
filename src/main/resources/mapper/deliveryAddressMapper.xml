@@ -4,6 +4,13 @@
 
 <mapper namespace="tb_delivery_address">
 
+    <select id="addressList" resultType="DeliveryAddressDto">
+        select *
+        from tb_delivery_address
+        where mbr_id = #{mbrId}
+        ;
+    </select>
+
     <select id="defaultAddress" resultType="DeliveryAddressDto">
         select *
         from tb_delivery_address
@@ -12,11 +19,5 @@
         ;
     </select>
 
-    <select id="editAddress" resultType="DeliveryAddressDto">
-        select *
-        from tb_delivery_address
-        where mbr_id = #{mbrId}
-        ;
-    </select>
 
 </mapper>

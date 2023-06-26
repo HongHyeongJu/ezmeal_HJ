@@ -21,7 +21,7 @@ public class DeliveryAddressController {
 
     @GetMapping
     public String addressList(@SessionAttribute() Model model) throws Exception {
-        List<DeliveryAddressDto> addressList = deliveryAddressDao.addressList(10001);
+        List<DeliveryAddressDto> addressList = deliveryAddressDao.addressList(10001L);
         model.addAttribute("addressList",addressList);
         return "addressList";
     }

@@ -12,7 +12,5 @@
         <typeAlias alias="CartProductDto" type="com.teamProject.ezmeal.domain.CartProductDto"/>
         <typeAlias alias="DeliveryAddressDto" type="com.teamProject.ezmeal.domain.DeliveryAddressDto"/>
         <typeAlias alias="MemberDto" type="com.teamProject.ezmeal.domain.MemberDto"/>
-
-
     </typeAliases>
 </configuration>

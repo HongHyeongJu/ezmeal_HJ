@@ -20,14 +20,14 @@ public class DeliveryAddressDaoImplTest {
 
     @Test
     public void defaultAddress() throws Exception {
-        DeliveryAddressDto defaultAddress = deliveryAddressDao.defaultAddress(1001);
+        DeliveryAddressDto defaultAddress = deliveryAddressDao.defaultAddress(1001L);
         Long addrId = defaultAddress.getAddr_id();
         assertSame(2L, addrId);
     }
 
     @Test
     public void editAddress() throws Exception {
-        List<DeliveryAddressDto> address = deliveryAddressDao.editAddress(1001);
+        List<DeliveryAddressDto> address = deliveryAddressDao.editAddress(1001L);
         assertEquals(address.size(),2);
     }
 }
