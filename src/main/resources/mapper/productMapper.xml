@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tb_product">
+
+    <!--product 관련 쿼리문: select_prod_cd, select_name, select_cate_cd_List, search_name-->
+
+    <!--insert into tb_product (prod_cd, cate_cd, prod_stus, cust_cd, dc_cd, name, mng_prod_nm,
+    sfkp_stus, sfkp_mtd, sp_prc, cnsmr_prc, sale_prc, mgn_rate, dscpt, detail, min_qty, weight,
+    stnd, orplc, recipe, mtd, distb_tlmt, vld_start_dt, vld_end_dt, mng, fst_reg_dt, sub_yn,
+    sale_yn, dp_yn, del_yn, inv_yn,opt_yn, rmk, in_dtm, in_id, up_dtm, up_id)  values ();-->
+
+
+
+    <!-- 상품코드로 상품찾기 -->
+    <select id="select_prod_cd" parameterType="String" resultType="ProductDto">
+        SELECT *
+        FROM tb_product
+        WHERE prod_cd = #{prod_cd} and sale_yn='y' and dp_yn='y' and del_yn='n';
+    </select>
+
+    <!-- 분류코드로 상품리스트 받기 -->
+    <select id="select_cate_cd_List" parameterType="String" resultType="ProductDto">
+        SELECT *
+        FROM tb_product
+        WHERE cate_cd LIKE #{like_cate_cd} and sale_yn='y' and dp_yn='y' and del_yn='n';
+    </select>
+
+    <!-- 분류코드로 상품리스트 받기 "코드_%" + 판매가격 낮은 순-->
+    <select id="select_cate_cd_List_Cheap" parameterType="String" resultType="ProductDto">
+        SELECT *
+        FROM tb_product
+        WHERE cate_cd LIKE #{like_cate_cd} and sale_yn='y' and dp_yn='y' and del_yn='n'
+        ORDER By sale_prc;
+    </select>
+
+    <!-- 이름으로 상품 검색하기 LIKE "%단어% -->
+    <select id="search_name" parameterType="String" resultType="ProductDto">
+        SELECT *
+        FROM tb_product
+        WHERE name LIKE #{like_name} and sale_yn='y' and dp_yn='y' and del_yn='n';
+    </select>
+
+    <!-- 새 상품 추가하기 -->
+    <!--    <insert id="insert_Product" parameterType="ProductDto">-->
+    <!--        INSERT INTO tb_product-->
+    <!--        values (#{prod_cd},#{cate_cd},#{prod_stus},#{cust_cd},#{dc_cd},#{name},#{mng_prod_nm},#{sfkp_stus},#{sfkp_mtd},-->
+    <!--                #{sp_prc},#{cnsmr_prc},#{sale_prc},#{mgn_rate},#{dscpt},#{detail},#{min_qty},#{weight},#{stnd},-->
+    <!--                #{orplc},#{recipe},#{mtd},#{distb_tlmt},#{vld_start_dt},#{vld_end_dt},#{mng},#{fst_reg_dt},#{sub_yn},-->
+    <!--                #{sale_yn},#{dp_yn},#{del_yn},#{inv_yn},#{opt_yn},#{rmk},#{in_dtm},#{in_id},#{up_dtm},#{up_id}-->
+    <!--                );-->
+    <!--    </insert>-->
+
+    <!-- 상품 정보 수정하기 -->
+
+
+    <!-- 임시로 쓰는 삭제문 -->
+    <delete id="delete_for_TDD" parameterType="String" >
+        DELETE FROM tb_product
+        WHERE prod_cd = #{prod_cd};
+    </delete>
+
+    <!-- DB적인 삭제문 -->
+    <update id="delete_Product_del_yn" parameterType="String"  >
+        UPDATE tb_product
+        SET del_yn='y'
+        WHERE prod_cd = #{prod_cd};
+    </update>
+
+    <!-- 카테고리별 개수 세기 -->
+    <select id="count_cate_cd" resultType="Map">
+        SELECT cate_cd, count(*)
+        FROM tb_product
+        WHERE sale_yn='y' and dp_yn='y' and del_yn='n'
+        group by cate_cd;
+    </select>
+
+
+
+    <!--    &lt;!&ndash; 궁금증! 결과값을 테이블로 받은 것을 매개변수로 제공해서 그걸 FROM 테이블로 사용가능? 헐 반대로,,,?&ndash;&gt;-->
+    <!--    <select id="order_by_sale_prc_asc"  parameterType="String" resultType="ProductDto" >-->
+    <!--        SELECT *-->
+    <!--        FROM #{tableName}-->
+    <!--        ORDER BY sale_prc;-->
+    <!--    </select>-->
+
+
+
+    <!---->
+
+</mapper>
