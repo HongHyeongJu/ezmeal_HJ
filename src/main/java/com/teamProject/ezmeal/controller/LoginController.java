@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,6 +27,7 @@ public class LoginController {
     @PostMapping("/login")
     public String postLogin(HttpServletRequest req,
                             @RequestParam(defaultValue = "/") String redirectURL,
+                            RedirectAttributes redirectAttrs,
                             String tryMbrId,
                             String tryMbrPw,
                             Model model
@@ -50,20 +52,24 @@ public class LoginController {
 //        // rememberId cookie logic 끝
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /* 개인 정보를 jsp로 보낼 경우, 특히 redirect를 하는 경우는 조심!!!!!
-        * redirect인 경우는 model로 담은 값들이 url에 그대로 나타나게 된다.
-        * 따라서 session에 값을 넣어서 보내는 방법을 택해야한다.
-        * */
+         * redirect인 경우는 model로 담은 값들이 url에 그대로 나타나게 된다.
+         * 따라서 session에 값을 넣어서 보내는 방법을 택해야한다.
+         * */
 
         Long memberId = loginService.getLogin(tryMbrId, tryMbrPw);
 
         // login 검증
         // session도 없고 session 있는데 login 정보 없을 때 들어옴
-        if (memberId == 1L ) {
-            model.addAttribute("wrongId", "id가 올바르지 않습니다.");
-            return "login";
+        if (memberId == 1L) {
+            redirectAttrs.addFlashAttribute("tryMbrId", tryMbrId);
+            redirectAttrs.addFlashAttribute("wrongIdMsg", "id가 올바르지 않습니다.");
+            return "redirect:" + "/login"; // redirect:는 get만 있다.
+
         } else if (memberId == 2L) {
-            model.addAttribute("wrongPw", "pw가 올바르지 않습니다.");
-            return "login";
+            redirectAttrs.addFlashAttribute("tryMbrId", tryMbrId);
+            redirectAttrs.addFlashAttribute("wrongPwMsg", "pw가 올바르지 않습니다.");
+            return "redirect:" + "/login";
+
         } else {
             // login성공시 filter에서 구분할 session 넣어주기
             HttpSession session = req.getSession();
@@ -83,8 +89,8 @@ public class LoginController {
     }
 
     /* Todo
-    * 1. login form 받아와서 변경하기
-    * 2. login pageFilter 처리하고 수행하기
-    * 3. session -> 정보유지 용도, cookie -> rememberId 마무리만 잘 해주기l
-    * */
+     * 1. login form 받아와서 변경하기
+     * 2. login pageFilter 처리하고 수행하기
+     * 3. session -> 정보유지 용도, cookie -> rememberId 마무리만 잘 해주기
+     * */
 }

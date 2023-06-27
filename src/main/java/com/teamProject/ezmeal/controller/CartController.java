@@ -28,7 +28,7 @@ public class CartController {
 
     @GetMapping("/general")
     public String subscript(@SessionAttribute(value = "memberId", required = false) Long memberId, Model model) {
-            Long mbrId = (memberId != null) ? memberId : 0L;
+            Long mbrId = (memberId != null) ? memberId : 0L; // 일단 비회원일 경우에도 에러없이 장바구니 들어갈 수 있도록 열어둠 -> null 인 경우 바로 view로 return하도록 하는 방안 생각 필요
         try {
             int count = cartDao.count(mbrId);
             // 품절 상태 업데이트

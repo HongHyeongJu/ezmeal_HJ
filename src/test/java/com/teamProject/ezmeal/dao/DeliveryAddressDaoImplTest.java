@@ -26,8 +26,8 @@ public class DeliveryAddressDaoImplTest {
     }
 
     @Test
-    public void editAddress() throws Exception {
-        List<DeliveryAddressDto> address = deliveryAddressDao.editAddress(1001L);
+    public void addressList() throws Exception {
+        List<DeliveryAddressDto> address = deliveryAddressDao.addressList(1001L);
         assertEquals(address.size(),2);
     }
 }

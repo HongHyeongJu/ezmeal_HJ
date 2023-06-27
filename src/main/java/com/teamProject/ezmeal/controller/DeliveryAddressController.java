@@ -20,9 +20,13 @@ public class DeliveryAddressController {
     private final DeliveryAddressDao deliveryAddressDao;
 
     @GetMapping
-    public String addressList(@SessionAttribute() Model model) throws Exception {
-        List<DeliveryAddressDto> addressList = deliveryAddressDao.addressList(10001L);
-        model.addAttribute("addressList",addressList);
-        return "addressList";
+    public String addressList(@SessionAttribute(value = "memberId", required = false) Long memberId, Model model) throws Exception {
+        if (memberId == null){
+            return "login";
+        } else {
+            List<DeliveryAddressDto> addressList = deliveryAddressDao.addressList(memberId);
+            model.addAttribute("addressList", addressList);
+            return "deliveryAddressList";
+        }
     }
 }
