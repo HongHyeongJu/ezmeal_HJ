@@ -18,7 +18,7 @@
     <li><a href="/logout">로그아웃</a></li>
     <li><a href="/cart/general">일반 장바구니</a></li>
     <li><a href="/cart/subscript">구독 장바구니</a></li>
-    <li><a href="/productlist">상품 목록</a></li>
+    <li><a href="//productcatelist">상품 목록</a></li>
     <li><a href="/address">배송지</a></li>
     <li><a href=""></a></li>
     <li><a href=""></a></li>

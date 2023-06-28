@@ -58,17 +58,17 @@ public class LoginController {
 
         Long memberId = loginService.getLogin(tryMbrId, tryMbrPw);
 
-        // login 검증
-        // session도 없고 session 있는데 login 정보 없을 때 들어옴
-        if (memberId == 1L) {
-            redirectAttrs.addFlashAttribute("tryMbrId", tryMbrId);
-            redirectAttrs.addFlashAttribute("wrongIdMsg", "id가 올바르지 않습니다.");
-            return "redirect:" + "/login"; // redirect:는 get만 있다.
+            // login 검증
+            // session도 없고 session 있는데 login 정보 없을 때 들어옴
+            if (memberId == 1L) {
+                redirectAttrs.addFlashAttribute("tryMbrId", tryMbrId);
+                redirectAttrs.addFlashAttribute("wrongIdMsg", "id가 올바르지 않습니다.");
+                return "redirect:" + "/login"; // redirect:는 get만 있다.
 
-        } else if (memberId == 2L) {
-            redirectAttrs.addFlashAttribute("tryMbrId", tryMbrId);
-            redirectAttrs.addFlashAttribute("wrongPwMsg", "pw가 올바르지 않습니다.");
-            return "redirect:" + "/login";
+            } else if (memberId == 2L) {
+                redirectAttrs.addFlashAttribute("tryMbrId", tryMbrId);
+                redirectAttrs.addFlashAttribute("wrongPwMsg", "pw가 올바르지 않습니다.");
+                return "redirect:" + "/login";
 
         } else {
             // login성공시 filter에서 구분할 session 넣어주기

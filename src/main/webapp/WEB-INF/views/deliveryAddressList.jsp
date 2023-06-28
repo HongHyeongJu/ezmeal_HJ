@@ -47,9 +47,12 @@
                     </div>
 
                     <div class="address_detail_btn">
-                        <button type="submit" class="address_detail_btn__edit">
-                            수정
-                        </button>
+                        <form action="/address/modify" method="get">
+                            <input type="hidden" name="addrId" value=${defaultAddress.addr_id}>
+                            <button type="submit" class="address_detail_btn__edit">
+                                수정
+                            </button>
+                        </form>
                     </div>
                 </div>
                 <!-- address_detail 끝 -->
@@ -76,10 +79,17 @@
                             </div>
 
                             <div class="address_detail_btn">
-                                <button type="submit" class="address_detail_btn__edit">
-                                    수정
-                                </button>
-                                <button type="submit" class="address_detail_btn__delete">삭제</button>
+                                    <%-- 나중에 비동기로 ajax?? 하는 방법 적용하기 --%>
+                                <form action="/address/modify" method="get">
+                                    <input type="hidden" name="addrId" value=${address.addr_id}>
+                                    <button type="submit" class="address_detail_btn__edit">
+                                        수정
+                                    </button>
+                                </form>
+                                <form action="/address/delete" method="post">
+                                    <input type="hidden" name="addrId" value=${address.addr_id}>
+                                    <button type="submit" class="address_detail_btn__delete">삭제</button>
+                                </form>
                             </div>
                         </div>
                         <!-- address_detail 끝 -->
@@ -89,7 +99,9 @@
                 <!-- address__list 끝 -->
             </c:if>
         </c:forEach>
-        <button class="address__add">배송지 추가</button>
+        <form action="/address/add" method="get">
+            <button class="address__add">배송지 추가</button>
+        </form>
         <!-- address__add 끝 -->
     </div>
     <!-- address__main 끝 -->
