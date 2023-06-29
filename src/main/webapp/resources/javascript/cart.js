@@ -34,10 +34,7 @@ const checkChecked = function () {
                 prodText.indexOf("[") + 1,
                 prodText.indexOf("]")
             );
-<<<<<<< HEAD
-=======
 
->>>>>>> wan_login
             SELECTPRODUCTCODE += prodCode;
         }
     }
