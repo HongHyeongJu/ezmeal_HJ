@@ -21,6 +21,9 @@ public interface CartDao {
     List<CartProductDto> prodIceList(Long mbrId) throws Exception;
     List<CartProductDto> prodOutSideList(Long mbrId) throws Exception;
 
-    void updateSoldOut(Long mbrId) throws Exception;
+    int updateSoldOut(Long mbrId) throws Exception;
+
+    List<CartProductDto> cartProducts(Long mbrId, String prodCodeString)throws Exception;
+
 
 }

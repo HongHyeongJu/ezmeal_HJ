@@ -9,12 +9,12 @@ let SELECTPRODUCTCODE = ""; // 항상 초기화 필요
 function handleOrder() {
     checkChecked(); // string type 데이터
 
-    const selectedCartProductCode = SELECTPRODUCTCODE.substring(0, SELECTPRODUCTCODE.length - 1);
-    console.log(selectedCartProductCode);
+    console.log(SELECTPRODUCTCODE);
     // 쿠키 참조 blog: https://velog.io/@rudnf003/javascript-%EC%BF%A0%ED%82%A4-%EC%83%9D%EC%84%B1-%EB%B0%8F-%EA%B4%80%EB%A6%AC
-    document.cookie = "orderProduct=" + selectedCartProductCode + "; path=/; domain=localhost";
+    // cookie maxtime을 설정해야 한다.
+    document.cookie = "orderProduct=" + SELECTPRODUCTCODE + "; path=/; domain=localhost";
 
-    console.log(typeof selectedCartProductCode)
+    console.log(typeof SELECTPRODUCTCODE)
     window.location.href = "/order/orderView";
 
     // 초기화
@@ -38,7 +38,7 @@ const checkChecked = function () {
                 prodText.indexOf("[") + 1,
                 prodText.indexOf("]")
             );
-            SELECTPRODUCTCODE += prodCode + ',';
+            SELECTPRODUCTCODE += prodCode;
         }
     }
 };
