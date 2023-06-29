@@ -40,6 +40,7 @@ public class CartController {
 
             DeliveryAddressDto defaultAddress = deliveryAddressDao.defaultAddress(mbrId);
 
+            model.addAttribute("loginYN", mbrId);
             model.addAttribute("count", count);
             model.addAttribute("cartColdProducts", cartColdProducts);
             model.addAttribute("cartIceProducts", cartIceProducts);

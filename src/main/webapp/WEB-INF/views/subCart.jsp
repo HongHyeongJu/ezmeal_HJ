@@ -81,6 +81,8 @@
                                 <!--상품사진 끝-->
                                 <div class="cart__item_list_description">
                                     <a href="/productlist/${item.prod_cd}">
+                                        <p class="cart__item_list_prod_cd">[${item.prod_cd}]</p>
+                                        <br/>
                                         <p>${item.name}</p>
                                     </a>
                                 </div>
@@ -197,7 +199,7 @@
         src="https://kit.fontawesome.com/6478f529f2.js"
         crossorigin="anonymous"
 ></script>
-
+<script src="/javascript/cart.js"></script>
 
 </body>
 </html>
