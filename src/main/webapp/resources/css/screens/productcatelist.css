@@ -3,12 +3,32 @@ body {
 }
 
 .empty {
-    height: 200px}
+    height: 200px;
+}
 
-/*div 보려고 만들어둔 실험 코드*/
-/*div {*/
-/*    border: 0px #000;*/
-/*}*/
+
+
+.지붕묶음 {
+    width: 980px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+.지붕 {
+    list-style-type: none;
+    margin: 0;
+    padding-right: 20px;
+    display: flex;
+    /*     justify-content: center;
+        align-items: center; */
+    position: relative;
+}
+
+
 
 /*상품 4개가 1 UL*/
 .prod_list_ul{
@@ -52,6 +72,7 @@ body {
     height: 96%;
     object-fit: contain;
     margin: 2%;
+    border-radius: 5%;
 }
 
 /*이미지 아래부분 전체*/
@@ -62,7 +83,11 @@ body {
     border: 0px #000;
 }
 
-.review_set {text-align: right;}
+.review_set {
+    text-align: right;
+    margin-right: 6px;
+    margin-bottom : 6px;
+}
 
 .dc_cd {
     color: cornflowerblue;
@@ -114,6 +139,10 @@ body {
 
 .star_img, .score, .total_num {
     vertical-align: middle;   /*옆 스팬글자랑 이미지랑 높이 맞추기*/
+}
+
+.total_num {
+    margin-right: 5px;
 }
 
 .prod_title  {

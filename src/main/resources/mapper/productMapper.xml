@@ -77,6 +77,21 @@
     </select>
 
 
+    <!--1개의 상품코드에 대한 리뷰 숫자 가져오기-->
+    <select id="review_count" parameterType="String"  resultType="int">
+        SELECT count(*)
+        FROM tb_product_review
+        GROUP BY prod_cd
+        HAVING prod_cd = #{prod_cd}
+    </select>
+
+    <!--1개의 상품코드에 대한 리뷰 별점 평균 가져오기-->
+    <select id="review_star_avg" parameterType="String"   resultType="Double">
+        SELECT avg(star)
+        FROM tb_product_review
+        GROUP BY prod_cd
+        HAVING prod_cd = #{prod_cd}
+    </select>
 
     <!--    &lt;!&ndash; 궁금증! 결과값을 테이블로 받은 것을 매개변수로 제공해서 그걸 FROM 테이블로 사용가능? 헐 반대로,,,?&ndash;&gt;-->
     <!--    <select id="order_by_sale_prc_asc"  parameterType="String" resultType="ProductDto" >-->

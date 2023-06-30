@@ -1,0 +1,600 @@
+body {
+    font-family: 'FontName', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* -------------------------------  상품 상세 상단 ----------------------------------- */
+.head_main {
+    margin-top: 150px;
+    width: 1000px;
+    height: auto;
+    background-color: white;
+    border: 3px solid rgb(197, 230, 197);
+    display: flex;
+    flex-direction: row;
+    align-items: top;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+}
+
+/* --------------------------------  왼쪽 상품 사진  ----------------------------------- */
+
+.right_info {
+    width: 530px;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    color: #333;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+
+.head_main_left {
+    width: 45%;
+    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.main_right {
+    width: 55%;
+    height: auto;
+    display: inline-block;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.main_img {
+    padding: 30px;
+    width: 400px;
+    height: 400px;
+    /*color: aqua;*/
+    padding-bottom : 0;
+}
+
+.mini_img_set{
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+
+}
+
+.mini_img {
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+}
+
+/* ----------------------------------  오른쪽 상품 정보   --------------------------------- */
+
+
+.prod_name {
+    padding-left: 2%;
+    display: block;
+    margin-top: 40px;
+    margin-bottom: 10px;
+    font-size: 200%;
+
+}
+
+.dc_cd {
+    padding-left: 2%;
+    font-size: 200%;
+    color: cornflowerblue;
+    display: inline-block;
+}
+
+.sale_prc {
+    padding-left: 2%;
+    font-size: 200%;
+    color: black;
+    display: inline-block;
+}
+
+.sale_prc > li {
+    padding-right: 20px
+}
+
+.price_set.prod_dscpt {
+    font-size: 200%;
+}
+
+.cnsmr_prc {
+    color:gray;
+    text-decoration: line-through;
+    margin-top: 0%;
+    display: inline-block;
+    font-size: 130%;
+}
+
+
+.star_img {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("../../img/star.png");
+    background-size: 100%;
+    background-repeat: no-repeat; /*그림 반복 막기*/
+    vertical-align: middle;
+}
+
+.star_img.fst {padding-left: 2%;}
+
+.star_img .score .total_num {
+    vertical-align: middle;   /*옆 스팬글자랑 이미지랑 높이 맞추기*/
+}
+
+
+.dl_row > dt {
+    flex-grow: 1;
+    display: table-cell;
+    vertical-align: middle;
+    width: 80px;
+    border-bottom: 1px solid white;
+    padding-left: 20px;
+    /* padding: 17px 0; */
+    color: #666;
+    list-style-type: none;
+    align-items: center;
+}
+
+.dl_row > dd {
+    flex-grow: 7;
+    display: table-cell;
+    vertical-align: top;
+    position: relative;
+    border-bottom: 1px solid white;
+    /* padding: 17px 0; */
+    color: #666;
+    list-style-type: none;
+}
+
+.dl_row > li {
+    margin-top : 15%;
+}
+
+.dl_row > dd > ul > li {
+    margin-top : 0;
+    margin-bottom : 0;
+    padding-top : 14px;
+}
+
+.dl_row ul{
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+
+dl {
+    border-top: 1px solid rgb(197, 230, 197); /* 위쪽 구분선 스타일 */
+    /* border-bottom: 1px solid silver;  */
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.right_keyword {
+    width: 530px;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    color: #333;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.right_keywords_things {
+    padding-left: 10px;
+    margin-top: 10px;
+    margin-bottom:0;
+}
+
+
+.price_set {
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.right_keyword.mbr_rv {
+    margin-top: 30px;
+    margin-bottom: 0;
+    font-size: 120%;
+}
+
+
+.prod_dscpt_one {
+    height: auto;
+    padding-right: 40px;
+}
+
+
+
+.mbr_rv {
+    margin-bottom: 20px;
+}
+
+
+.choose_option {
+    font-style: normal;
+}
+
+/*------------------------------------------------------------------------*/
+
+.detail_navi_set {
+    margin-top: 50px;
+    width: 1100px;
+    height: 55px;
+    background-color:rgb(218, 247, 210);
+    display: flex;
+    flex-direction: row;
+    align-items: top;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    list-style-type: none;
+    border-radius: 10px;
+}
+
+.detail_navi {
+    list-style-type: none;
+    flex-basis: 25%;
+    margin-top: 0px;
+    display: flex;
+    text-align: center;
+    position: relative;
+}
+
+
+.detail_navi:hover {
+    opacity: 0.8;
+    cursor: pointer;
+
+}
+
+.detail_navi > a {
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding-top: 6%;
+    text-decoration: none; /* 밑줄 없애기 */
+    color: inherit; /* 부모 요소의 글자색 상속 */
+}
+
+.detail_navi_set li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    height: 100%;
+    width: 2px;
+    background-color:rgb(243, 255, 243); /* 구분선 색상 설정 */
+    transform: translateY(-50%);
+}
+
+.detail_img {
+    width: 1100px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.middle_2 {
+    width: 1100px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.dscpt_bottom > dt {
+    flex-grow: 1;
+    display: table-cell;
+    vertical-align: middle;
+    width: 150px;
+    border-bottom: 1px solid white;
+    padding: 17px 0;
+    color: #666;
+    list-style-type: none;
+    text-align: center;
+}
+
+.dscpt_bottom > dd {
+    flex-grow: 6;
+    display: table-cell;
+    vertical-align: middle;
+    position: relative;
+    border-bottom: 1px solid white;
+    padding: 17px 0;
+    color: #666;
+    list-style-type: none;
+}
+
+.dscpt_bottom ul{
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.middle_3 {
+    padding-left: 2%;
+    margin-top: 10px;
+    margin-bottom:0;
+    width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*-----------------------------------상품 후기 시작--------------------------------*/
+
+
+.review_head {
+    width: 1100px;
+    height: 30px;
+    display: flex;
+    font-size: 200%;
+    margin-top: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 50px;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(31, 167, 115);
+}
+
+
+.bottm_title {
+    width: 60%;
+    max-width: 1100px; /* 최대 너비를 1100px로 제한 */
+    margin-right: auto;
+    margin-bottom: 50px;
+}
+
+.make_review_btn {
+    width: 12%;
+    height: 50px;
+    max-width: 1100px; /* 최대 너비를 1100px로 제한 */
+    margin: 0;
+    background-color: rgb(151, 233, 97);
+    border-radius: 10px;
+    border: 2px solid rgb(255, 255, 255);
+    color: white;
+    font-size: 70%;
+    margin-right: 20px;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.rv_container {
+    width: 1100px; /* 원하는 가로 길이 */
+    margin-left: auto;
+    margin-right: auto;
+    /* border-top: 1px solid rgb(31, 167, 115); */
+    border-bottom: 1px solid rgb(31, 167, 115);
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.rv_set {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-left: 20px;
+    padding-top: 15px;
+}
+
+.rv_wrt, .rv_wrt_dt, .rv_star, .rv_kword {
+    width: auto;
+    height: 30px;
+    padding-left: 10px;
+    padding-right: 20px;
+    display: inline-flex;
+    align-items: center;
+}
+
+
+.rv_kword {
+    border: 1px solid black;
+    border-radius: 5px;
+    line-height: 30px;
+    text-align: center;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.rv_title {
+    width: 100%;
+    display: block;
+    padding-top: 15px;
+    padding-left: 10px;
+    font-size: 120%;
+}
+
+.rv_stmt {
+    width: 80%;
+    height: auto;
+    padding-top: 15px;
+    padding-left: 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.rv_img {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-left: 50px;
+    margin-bottom: 20px;
+}
+
+/*---------------이미지변환 관련---------------*/
+.rv_img img {
+    transition: transform 0.6s ease;
+}
+
+.rv_img:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.rv_img.active img {
+    transform: scale(1.2);
+    width: 500px;
+    height: 500px;
+}
+.rv_container {
+    transition: height 0.6s ease;
+}
+
+/*--------------------------------------상품 문의 시작-------------------------------------------------*/
+
+
+.inquiry_head {
+    width: 1100px;
+    height: 30px;
+    display: flex;
+    font-size: 200%;
+    margin-top: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 50px;
+    justify-content: space-between;
+
+}
+
+
+.bottm_title {
+    width: 70%;
+    max-width: 1100px; /* 최대 너비를 1100px로 제한 */
+    margin-right: auto;
+}
+
+.make_inquiry_btn {
+    width: 12%;
+    height: 50px;
+    max-width: 1100px; /* 최대 너비를 1100px로 제한 */
+    margin: 0;
+    background-color: rgb(151, 233, 97);
+    border-radius: 10px;
+    border: 2px solid rgb(255, 255, 255);
+    color: white;
+    font-size: 70%;
+    margin-right: 20px;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.inquiry_container {
+    width: 1100px; /* 원하는 가로 길이 */
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+}
+
+.header {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    height: 50px;
+}
+
+
+.inquiry_title {
+    width:61%;
+}
+
+.inquiry_wrt {
+    width:13%;
+}
+.inquiry_wrt_dt {
+    text-align: center;
+}
+.inquiry_stus {
+    width:13%;
+}
+.inquiry_title, .answer {
+    padding-left: 20px;
+    border-bottom: 1px solid gainsboro;
+}
+
+.inquiry_title .inquiry_wrt, .inquiry_wrt_dt, .inquiry_stus, .inquiry_wrt{
+    text-align: center;
+    height: 50px;
+    border-bottom: 1px solid gainsboro;
+}
+
+.answer {
+    height: auto;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+
+.inquiry_title:hover {
+    background-color: rgb(216, 242, 202);
+}
+
+.accordion:after { /* .accordion 클래스 태그의 뒤에 위치하는 공간을 선택한다. */
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right; /* 오른쪽에 붙인다. */
+    margin-left: 5px;
+}
+
+.accordion {
+    background-color: white;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 61%; /* button은 display가 inline-block이라 width 지정 가능 / 부모의 크기의 100% -> body? */
+    border: none; /* border 없앰 */
+    border-bottom: 1px solid gainsboro;
+    text-align: left; /* button 내용 왼쪽 정렬 */
+    outline: none; /* 요소의 테두리인 outline제거.( border는 자리를 차지하지만. outline은 자리를 처지 하지 않는다는 차이 있음)*/
+    font-size: 100%;
+    transition: 0.4s; /* 애니메이션효과(전환효과) 값. 수정해보며 변화를 느껴보기 */
+}
+
+
+.answer {
+    max-height: 0; /* panel의 최대 높이를 0으로 제한한다.  */
+    overflow: hidden; /* 부모 요소를 벗어나는 건 숨긴다...???? panel의 부모 = body */
+    /* max-height가 변경될 때 0.2초 동안 진행된다. ease-out - 애니메이션이 빠르게 시작되고 느리게 종료되도록 설정한다. */
+    transition: max-height 0.2s ease-out;
+}
+
+.empty-space {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 200px;
+    height: 200px; /* 화면의 세로 높이를 100%로 설정 */
+}
+
+.go_up > a {
+    text-decoration: none; /* 밑줄 없애기 */
+    color: inherit; /* 부모 요소의 글자색 상속 */
+}
+
+.make_review_btn > a, .make_inquiry_btn > a {
+    text-decoration: none; /* 밑줄 없애기 */
+    color: inherit; /* 부모 요소의 글자색 상속 */
+}

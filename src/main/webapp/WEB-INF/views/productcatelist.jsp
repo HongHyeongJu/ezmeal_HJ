@@ -12,12 +12,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>카테고리 별 상품 목록</title>
-  <link rel="stylesheet" href="/css/screens/productcatelist.css?ver=1"/>
+  <link rel="stylesheet" href="/css/screens/productcatelist.css?ver=2"/>
 </head>
 <body>
 
 <!--헤더 내려오는 공백-->
 <div class="empty"></div>
+<ul class="지붕묶음" id="section1">
+  <li class="지붕">추천순</li>
+  <li class="지붕">낮은가격순</li>
+  <li class="지붕">높은가격순</li>
+</ul>
 
 <!--전달 받은 상품 리스트 하나한 꺼내기-->
 <c:forEach var="product" items="${productCateCdList}" varStatus="status">
@@ -41,8 +46,10 @@
         <div class="review_score"> <!--상품 관련 평균평점 및 리뷰 (리뷰테이블이 오면 값넣음)-->
           <div class="review_set">
             <span class="star_img"></span> <!--별 이미지(고정)-->
-            <span class="score">4.5</span> <!--평균 점수-->
-            <span class="total_num">(67)&nbsp;&nbsp;</span> <!--리뷰 수-->
+            <c:set var="starAvg" value="${reviewStarAvgMap[product.prod_cd]}" />
+            <span class="score">${starAvg}</span> <!--평균 점수-->
+            <c:set var="reviewcCnt" value="${reviewCountMap[product.prod_cd]}" />
+            <span class="total_num">(${reviewcCnt})</span> <!--리뷰 수-->
           </div>
         </div>
         <p class="prod_title"> <!--상품 이름-->
@@ -50,8 +57,9 @@
         </p>
         <div class="dc_cd_prod_dscpt_wrapper"> <!-- 할인정보, 판매가격, 소비자가격 세트 -->
           <span class="dc_cd">
-                      <strong>${not empty product.getDc_cd() ? product.getDc_cd() : '0'}
-                        <!--할인코드가 있으면 출력, null이면 0-->
+            <c:set var="discountRate" value="${discountRateMap[product.prod_cd]}" />
+                      <strong>
+                          ${discountRate} <!--할인퍼센트-->
                       </strong>%
                     </span>&nbsp;
           <span class="sale_prc"> <!--판매 가격-->
@@ -93,7 +101,7 @@
   </c:if>
 </c:forEach>
 
-  <script src="/javascript/productlistaddcart.js"></script>
+<script src="/javascript/productlistaddcart.js"></script>
 
 </body>
 </html>
