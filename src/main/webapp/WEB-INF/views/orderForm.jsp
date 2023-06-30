@@ -47,9 +47,10 @@
 <h3> 쿠폰 </h3>
 <P>내가 가진 쿠폰 보여주기 -> 쿠폰 사용 유무 및 해당 조건에 사용가능한 쿠폰인지 확인 필요, 총 쿠폰 개수, 사용가능 쿠폰 개수</P>
 <h3>적립금사용</h3>
-<P>적립금 금액 :</P>
+<P>적립금 금액 : <br>
+사용가능 적립금 : ${pointMap.get("usePoint")}</P>
 <p>최종결제금액 : <br>
-| 적립예정금액 : </p>
+| 적립예정금액 : ${pointMap.get("pointRate")}</p>
 ps. 결제 창에서 json으로 데이터를 받은 후 주문 master, 수행
 <h3> 개인정보 수집/제공 </h3>
 <p> 개인 정보 수집, 이용 및 처리 동의 </p>
@@ -60,8 +61,9 @@ ps. 결제 창에서 json으로 데이터를 받은 후 주문 master, 수행
 <p> 주문금액 : ${priceMap.get("orderPrice")} </p>
 <p> 상품 금액 : ${priceMap.get("productPrice")}</p>
 <p> 상품 할인 금액 : ${priceMap.get("productsDiscount")}</p>
+<p> 적립 예정 금액 : </p>
+<p>적립금 사용 : JS로 막기 </p>
+<p> 최종결제 금액 : JS</p>
 
-<p>적립금 사용 - 이게 좀 빡세네</p>
-<p> 최종결제 금액 </p>
 </body>
 </html>

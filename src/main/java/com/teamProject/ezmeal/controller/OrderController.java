@@ -1,8 +1,6 @@
 package com.teamProject.ezmeal.controller;
 
-import com.teamProject.ezmeal.dao.CartDao;
-import com.teamProject.ezmeal.dao.DeliveryAddressDao;
-import com.teamProject.ezmeal.dao.MemberDao;
+import com.teamProject.ezmeal.dao.*;
 import com.teamProject.ezmeal.domain.CartProductDto;
 import com.teamProject.ezmeal.domain.DeliveryAddressDto;
 import com.teamProject.ezmeal.domain.MemberDto;
@@ -23,6 +21,9 @@ public class OrderController {
     private final CartDao cartDao;
     private final DeliveryAddressDao deliveryAddressDao;
     private final MemberDao memberDao;
+    private final PointTransactionHistoryDao pointTransactionHistoryDao;
+    private final MemberGradeBenefitDao memberGradeBenefitDao;
+
 
     @GetMapping("/general")
     public String getGeneralOrder(@SessionAttribute Long memberId, @CookieValue String orderProduct, Model model) {
@@ -57,10 +58,20 @@ public class OrderController {
             priceMap.put("orderPrice", orderPrice);
             priceMap.put("productsDiscount", productsDiscount);
 
+            // 적립금
+            // 사용가능 적립금, 적립 예정금액
+            Map<String, Integer> pointMap = new HashMap<>();
+            int pointCanUse = pointTransactionHistoryDao.pointCanUse(memberId);
+            int pointRate = (orderPrice / 100) * (memberGradeBenefitDao.getPointRate(memberId));
+
+            pointMap.put("usePoint", pointCanUse);
+            pointMap.put("pointRate", pointRate);
+
             model.addAttribute("defaultAddress", defaultAddress);
             model.addAttribute("cartProductDtos", cartProductDtos);
-            model.addAttribute("priceMap", priceMap);
             model.addAttribute("mbrInfo", memberInfo);
+            model.addAttribute("priceMap", priceMap);
+            model.addAttribute("pointMap", pointMap);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
