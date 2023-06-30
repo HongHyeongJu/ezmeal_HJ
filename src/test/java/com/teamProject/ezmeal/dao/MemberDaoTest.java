@@ -1,5 +1,6 @@
 package com.teamProject.ezmeal.dao;
 
+import com.teamProject.ezmeal.domain.MemberDto;
 import com.teamProject.ezmeal.service.LoginService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,5 +27,11 @@ public class MemberDaoTest {
     public void checkNull() throws Exception {
         Long login = loginService.getLogin("kimjava100", "asdf1234");
         System.out.println("login = " + login);
+    }
+
+    @Test
+    public void  memberInfo() throws  Exception {
+        MemberDto memberInfo = memberDao.getMemberInfo(1001L);
+        System.out.println("memberInfo = " + memberInfo);
     }
 }

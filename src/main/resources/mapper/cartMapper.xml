@@ -129,21 +129,18 @@ TODO
     </select>
 
 
-<!--    &lt;!&ndash;동적쿼리, 상품 여러개 받아오기&ndash;&gt;-->
-<!--    <select id="selectCartProducts" resultType="CartProduct">-->
-<!--        SELECT *-->
-<!--        FROM tb_cart_product-->
-<!--        WHERE cart_seq = #{cartSeq}-->
-<!--        ;-->
-<!--    </select>-->
-
-<!--    <select id="selectCartProducts" resultType="CartProduct">-->
-<!--        SELECT *-->
-<!--        FROM tb_cart_product-->
-<!--        WHERE mbr_id = #{mbrId}-->
-<!--        AND prod_cd IN-->
-<!--        <foreach item="item" collection="prodCdList" open="(" separator="," close=")">-->
-<!--            #{item}-->
-<!--        </foreach>-->
-<!--    </select>-->
+    <!--동적쿼리, 상품 여러개 받아오기-->
+    <select id="select_prod" resultType="CartProductDto">
+        SELECT *
+        from tb_cart_product cp,
+        tb_product p
+--         tb_product_discount pd
+        WHERE cp.cart_seq = #{cartSeq}
+          and cp.prod_cd = p.prod_cd
+--           and p.dc_cd = pd.dc_cd
+        AND cp.prod_cd IN
+        <foreach item="item" collection="prodCdList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

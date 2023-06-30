@@ -1,5 +1,6 @@
 package com.teamProject.ezmeal.dao;
 
+import com.teamProject.ezmeal.domain.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -16,5 +17,10 @@ public class MemberDao {
 
     public Long getMemberId(String loginId) throws Exception {
         return session.selectOne(namespace+"mbr_id", loginId);
+    }
+
+    public MemberDto getMemberInfo(Long memberId) throws Exception {
+        return session.selectOne(namespace + "mbr_Info", memberId);
+
     }
 }

@@ -16,4 +16,10 @@
         WHERE lgin_id = #{loginId}
     </select>
 
+    <select id="mbr_Info" parameterType="Long" resultType="MemberDto">
+        select *
+        from tb_member
+        where mbr_id = ${memberId}
+    </select>
+
 </mapper>

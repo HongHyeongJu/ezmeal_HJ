@@ -11,9 +11,7 @@ function handleOrder() {
 
     // 쿠키 참조 blog: https://velog.io/@rudnf003/javascript-%EC%BF%A0%ED%82%A4-%EC%83%9D%EC%84%B1-%EB%B0%8F-%EA%B4%80%EB%A6%AC
     document.cookie = "orderProduct=" + SELECTPRODUCTCODE + "; path=/; domain=localhost";
-    console.log(typeof SELECTPRODUCTCODE)
-    window.location.href = "/order/orderView";
-
+    window.location.href = "/order/general";
     // 초기화
     SELECTPRODUCTCODE = "";
 }

@@ -42,5 +42,8 @@ public class CartDaoImplTest {
 
     @Test
     public void address() throws Exception{
+        List<CartProductDto> cartProductDtos = cartDao.cartProducts(1001L, "p00002");
+        System.out.println("cartProductDtos = " + cartProductDtos);
+        System.out.println("cartProductDtos.get(0) = " + cartProductDtos.get(0));
     }
 }
