@@ -43,6 +43,19 @@ public class ProductDao {
         return session.selectList(namespace + "search_name", like_name);
     }
 
+
+    /* 1개의 상품코드에 대한 리뷰 숫자 가져오기 */
+    public Integer countProductReview(String prod_cd) throws SQLException {
+        return session.selectOne(namespace+"review_count",prod_cd);
+    }
+
+    /* 1개의 상품코드에 대한 별점 평균 받기 */
+    public Double avgProductReviewStar(String prod_cd) throws SQLException {
+        return session.selectOne(namespace+"review_star_avg",prod_cd);
+    }
+
+
+
 //    public List<ProductDto> orderBySalePrc() throws SQLException {
 //        String tableName = "tb_product";
 //        return session.selectList(namespace + "order_by_sale_prc_asc", tableName);

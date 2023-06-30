@@ -16,4 +16,24 @@
         WHERE lgin_id = #{loginId}
     </select>
 
+    <insert id="mbr_signup" parameterType="MemberDto">
+        INSERT INTO tb_member (
+                               name
+                              ,sex
+                              ,birth
+                              ,phone
+                              ,email
+                              ,lgin_id
+                              ,lgin_pw
+        ) values (
+                     #{name}
+                 ,#{sex}
+                 ,#{birth}
+                 ,#{phone}
+                 ,#{email}
+                 ,#{lgin_id}
+                 ,#{lgin_pw}
+                 )
+    </insert>
+
 </mapper>
