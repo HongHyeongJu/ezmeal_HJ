@@ -10,6 +10,12 @@
 <!--        cart , cartProduct 추가 필요-->
         <typeAlias alias="CartDto" type="com.teamProject.ezmeal.domain.CartDto"/>
         <typeAlias alias="CartProductDto" type="com.teamProject.ezmeal.domain.CartProductDto"/>
+        <typeAlias alias="DeliveryAddressDto" type="com.teamProject.ezmeal.domain.DeliveryAddressDto"/>
+        <typeAlias alias="MemberDto" type="com.teamProject.ezmeal.domain.MemberDto"/>
+<!--상품 , 상품 이미지-->
+        <typeAlias alias="ProductDto" type="com.teamProject.ezmeal.domain.ProductDto"/>
+        <typeAlias alias="ProductImgDto" type="com.teamProject.ezmeal.domain.ProductImgDto"/>
+
 
     </typeAliases>
 </configuration>
