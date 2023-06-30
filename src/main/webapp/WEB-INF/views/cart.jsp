@@ -37,7 +37,7 @@
                     |
                     <form action="/cart/general" method="GET">
                         <button type="submit" class="cart__items_category-btn">
-                            일반상품
+                            일반상품 | 비동기처리 수행
                         </button>
                     </form>
                 </div>
@@ -55,7 +55,7 @@
             <!--cart__items_category 끝-->
 
             <div class="cart__items_list">
-                <!-- 냉장 ---------------------------------------------- -->
+                <!-- 냉장 ------------------------------------------------>
                 <c:if test="${not empty cartColdProducts}">
                     <h4 class="cart__items_list-type">
               <span>
@@ -80,6 +80,8 @@
                                 <!--상품사진 끝-->
                                 <div class="cart__item_list_description">
                                     <a href="/productlist/${item.prod_cd}">
+                                        <p class="cart__item_list_prod_cd"> [${item.prod_cd}]</p>
+                                        <br/>
                                         <p>${item.name}</p>
                                     </a>
                                 </div>
@@ -142,6 +144,8 @@
                                 <!--상품사진 끝-->
                                 <div class="cart__item_list_description">
                                     <a href="/productlist/${item.prod_cd}">
+                                        <p class="cart__item_list_prod_cd">[${item.prod_cd}]</p>
+                                        <br/>
                                         <p>${item.name}</p>
                                     </a>
                                 </div>
@@ -205,6 +209,8 @@
                                 <!--상품사진 끝-->
                                 <div class="cart__item_list_description">
                                     <a href="/productlist/${item.prod_cd}">
+                                        <p class="cart__item_list_prod_cd">[${item.prod_cd}]</p>
+                                        <br/>
                                         <p>${item.name}</p>
                                     </a>
                                 </div>
@@ -253,7 +259,7 @@
                     <div class="dlvar_destination">
                         <p>${defaultAddress.desti} </p>
                         <p>${defaultAddress.desti_dtl}</p>
-                        <p>TODO | login 안했을 시, 로그인 해주세요!</p>
+                        <p>${loginYN == 0 ? "login을 해주세요!" : "" }</p>
                     </div>
                     <button class="dlvar_chg" type="button">
                         <span>배송지 변경</span>
@@ -284,7 +290,7 @@
 
             <div class="payment-detail">
                 <button class="payment-detail__btn">
-                    주문하기 | 상품 없을 시, 상품을 담아주세요 (JS)
+                    주문하기
                 </button>
                 <ul class="payment-detail__content">
                     <li class="payment-detail__content-li">
@@ -318,41 +324,7 @@
         src="https://kit.fontawesome.com/6478f529f2.js"
         crossorigin="anonymous"
 ></script>
-
-
-<%--------------------------------------------------------------------------------%>
-
-<%--<h1>받아온 data</h1>--%>
-<%--<h3>총 상품 개수</h3>--%>
-<%--<p>${count} 개</p>--%>
-
-<%--<h3>배송지</h3>--%>
-<%--<p>${defaultAddress.ncnm}</p>--%>
-<%--<p>${defaultAddress.rcpr} | ${defaultAddress.phone}</p>--%>
-<%--<p>${defaultAddress.desti} </p>--%>
-<%--<p>${defaultAddress.desti_dtl}</p>--%>
-
-
-<%--<ul>--%>
-<%--    냉장--%>
-<%--    <c:forEach var="product" items="${cartProducts}">--%>
-<%--        <c:if test="${product.typ eq '냉장'}">--%>
-
-<%--            <li>${product.name} | ${product.cnsmr_prc} | ${product.sale_prc} </li>--%>
-<%--        </c:if>--%>
-<%--    </c:forEach>--%>
-<%--</ul>--%>
-
-<%--<ul>--%>
-<%--    냉동--%>
-<%--    <c:forEach var="product" items="${cartProducts}">--%>
-<%--        <c:if test="${product.typ eq '냉동'}">--%>
-<%--            <li>${product.name} | ${product.cnsmr_prc} | ${product.sale_prc} </li>--%>
-<%--        </c:if>--%>
-<%--    </c:forEach>--%>
-<%--</ul>--%>
-<%--------------------------------------------------------------------------------%>
-
+<script src="/javascript/cart.js"></script>
 
 </body>
 </html>

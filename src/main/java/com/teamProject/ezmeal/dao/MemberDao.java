@@ -20,6 +20,9 @@ public class MemberDao {
     }
 
     public int mbrsignup(MemberDto memberDto) throws Exception {
-        return session.insert(namespace + "mbr_signup",memberDto);
+        return session.insert(namespace + "mbr_signup", memberDto);
+    }
+    public MemberDto getMemberInfo(Long memberId) throws Exception {
+        return session.selectOne(namespace + "mbr_Info", memberId);
     }
 }

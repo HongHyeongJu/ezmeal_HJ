@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -19,27 +21,29 @@ public class CartDaoImplTest {
 
     @Test
     public void cartSeq() throws Exception {
-        int i = cartDao.cartSeq(1001);
-        assertEquals(i,1);
+        Long i = cartDao.cartSeq(1001L);
+        assertEquals((long)i,1L);
     }
 
     @Test
     public void count() throws Exception {
-        int count = cartDao.count(1001);
+        int count = cartDao.count(1001L);
 
         System.out.println("count = " + count);
     }
 
     @Test
     public void prodList() throws Exception {
-        List<CartProductDto> strings = cartDao.prodList(1001);
+        List<CartProductDto> strings = cartDao.prodList(1001L);
         int size = strings.size();
-        assertEquals(4, size);
+        assertEquals(6, size);
         System.out.println("strings = " + strings);
     }
 
     @Test
     public void address() throws Exception{
-
+        List<CartProductDto> cartProductDtos = cartDao.cartProducts(1001L, "p00002");
+        System.out.println("cartProductDtos = " + cartProductDtos);
+        System.out.println("cartProductDtos.get(0) = " + cartProductDtos.get(0));
     }
 }

@@ -33,6 +33,10 @@ public class CartProductDto {
     // tb_product_option data
     private String opt_nm;
 
+    // tb_product_discount
+    private Integer rate;
+    private Integer prc;
+
     public CartProductDto(String prod_cd, String typ, Integer qty, String name, Integer cnsmr_prc, Integer sale_prc) {
         this.prod_cd = prod_cd;
         this.typ = typ;
@@ -40,6 +44,18 @@ public class CartProductDto {
         this.name = name;
         this.cnsmr_prc = cnsmr_prc;
         this.sale_prc = sale_prc;
+    }
+
+    public CartProductDto(String prod_cd, String typ, Integer qty, String name, Integer cnsmr_prc, Integer sale_prc, Integer rate
+            ,Integer prc) {
+        this.prod_cd = prod_cd;
+        this.typ = typ;
+        this.qty = qty;
+        this.name = name;
+        this.cnsmr_prc = cnsmr_prc;
+        this.sale_prc = sale_prc;
+        this.rate = rate;
+        this.prc = prc;
     }
 
     @Override
@@ -51,6 +67,8 @@ public class CartProductDto {
                 ", name='" + name + '\'' +
                 ", cnsmr_prc=" + cnsmr_prc +
                 ", sale_prc=" + sale_prc +
+                ", rate=" + rate +
+                ", prc=" + prc +
                 '}';
     }
 }

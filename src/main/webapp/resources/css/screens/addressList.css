@@ -1,0 +1,116 @@
+/* 제일 큰 div  */
+.address {
+    /* layout 잡기 */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    /* colape margin : 부모 div와 자손 div의 상하가 붙을 경우 margin 상쇄. -> padding 이용 */
+    /* margin-top: 156px 0 50px 0;  */
+    padding: 156px 0;
+}
+
+/* 배송지 title */
+.address__name {
+    /* layout 잡기 */
+    width: 1050px;
+    height: 133px;
+    box-sizing: border-box; /* div의 크기를 고정 */
+    padding: 50px 0 48px;
+    /* detail 수행 */
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 35px;
+    text-align: center;
+}
+
+.address__main {
+    /* layout 잡기 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 1050px;
+    box-sizing: border-box;
+}
+
+.address__list {
+    /* layout 잡기 */
+    display: flex;
+    justify-content: baseline;
+    width: 1050px;
+    box-sizing: border-box;
+    padding: 40px 40px 20px 40px;
+    margin-bottom: 10px;
+    /* 세부 */
+    border: 2px solid rgb(246, 250, 246);
+    border-radius: 30px;
+}
+
+.address_title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.address_title_name {
+    font-size: 20px;
+    margin-right: 15px;
+}
+
+.address_title_default {
+    background-color: rgb(231, 249, 231);
+    color: rgb(0, 199, 40);
+    box-sizing: border-box;
+    border-radius: 100px; /*끝 테두리만 완전 둥글게*/
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: -0.03em;
+    padding: 4px 7px; /* div background가 글자랑 겹치는거 해결 */
+    text-align: center;
+}
+
+.address__list_part {
+    width: 1050px;
+    /* address_detail의 bug를 해결하기 위해 부모에 width를 지정했다.
+    자손에 따로 width를 지정하지 않으면 부모 div 내에서 작동을 한다. */
+}
+.address_detail {
+    /* width: 1050px;*/
+    /* address__list_part 부모 div에 width를 설정 안하고
+    자손에 바로 주면 div를 벗어나는 bug 생긴다.
+    항상 기준이 부모여야된다는 것을 잊지 말자
+    */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: rgb(128, 128, 128);
+}
+
+.address_detail_info div {
+    margin-bottom: 10px;
+}
+
+button {
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(219, 219, 219);
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 4px 10px;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 140%;
+    letter-spacing: -0.03em;
+    color: rgb(77, 77, 77);
+    cursor: pointer;
+    margin-right: 0;
+}
+
+.address__add {
+    margin-top: 20px;
+    width: 1050px;
+    height: 50px;
+    border-radius: 15px;
+    color: rgb(0, 199, 40);
+    font-size: large;
+}

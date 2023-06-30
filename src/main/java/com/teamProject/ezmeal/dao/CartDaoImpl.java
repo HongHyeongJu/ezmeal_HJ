@@ -1,12 +1,14 @@
 package com.teamProject.ezmeal.dao;
 
 import com.teamProject.ezmeal.domain.CartProductDto;
-import com.teamProject.ezmeal.domain.DeliveryAddressDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -23,59 +25,84 @@ public class CartDaoImpl implements CartDao {
 
     // soldout update
     @Override
-    public void updateSoldOut(int mbrId) throws Exception {
-        session.update(namespace + "soldOut_yn", mbrId);
+    public int updateSoldOut(Long mbrId) throws Exception {
+        return session.update(namespace + "soldOut_yn", mbrId);
     }
 
     // cart seq를 구하는 query
     @Override
-    public int cartSeq(int mbrId) throws Exception {
+    public Long cartSeq(Long mbrId) throws Exception {
         return session.selectOne(namespace + "tb_cart_seq", mbrId);
     }
 
     // 1차 count 완료 -> 일반, 구독 상품 분류
     @Override
-    public int count(int mbrId) throws Exception {
-        int cartSeq = cartSeq(mbrId); // cart_seq
+    public int count(Long mbrId) throws Exception {
+        Long cartSeq = cartSeq(mbrId); // cart_seq
         return session.selectOne(namespace + "tb_cart_product-count", cartSeq);
     }
+
     @Override
-    public int subCount(int mbrId) throws Exception {
-        int cartSeq = cartSeq(mbrId); // cart_seq
+    public int subCount(Long mbrId) throws Exception {
+        Long cartSeq = cartSeq(mbrId); // cart_seq
         return session.selectOne(namespace + "tb_cart_subscript-count", cartSeq);
     }
 
     // 2개 일반, 구독
     @Override
-    public List<CartProductDto> prodList(int mbrId) throws Exception {
-        int cartSeq = cartSeq(mbrId);// cart_seq
-        return session.selectList("tb_cart_product", cartSeq);
+    public List<CartProductDto> prodList(Long mbrId) throws Exception {
+        Long cartSeq = cartSeq(mbrId);// cart_seq
+        return session.selectList(namespace + "tb_cart_product", cartSeq);
     }
+
     // 일반 상품 냉장, 냉동, 상온
     @Override
-    public List<CartProductDto> prodColdList(int mbrId) throws Exception {
-        int cartSeq = cartSeq(mbrId);// cart_seq
-        return session.selectList("tb_cart_product_cold", cartSeq);
+    public List<CartProductDto> prodColdList(Long mbrId) throws Exception {
+        Long cartSeq = cartSeq(mbrId);// cart_seq
+        return session.selectList(namespace + "tb_cart_product_cold", cartSeq);
     }
 
     @Override
-    public List<CartProductDto> prodIceList(int mbrId) throws Exception {
-        int cartSeq = cartSeq(mbrId);// cart_seq
-        return session.selectList("tb_cart_product_ice", cartSeq);
+    public List<CartProductDto> prodIceList(Long mbrId) throws Exception {
+        Long cartSeq = cartSeq(mbrId);// cart_seq
+        return session.selectList(namespace + "tb_cart_product_ice", cartSeq);
     }
 
     @Override
-    public List<CartProductDto> prodOutSideList(int mbrId) throws Exception {
-        int cartSeq = cartSeq(mbrId);// cart_seq
-        return session.selectList("tb_cart_product_outside", cartSeq);
+    public List<CartProductDto> prodOutSideList(Long mbrId) throws Exception {
+        Long cartSeq = cartSeq(mbrId);// cart_seq
+        return session.selectList(namespace + "tb_cart_product_outside", cartSeq);
     }
 
     @Override
-    public List<CartProductDto> subProdList(int mbrId) throws Exception {
-        int cartSeq = cartSeq(mbrId);// cart_seq
-        return session.selectList("tb_cart_sub-product", cartSeq);
+    public List<CartProductDto> subProdList(Long mbrId) throws Exception {
+        Long cartSeq = cartSeq(mbrId);// cart_seq
+        return session.selectList(namespace + "tb_cart_sub-product", cartSeq);
     }
 
+    // 동적쿼리
+    @Override
+    public List<CartProductDto> cartProducts(Long mbrId, String prodCodeString) throws Exception {
+        Long cartSeq = cartSeq(mbrId);// cart_seq
+
+        // 하나로 되어있는 string 배열로 쪼개기
+        String[] parts = prodCodeString.split("p"); // TODO 구독상품은 p -> g
+
+        ArrayList<String> prodCdList = new ArrayList<>();
+        for (String part : parts) {
+            if (!part.isEmpty()) {
+                String prodCd = "p" + part; // TODO 구독상품은 p -> g
+                prodCdList.add(prodCd);
+            }
+        }
+
+        // map으로 다른 것들 담기
+        Map map = new HashMap<>();
+        map.put("cartSeq", cartSeq);
+        map.put("prodCdList", prodCdList);
+
+        return session.selectList(namespace + "select_prod", map);
+    }
     // 삭제한 상품 list 받아오는 작업 수행
 
 }
