@@ -20,8 +20,8 @@
     <li><a href="/cart/subscript">구독 장바구니</a></li>
     <li><a href="//productcatelist">상품 목록</a></li>
     <li><a href="/address">배송지</a></li>
-    <li><a href=""></a></li>
-    <li><a href=""></a></li>
+    <li><a href="/member/signup">회원가입</a></li>
+    <li><a href="/mypage/withdrawal">회원탈퇴</a></li>
     <li><a href=""></a></li>
     <li><a href=""></a></li>
 </ul>
