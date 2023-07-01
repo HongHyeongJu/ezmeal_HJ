@@ -14,25 +14,6 @@
   <link rel="stylesheet" href="/css/screens/signup.css">
 </head>
 <body>
-<%--    <form action="/register" method="post">--%>
-<%--        <h1>회원가입</h1>--%>
-<%--        아이디*    <input type="text" name="mbrId" id="id">--%>
-<%--        <br>--%>
-<%--        비밀번호*  <input type="password" name="mbrPw" id="pw">--%>
-<%--        <br>--%>
-<%--        이름*      <input type="text" name="mbrName" id="name">--%>
-<%--        <br>--%>
-<%--        휴대전화*  <input type="tel" name="phone" id="phone">--%>
-<%--        <br>--%>
-<%--        이메일*    <input type="email" name="email" id="email">--%>
-<%--        <br>--%>
-<%--        생년월일*  <input type="text" name="birth" id="birth">--%>
-<%--        <br>--%>
-<%--        성별*      <input type="radio" name="sex" id="male" value="m">남자--%>
-<%--                   <input type="radio" name="sex" id="female" value="f">여자--%>
-<%--        <br>--%>
-<%--                   <input type="image" src="/img/register.png" alt="제출버튼">--%>
-<%--    </form>--%>
 
 <form action="<c:url value="/member/signup/success"/>" method="post" onsubmit="return formCheck(this)">
   <div class="title">회원가입</div>
