@@ -19,6 +19,11 @@
         <typeAlias alias="MemberGradeDto" type="com.teamProject.ezmeal.domain.MemberGradeDto"/>
         <typeAlias alias="MemberGradeBenefitDto" type="com.teamProject.ezmeal.domain.MemberGradeBenefitDto"/>
         <typeAlias alias="PointTransactionHistoryDto" type="com.teamProject.ezmeal.domain.PointTransactionHistoryDto"/>
+<!--회원 쿠폰, 쿠폰 발행 -->
+        <typeAlias alias="CouponIssueDto" type="com.teamProject.ezmeal.domain.CouponIssueDto"/>
+        <typeAlias alias="MemberCouponDto" type="com.teamProject.ezmeal.domain.MemberCouponDto"/>
+<!--join dto-->
+        <typeAlias alias="CouponJoinDto" type="com.teamProject.ezmeal.domain.CouponJoinDto"/>
 
 
     </typeAliases>

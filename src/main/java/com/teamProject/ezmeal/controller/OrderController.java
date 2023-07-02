@@ -2,6 +2,7 @@ package com.teamProject.ezmeal.controller;
 
 import com.teamProject.ezmeal.dao.*;
 import com.teamProject.ezmeal.domain.CartProductDto;
+import com.teamProject.ezmeal.domain.CouponJoinDto;
 import com.teamProject.ezmeal.domain.DeliveryAddressDto;
 import com.teamProject.ezmeal.domain.MemberDto;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class OrderController {
     private final MemberDao memberDao;
     private final PointTransactionHistoryDao pointTransactionHistoryDao;
     private final MemberGradeBenefitDao memberGradeBenefitDao;
+    private final CouponJoinDao couponJoinDao;
 
 
     @GetMapping("/general")
@@ -67,11 +69,22 @@ public class OrderController {
             pointMap.put("usePoint", pointCanUse);
             pointMap.put("pointRate", pointRate);
 
+            // 쿠폰
+//            Map<String, Object> couponMap = new HashMap<>();
+            List<CouponJoinDto> coupons = couponJoinDao.couponList(memberId);
+            // TODO 사용가능 쿠폰 logic 생성 후 Map 사용할지 결정
+//            int couponCount = couponJoinDtos.size();
+//            couponMap.put("coupon", couponJoinDtos);
+//            couponMap.put("couponCount", couponCount);
+
+
             model.addAttribute("defaultAddress", defaultAddress);
             model.addAttribute("cartProductDtos", cartProductDtos);
             model.addAttribute("mbrInfo", memberInfo);
             model.addAttribute("priceMap", priceMap);
             model.addAttribute("pointMap", pointMap);
+//            model.addAttribute("couponMap", couponMap);
+            model.addAttribute("counpons", coupons);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -107,5 +120,4 @@ public class OrderController {
         // cookie 정보 이용해서 데이터 전달하기
         return "orderTest";
     }
-
 }
