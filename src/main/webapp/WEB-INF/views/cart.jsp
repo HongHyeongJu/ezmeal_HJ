@@ -75,7 +75,7 @@
                             <li class="cart__item_list">
                                 <input type="checkbox"/>
                                 <a href="/productlist/${item.prod_cd}" class="cart__item_list__a">
-                                    <img src="img/goods.png"/>
+                                    <img src="/img/G001.png"/>
                                 </a>
                                 <!--상품사진 끝-->
                                 <div class="cart__item_list_description">
