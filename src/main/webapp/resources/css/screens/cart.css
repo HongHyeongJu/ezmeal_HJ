@@ -129,22 +129,16 @@ button icon 누르면 위 아래로 변경되는 JS 수행 필요
 
 /* 1.2.1 냉장, 냉동, 상온 icon */
 
-.fas {
-    font-size: 20px;
-    width: 30px;
-    height: 30px;
-}
+/*.fas {*/
+/*    font-size: 20px;*/
+/*    width: 30px;*/
+/*    height: 30px;*/
+/*}*/
 
 /* 1.2.1 상품접고 열기 button */
 .cart__items_list__btn {
     /* button 기본 css 설정 제거 */
     border: none;
-    background: inherit;
-    padding: 0;
-    margin: 0;
-    /* btn과 내부 icon or span 동일 적용 */
-    display: flex;
-    align-items: center;
 }
 
 /* 1.2.2. border 적용 */
@@ -193,7 +187,6 @@ button icon 누르면 위 아래로 변경되는 JS 수행 필요
     display: flex;
     align-items: center;
     /* button 기본 css 설정 제거 */
-    border: none;
     background: inherit;
     padding: 0;
     margin: 0;
@@ -432,14 +425,13 @@ JS를 이용해서 동적으로 판매자 가격 선긋기 수행
 /* checkbox 요소 - check 된 경우 */
 input[type="checkbox"] {
     appearance: none;
-    border: 2px solid rgb(188, 181, 181);
+    border: 1px solid rgb(188, 181, 181);
     outline: none;
     margin: 0 12px 0 0;
     width: 24px;
     height: 24px;
     position: relative;
     border-radius: 50%;
-    border-width: 1px;
     cursor: pointer;
 }
 

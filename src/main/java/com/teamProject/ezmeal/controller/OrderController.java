@@ -77,7 +77,7 @@ public class OrderController {
             throw new RuntimeException(e);
         }
         // cookie 정보 이용해서 데이터 전달하기
-        return "orderForm";
+        return "order";
     }
 
     // js를 통해서 일반 url이면 window.location.href = "/order/general" 구독이면  window.location.href = "/order/subscript"
@@ -105,7 +105,7 @@ public class OrderController {
             throw new RuntimeException(e);
         }
         // cookie 정보 이용해서 데이터 전달하기
-        return "orderForm";
+        return "orderTest";
     }
 
 }

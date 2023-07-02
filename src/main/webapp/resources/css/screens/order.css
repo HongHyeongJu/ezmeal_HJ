@@ -1,0 +1,337 @@
+/* 제일 큰 div  */
+.order {
+    /* layout 잡기 */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 156px 0 50px 0; /*상단 nav 공간 제공*/
+}
+
+/* 장바구니 title */
+.order__name {
+    /* layout 잡기 */
+    width: 1050px;
+    box-sizing: border-box; /* div의 크기를 고정 */
+    padding: 50px 0 48px;
+    /* detail 수행 */
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 35px;
+    text-align: center;
+}
+
+/* main 내부에 items 작성 후 더 아래에서 결제 베너 생성
+  1. items: 상품 관련 정보
+  2. benu: 배송지, 예상 결제 가격
+  */
+.order__main {
+    /* layout 잡기 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1050px;
+    box-sizing: border-box;
+}
+
+/* 1. items: 상품 관련 정보
+  1.1. category
+  1.2. 장바구니 상품들
+   */
+.order__subjects {
+    /* layout 잡기 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1050px;
+}
+
+/* 1.2. items list
+  1.2.1. 냉장,냉동,상품 type란
+  1.2.2. layout 공통 적용
+  1.2.3. 상품
+  */
+.order__subjects_list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1050px;
+}
+
+/* 1.2.1. */
+/* h4마다 category인데 개별 class명이 따로 존재한다. */
+/* 공통 */
+.order_category {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1050px;
+    box-sizing: border-box;
+    padding: 15px 5px;
+    margin-top: 75px;
+    border-bottom: solid 1px black;
+}
+
+/* 1.2.1. */
+
+/* TODO
+  button icon 누르면 위 아래로 변경되는 JS 수행 필요
+  */
+
+/* 1.2.1 상품접고 열기 button */
+/* button은 border이 사라지는 순간 btn 내부 값의 크기가 btn의 크기기 된다.
+이전 문제점으로 cart.css에 .fas{}; 에 width, height를 지정하니깐 이게 order.css에도
+적용이 되었다.
+항상 작은 범위로 선택
+class || class 선택자 || class>선택자 로만 css를 설정해주자.
+절대 tag명으로 설정하면 안된다.
+*/
+.order__items_list__btn {
+    /* button 기본 css 설정 제거 */
+    border: none;
+}
+.order__items_list__btn > i {
+    font-size: small;
+}
+
+/* 1.2.2. border 적용 */
+
+/* ul 내부 li border 반복 생성 */
+.order__item_list {
+    /* 상품 목록 layout 잡기 */
+    width: 1050px;
+    box-sizing: border-box;
+    padding: 15px 5px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* ul 내부 li border */
+    border-bottom: 1px solid lightgray;
+}
+
+/* 상품 img 크기 조절 */
+.order__item_list img {
+    width: 60px;
+    height: 78px;
+}
+
+/* 수량 */
+.order__item__count div {
+    width: 30px;
+    height: 28px;
+    /* text 중앙에 두기 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 상품명 */
+.order__item_list_description {
+    width: 700px;
+    min-height: 40px;
+    margin-right: 20px;
+    /* 수직 중앙 정렬 */
+    display: flex;
+    align-items: center;
+}
+
+/* 소비자, 판매가 가격 */
+.order__item_price {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+    width: 120px;
+    height: 50px;
+}
+
+.order__item_price span:last-child {
+    text-decoration: line-through;
+    font-weight: 100;
+    font-size: small;
+    color: grey;
+}
+
+/* 주문자 정보 */
+.order_info_template {
+    width: 1050px;
+}
+/* 공통 속성 */
+.order_info_template__title {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    padding: 10px 5px;
+    margin: 20px 0;
+}
+
+.order_info_template__title span {
+    width: 200px;
+}
+/* 공통 속성 끝 */
+
+/* 주문자 정보 끝 */
+
+/* 배송 요청사항 */
+.order_info_template__radiobox {
+    align-items: center;
+}
+.order_info_template__radiobox > div {
+    display: flex;
+    margin-bottom: 10px;
+}
+.order_info_template__radiobox > div > span {
+    display: block;
+    box-sizing: border-box; /*이게 있어야지 width가 고정이 된다.*/
+    width: 200px;
+}
+.door_password > span {
+    padding-left: 40px;
+}
+/* 배송 요청사항 끝 */
+
+.order__subjects_list_and_benu {
+    width: 1050px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+}
+
+.order_category_small {
+    width: 742px;
+    box-sizing: border-box;
+    padding: 15px 5px;
+    margin-top: 75px;
+    border-bottom: solid 1px black;
+}
+
+/* 2. benu
+  2.1. 배송지 정보
+  2.2. 결제 금액 정보
+  2.3. 주문하기 버튼
+  2.4. 약관 정보
+  */
+
+.order__btn {
+    margin-right: 10px;
+    width: 400px;
+    height: 44px;
+    padding: 0px 54px 0px 16px;
+    border: 1px solid rgb(221, 221, 221);
+    background-color: var(--ezmealbackgroundGreen);
+    font-size: 14px;
+    text-align: left;
+    /* color: rgb(204, 204, 204); */
+    color: var(--ezmealGreen);
+}
+.order__point {
+    color: black;
+    width: 300px;
+}
+
+.order__point_alluse {
+    width: 110px;
+    padding: 0;
+    text-align: center;
+    color: var(--ezmealGreen);
+}
+/* 임시방편 */
+.order_info_template__title_point1 {
+    margin-bottom: 0;
+}
+.order_info_template__title_point2 {
+    margin-top: 0;
+}
+
+.order_btn_method {
+    padding: 0;
+    width: 80px;
+    text-align: center;
+}
+.order__btn_creditCard {
+    background-color: var(--ezmealGreen);
+    color: white;
+}
+.order__btn_kakao {
+    background-color: var(--kakaoYellow);
+    color: black;
+}
+.order__btn_toss {
+    background-color: var(--tossBlue);
+    color: white;
+}
+
+.order__price_div {
+    width: 742px;
+    display: flex;
+    justify-content: center;
+    margin: 50px 0 100px 0;
+}
+
+.order__price {
+    background-color: var(--ezmealGreen);
+    color: white;
+    text-align: center;
+    font-size: large;
+    width: 240px;
+    height: 56px;
+    padding: 0;
+    font-weight: 500;
+}
+
+.order_benu {
+    /* layout 잡기 */
+    text-align: center;
+    width: 245px;
+    height: 260px;
+    box-sizing: border-box;
+    padding: 17px;
+    background-color: var(--ezmealbackgroundGreen);
+}
+
+/* 고정값을 가지고 내려가기위해서 고정기준점이 되는 div를 감싸준다. */
+.order__benu_position {
+    width: 284px;
+    position: sticky;
+    top: 0;
+}
+
+/* benu_category */
+.order__benu_category {
+    font-size: larger;
+    width: 245px;
+    box-sizing: border-box;
+    padding: 0 17px 0 13px;
+}
+/* benu_icon */
+.fa-wallet {
+    margin-right: 10px;
+    font-size: 15px;
+    width: 30px;
+    height: 30px;
+    color: var(--ezmealGreen);
+}
+
+.order_benu__title {
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+}
+
+.order_benu__title:first-child {
+    margin: 0;
+    padding: 0;
+}
+.order_benu__title:nth-child(2),
+.order_benu__title:nth-child(3) {
+    font-size: small;
+    color: grey;
+}
+/* 밑줄 긋기 위함 */
+.order_benu__title:nth-child(3),
+.order_benu__title:nth-child(5) {
+    padding-bottom: 10px;
+    border-bottom: 0.1px solid rgb(188, 181, 181);
+}

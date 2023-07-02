@@ -32,7 +32,7 @@
 <p>
     보내는 분 : ${mbrInfo.name} <br>
     휴대폰 : ${mbrInfo.phone} <br>
-    이메일 : ${mbrInfo.email }<br>
+    이메일 : ${mbrInfo.email}<br>
 </p>
 
 

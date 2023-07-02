@@ -8,5 +8,6 @@
 
 
 /* screens */
-@import "screens/cart.css";
 @import "screens/addressList.css";
+@import "screens/cart.css";
+@import "screens/order.css";
