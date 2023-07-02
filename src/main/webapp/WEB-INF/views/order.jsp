@@ -184,11 +184,10 @@
                         <div class="order_info_template_small">
                             <div class="order_info_template__title">
                                 <span>쿠폰적용</span>
-                        <%-- TODO coupon db 받아오기 --%>
-                                <button class="order__btn order__coupon">
-                                    사용가능 쿠폰 1 db장 / 전체 쿠폰 n db장
+                                <button class="order__btn order__coupon btn-open-popup">
+                                    사용가능 쿠폰 1장 / 전체 쿠폰 n장
                                 </button>
-                                <!-- TODO 모달 넣기 -->
+                                <div class="order__coupon_pk" hidden>pk</div>
                             </div>
                         </div>
                         <!--order_info_template 쿠폰 끝 -->
@@ -316,11 +315,51 @@
         <!--order__subjects 끝-->
     </div>
     <!-- order__main 끝 -->
+
+    <!-- 쿠폰용 modal -->
+    <div class="modal">
+        <!-- modal background-->
+        <div class="modal_body">
+            <!-- modal table 작성 -->
+            <table class="order__modal_table">
+                <tr class="order__modal_table_row">
+                    <th>선택</th>
+                    <th>쿠폰명</th>
+                    <th>할인 - (정률할인은 최대금액 존재)</th>
+                    <th>사용 시작기간 ~ 사용 마감일</th>
+                    <th>사용기준</th>
+                </tr>
+                <tr class="order__modal_table_instance">
+                    <td hidden>coupon_pk1</td>
+                    <td><input type="radio" name="coupon" /></td>
+                    <td class="order__coupon_name">쿠폰 1</td>
+                    <td class="order__coupon_dc">10% 할인 (최대 4000원)</td>
+                    <td class="order__coupon_date">2023-07-01 ~ 2023-07-15</td>
+                    <td class="order__coupon_rule">구매금액 50,000원 이상</td>
+                </tr>
+                <tr class="order__modal_table_instance">
+                    <td hidden>coupon_pk2</td>
+                    <td><input type="radio" name="coupon" /></td>
+                    <td class="order__coupon_name">쿠폰 2</td>
+                    <td class="order__coupon_dc">5,000원 할인</td>
+                    <td class="order__coupon_date">2023-07-05 ~ 2023-07-31</td>
+                    <td class="order__coupon_rule">구매금액 30,000원 이상</td>
+                </tr>
+            </table>
+            <!-- Modal  table 끝 -->
+            <button class="order__modal_ok">확인</button>
+        </div>
+        <!-- modal main contents-->
+    </div>
+    <!-- 쿠폰용 modal -->
+
 </main>
 <!--order 끝-->
 <script
         src="https://kit.fontawesome.com/6478f529f2.js"
         crossorigin="anonymous"
 ></script>
+<script src="/javascript/modal.js"></script>
+<script src="/javascript/order.js"></script>
 </body>
 </html>

@@ -293,8 +293,6 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
 /* 고정값을 가지고 내려가기위해서 고정기준점이 되는 div를 감싸준다. */
 .order__benu_position {
     width: 284px;
-    position: sticky;
-    top: 0;
 }
 
 /* benu_category */
@@ -334,4 +332,15 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
 .order_benu__title:nth-child(5) {
     padding-bottom: 10px;
     border-bottom: 0.1px solid rgb(188, 181, 181);
+}
+
+/* order-modal detail */
+.modal_body {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.order__modal_table {
+    width: 100%; /*부모 기준으로 100%*/
 }
