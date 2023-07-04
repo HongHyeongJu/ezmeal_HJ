@@ -16,7 +16,7 @@ function handleOrder() {
     SELECTPRODUCTCODE = "";
 }
 
-// logic
+// logic -> TODO cart_seq 변경되어서 logic 수정 필요
 // 1. cart checked prod_cd 찾기
 const checkChecked = function () {
     // 반복문이 돌 때마다 block(scope 생성) 이 생성이 되어서 const 사용이 가능하다.

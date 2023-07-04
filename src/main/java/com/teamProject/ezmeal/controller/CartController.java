@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,8 +29,7 @@ public class CartController {
     private final DeliveryAddressService deliveryAddressService;
 
     @GetMapping
-    public String getGeneral(@SessionAttribute(required = false) Long memberId, Model model) {
-        System.out.println("memberId = " + memberId);
+    public String getGeneral(HttpServletRequest request, @SessionAttribute(required = false) Long memberId, Model model) {
         // TODO 회원 session 유무로 비회원, 회원 장바구니 접근 logic 수행
         if (memberId == null) {
             // TODO 일반 장바구니 임시 table 값 들고 오기 - return 필수
@@ -37,7 +37,6 @@ public class CartController {
 
         // 회원 장바구니 가져오기
         Long cartSeq = cartService.getCartSeq(memberId);
-        System.out.println("cartSeq = " + cartSeq);
         // 품절 상품 업데이트
         int updatedCnt = cartProductService.checkSoldOut(cartSeq);
 
@@ -45,29 +44,38 @@ public class CartController {
         int count = cartProductService.countProduct(cartSeq);
 
         // 일반 상품 : 냉장/냉동/상온 map으로 저장
-        Map<String, List<CartProductDto>> ProductsMap = cartProductService.getProducts(cartSeq);
+        Map<String, List<CartProductDto>> productsMap = cartProductService.getProducts(cartSeq);
 
         // 기본 배송지
         // TODO 선택 배송지 존재시, 선택배송지가 되도록 logic 작성 필요 - selectAddress
         DeliveryAddressDto defaultAddress = deliveryAddressService.getDefaultAddress(memberId);
-        model.addAttribute("count", count);
         // product info : cart_prod_seq, prod_cd ,typ ,soldout_yn ,qty ,name ,cnsmr_prc ,sale_prc
-        model.addAttribute("ProductsMap", ProductsMap);
-        System.out.println("ProductsMap = " + ProductsMap);
+        request.setAttribute("productsMap", productsMap);
+//        model.addAttribute("ProductsMap", productsMap);
+        model.addAttribute("count", count);
         model.addAttribute("defaultAddress", defaultAddress);
 
         return "cart";
     }
 
-    @PatchMapping("/general")
+    // 개별 상품 삭제 : JS fetch를 이용한 rest API 수행
+    @PatchMapping("/delete")
     @ResponseBody
-//    TODO cart_prod_seq로 변경 필요
-    public Abc patchSubscript(@RequestBody String deleteProdCd, @SessionAttribute Long memberId) throws Exception {
-        Map map = new HashMap();
-        map.put("mbrId", memberId);
-        map.put("prodCd", deleteProdCd);
-        cartProductService.deleteCartProduct(map);
-        return new Abc();
+    public String patchSubscript(@SessionAttribute Long memberId, @RequestBody Long cartProdSeq) {
+        // 예외1. 회원 세션 만료  TODO 장바구니로 이동 필요
+        if (memberId == null) return "no_memberId";
+
+        // 예외2. service에서 검증 돌림
+        Long cartSeq = cartService.getCartSeq(memberId);
+        int validationResult = cartProductService.validateCartProduct(cartSeq, cartProdSeq);
+
+        // 예외3. 잘못된 상품으로 접근
+        String failMessage = "wrong product";
+        if (validationResult == 0) return failMessage;
+
+        cartProductService.removeCartProduct(cartProdSeq);
+        // TODO 1. 먼저 cart.jsp에서 반복문을 따로 뽑아낸다. 2. 해당 jsp를 변수에 담이서 return한다. 3. js에서 html을 갈아엎는다.
+        return "hi";
     }
 
     @Data

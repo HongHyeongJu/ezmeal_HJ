@@ -99,12 +99,19 @@
     </select>
 
     <!-- 상품 삭제 -->
-    <update id="delete" parameterType="java.util.Map">
+    <update id="delete">
         UPDATE tb_cart_product
         SET del_yn = 'y'
-        WHERE prod_cd = #{prodCd}
-          AND mbr_id = #{mbrId}
+        WHERE cart_prod_seq = #{cartProdSeq}
     </update>
+
+    <!-- 해당 회원의 장바구니의 상품 존재여부 검증 -->
+    <select id="validation" resultType="int">
+        select count(*)
+        from tb_cart_product
+        where cart_seq = #{cartSeq}
+          and cart_prod_seq = #{cartProdSeq}
+    </select>
 
     <!--  | 관리자 |  -->
 

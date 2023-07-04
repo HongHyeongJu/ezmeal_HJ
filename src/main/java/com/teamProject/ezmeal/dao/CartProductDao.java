@@ -78,12 +78,16 @@ public class CartProductDao {
         return session.selectList(namespace + "selected_prod", map);
     }
 
-    // 삭제한 상품 list 받아오는 작업 수행 - 시스템 컬럼 update 같이 해주기
-    // TODO cart_prod_seq로 변경 필요
-    public int deleteCartProductYN(Map map) {
-        return session.update(namespace + "delete", map);
+    // 개별 상품 삭제 : JS fetch를 이용한 rest API 수행
+    public int deleteCartProduct(Long cartProdSeq) {
+        return session.update(namespace + "delete", cartProdSeq);
     }
 
+
+    // 해당 회원의 장바구니의 상품 존재여부 검증
+    public int selectValidation(Map<String, Long> validationMap){
+        return session.selectOne(namespace + "validation", validationMap);
+    }
     // TODO 담을수 있는 최대 수량
     // TODO 삭제된 상품들 중에서 up_dtm이 가장 낮은거 5개 보여주기
     // TODO 상품 목록에서 클릭시, 장바구니 insert하기
@@ -98,5 +102,7 @@ public class CartProductDao {
         return session.selectList(namespace + "all_product", cartSeq);
     }
     // TODO 많이 담은 상품 도표로 나타내기 - top 5개
-    //
+
+    // TEST
+    // TODO - test용 insert, update, delete 생성
 }

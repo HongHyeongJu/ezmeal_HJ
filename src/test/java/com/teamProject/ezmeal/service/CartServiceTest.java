@@ -36,6 +36,6 @@ public class CartServiceTest {
         Map map = new HashMap();
         map.put("mbrId", 1001L);
         map.put("prodCd", "p00001");
-        cartProductService.deleteCartProduct(map);
+        cartProductService.removeCartProduct(1L);
     }
 }
