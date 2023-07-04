@@ -1,72 +1,78 @@
 package com.teamProject.ezmeal.controller;
 
 import com.teamProject.ezmeal.dao.CartDao;
+import com.teamProject.ezmeal.dao.CartProductDao;
 import com.teamProject.ezmeal.dao.DeliveryAddressDao;
 import com.teamProject.ezmeal.domain.CartProductDto;
 import com.teamProject.ezmeal.domain.DeliveryAddressDto;
-import com.teamProject.ezmeal.service.CartServiceImpl;
+import com.teamProject.ezmeal.service.CartProductService;
+import com.teamProject.ezmeal.service.CartService;
+import com.teamProject.ezmeal.service.DeliveryAddressService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/cart")
 public class CartController {
 
-    private final CartDao cartDao;
-    private final CartServiceImpl cartService;
-    private final DeliveryAddressDao deliveryAddressDao;
+    private final CartService cartService;
+    private final CartProductService cartProductService;
+    private final DeliveryAddressService deliveryAddressService;
 
-
-    @GetMapping("/general")
-    public String subscript(@SessionAttribute(value = "memberId", required = false) Long memberId, Model model) {
-            Long mbrId = (memberId != null) ? memberId : 0L; // 일단 비회원일 경우에도 에러없이 장바구니 들어갈 수 있도록 열어둠 -> null 인 경우 바로 view로 return하도록 하는 방안 생각 필요
-        try {
-            int count = cartDao.count(mbrId);
-            // 품절 상태 업데이트
-            cartDao.updateSoldOut(mbrId);
-
-            List<CartProductDto> cartColdProducts = cartService.getColdProduct(mbrId);
-            List<CartProductDto> cartIceProducts = cartService.getIceProduct(mbrId);
-            List<CartProductDto> cartOutSideProducts = cartService.getOutSideProduct(mbrId);
-
-            DeliveryAddressDto defaultAddress = deliveryAddressDao.defaultAddress(mbrId);
-
-            model.addAttribute("loginYN", mbrId);
-            model.addAttribute("count", count);
-            model.addAttribute("cartColdProducts", cartColdProducts);
-            model.addAttribute("cartIceProducts", cartIceProducts);
-            model.addAttribute("cartOutSideProducts", cartOutSideProducts);
-            model.addAttribute("defaultAddress", defaultAddress);
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+    @GetMapping
+    public String getGeneral(@SessionAttribute(required = false) Long memberId, Model model) {
+        System.out.println("memberId = " + memberId);
+        // TODO 회원 session 유무로 비회원, 회원 장바구니 접근 logic 수행
+        if (memberId == null) {
+            // TODO 일반 장바구니 임시 table 값 들고 오기 - return 필수
         }
+
+        // 회원 장바구니 가져오기
+        Long cartSeq = cartService.getCartSeq(memberId);
+        System.out.println("cartSeq = " + cartSeq);
+        // 품절 상품 업데이트
+        int updatedCnt = cartProductService.checkSoldOut(cartSeq);
+
+        // 일반 상품 수량
+        int count = cartProductService.countProduct(cartSeq);
+
+        // 일반 상품 : 냉장/냉동/상온 map으로 저장
+        Map<String, List<CartProductDto>> ProductsMap = cartProductService.getProducts(cartSeq);
+
+        // 기본 배송지
+        // TODO 선택 배송지 존재시, 선택배송지가 되도록 logic 작성 필요 - selectAddress
+        DeliveryAddressDto defaultAddress = deliveryAddressService.getDefaultAddress(memberId);
+        model.addAttribute("count", count);
+        // product info : cart_prod_seq, prod_cd ,typ ,soldout_yn ,qty ,name ,cnsmr_prc ,sale_prc
+        model.addAttribute("ProductsMap", ProductsMap);
+        System.out.println("ProductsMap = " + ProductsMap);
+        model.addAttribute("defaultAddress", defaultAddress);
+
         return "cart";
     }
-    @GetMapping("/subscript")
-    public String general(@SessionAttribute(value = "memberId", required = false) Long memberId, Model model) {
-        Long mbrId = (memberId != null) ? memberId : 0L;
-        try{
-            // session.get member id 해야한다.
-            int count = cartDao.subCount(mbrId);
-            cartDao.updateSoldOut(mbrId);
 
-            List<CartProductDto> cartSubProducts = cartDao.subProdList(mbrId);
-            DeliveryAddressDto defaultAddress = deliveryAddressDao.defaultAddress(mbrId);
+    @PatchMapping("/general")
+    @ResponseBody
+//    TODO cart_prod_seq로 변경 필요
+    public Abc patchSubscript(@RequestBody String deleteProdCd, @SessionAttribute Long memberId) throws Exception {
+        Map map = new HashMap();
+        map.put("mbrId", memberId);
+        map.put("prodCd", deleteProdCd);
+        cartProductService.deleteCartProduct(map);
+        return new Abc();
+    }
 
-            model.addAttribute("count", count);
-            model.addAttribute("cartSubProducts", cartSubProducts);
-            model.addAttribute("defaultAddress", defaultAddress);
-        }catch (Exception e){
-            throw new RuntimeException(e);
-        }
-        return "subCart";
+    @Data
+    static class Abc {
+        String name = "taewan";
+        int age = 12;
     }
 }

@@ -3,20 +3,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="tb_delivery_address">
-    <!--select-->
+
+    <!-- 기본 배송지 -->
+    <select id="default_address" resultType="DeliveryAddressDto">
+        select *
+        from tb_delivery_address
+        where mbr_id = #{mbrId}
+          and basic_yn = 'y'
+    </select>
+
     <!-- 전체 배송지 list -->
     <select id="addressList" resultType="DeliveryAddressDto">
         select *
         from tb_delivery_address
         where mbr_id = #{mbrId}
-        ;
-    </select>
-    <!-- 기본 배송지 -->
-    <select id="defaultAddress" resultType="DeliveryAddressDto">
-        select *
-        from tb_delivery_address
-        where mbr_id = #{mbrId}
-          and basic_yn = 'y'
         ;
     </select>
 

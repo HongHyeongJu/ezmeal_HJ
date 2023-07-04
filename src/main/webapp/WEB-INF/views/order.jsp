@@ -116,15 +116,15 @@
                             <div>
                                 <span>기본 배송지 (필수) </span>
                                 <label>
-                                    <input type="radio" name="contact" value="mail"/>
+                                    <input type="radio" name="default_address" value="mail"/>
                                     <span>문 앞</span>
                                 </label>
                                 <label>
-                                    <input type="radio" name="contact" value="mail"/>
+                                    <input type="radio" name="default_address" value="mail"/>
                                     <span>경비실</span>
                                 </label>
                                 <label>
-                                    <input type="radio" name="contact" value="mail"/>
+                                    <input type="radio" name="default_address" value="mail"/>
                                     <span>택배함</span>
                                 </label>
                             </div>
@@ -132,21 +132,21 @@
                             <div>
                                 <span>공동현관 출입방법 (필수)</span>
                                 <label>
-                                    <input type="radio" name="contact" value="mail"/>
+                                    <input type="radio" name="come_method" value="mail"/>
                                     <span>공동현관 비밀번호</span>
                                 </label>
                                 <label>
-                                    <input type="radio" name="contact" value="mail"/>
+                                    <input type="radio" name="come_method" value="mail"/>
                                     <span>자유 출입 가능</span>
                                 </label>
                             </div>
                             <!-- TODO 숨김 JS 수행 필요 -->
                             <div class="door_password">
-                                <span> 👉 공동현관 비밀번호</span>
+                                <span>👉 공동현관 비밀번호</span>
                                 <label>
                                     <input
                                             type="text"
-                                            name="contact"
+                                            name="come_method"
                                             placeholder="공동현관 비밀번호"
                                     />
                                 </label>
@@ -155,11 +155,11 @@
                             <div>
                                 <span>배송 완료 메시지 전송 (필수)</span>
                                 <label>
-                                    <input type="radio" name="contact" value="mail"/>
+                                    <input type="radio" name="delivery_msg" value="mail"/>
                                     <span>예</span>
                                 </label>
                                 <label>
-                                    <input type="radio" name="contact" value="mail"/>
+                                    <input type="radio" name="delivery_msg" value="mail"/>
                                     <span>아니오</span>
                                 </label>
                             </div>

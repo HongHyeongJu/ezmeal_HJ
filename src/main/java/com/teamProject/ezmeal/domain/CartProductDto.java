@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartProductDto {
+    private Long cart_prod_seq;
     private Long cart_seq;
     private Long mbr_id;
     private String prod_cd;
@@ -33,42 +34,16 @@ public class CartProductDto {
     // tb_product_option data
     private String opt_nm;
 
-    // tb_product_discount
-    private Integer rate;
-    private Integer prc;
-
-    public CartProductDto(String prod_cd, String typ, Integer qty, String name, Integer cnsmr_prc, Integer sale_prc) {
+    // 장바구니에 뿌려줄 data
+    // TODO  option 확실해지면 다시 작성 필요 - option_cd 존재시, option 값(opt_val)을 상품 명 옆에 두고 | 가격은 옵션 가격으로 지정
+    public CartProductDto(Long cart_prod_seq, String prod_cd, String typ, String soldout_yn, Integer qty, String name, Integer cnsmr_prc, Integer sale_prc) {
+        this.cart_prod_seq = cart_prod_seq;
         this.prod_cd = prod_cd;
         this.typ = typ;
+        this.soldout_yn = soldout_yn;
         this.qty = qty;
         this.name = name;
         this.cnsmr_prc = cnsmr_prc;
         this.sale_prc = sale_prc;
-    }
-
-    public CartProductDto(String prod_cd, String typ, Integer qty, String name, Integer cnsmr_prc, Integer sale_prc, Integer rate
-            ,Integer prc) {
-        this.prod_cd = prod_cd;
-        this.typ = typ;
-        this.qty = qty;
-        this.name = name;
-        this.cnsmr_prc = cnsmr_prc;
-        this.sale_prc = sale_prc;
-        this.rate = rate;
-        this.prc = prc;
-    }
-
-    @Override
-    public String toString() {
-        return "CartProductDto{" +
-                "prod_cd='" + prod_cd + '\'' +
-                ", typ='" + typ + '\'' +
-                ", qty=" + qty +
-                ", name='" + name + '\'' +
-                ", cnsmr_prc=" + cnsmr_prc +
-                ", sale_prc=" + sale_prc +
-                ", rate=" + rate +
-                ", prc=" + prc +
-                '}';
     }
 }
