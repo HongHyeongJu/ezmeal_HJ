@@ -21,8 +21,13 @@
     <li><a href="/product/catelist?cate_cd=02">상품 목록</a></li>
     <li><a href="/product/detail?prod_cd=P00006">상품 상세</a></li>
     <li><a href="/address">배송지</a></li>
+
     <li><a href=""></a></li>
     <li><a href="/product/regist">관리자 상품 CRUD</a></li>
+
+    <li><a href="/member/signup">회원가입</a></li>
+    <li><a href="/mypage/withdrawal">회원탈퇴</a></li>
+
     <li><a href=""></a></li>
     <li><a href=""></a></li>
 </ul>

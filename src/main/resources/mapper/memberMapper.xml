@@ -42,5 +42,12 @@
         where mbr_id = #{memberId}
     </select>
 
+    <!--회원탈퇴 쿼리문 del_yn(삭제여부) : 'y'로 UPDATE 해준다.-->
+    <update id="mbr_withdrawal" parameterType="long">
+        UPDATE tb_member
+        SET del_yn = 'y'
+        WHERE mbr_id = #{mbr_id}
+    </update>
+
 
 </mapper>
