@@ -1,34 +1,40 @@
 package com.teamProject.ezmeal.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class ProductDto {
-    private String prod_cd, cate_cd, prod_stus, cust_cd, dc_cd, name, mng_prod_nm, sfkp_stus, sfkp_mtd;
+    private Long prod_cd;
+    private String cate_cd, prod_stus, cust_cd, dc_cd, name, mng_prod_nm, sfkp_stus, sfkp_mtd;
     private Integer sp_prc, cnsmr_prc, sale_prc, mgn_rate;
     private String dscpt;
 
     private String detail;
     private Integer min_qty, weight;
     private String stnd, orplc, recipe, mtd, distb_tlmt, vld_start_dt, vld_end_dt, mng, fst_reg_dt;
-    private String sub_yn, sale_yn, dp_yn, del_yn, inv_yn, opt_yn, rmk;
+    private String sale_yn, dp_yn, del_yn, inv_yn, opt_yn, rmk;
+
     private LocalDateTime in_dtm;
+
     private String in_id;
+
     private LocalDateTime up_dtm;
+
     private String up_id;
 
     /*-------------------------------------------------------------------   [생성자 시작]   -------------------*/
-    ProductDto(){}
 
 
-
-    ProductDto(String prod_cd, String cate_cd,String prod_stus,String cust_cd,String dc_cd,String name,String mng_prod_nm,
+    public ProductDto(String cate_cd,String prod_stus,String cust_cd,String dc_cd,String name,String mng_prod_nm,
                String sfkp_stus,String sfkp_mtd,Integer sp_prc,Integer cnsmr_prc,Integer sale_prc,
                Integer mgn_rate, String dscpt,String detail,Integer min_qty,Integer weight,
-               String stnd,String orplc,String recipe,String mtd,String distb_tlmt,String vld_start_dt,String vld_end_dt,String mng,String fst_reg_dt,
-               String sub_yn,String sale_yn,String dp_yn,String del_yn,String inv_yn,String opt_yn,String rmk,
+               String stnd,String orplc,String recipe,String mtd,String distb_tlmt,
+               String vld_start_dt,String vld_end_dt,String mng,String fst_reg_dt,
+               String sale_yn,String dp_yn,String del_yn,String inv_yn,String opt_yn,String rmk,
                LocalDateTime in_dtm,String in_id, LocalDateTime up_dtm, String up_id){
-        this.prod_cd=prod_cd;
         this.cate_cd=cate_cd;
         this.prod_stus=prod_stus;
         this.cust_cd=cust_cd;
@@ -54,7 +60,6 @@ public class ProductDto {
         this.vld_end_dt=vld_end_dt;
         this.mng=mng;
         this.fst_reg_dt=fst_reg_dt;
-        this.sub_yn=sub_yn;
         this.sale_yn=sale_yn;
         this.dp_yn=dp_yn;
         this.del_yn=del_yn;
@@ -66,6 +71,8 @@ public class ProductDto {
         this.up_dtm=up_dtm;
         this.up_id=up_id;
     }
+
+    ProductDto(){}
     /*-------------------------------------------------------------------   [생성자 끝]   -------------------*/
 
     /*-----------------------------------------------------------------   [toString & equals 시작]   -------*/
@@ -99,11 +106,11 @@ public class ProductDto {
 
 
     /*-------------------------------------------------------------------   [getter & setter 시작]   ---------*/
-    public String getProd_cd() {
+    public Long getProd_cd() {
         return prod_cd;
     }
 
-    public void setProd_cd(String prod_cd) {
+    public void setProd_cd(Long prod_cd) {
         this.prod_cd = prod_cd;
     }
 
@@ -307,14 +314,6 @@ public class ProductDto {
         this.fst_reg_dt = fst_reg_dt;
     }
 
-    public String getSub_yn() {
-        return sub_yn;
-    }
-
-    public void setSub_yn(String sub_yn) {
-        this.sub_yn = sub_yn;
-    }
-
     public String getSale_yn() {
         return sale_yn;
     }
@@ -393,54 +392,6 @@ public class ProductDto {
 
     public void setUp_id(String up_id) {
         this.up_id = up_id;
-    }
-
-
-    /*-----------------------------------------------------------------------------   [메서드...?]   ---------*/
-
-    public void changeProduct (ProductDto productDto, String prod_cd, String cate_cd,String prod_stus,String cust_cd,
-                               String dc_cd,String name,String mng_prod_nm,
-                               String sfkp_stus,String sfkp_mtd,Integer sp_prc,Integer cnsmr_prc,Integer sale_prc,
-                               Integer mgn_rate, String dscpt,String detail,Integer min_qty,Integer weight,
-                               String stnd,String orplc,String recipe,String mtd,String distb_tlmt,
-                               String vld_start_dt,String vld_end_dt,String mng,String fst_reg_dt,
-                               String sub_yn,String sale_yn,String dp_yn,String del_yn,String inv_yn,
-                               String opt_yn,String rmk,LocalDateTime up_dtm, String up_id){
-        productDto.setProd_cd(prod_cd);
-        productDto.setCate_cd(cate_cd);
-        productDto.setProd_stus(prod_stus);
-        productDto.setCust_cd(cust_cd);
-        productDto.setDc_cd(dc_cd);
-        productDto.setName(name);
-        productDto.setMng_prod_nm(mng_prod_nm);
-        productDto.setSfkp_stus(sfkp_stus);
-        productDto.setSfkp_mtd(sfkp_mtd);
-        productDto.setSp_prc(sp_prc);
-        productDto.setCnsmr_prc(cnsmr_prc);
-        productDto.setSale_prc(sale_prc);
-        productDto.setSale_prc(mgn_rate);
-        productDto.setDscpt(dscpt);
-        productDto.setDetail(detail);
-        productDto.setMin_qty(min_qty);
-        productDto.setWeight(weight);
-        productDto.setStnd(stnd);
-        productDto.setOrplc(orplc);
-        productDto.setRecipe(recipe);
-        productDto.setMtd(mtd);
-        productDto.setDistb_tlmt(distb_tlmt);
-        productDto.setVld_start_dt(vld_start_dt);
-        productDto.setVld_end_dt(vld_end_dt);
-        productDto.setMng(mng);
-        productDto.setFst_reg_dt(fst_reg_dt);
-        productDto.setSub_yn(sub_yn);
-        productDto.setSale_yn(sale_yn);
-        productDto.setDp_yn(dp_yn);
-        productDto.setDel_yn(del_yn);
-        productDto.setInv_yn(inv_yn);
-        productDto.setOpt_yn(opt_yn);
-        productDto.setRmk(rmk);
-        productDto.setUp_dtm(up_dtm);
-        productDto.setUp_id(up_id);
     }
 
 

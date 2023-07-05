@@ -38,7 +38,7 @@
         <a> <!--상품 대표 이미지-->
           <c:set var="productImg" value="${productCateCdImgMap[product.prod_cd]}"/>
           <img id="prod_top top_img"
-               src="/img/${not empty productImg.url?productImg.url:"noimg"}.png"/>
+               src="/img/${not empty productImg.url?productImg.url:"ezmeal_logo"}.png"/>
         </a>
       </figure>
       <!--------------------------------------------------------------------------------------------->
@@ -102,6 +102,12 @@
 </c:forEach>
 
 <script src="/javascript/productlistaddcart.js"></script>
-
+<script>
+  // msg 값을 확인하고 alert 창 띄우기 없는 상품코드 일 때
+    var msg = "${msg}";
+    if (msg !== "") {
+      alert(msg);
+    }
+</script>
 </body>
 </html>

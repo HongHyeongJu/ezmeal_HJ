@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tb_product_review">
+
+    <!-- 해당 상품의 상품 리뷰 select 하기 -->
+
+
+    <!-- 해당 상품의 상품 리뷰 개수랑, 별점 평균 받기 하기 -->
+
+
+    <!--1개의 상품코드에 대한 리뷰 숫자 가져오기-->
+    <select id="get_review_count" parameterType="Long"  resultType="int">
+    SELECT count(*)
+    FROM tb_product_review
+    WHERE prod_cd = #{prod_cd}
+    </select>
+
+
+    <!--1개의 상품코드에 대한 리뷰 별점 평균 가져오기-->
+    <select id="get_review_average"  parameterType="Long"   resultType="Double">
+    SELECT Round(avg(star),1)
+    FROM tb_product_review
+    WHERE prod_cd = #{prod_cd}
+    GROUP BY prod_cd
+    </select>
+
+    <!--해당 카테고리에 있는 별점 평균 받아오기 Map(prod_cd , round(avg(star),1))-->
+    <select id="get_review_average_for_cate_list"  parameterType="String"   resultType="Map">
+    select prod_cd, Round(avg(star),1)
+    from tb_product_review
+    where prod_cd In (select prod_cd
+                    from tb_product
+                    where cate_cd Like concat(#{cate_cd},'%')
+                    ANd revw_opub_yn = 'y' AND del_yn='n' )
+    GROUP BY prod_cd;
+    </select>
+
+    <!--해당 카테고리에 있는 리뷰 전체 받아오기 Map(prod_cd , count(*))-->
+    <select id="get_review_count_for_cate_list"  parameterType="String"   resultType="Map">
+        select prod_cd, count(*)
+        from tb_product_review
+        where prod_cd In (select prod_cd
+                          from tb_product
+                          where cate_cd Like concat(#{cate_cd},'%')
+                            ANd revw_opub_yn = 'y' AND del_yn='n' )
+        GROUP BY prod_cd
+    </select>
+<!--    &lt;!&ndash;1개의 상품코드에 대한 리뷰 별점 평균 가져오기&ndash;&gt;-->
+<!--    <select id="test"  parameterType="Long"   resultType="map">-->
+<!--        SELECT Round(avg(star),1), count(*)-->
+<!--        FROM tb_product_review-->
+<!--        WHERE prod_cd = #{prod_cd}-->
+<!--    </select>-->
+
+    <!--
+    SELECT prod_cd, Round(avg(star),1) , count(*),
+    FROM tb_product_review
+    WHERE prod_cd = 3
+    GROUP BY prod_cd;
+    이거 반환값이 뭘까?
+    -->
+
+
+</mapper>

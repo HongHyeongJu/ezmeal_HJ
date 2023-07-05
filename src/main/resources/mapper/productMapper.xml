@@ -14,57 +14,78 @@
 
 
     <!-- 상품코드로 상품찾기 -->
-    <select id="select_prod_cd" parameterType="String" resultType="ProductDto">
+    <select id="select_product_by_prod_cd" parameterType="Long" resultType="ProductDto">
         SELECT *
         FROM tb_product
-        WHERE prod_cd = #{prod_cd} and sale_yn='y' and dp_yn='y' and del_yn='n';
+        WHERE prod_cd = #{prod_cd} and sale_yn='y' and dp_yn='y' and del_yn='n'
     </select>
 
     <!-- 분류코드로 상품리스트 받기 -->
-    <select id="select_cate_cd_List" parameterType="String" resultType="ProductDto">
+    <select id="select_product_list_by_cate_cd" parameterType="String" resultType="ProductDto">
         SELECT *
         FROM tb_product
-        WHERE cate_cd LIKE #{like_cate_cd} and sale_yn='y' and dp_yn='y' and del_yn='n';
+        WHERE cate_cd LIKE concat( #{cate_cd},'%') and sale_yn='y' and dp_yn='y' and del_yn='n'
     </select>
 
-    <!-- 분류코드로 상품리스트 받기 "코드_%" + 판매가격 낮은 순-->
-    <select id="select_cate_cd_List_Cheap" parameterType="String" resultType="ProductDto">
+    <!-- 분류코드로 상품리스트 받기 "코드_%" + 판매가격 낮은 순--> <!--하드코딩.. 이게 맞아? -->
+    <select id="select_product_list_cate_cd__Cheap" parameterType="String" resultType="ProductDto">
         SELECT *
         FROM tb_product
-        WHERE cate_cd LIKE #{like_cate_cd} and sale_yn='y' and dp_yn='y' and del_yn='n'
-        ORDER By sale_prc;
+        WHERE cate_cd LIKE concat(#{cate_cd}, '%')  and sale_yn='y' and dp_yn='y' and del_yn='n'
+        ORDER By sale_prc
     </select>
+
+
+    <!-- 분류코드로 상품리스트 받기 "코드_%" + 판매가격 낮은 순--> <!--하드코딩.. 이게 맞아? -->
+    <select id="select_product_list_cate_cd_mini" parameterType="String" resultType="ProductDto">
+        SELECT prod_cd, name, sale_prc
+        FROM tb_product
+        WHERE cate_cd LIKE concat(#{cate_cd}, '%')  and sale_yn='y' and dp_yn='y' and del_yn='n'
+    </select>
+
 
     <!-- 이름으로 상품 검색하기 LIKE "%단어% -->
-    <select id="search_name" parameterType="String" resultType="ProductDto">
+    <select id="search_by_name" parameterType="String" resultType="ProductDto">
         SELECT *
         FROM tb_product
-        WHERE name LIKE #{like_name} and sale_yn='y' and dp_yn='y' and del_yn='n';
+        WHERE name LIKE concat( '%', #{name},'%') and sale_yn='y' and dp_yn='y' and del_yn='n'
     </select>
 
-    <!-- 새 상품 추가하기 -->
-    <!--    <insert id="insert_Product" parameterType="ProductDto">-->
-    <!--        INSERT INTO tb_product-->
-    <!--        values (#{prod_cd},#{cate_cd},#{prod_stus},#{cust_cd},#{dc_cd},#{name},#{mng_prod_nm},#{sfkp_stus},#{sfkp_mtd},-->
-    <!--                #{sp_prc},#{cnsmr_prc},#{sale_prc},#{mgn_rate},#{dscpt},#{detail},#{min_qty},#{weight},#{stnd},-->
-    <!--                #{orplc},#{recipe},#{mtd},#{distb_tlmt},#{vld_start_dt},#{vld_end_dt},#{mng},#{fst_reg_dt},#{sub_yn},-->
-    <!--                #{sale_yn},#{dp_yn},#{del_yn},#{inv_yn},#{opt_yn},#{rmk},#{in_dtm},#{in_id},#{up_dtm},#{up_id}-->
-    <!--                );-->
-    <!--    </insert>-->
+    <!--새 상품 추가하기-->
+    <insert id="insert_product" parameterType="ProductDto" >
+        INSERT INTO tb_product (cate_cd, prod_stus, cust_cd, dc_cd, name, mng_prod_nm, sfkp_stus, sfkp_mtd, sp_prc,
+                                cnsmr_prc, sale_prc, mgn_rate, dscpt, detail, min_qty, weight, stnd, orplc, recipe,
+                                mtd, distb_tlmt, vld_start_dt, vld_end_dt, mng, fst_reg_dt, sale_yn, dp_yn,
+                                del_yn, inv_yn, opt_yn, rmk, in_dtm, in_id, up_dtm, up_id)
+        VALUES (#{cate_cd}, #{prod_stus}, #{cust_cd}, #{dc_cd}, #{name}, #{mng_prod_nm}, #{sfkp_stus}, #{sfkp_mtd},
+                #{sp_prc}, #{cnsmr_prc}, #{sale_prc}, #{mgn_rate}, #{dscpt}, #{detail}, #{min_qty}, #{weight},
+                #{stnd}, #{orplc}, #{recipe}, #{mtd}, #{distb_tlmt}, #{vld_start_dt}, #{vld_end_dt}, #{mng},
+                #{fst_reg_dt}, #{sale_yn}, #{dp_yn}, #{del_yn}, #{inv_yn}, #{opt_yn}, #{rmk}, #{in_dtm},
+                #{in_id}, #{up_dtm}, #{up_id})
+    </insert>
 
     <!-- 상품 정보 수정하기 -->
 
 
+
+
+    <!-- 상품코드 제일 큰것(구독) -->
+    <select id="select_max_prod_cd" resultType="Long">
+        SELECT Max(prod_cd)
+        FROM tb_product
+    </select>
+    <!-- Max가 for문 하나라 더 좋다-->
+
     <!-- 임시로 쓰는 삭제문 -->
-    <delete id="delete_for_TDD" parameterType="String" >
+    <delete id="delete_for_TDD" parameterType="Long" >
         DELETE FROM tb_product
-        WHERE prod_cd = #{prod_cd};
+        WHERE prod_cd = #{prod_cd}
     </delete>
 
     <!-- DB적인 삭제문 -->
-    <update id="delete_Product_del_yn" parameterType="String"  >
+    <update id="delete_Product_del_y" parameterType="Long"  >
         UPDATE tb_product
-        SET del_yn='y'
+        SET sale_yn='y' and dp_yn='y' and del_yn='y'
         WHERE prod_cd = #{prod_cd};
     </update>
 
@@ -73,35 +94,15 @@
         SELECT cate_cd, count(*)
         FROM tb_product
         WHERE sale_yn='y' and dp_yn='y' and del_yn='n'
-        group by cate_cd;
+        group by cate_cd
     </select>
 
 
-    <!--1개의 상품코드에 대한 리뷰 숫자 가져오기-->
-    <select id="review_count" parameterType="String"  resultType="int">
-        SELECT count(*)
-        FROM tb_product_review
-        GROUP BY prod_cd
-        HAVING prod_cd = #{prod_cd}
-    </select>
 
-    <!--1개의 상품코드에 대한 리뷰 별점 평균 가져오기-->
-    <select id="review_star_avg" parameterType="String"   resultType="Double">
-        SELECT avg(star)
-        FROM tb_product_review
-        GROUP BY prod_cd
-        HAVING prod_cd = #{prod_cd}
-    </select>
+<!--//필요한 값은 DB안에서 다 처리해서 나가기 (여러 함수나 SQL메서드를 사용해야 쎄보임!! 뭘좀 아는구나 ㅋㅋ good 구린건 안돼!! )-->
 
-    <!--    &lt;!&ndash; 궁금증! 결과값을 테이블로 받은 것을 매개변수로 제공해서 그걸 FROM 테이블로 사용가능? 헐 반대로,,,?&ndash;&gt;-->
-    <!--    <select id="order_by_sale_prc_asc"  parameterType="String" resultType="ProductDto" >-->
-    <!--        SELECT *-->
-    <!--        FROM #{tableName}-->
-    <!--        ORDER BY sale_prc;-->
-    <!--    </select>-->
+<!--면접관이 보는 부분: 맵퍼, 컨트롤러 처리, 얼마나 깔끔한지-->
+<!--지원 회사 같은건 원장님께 조언얻기-->
 
-
-
-    <!---->
 
 </mapper>
