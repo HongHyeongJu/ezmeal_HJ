@@ -1,6 +1,7 @@
 package com.teamProject.ezmeal.service;
 
 import com.teamProject.ezmeal.dao.CartProductDao;
+import com.teamProject.ezmeal.domain.CartJoinProductDto;
 import com.teamProject.ezmeal.domain.CartProductDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.exceptions.PersistenceException;
@@ -14,8 +15,8 @@ import java.util.*;
 @RequiredArgsConstructor
 public class CartProductService {
     private final CartProductDao cartProductDao;
+    public static final String[] TYPE_NAME = {"냉동", "냉장", "상온"};
 
-    private Map<String, Object> productMap = new HashMap<>();
 
 
     // 품절 상품 업데이트
@@ -30,38 +31,60 @@ public class CartProductService {
 
     // 일반 상품 : 냉장/냉동/상온 map으로 저장
     // TODO option 확실해지면 다시 작성 필요 - option_cd 존재시, option 값(opt_val)을 상품 명 옆에 두고 | 가격은 옵션 가격으로 지정
-    public Map<String, List<CartProductDto>> getProducts(Long cartSeq) {
-        String[] typeName = {"냉장", "냉동", "상온"};
-        List<String> typeNameList = new ArrayList<>(Arrays.asList(typeName));
+    public Map<String, List<CartJoinProductDto>> getProducts(Long cartSeq) {
+//        String[] typeName = {"냉장", "냉동", "상온"};
+//        List<String> typeNameList = new ArrayList<>(Arrays.asList(typeName));
+//
+//        Map<String, List<CartProductDto>> productsMap = null;
+//
+//        int maxRetries = 3;
+//        int retryCount = 0;
+//        while (retryCount < maxRetries) {
+//            try {
+//                productsMap = new HashMap<>();
+//                for (String type : typeNameList) {
+//                    List<CartProductDto> cartProductDtos = cartProductDao.selectProduct(cartSeq);
+//                    productsMap.put(type, cartProductDtos);
+//                }
+//                break; // 성공적으로 데이터를 가져왔으므로 반복문 종료
+//            } catch (PersistenceException e) {
+//                retryCount++;
+//                if (retryCount >= maxRetries) {
+//                    e.printStackTrace();
+//                    throw new RuntimeException(e);
+//                }
+//                // 추가적인 로깅 또는 대기 시간 설정
+//                System.out.println("Retrying after 2 seconds...");
+//                try {
+//                    Thread.sleep(2000); // 3초 대기
+//                } catch (InterruptedException ex) {
+//                    Thread.currentThread().interrupt();
+//                }
+//            }
+//        }
 
-        Map<String, List<CartProductDto>> productsMap = null;
+        Map<String, List<CartJoinProductDto>> productsMap = new HashMap<>();
 
-        int maxRetries = 3;
-        int retryCount = 0;
+        List<CartJoinProductDto> iceList = new ArrayList<>();
+        List<CartJoinProductDto> coldList = new ArrayList<>();
+        List<CartJoinProductDto> outSideList = new ArrayList<>();
 
-        while (retryCount < maxRetries) {
-            try {
-                productsMap = new HashMap<>();
-                for (String type : typeNameList) {
-                    List<CartProductDto> cartProductDtos = cartProductDao.selectProduct(type, cartSeq);
-                    productsMap.put(type, cartProductDtos);
-                }
-                break; // 성공적으로 데이터를 가져왔으므로 반복문 종료
-            } catch (PersistenceException e) {
-                retryCount++;
-                if (retryCount >= maxRetries) {
-                    e.printStackTrace();
-                    throw new RuntimeException(e);
-                }
-                // 추가적인 로깅 또는 대기 시간 설정
-                System.out.println("Retrying after 2 seconds...");
-                try {
-                    Thread.sleep(2000); // 3초 대기
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                }
+        List<CartJoinProductDto> cartJoinProducts = cartProductDao.selectProduct(cartSeq);
+
+        for (CartJoinProductDto product : cartJoinProducts) {
+            if (product.getTyp().equals(TYPE_NAME[0])) {
+                iceList.add(product);
+            } else if (product.getTyp().equals(TYPE_NAME[1])) {
+                coldList.add(product);
+            } else if (product.getTyp().equals(TYPE_NAME[2])) {
+                outSideList.add(product);
             }
         }
+
+        productsMap.put(TYPE_NAME[0], iceList);
+        productsMap.put(TYPE_NAME[1], coldList);
+        productsMap.put(TYPE_NAME[2], outSideList);
+
         return productsMap;
     }
 

@@ -1,5 +1,6 @@
 package com.teamProject.ezmeal.dao;
 
+import com.teamProject.ezmeal.domain.CartJoinProductDto;
 import com.teamProject.ezmeal.domain.CartProductDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
@@ -40,11 +41,8 @@ public class CartProductDao {
     */
 
     // 일반 상품 : 냉동, 냉장, 상온 분리
-    public List<CartProductDto> selectProduct(String type, Long cartSeq) {
-        Map<String, Object> productMap = new HashMap<>();
-        productMap.put("type", type);
-        productMap.put("cartSeq", cartSeq);
-        return session.selectList(namespace + "product", productMap);
+    public List<CartJoinProductDto> selectProduct(Long cartSeq) {
+        return session.selectList(namespace + "product", cartSeq);
     }
 
     // 주문하기에 선택된 장바구니 상품 가져오기

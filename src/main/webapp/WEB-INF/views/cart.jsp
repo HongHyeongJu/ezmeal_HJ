@@ -29,8 +29,153 @@ change this template use File | Settings | File Templates. --%>
                 <button class="cart__items_nav__btn_rm">선택삭제</button>
             </div>
             <!--cart__items_category_btns cart__items_nav 끝-->
+            <%--------------------------------------------------------------------------------------------------------------------%>
+            <div class="cart__items_list">
+                <c:if test="${not empty productIce}">
+                    <h4 class="cart__items_list-type">
+            <span>
+                <span><i class="fas fa-igloo" style="color: #306ed9"></i></span>
+                냉동 상품
+            </span>
+                        <button class="cart__items_list__btn">
+                            <i class="fas fa-chevron-down" style="color: #8d9096"></i>
+                        </button>
+                    </h4>
+                    <ul class="cart__items__ul">
+                        <c:forEach items="${productIce}" var="item">
+                            <li class="cart__item_list  cart__item__soldout_${item.soldout_yn}">
+                                <input type="checkbox"
+                                       cart_prod_seq="${item.cart_prod_seq}" ${item.soldout_yn eq 'y' ? 'disabled' : ''}/>
+                                <a href="/productlist/${item.prod_cd}" class="cart__item_list__a">
+                                    <img src="/img/${item.prod_cd}.png"/>
+                                </a>
+                                <div class="cart__item_list_description">
+                                    <a href="/productlist/${item.prod_cd}">
+                                        <p class="cart__item_list_prod_cd">
+                                            [${item.prod_cd}${item.soldout_yn eq 'y' ? " | 품절" : ''}]</p>
+                                        <br/>
+                                        <p>${item.name}</p>
+                                    </a>
+                                </div>
+                                <div class="cart__item__btn">
+                                    <button type="button" aria-label="수량내리기" disabled>-</button>
+                                    <div po_qty="${item.po_qty}">${item.cp_qty}</div>
+                                    <button type="button" aria-label="수량올리기">+</button>
+                                </div>
+                                <div class="cart__item_price">
+                                    <span aria-label="할인 가격" data-testid="discount-price">${item.sale_prc}</span>
+                                    <c:if test="${item.cnsmr_prc ne item.sale_prc}">
+                            <span aria-label="판매 가격" data-testid="product-price"
+                                  class="cart__item_product-price">
+                                    ${item.cnsmr_prc}
+                            </span>
+                                    </c:if>
+                                </div>
+                                <button class="cart__delete_btn" type="button" data-testid="delete">
+                                    <span>x</span>
+                                </button>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </c:if>
 
-            <jsp:include page="cartProductModule.jsp"  />
+                <c:if test="${not empty productCold}">
+                    <h4 class="cart__items_list-type">
+                <span>
+                    <span><i class="fas fa-tint" style="color: #306ed9"></i></span>
+                    냉장 상품
+                </span>
+                        <button class="cart__items_list__btn">
+                            <i class="fas fa-chevron-down" style="color: #8d9096"></i>
+                        </button>
+                    </h4>
+                    <ul class="cart__items__ul">
+                        <c:forEach items="${productCold}" var="item">
+                            <li class="cart__item_list  cart__item__soldout_${item.soldout_yn}" opt_seq = ${item.opt_seq}>
+                                <input type="checkbox"
+                                       cart_prod_seq="${item.cart_prod_seq}" ${item.soldout_yn eq 'y' ? 'disabled' : ''}/>
+                                <a href="/productlist/${item.prod_cd}" class="cart__item_list__a">
+                                    <img src="/img/${item.prod_cd}.png"/>
+                                </a>
+                                <div class="cart__item_list_description">
+                                    <a href="/productlist/${item.prod_cd}">
+                                        <p class="cart__item_list_prod_cd">
+                                            [${item.prod_cd}${item.soldout_yn eq 'y' ? " | 품절" : ''}]</p>
+                                        <br/>
+                                        <p>${item.name}</p>
+                                    </a>
+                                </div>
+                                <div class="cart__item__btn">
+                                    <button type="button" aria-label="수량내리기">-</button>
+                                    <div po_qty="${item.po_qty}">${item.cp_qty}</div>
+                                    <button type="button" aria-label="수량올리기">+</button>
+                                </div>
+                                <div class="cart__item_price">
+                                    <span aria-label="할인 가격" data-testid="discount-price">${item.sale_prc}</span>
+                                    <c:if test="${item.cnsmr_prc ne item.sale_prc}">
+                            <span aria-label="판매 가격" data-testid="product-price"
+                                  class="cart__item_product-price">
+                                    ${item.cnsmr_prc}
+                            </span>
+                                    </c:if>
+                                </div>
+                                <button class="cart__delete_btn" type="button" data-testid="delete">
+                                    x
+                                </button>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </c:if>
+
+                <c:if test="${not empty productOutside}">
+                    <h4 class="cart__items_list-type">
+                <span>
+                    <span><i class="fas fa-sun" style="color: #ef8025"></i></span>
+                    상온 상품
+                </span>
+                        <button class="cart__items_list__btn">
+                            <i class="fas fa-chevron-down" style="color: #8d9096"></i>
+                        </button>
+                    </h4>
+                    <ul class="cart__items__ul">
+                        <c:forEach items="${productOutside}" var="item">
+                            <li class="cart__item_list  cart__item__soldout_${item.soldout_yn}" opt_seq = ${item.opt_seq}>
+                                <input type="checkbox"
+                                       cart_prod_seq="${item.cart_prod_seq}" ${item.soldout_yn eq 'y' ? 'disabled' : ''}/>
+                                <a href="/productlist/${item.prod_cd}" class="cart__item_list__a">
+                                    <img src="/img/${item.prod_cd}.png"/>
+                                </a>
+                                <div class="cart__item_list_description">
+                                    <a href="/productlist/${item.prod_cd}">
+                                        <p class="cart__item_list_prod_cd">
+                                            [${item.prod_cd}${item.soldout_yn eq 'y' ? " | 품절" : ''}]</p>
+                                        <br/>
+                                        <p>${item.name}</p>
+                                    </a>
+                                </div>
+                                <div class="cart__item__btn">
+                                    <button type="button" aria-label="수량내리기">-</button>
+                                    <div po_qty="${item.po_qty}">${item.cp_qty}</div>
+                                    <button type="button" aria-label="수량올리기">+</button>
+                                </div>
+                                <div class="cart__item_price">
+                                    <span aria-label="할인 가격" data-testid="discount-price">${item.sale_prc}</span>
+                                    <c:if test="${item.cnsmr_prc ne item.sale_prc}">
+                            <span aria-label="판매 가격" data-testid="product-price"
+                                  class="cart__item_product-price">
+                                    ${item.cnsmr_prc}
+                            </span>
+                                    </c:if>
+                                </div>
+                                <button class="cart__delete_btn" type="button" data-testid="delete">
+                                    x
+                                </button>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </c:if>
+
+            </div>
 
             <!--cart__items_list 끝-->
         </div>

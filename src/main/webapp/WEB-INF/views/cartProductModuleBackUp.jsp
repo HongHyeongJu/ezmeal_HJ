@@ -7,19 +7,42 @@
         choose-when : 내부 when은 true일 경우 1번만 실행, forEach는 반복작업을 수행하는 역할
         -> choose내부 when이 모든 true인 경우,  choose는 1번만 수행되지만 forEach로 인해서 그다음 choose-when 순차 수행
     --%>
+    <c:forEach var="category" items="${productsMap.keySet()}">
+        <c:set var="categoryIcon" value=""/>
+        <c:set var="categoryColor" value=""/>
+        <c:set var="categoryLabel" value=""/>
 
-        <c:if test="${not empty productIce}">
+        <c:choose>
+            <c:when test="${category eq '냉장'}">
+                <c:set var="categoryIcon" value="fa-tint"/>
+                <c:set var="categoryColor" value="#306ed9"/>
+                <c:set var="categoryLabel" value="냉장 상품"/>
+            </c:when>
+            <c:when test="${category eq '냉동'}">
+                <c:set var="categoryIcon" value="fa-igloo"/>
+                <c:set var="categoryColor" value="#306ed9"/>
+                <c:set var="categoryLabel" value="냉동 상품"/>
+            </c:when>
+            <c:when test="${category eq '상온'}">
+                <c:set var="categoryIcon" value="fa-sun"/>
+                <c:set var="categoryColor" value="#ef8025"/>
+                <c:set var="categoryLabel" value="상온 상품"/>
+            </c:when>
+        </c:choose>
+
+        <c:if test="${not empty productsMap.get(category)}">
             <h4 class="cart__items_list-type">
                 <span>
-                    <span><i class="fas fa-igloo" style="color: #306ed9"></i></span>
-                    냉동 상품
+                    <span><i class="fas ${categoryIcon}" style="color: ${categoryColor}"></i></span>
+                    ${categoryLabel}
                 </span>
                 <button class="cart__items_list__btn">
                     <i class="fas fa-chevron-down" style="color: #8d9096"></i>
                 </button>
             </h4>
+
             <ul class="cart__items__ul">
-                <c:forEach items="${productIce}" var="item">
+                <c:forEach items="${productsMap.get(category)}" var="item">
                     <li class="cart__item_list ${item.soldout_yn eq 'y' ? 'cart__item__soldout' : ''}">
                         <input type="checkbox"
                                cart_prod_seq="${item.cart_prod_seq}"  ${item.soldout_yn eq 'y' ? 'disabled' : ''}/>
@@ -59,29 +82,5 @@
                 </c:forEach>
             </ul>
         </c:if>
-
-        <c:if test="${not empty productCold}">
-            <h4 class="cart__items_list-type">
-                <span>
-                    <span><i class="fas fa-tint" style="color: #306ed9"></i></span>
-                    냉장 상품
-                </span>
-                <button class="cart__items_list__btn">
-                    <i class="fas fa-chevron-down" style="color: #8d9096"></i>
-                </button>
-            </h4>
-        </c:if>
-
-        <c:if test="${not empty productOutside}">
-            <h4 class="cart__items_list-type">
-                <span>
-                    <span><i class="fas fa-tint" style="color: #ef8025"></i></span>
-                    상온 상품
-                </span>
-                <button class="cart__items_list__btn">
-                    <i class="fas fa-chevron-down" style="color: #8d9096"></i>
-                </button>
-            </h4>
-        </c:if>
-
+    </c:forEach>
 </div>

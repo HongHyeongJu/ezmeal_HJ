@@ -1,5 +1,6 @@
 package com.teamProject.ezmeal.service;
 
+import com.teamProject.ezmeal.domain.CartJoinProductDto;
 import com.teamProject.ezmeal.domain.CartProductDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,10 +23,10 @@ public class CartServiceTest {
     private CartProductService cartProductService;
 
     @Test
-    public void generalProducts() throws Exception {
-        Map<String, List<CartProductDto>> stringListMap = cartProductService.getProducts(1L);
+    public void generalProducts() {
+        Map<String, List<CartJoinProductDto>> stringListMap = cartProductService.getProducts(1L);
         System.out.println("product = " + stringListMap.size()); //3
-        List<CartProductDto> cold = stringListMap.get("ice");
+        List<CartJoinProductDto> cold = stringListMap.get("ice");
         System.out.println("cold = " + cold);
         String typ = cold.get(0).getTyp();
         assertEquals("냉동", typ);

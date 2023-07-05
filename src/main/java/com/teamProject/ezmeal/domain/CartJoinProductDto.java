@@ -12,7 +12,9 @@ public class CartJoinProductDto {
     private String prod_cd;
     private Long opt_seq;
     private String typ;
-    private Integer qty;
+    private String soldout_yn;
+    private Integer cp_qty;
+    private Integer po_qty;
     private String name;
     private Integer cnsmr_prc;
     private Integer sale_prc;

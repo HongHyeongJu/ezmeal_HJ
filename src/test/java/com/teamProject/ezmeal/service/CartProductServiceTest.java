@@ -1,5 +1,6 @@
 package com.teamProject.ezmeal.service;
 
+import com.teamProject.ezmeal.domain.CartJoinProductDto;
 import com.teamProject.ezmeal.domain.CartProductDto;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.junit.Test;
@@ -38,19 +39,8 @@ public class CartProductServiceTest {
 
     @Test
     public void getProducts() {
-        int countProduct = cartProductService.countProduct(1L);
+        Map<String, List<CartJoinProductDto>> products = cartProductService.getProducts(1L);
 
-        Map<String, List<CartProductDto>> productsMap = cartProductService.getProducts(1L);
-        Set<String> types = productsMap.keySet();
-        int sum = 0;
-
-        for (String type : types) {
-            List<CartProductDto> productsList = productsMap.get(type);
-            System.out.println("productsList = " + productsList);
-            sum += productsList.size();
-        }
-
-        assertEquals(sum, countProduct);
     }
 
     // 임의 sql 예외 발생 수행

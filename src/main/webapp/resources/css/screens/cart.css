@@ -156,7 +156,7 @@ button icon 누르면 위 아래로 변경되는 JS 수행 필요
     align-items: center;
 }
 
-.cart__item__soldout {
+.cart__item__soldout_y {
     color: #8d9096;
     text-decoration: line-through;
 }

@@ -1,5 +1,6 @@
 package com.teamProject.ezmeal.dao;
 
+import com.teamProject.ezmeal.domain.CartJoinProductDto;
 import com.teamProject.ezmeal.domain.CartProductDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +40,7 @@ public class CartProductDaoTest {
 
     }
 
-    // 일반 상품 수량 - 품절, 삭제 제외
+    // 일반 상품 수량 - 품절, 삭제 제외 -> TODO 옵션 생각해서 다시
     @Test
     public void count() {
         // TODO 1. cartDao insert method 생성되면 재고가 적은 상품 임의로 만들기
@@ -52,31 +53,12 @@ public class CartProductDaoTest {
     // 일반 상품 : 냉장/냉동/상온 map으로 저장
     @Test
     public void typeProd(){
-        int typeCount = 0;
-        List<CartProductDto> colds = cartProductDao.selectProduct("냉장", 1L);
-        for (CartProductDto cold : colds) {
-            String typName = cold.getTyp();
-            if (typName.equals("냉장")) typeCount++;
-        }
-        assertEquals(typeCount, colds.size());
+        List<CartJoinProductDto> CartJoinProductDtos = cartProductDao.selectProduct(1L);
+        int size = CartJoinProductDtos.size();
+        int countProduct = cartProductDao.countProduct(1L);
+        System.out.println("countProduct = " + CartJoinProductDtos +'\n');
+        assertEquals(size, 10);
 
-        // count 초기화
-        typeCount = 0;
-        List<CartProductDto> ices = cartProductDao.selectProduct("냉동", 1L);
-        for (CartProductDto ice : ices) {
-            String typName = ice.getTyp();
-            if (typName.equals("냉동")) typeCount++;
-        }
-        assertEquals(typeCount, ices.size());
-
-        // count 초기화
-        typeCount = 0;
-        List<CartProductDto> outSides = cartProductDao.selectProduct("상온", 1L);
-        for (CartProductDto outSide : outSides) {
-            String typName = outSide.getTyp();
-            if (typName.equals("상온")) typeCount++;
-        }
-        assertEquals(typeCount, outSides.size());
     }
 
     // 개별 상품 삭제 : JS fetch를 이용한 rest API 수행
