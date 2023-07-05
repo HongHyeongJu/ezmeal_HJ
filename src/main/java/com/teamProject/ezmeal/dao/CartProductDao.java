@@ -30,7 +30,6 @@ public class CartProductDao {
     // 일반 상품 : 냉장/냉동/상온 map으로 저장
     // TODO  option 확실해지면 다시 작성 필요 - option_cd 존재시, option 값(opt_val)을 상품 명 옆에 두고 | 가격은 옵션 가격으로 지정
     /* TODO  옵션 쿼리문 - 냉장 냉동, 상온에 조건 추가 하면 된다.
-             -> join으로 옵션 값 table 받아오기, column으로 옵션명, 옵션값(수량=quentity), 가격(소비자가, 판매가),
              -> 품절
                     단일상품 & 맛 & 무게 - 재고가 0이상인지 비교
                     수량 옵션의 경우     - 재고가 옵션의 값(quentity)보다 큰지 비교
@@ -40,19 +39,12 @@ public class CartProductDao {
         p.s. 옵션: 맛 & 무게-각각 다른 상품 코드 , 수량-동일 코드  |  재고: 현재재고량 - 안전재고량
     */
 
-    // 냉장 상품
-    public List<CartProductDto> selectProdCold(Long cartSeq) {
-        return session.selectList(namespace + "product_cold", cartSeq);
-    }
-
-    // 냉동 상품
-    public List<CartProductDto> selectProdIce(Long cartSeq) {
-        return session.selectList(namespace + "product_ice", cartSeq);
-    }
-
-    // 일반 상품
-    public List<CartProductDto> selectProdOutSide(Long cartSeq) {
-        return session.selectList(namespace + "product_outside", cartSeq);
+    // 일반 상품 : 냉동, 냉장, 상온 분리
+    public List<CartProductDto> selectProduct(String type, Long cartSeq) {
+        Map<String, Object> productMap = new HashMap<>();
+        productMap.put("type", type);
+        productMap.put("cartSeq", cartSeq);
+        return session.selectList(namespace + "product", productMap);
     }
 
     // 주문하기에 선택된 장바구니 상품 가져오기

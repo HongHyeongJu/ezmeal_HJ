@@ -1,19 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.teamProject.ezmeal.domain.CartProductDto" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Map" %>
 <%@ page contentType="text/html; charset=utf-8" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: taewan
-  Date: 2023/07/04
-  Time: 11:36 PM
-  To change this template use File | Settings | File Templates.
---%>
 
-<%
-    Map<String, List<CartProductDto>> productsMap = (Map<String, List<CartProductDto>>) request.getAttribute("productsMap");
-%>
 
 <div class="cart__items_list">
     <%--forEach     : 반복 작업을 수행
@@ -26,17 +13,17 @@
         <c:set var="categoryLabel" value=""/>
 
         <c:choose>
-            <c:when test="${category eq 'cold'}">
+            <c:when test="${category eq '냉장'}">
                 <c:set var="categoryIcon" value="fa-tint"/>
                 <c:set var="categoryColor" value="#306ed9"/>
                 <c:set var="categoryLabel" value="냉장 상품"/>
             </c:when>
-            <c:when test="${category eq 'ice'}">
+            <c:when test="${category eq '냉동'}">
                 <c:set var="categoryIcon" value="fa-igloo"/>
                 <c:set var="categoryColor" value="#306ed9"/>
                 <c:set var="categoryLabel" value="냉동 상품"/>
             </c:when>
-            <c:when test="${category eq 'outside'}">
+            <c:when test="${category eq '상온'}">
                 <c:set var="categoryIcon" value="fa-sun"/>
                 <c:set var="categoryColor" value="#ef8025"/>
                 <c:set var="categoryLabel" value="상온 상품"/>
@@ -68,7 +55,7 @@
                                 <p class="cart__item_list_prod_cd">
                                     [${item.prod_cd}${item.soldout_yn eq 'y' ? " | 품절" : ''}]</p>
                                 <br/>
-                                <p>${item.name}</p>
+                                <p>${item.name}${item.opt_seq eq null ? '' : item.opt_name}</p>
                             </a>
                         </div>
 

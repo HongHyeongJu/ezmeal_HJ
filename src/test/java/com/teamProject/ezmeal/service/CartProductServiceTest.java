@@ -46,6 +46,7 @@ public class CartProductServiceTest {
 
         for (String type : types) {
             List<CartProductDto> productsList = productsMap.get(type);
+            System.out.println("productsList = " + productsList);
             sum += productsList.size();
         }
 

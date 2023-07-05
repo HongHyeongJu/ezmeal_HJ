@@ -53,7 +53,7 @@ public class CartProductDaoTest {
     @Test
     public void typeProd(){
         int typeCount = 0;
-        List<CartProductDto> colds = cartProductDao.selectProdCold(1L);
+        List<CartProductDto> colds = cartProductDao.selectProduct("냉장", 1L);
         for (CartProductDto cold : colds) {
             String typName = cold.getTyp();
             if (typName.equals("냉장")) typeCount++;
@@ -62,19 +62,19 @@ public class CartProductDaoTest {
 
         // count 초기화
         typeCount = 0;
-        List<CartProductDto> ices = cartProductDao.selectProdCold(1L);
+        List<CartProductDto> ices = cartProductDao.selectProduct("냉동", 1L);
         for (CartProductDto ice : ices) {
             String typName = ice.getTyp();
-            if (typName.equals("냉장")) typeCount++;
+            if (typName.equals("냉동")) typeCount++;
         }
         assertEquals(typeCount, ices.size());
 
         // count 초기화
         typeCount = 0;
-        List<CartProductDto> outSides = cartProductDao.selectProdCold(1L);
+        List<CartProductDto> outSides = cartProductDao.selectProduct("상온", 1L);
         for (CartProductDto outSide : outSides) {
             String typName = outSide.getTyp();
-            if (typName.equals("냉장")) typeCount++;
+            if (typName.equals("상온")) typeCount++;
         }
         assertEquals(typeCount, outSides.size());
     }

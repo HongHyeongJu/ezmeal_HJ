@@ -5,7 +5,6 @@
 <mapper namespace="cartProduct">
 
     <!-- 품절 상품 업데이트 -->
-    <!-- JOIN ON 을 사용하는 것이 외부 조인시 누락 정보를 막아서 정확한 결과 도출, 권장하는 방식-->
     <update id="soldOut_yn" parameterType="Long">
         UPDATE tb_cart_product cp
             JOIN tb_product_inventory pi
@@ -24,60 +23,21 @@
     </select>
 
     <!-- 일반 상품 : 냉장/냉동/상온 map으로 저장 -->
-    <!-- TODO  option 확실해지면 다시 작성 필요 - option_cd 존재시, option 값(opt_val)을 상품 명 옆에 두고 | 가격은 옵션 가격으로 지정 -->
 
-    <!--냉장-->
-    <select id="product_cold" resultType="CartProductDto">
-        select cp.cart_prod_seq,
-               cp.prod_cd,
-               cp.typ,
-               cp.soldout_yn,
-               cp.qty,
-               p.name,
-               p.cnsmr_prc,
-               p.sale_prc
-        from tb_cart_product cp,
-             tb_product p
-        where cp.cart_seq = #{cartSeq}
-          and cp.prod_cd = p.prod_cd
-          and cp.typ = '냉장'
-          and cp.del_yn &lt;&gt; 'y'
-    </select>
-
-    <!--냉동-->
-    <select id="product_ice" resultType="CartProductDto">
-        select cp.cart_prod_seq,
-               cp.prod_cd,
-               cp.typ,
-               cp.soldout_yn,
-               cp.qty,
-               p.name,
-               p.cnsmr_prc,
-               p.sale_prc
-        from tb_cart_product cp,
-             tb_product p
-        where cp.cart_seq = #{cartSeq}
-          and cp.prod_cd = p.prod_cd
-          and cp.typ = '냉동'
-          and cp.del_yn &lt;&gt; 'y'
-    </select>
-
-    <!--상온-->
-    <select id="product_outside" resultType="CartProductDto">
-        select cp.cart_prod_seq,
-               cp.prod_cd,
-               cp.typ,
-               cp.soldout_yn,
-               cp.qty,
-               p.name,
-               p.cnsmr_prc,
-               p.sale_prc
-        from tb_cart_product cp,
-             tb_product p
-        where cp.cart_seq = #{cartSeq}
-          and cp.prod_cd = p.prod_cd
-          and cp.typ = '상온'
-          and cp.del_yn &lt;&gt; 'y'
+    <select id="product" resultType="CartJoinProductDto">
+        SELECT
+            cp.cart_prod_seq,
+            cp.prod_cd,
+            cp.opt_seq,
+            cp.typ,
+            IFNULL(po.qty, 1) AS qty,
+            IFNULL(CONCAT(p.name, po.name), p.name) AS name,
+            IFNULL(p.cnsmr_prc, po.cnsmr_prc) AS cnsmr_prc,
+            IFNULL(p.sale_prc, po.sale_prc) AS sale_prc
+        FROM tb_cart_product cp
+                 JOIN tb_product p ON cp.prod_cd = p.prod_cd
+                 LEFT JOIN tb_product_option po ON cp.opt_seq = po.opt_seq
+        WHERE cp.cart_seq = #{cartSeq}
     </select>
 
 

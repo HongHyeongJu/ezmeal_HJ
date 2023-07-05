@@ -7,15 +7,16 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.PrinterException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 // TODO transaction이 핵심 -> 이거의 예외, service 단의 목적
 @Service
 @RequiredArgsConstructor
 public class CartProductService {
     private final CartProductDao cartProductDao;
+
+    private Map<String, Object> productMap = new HashMap<>();
+
 
     // 품절 상품 업데이트
     public int checkSoldOut(Long cartSeq) {
@@ -30,15 +31,21 @@ public class CartProductService {
     // 일반 상품 : 냉장/냉동/상온 map으로 저장
     // TODO option 확실해지면 다시 작성 필요 - option_cd 존재시, option 값(opt_val)을 상품 명 옆에 두고 | 가격은 옵션 가격으로 지정
     public Map<String, List<CartProductDto>> getProducts(Long cartSeq) {
+        String[] typeName = {"냉장", "냉동", "상온"};
+        List<String> typeNameList = new ArrayList<>(Arrays.asList(typeName));
+
         Map<String, List<CartProductDto>> productsMap = null;
+
         int maxRetries = 3;
         int retryCount = 0;
+
         while (retryCount < maxRetries) {
             try {
                 productsMap = new HashMap<>();
-                productsMap.put("cold", cartProductDao.selectProdCold(cartSeq));
-                productsMap.put("ice", cartProductDao.selectProdIce(cartSeq));
-                productsMap.put("outside", cartProductDao.selectProdOutSide(cartSeq));
+                for (String type : typeNameList) {
+                    List<CartProductDto> cartProductDtos = cartProductDao.selectProduct(type, cartSeq);
+                    productsMap.put(type, cartProductDtos);
+                }
                 break; // 성공적으로 데이터를 가져왔으므로 반복문 종료
             } catch (PersistenceException e) {
                 retryCount++;
