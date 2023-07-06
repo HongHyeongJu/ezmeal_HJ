@@ -62,15 +62,15 @@ public class CartController {
     @ResponseBody
     public String patchSubscript(@SessionAttribute Long memberId, @RequestBody Long cartProdSeq) {
 //        // 예외1. 회원 세션 만료  TODO 장바구니로 이동 필요
-//        if (memberId == null) return "no_memberId";
+        System.out.println("memberId = " + memberId);
+        if (memberId == null) return "no_memberId";
 
         // 예외2. service에서 검증 돌림
         Long cartSeq = cartService.getCartSeq(memberId);
         int validationResult = cartProductService.validateCartProduct(cartSeq, cartProdSeq);
 
         // 예외3. 잘못된 상품으로 접근
-        String failMessage = "wrong product";
-        if (validationResult == 0) return failMessage;
+        if (validationResult == 0) return "wrong product";
 
         cartProductService.removeCartProduct(cartProdSeq);
         // TODO  2. 해당 jsp를 변수에 담이서 return한다. 3. js에서 html을 갈아엎는다.

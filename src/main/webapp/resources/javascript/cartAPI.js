@@ -1,12 +1,11 @@
 const deleteBtns = document.querySelectorAll(".cart__delete_btn");
-
+const deleteAllBtn = document.querySelector(".cart__items_nav__btn_rm");
 // delete REST API
-function deleteCartProduct(e) {
-    // delete btn의 부모 요소 들고 오기
-    const parentDiv = e.target.parentNode;
-
+function deleteCartProduct(event) {
+    // delete btn의 부모 요소
+    const parentElement = event.target.parentNode;
     // 부모요소에서 input 내부 property의 값을 가지고 오기
-    const cartProdSeq = parentDiv.querySelector("input[cart_prod_seq]").getAttribute('cart_prod_seq');
+    const cartProdSeq = parentElement.getAttribute('cart_prod_seq')
 
     // rest API 수행 , server로 값 보내기
     fetch("/cart/delete", {
@@ -20,23 +19,31 @@ function deleteCartProduct(e) {
         body: JSON.stringify(cartProdSeq)
     })
         .then(response => {
-            // 응답을 받는 경우, 형식을 지켜줘야한다.
-            if (response.ok) {
-                return response.text()
-            }
-            throw new Error('Error: ' + response.status);
+            if (response.ok) return response.text();
+            else throw new Error('Error: ' + response.status);
         })
         .then(data => {
-            console.log(data);
+            if (data === "no_memberId"){
+                alert("no_member. go to login");
+                window.location.href = "/login";
+                return;
+            } else if (data === "wrong product"){
+                alert("don't do that")
+                return;
+            }
+            parentElement.remove();
         })
         .catch(error => {
-            // 서버에서 응답이 실패한 경우에 대한 처리를 여기에 작성하세요.
             console.error('Error:', error);
+            window.location.href="/";
         });
-    // TODO. 화면에서 동적으로 처리된 html을 받아서 뿌릴 것
-    parentDiv.style.display = 'none';
 }
 
-// 모든 삭제 btn에 관련된 요소 listen하기
-for (let deleteBtn of deleteBtns)
+function deleteCartProducts(event){
+    console.log(cartProdSeqSet);
+}
+deleteBtns.forEach(deleteBtn => {
     deleteBtn.addEventListener("click", deleteCartProduct);
+});
+
+deleteAllBtn.addEventListener("click", deleteCartProducts);

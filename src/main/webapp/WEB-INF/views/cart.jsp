@@ -43,9 +43,8 @@ change this template use File | Settings | File Templates. --%>
                     </h4>
                     <ul class="cart__items__ul">
                         <c:forEach items="${productIce}" var="item">
-                            <li class="cart__item_list  cart__item__soldout_${item.soldout_yn}">
-                                <input type="checkbox"
-                                       cart_prod_seq="${item.cart_prod_seq}" ${item.soldout_yn eq 'y' ? 'disabled' : ''}/>
+                            <li class="cart__item_list  cart__item__soldout_${item.soldout_yn}" cart_prod_seq="${item.cart_prod_seq}" opt_seq = ${item.opt_seq}>
+                                <input type="checkbox" ${item.soldout_yn eq 'y' ? 'disabled' : 'class="cart__item_nav__checkbox"'}/>
                                 <a href="/productlist/${item.prod_cd}" class="cart__item_list__a">
                                     <img src="/img/${item.prod_cd}.png"/>
                                 </a>
@@ -91,9 +90,8 @@ change this template use File | Settings | File Templates. --%>
                     </h4>
                     <ul class="cart__items__ul">
                         <c:forEach items="${productCold}" var="item">
-                            <li class="cart__item_list  cart__item__soldout_${item.soldout_yn}" opt_seq = ${item.opt_seq}>
-                                <input type="checkbox"
-                                       cart_prod_seq="${item.cart_prod_seq}" ${item.soldout_yn eq 'y' ? 'disabled' : ''}/>
+                            <li class="cart__item_list  cart__item__soldout_${item.soldout_yn}" cart_prod_seq="${item.cart_prod_seq}" opt_seq = ${item.opt_seq}>
+                                <input type="checkbox" ${item.soldout_yn eq 'y' ? 'disabled' : 'class="cart__item_nav__checkbox"'}/>
                                 <a href="/productlist/${item.prod_cd}" class="cart__item_list__a">
                                     <img src="/img/${item.prod_cd}.png"/>
                                 </a>
@@ -139,9 +137,8 @@ change this template use File | Settings | File Templates. --%>
                     </h4>
                     <ul class="cart__items__ul">
                         <c:forEach items="${productOutside}" var="item">
-                            <li class="cart__item_list  cart__item__soldout_${item.soldout_yn}" opt_seq = ${item.opt_seq}>
-                                <input type="checkbox"
-                                       cart_prod_seq="${item.cart_prod_seq}" ${item.soldout_yn eq 'y' ? 'disabled' : ''}/>
+                            <li class="cart__item_list  cart__item__soldout_${item.soldout_yn}" cart_prod_seq="${item.cart_prod_seq}" opt_seq = ${item.opt_seq}>
+                                <input type="checkbox" ${item.soldout_yn eq 'y' ? 'disabled' : 'class="cart__item_nav__checkbox"'}/>
                                 <a href="/productlist/${item.prod_cd}" class="cart__item_list__a">
                                     <img src="/img/${item.prod_cd}.png"/>
                                 </a>
