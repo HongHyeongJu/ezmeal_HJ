@@ -7,7 +7,7 @@ import java.util.Objects;
 public class ProductReviewDto {
 
     Long revw_id, ord_id, mbr_id;
-    String prod_cd, typ_yp, title, stmt;
+    String prod_cd, title, stmt;
     LocalDate dlvry_cmpl_dt, revw_posbl_dt, wrt_dt;
     int thumb, star;
     String revw_opub_yn, del_yn;
@@ -17,13 +17,15 @@ public class ProductReviewDto {
     String up_id;
     /*-----------------------------------------------------------------------------*/
 
-    public ProductReviewDto(Long ord_id, Long mbr_id, String prod_cd, String typ_yp, String title, String stmt, LocalDate dlvry_cmpl_dt,
+    public ProductReviewDto(Long ord_id, Long mbr_id, String prod_cd, String title,
+                            String stmt, LocalDate dlvry_cmpl_dt,
                             LocalDate revw_posbl_dt, LocalDate wrt_dt, int thumb, int star,
-                            String revw_opub_yn, String del_yn, LocalDateTime in_dtm, String in_id, LocalDateTime up_dtm, String up_id) {
+                            String revw_opub_yn, String del_yn, LocalDateTime in_dtm,
+                            String in_id, LocalDateTime up_dtm, String up_id) {
         this.ord_id = ord_id;
         this.mbr_id = mbr_id;
         this.prod_cd = prod_cd;
-        this.typ_yp = typ_yp;
+
         this.title = title;
         this.stmt = stmt;
         this.dlvry_cmpl_dt = dlvry_cmpl_dt;
@@ -45,12 +47,12 @@ public class ProductReviewDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductReviewDto that = (ProductReviewDto) o;
-        return thumb == that.thumb && star == that.star && Objects.equals(revw_id, that.revw_id) && Objects.equals(ord_id, that.ord_id) && Objects.equals(mbr_id, that.mbr_id) && Objects.equals(prod_cd, that.prod_cd) && Objects.equals(typ_yp, that.typ_yp) && Objects.equals(title, that.title) && Objects.equals(stmt, that.stmt) && Objects.equals(dlvry_cmpl_dt, that.dlvry_cmpl_dt) && Objects.equals(revw_posbl_dt, that.revw_posbl_dt) && Objects.equals(wrt_dt, that.wrt_dt) && Objects.equals(revw_opub_yn, that.revw_opub_yn) && Objects.equals(del_yn, that.del_yn) && Objects.equals(in_dtm, that.in_dtm) && Objects.equals(in_id, that.in_id) && Objects.equals(up_dtm, that.up_dtm) && Objects.equals(up_id, that.up_id);
+        return thumb == that.thumb && star == that.star && Objects.equals(revw_id, that.revw_id) && Objects.equals(ord_id, that.ord_id) && Objects.equals(mbr_id, that.mbr_id) && Objects.equals(prod_cd, that.prod_cd) && Objects.equals(title, that.title) && Objects.equals(stmt, that.stmt) && Objects.equals(dlvry_cmpl_dt, that.dlvry_cmpl_dt) && Objects.equals(revw_posbl_dt, that.revw_posbl_dt) && Objects.equals(wrt_dt, that.wrt_dt) && Objects.equals(revw_opub_yn, that.revw_opub_yn) && Objects.equals(del_yn, that.del_yn) && Objects.equals(in_dtm, that.in_dtm) && Objects.equals(in_id, that.in_id) && Objects.equals(up_dtm, that.up_dtm) && Objects.equals(up_id, that.up_id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(revw_id, ord_id, mbr_id, prod_cd, typ_yp, title, stmt, dlvry_cmpl_dt, revw_posbl_dt, wrt_dt, thumb, star, revw_opub_yn, del_yn, in_dtm, in_id, up_dtm, up_id);
+        return Objects.hash(revw_id, ord_id, mbr_id, prod_cd, title, stmt, dlvry_cmpl_dt, revw_posbl_dt, wrt_dt, thumb, star, revw_opub_yn, del_yn, in_dtm, in_id, up_dtm, up_id);
     }
 
     /*-----------------------------------------------------------------------------*/
@@ -62,7 +64,6 @@ public class ProductReviewDto {
                 ", ord_id=" + ord_id +
                 ", mbr_id=" + mbr_id +
                 ", prod_cd='" + prod_cd + '\'' +
-                ", typ_yp='" + typ_yp + '\'' +
                 ", title='" + title + '\'' +
                 ", stmt='" + stmt + '\'' +
                 ", wrt_dt=" + wrt_dt +
@@ -102,14 +103,6 @@ public class ProductReviewDto {
 
     public void setProd_cd(String prod_cd) {
         this.prod_cd = prod_cd;
-    }
-
-    public String getTyp_yp() {
-        return typ_yp;
-    }
-
-    public void setTyp_yp(String typ_yp) {
-        this.typ_yp = typ_yp;
     }
 
     public String getTitle() {

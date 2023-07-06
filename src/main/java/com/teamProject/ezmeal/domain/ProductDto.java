@@ -46,7 +46,7 @@ public class ProductDto {
         this.sp_prc=sp_prc;
         this.cnsmr_prc=cnsmr_prc;
         this.sale_prc=sale_prc;
-        this.mgn_rate=mgn_rate; //마진율 = ((판매가 - 원가) / 판매가) * 100
+        this.mgn_rate=mgn_rate;
         this.dscpt=dscpt;
         this.detail=detail;
         this.min_qty=min_qty;

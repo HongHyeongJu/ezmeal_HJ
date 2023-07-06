@@ -5,10 +5,44 @@
 <mapper namespace="tb_product_review">
 
     <!-- 해당 상품의 상품 리뷰 select 하기 -->
+    <!-- 한 회원의 리뷰 모아보기 -->
+    <select id="get_all_member_review" parameterType="Long"  resultType="ProductReviewDto">
+        SELECT *
+        FROM tb_product_review
+        WHERE mbr_id = #{mbr_id} AND del_yn = 'n'
+    </select>
 
+    <!--찐 삭제(관리자용)-->
+    <delete id="delete_my_review" parameterType="Map"  >
+        DELETE
+        FROM tb_product_review
+        WHERE revw_id = #{revw_id}
+    </delete>
 
-    <!-- 해당 상품의 상품 리뷰 개수랑, 별점 평균 받기 하기 -->
+    <!--가짜 삭제-->
+    <update id="delete_my_review_del_y" parameterType="Map" >
+        UPDATE tb_product_review
+        SET del_yn = 'y'
+        WHERE revw_id = #{revw_id} AND mbr_id = #{mbr_id}
+    </update>
 
+    <!--리뷰 생성-->
+    <insert id="insert_review" parameterType="ProductReviewDto" >
+        INSERT INTO tb_product_review ( ord_id, prod_cd, mbr_id, title, stmt, dlvry_cmpl_dt, revw_posbl_dt,
+                                       wrt_dt, thumb, star, revw_opub_yn, del_yn, in_dtm, in_id, up_dtm, up_id)
+        VALUES ( #{ord_id}, #{prod_cd}, #{mbr_id}, #{title}, #{stmt}, #{dlvry_cmpl_dt}, #{revw_posbl_dt},
+                 #{wrt_dt}, #{thumb}, #{star}, #{revw_opub_yn}, #{del_yn}, #{in_dtm}, 'ezmeal' , #{up_dtm}, 'ezmeal')
+    </insert>
+
+    <!--리뷰 수정하기  (배송완료날짜~+1달까지만 가능)  -->
+    <update id="update_review" parameterType="ProductReviewDto" >
+        UPDATE tb_product_review
+        SET title=#{title}, stmt=#{stmt}, wrt_dt=#{wrt_dt}, star=#{star}, revw_opub_yn=#{revw_opub_yn}, del_yn=#{del_yn}
+        WHERE revw_id = #{revw_id} AND mbr_id = #{mbr_id} AND now() between dlvry_cmpl_dt AND dlvry_cmpl_dt+31
+    </update>
+
+    <!--도움돼요 증감 반영(수정)하기--> <!--도움되요 누를때마다 DB에 업데이트 하면 무리가니까 다른 페이지로 이동 할 때 반영하도록 함. 그런데 어떤 사용자가 도움돼요 눌렀는지
+    기록되어야함. 그래야 나중에 도움되요 취소 가능...엥???--> <!--이건 안되겠다... 나중에 통계용 TB를 따로 만들거나 해야할듯-->
 
     <!--1개의 상품코드에 대한 리뷰 숫자 가져오기-->
     <select id="get_review_count" parameterType="Long"  resultType="int">
@@ -16,7 +50,6 @@
     FROM tb_product_review
     WHERE prod_cd = #{prod_cd}
     </select>
-
 
     <!--1개의 상품코드에 대한 리뷰 별점 평균 가져오기-->
     <select id="get_review_average"  parameterType="Long"   resultType="Double">
@@ -26,15 +59,16 @@
     GROUP BY prod_cd
     </select>
 
+<!--[고민] 해당 카테고리에 있는 별점 평균, 리뷰수를 받아올 때   (1)쿼리문을 2번 돌릴 것인가?    (2)카테고리용 미니리뷰DTO를 하나 더 만들 것인가? 일단은 쿼리문 2개로 -->
+
     <!--해당 카테고리에 있는 별점 평균 받아오기 Map(prod_cd , round(avg(star),1))-->
     <select id="get_review_average_for_cate_list"  parameterType="String"   resultType="Map">
     select prod_cd, Round(avg(star),1)
     from tb_product_review
     where prod_cd In (select prod_cd
                     from tb_product
-                    where cate_cd Like concat(#{cate_cd},'%')
-                    ANd revw_opub_yn = 'y' AND del_yn='n' )
-    GROUP BY prod_cd;
+                    where cate_cd Like concat(#{cate_cd},'%') ANd revw_opub_yn = 'y' AND del_yn='n' )
+    GROUP BY prod_cd
     </select>
 
     <!--해당 카테고리에 있는 리뷰 전체 받아오기 Map(prod_cd , count(*))-->
@@ -43,24 +77,9 @@
         from tb_product_review
         where prod_cd In (select prod_cd
                           from tb_product
-                          where cate_cd Like concat(#{cate_cd},'%')
-                            ANd revw_opub_yn = 'y' AND del_yn='n' )
+                          where cate_cd Like concat(#{cate_cd},'%') ANd revw_opub_yn = 'y' AND del_yn='n' )
         GROUP BY prod_cd
     </select>
-<!--    &lt;!&ndash;1개의 상품코드에 대한 리뷰 별점 평균 가져오기&ndash;&gt;-->
-<!--    <select id="test"  parameterType="Long"   resultType="map">-->
-<!--        SELECT Round(avg(star),1), count(*)-->
-<!--        FROM tb_product_review-->
-<!--        WHERE prod_cd = #{prod_cd}-->
-<!--    </select>-->
-
-    <!--
-    SELECT prod_cd, Round(avg(star),1) , count(*),
-    FROM tb_product_review
-    WHERE prod_cd = 3
-    GROUP BY prod_cd;
-    이거 반환값이 뭘까?
-    -->
 
 
 </mapper>

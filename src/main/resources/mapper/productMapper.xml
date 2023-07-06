@@ -20,12 +20,24 @@
         WHERE prod_cd = #{prod_cd} and sale_yn='y' and dp_yn='y' and del_yn='n'
     </select>
 
-    <!-- 분류코드로 상품리스트 받기 -->
+    <!-- 분류코드로 상품리스트 받기 (상품 객체 전체값) -->
     <select id="select_product_list_by_cate_cd" parameterType="String" resultType="ProductDto">
         SELECT *
         FROM tb_product
         WHERE cate_cd LIKE concat( #{cate_cd},'%') and sale_yn='y' and dp_yn='y' and del_yn='n'
     </select>
+
+    <!--추가할 것. 재고테이블에서 재고가 있는 것만 ㅠ, 옵션여부도 판단하기-->
+
+    <!-- 분류코드로 상품리스트 받기 , 전체 리스트에 출력되는 값만.-->
+    <select id="select_product_list_cate_cd_mini" parameterType="String" resultType="ProductDto">
+        SELECT prod_cd, name, sale_prc
+        FROM tb_product
+        WHERE cate_cd LIKE concat(#{cate_cd}, '%')  and sale_yn='y' and dp_yn='y' and del_yn='n'
+    </select>
+
+
+<!-- 컨트롤러는 흐름 서비스에서 준 결과로만, 서비스는 비즈니스 -->
 
     <!-- 분류코드로 상품리스트 받기 "코드_%" + 판매가격 낮은 순--> <!--하드코딩.. 이게 맞아? -->
     <select id="select_product_list_cate_cd__Cheap" parameterType="String" resultType="ProductDto">
@@ -36,12 +48,6 @@
     </select>
 
 
-    <!-- 분류코드로 상품리스트 받기 "코드_%" + 판매가격 낮은 순--> <!--하드코딩.. 이게 맞아? -->
-    <select id="select_product_list_cate_cd_mini" parameterType="String" resultType="ProductDto">
-        SELECT prod_cd, name, sale_prc
-        FROM tb_product
-        WHERE cate_cd LIKE concat(#{cate_cd}, '%')  and sale_yn='y' and dp_yn='y' and del_yn='n'
-    </select>
 
 
     <!-- 이름으로 상품 검색하기 LIKE "%단어% -->
@@ -65,8 +71,18 @@
     </insert>
 
     <!-- 상품 정보 수정하기 -->
+    <update id="update_product" parameterType="ProductDto" >
+        INSERT INTO tb_product (cate_cd, prod_stus, cust_cd, dc_cd, name, mng_prod_nm, sfkp_stus, sfkp_mtd, sp_prc,
+                                cnsmr_prc, sale_prc, mgn_rate, dscpt, detail, min_qty, weight, stnd, orplc, recipe,
+                                mtd, distb_tlmt, vld_start_dt, vld_end_dt, mng, fst_reg_dt, sale_yn, dp_yn,
+                                del_yn, inv_yn, opt_yn, rmk, in_dtm, in_id, up_dtm, up_id)
+        VALUES (#{cate_cd}, #{prod_stus}, #{cust_cd}, #{dc_cd}, #{name}, #{mng_prod_nm}, #{sfkp_stus}, #{sfkp_mtd},
+                #{sp_prc}, #{cnsmr_prc}, #{sale_prc}, #{mgn_rate}, #{dscpt}, #{detail}, #{min_qty}, #{weight},
+                #{stnd}, #{orplc}, #{recipe}, #{mtd}, #{distb_tlmt}, #{vld_start_dt}, #{vld_end_dt}, #{mng},
+                #{fst_reg_dt}, #{sale_yn}, #{dp_yn}, #{del_yn}, #{inv_yn}, #{opt_yn}, #{rmk}, #{up_dtm}, #{up_id})
+    </update>
 
-
+    <!-- 옵션 수정도 해야... 옵션 만들어야겠다 -->
 
 
     <!-- 상품코드 제일 큰것(구독) -->
@@ -78,7 +94,8 @@
 
     <!-- 임시로 쓰는 삭제문 -->
     <delete id="delete_for_TDD" parameterType="Long" >
-        DELETE FROM tb_product
+        DELETE
+        FROM tb_product
         WHERE prod_cd = #{prod_cd}
     </delete>
 
