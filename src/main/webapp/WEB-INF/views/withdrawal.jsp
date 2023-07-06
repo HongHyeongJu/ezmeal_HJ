@@ -36,7 +36,7 @@
     </div>
     <div class="button-section">
         <button class="button1" type="button" height="44" onclick="history.back();">
-<%--        <button class="button1" type="button" height="44" onclick="sendGetRequest()">--%>
+            <%--        <button class="button1" type="button" height="44" onclick="sendGetRequest()">--%>
             <span class="button-msg">취소</span>
         </button>
         <button class="button2" type="submit" height="44" onclick="sendPostRequest()">
