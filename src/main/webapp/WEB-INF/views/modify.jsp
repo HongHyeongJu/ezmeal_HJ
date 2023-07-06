@@ -108,13 +108,13 @@
                     <div class="value">
                         <div class="gender-section">
                             <label class="gender-label" for="gender-man">
-                                <input data-testid="radio-MALE" id="gender-man" name="sex" type="radio" class="gender-input" value="m">
+                                <input data-testid="radio-MALE" id="gender-man" name="gender" type="radio" class="gender-input" value="m">
 <%--                                <span class="gender-span"><div class="span-mini"></div></span>--%>
                                 <span aria-labelledby="gender-man" class="gender-value">남자</span>
                             </label>
 
                             <label class="gender-label" for="gender-woman">
-                                <input data-testid="radio-FEMALE" id="gender-woman" name="sex" type="radio" class="gender-input" value="f">
+                                <input data-testid="radio-FEMALE" id="gender-woman" name="gender" type="radio" class="gender-input" value="f">
 <%--                                <span class="gender-span"><div class="span-mini"></div></span>--%>
                                 <span aria-labelledby="gender-woman" class="gender-value">여자</span>
                             </label>
