@@ -6,26 +6,26 @@ import java.util.Objects;
 
 public class ProductReviewDto {
 
-    Long revw_id, ord_id, mbr_id;
-    String prod_cd, title, stmt;
-    LocalDate dlvry_cmpl_dt, revw_posbl_dt, wrt_dt;
-    int thumb, star;
-    String revw_opub_yn, del_yn;
-    LocalDateTime in_dtm;
-    String in_id;
-    LocalDateTime up_dtm;
-    String up_id;
+    private Long revw_id, ord_id, prod_cd, mbr_id;
+    private String title, stmt;
+    private LocalDate dlvry_cmpl_dt, revw_posbl_dt, wrt_dt;
+    private Integer thumb, star;
+    private String revw_opub_yn, del_yn;
+    private LocalDateTime in_dtm;
+    private String in_id;
+    private LocalDateTime up_dtm;
+    private String up_id;
     /*-----------------------------------------------------------------------------*/
+    public ProductReviewDto(){}
 
-    public ProductReviewDto(Long ord_id, Long mbr_id, String prod_cd, String title,
+    public ProductReviewDto(Long ord_id, Long prod_cd, Long mbr_id, String title,
                             String stmt, LocalDate dlvry_cmpl_dt,
-                            LocalDate revw_posbl_dt, LocalDate wrt_dt, int thumb, int star,
+                            LocalDate revw_posbl_dt, LocalDate wrt_dt, Integer thumb, Integer star,
                             String revw_opub_yn, String del_yn, LocalDateTime in_dtm,
                             String in_id, LocalDateTime up_dtm, String up_id) {
         this.ord_id = ord_id;
-        this.mbr_id = mbr_id;
         this.prod_cd = prod_cd;
-
+        this.mbr_id = mbr_id;
         this.title = title;
         this.stmt = stmt;
         this.dlvry_cmpl_dt = dlvry_cmpl_dt;
@@ -97,11 +97,11 @@ public class ProductReviewDto {
         this.mbr_id = mbr_id;
     }
 
-    public String getProd_cd() {
+    public Long getProd_cd() {
         return prod_cd;
     }
 
-    public void setProd_cd(String prod_cd) {
+    public void setProd_cd(Long prod_cd) {
         this.prod_cd = prod_cd;
     }
 
@@ -145,19 +145,19 @@ public class ProductReviewDto {
         this.wrt_dt = wrt_dt;
     }
 
-    public int getThumb() {
+    public Integer getThumb() {
         return thumb;
     }
 
-    public void setThumb(int thumb) {
+    public void setThumb(Integer thumb) {
         this.thumb = thumb;
     }
 
-    public int getStar() {
+    public Integer getStar() {
         return star;
     }
 
-    public void setStar(int star) {
+    public void setStar(Integer star) {
         this.star = star;
     }
 

@@ -23,10 +23,23 @@ public class ProductReviewDao {
         return session.selectList("get_all_member_review", mbr_id);
     }
 
+    /* (리뷰 시퀀스, 회원 PK )로 리뷰 객체 얻기*/
+    public ProductReviewDto selectOneReviewByMember(Long revw_id , Long mbr_id) throws SQLException {
+        HashMap map = new HashMap<>();
+        map.put("revw_id", revw_id);
+        map.put("mbr_id", mbr_id);
+        return session.selectOne("get_one_review", map);
+    }
+
+    /*가장 최근에 생성한 리뷰 SEQ 얻기 (TDD용)*/
+    public ProductReviewDto selectLastInsertReview() throws SQLException {
+        return session.selectOne("get_last_insert_review");
+    }
+
 
     /*리뷰 삭제하기(영구삭제)*/
-    public Integer deleteReviewForever(Long revw_id) throws SQLException {
-        return session.selectOne("delete_my_review_del_y", revw_id);
+    public Integer deleteReviewForTdd(Long revw_id) throws SQLException {
+        return session.delete("delete_my_review_for_tdd", revw_id);
     }
 
 
@@ -35,30 +48,35 @@ public class ProductReviewDao {
         HashMap map = new HashMap<>();
         map.put("revw_id", revw_id);
         map.put("mbr_id", mbr_id);
-        return session.selectOne("delete_my_review_del_y", map);
+        return session.update("delete_my_review_del_y", map);
     }
 
 
     /*리뷰 생성하기*/
     public Integer insertReview(ProductReviewDto productReviewDto) throws SQLException {
-        return session.selectOne("insert_review", productReviewDto);
+        return session.insert("insertProductReview", productReviewDto);
     }
 
 
     /*리뷰 수정하기*/
     public Integer UpdateReview(ProductReviewDto productReviewDto) throws SQLException {
-        return session.selectOne("update_review", productReviewDto);
+        return session.update("update_review", productReviewDto);
     }
+
+//    /*리뷰 공개여부만 변경*/
+//    public Integer UpdateReviewOpenYN(String revw_opub_yn) throws SQLException {
+//        return session.update("update_review_open_yn", revw_opub_yn);
+//    } 리뷰 상세가서 비공개 체크 누르면 그때 반영되게 하면 될듯 ㅇㅇ
 
 
     /*1상품 리뷰 개수*/
-    public Integer countReview(Long prod_cd) throws SQLException {
+    public Integer countReviewOneProduct(Long prod_cd) throws SQLException {
         return session.selectOne(namespace+"get_review_count", prod_cd);
     }
 
 
     /*1상품 리뷰 평점*/
-    public Double ReviewAverage(Long prod_cd) throws SQLException {
+    public Double reviewAverageOneProduct(Long prod_cd) throws SQLException {
         return session.selectOne(namespace+"get_review_average", prod_cd);
     }
 

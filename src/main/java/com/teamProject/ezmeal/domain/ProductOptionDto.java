@@ -4,9 +4,12 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class ProductOptionDto {
-    Long opt_seq;
-    String prod_cd, dc_cd, name, typ;
-    int qty, cnsmr_prc, sale_prc;
+    Long opt_seq, prod_cd;
+    /* opt_name:10개 세트   full_name:불닭볶음김밥 10개 세트 */
+    String  dc_cd, name, full_name, typ;
+    /*원래 Table에는 name컬럼만 있음 (name가 해당함.)
+    full_name은 단일상품의 원래 이름+옵션명(상품 Table에서 Pk로 찾으면 찾을 수 있는 것))*/
+    Integer qty, cnsmr_prc, sale_prc;
     String use_yn, del_yn, rmk;
     LocalDateTime in_dtm;
     String in_id;
@@ -14,14 +17,16 @@ public class ProductOptionDto {
     String up_id;
 
     /*---------------------------------------------------------------*/
-    public ProductOptionDto(String prod_cd, String dc_cd, String name, String typ,
-                            int qty, int cnsmr_prc, int sale_prc,
+    public ProductOptionDto(Long prod_cd, String dc_cd, String name,
+                            String full_name, String typ,
+                            Integer qty, Integer cnsmr_prc, Integer sale_prc,
                             String use_yn, String del_yn, String rmk,
                             LocalDateTime in_dtm, String in_id,
                             LocalDateTime up_dtm, String up_id) {
         this.prod_cd = prod_cd;
         this.dc_cd = dc_cd;
         this.name = name;
+        this.full_name = full_name;
         this.typ = typ;
         this.qty = qty;
         this.cnsmr_prc = cnsmr_prc;
@@ -44,12 +49,12 @@ public class ProductOptionDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductOptionDto that = (ProductOptionDto) o;
-        return qty == that.qty && Objects.equals(opt_seq, that.opt_seq) && Objects.equals(prod_cd, that.prod_cd) && Objects.equals(dc_cd, that.dc_cd);
+        return qty == that.qty && cnsmr_prc == that.cnsmr_prc && sale_prc == that.sale_prc && Objects.equals(opt_seq, that.opt_seq) && Objects.equals(prod_cd, that.prod_cd) && Objects.equals(dc_cd, that.dc_cd) && Objects.equals(name, that.name) && Objects.equals(full_name, that.full_name) && Objects.equals(typ, that.typ) && Objects.equals(use_yn, that.use_yn) && Objects.equals(del_yn, that.del_yn) && Objects.equals(rmk, that.rmk) && Objects.equals(in_dtm, that.in_dtm) && Objects.equals(in_id, that.in_id) && Objects.equals(up_dtm, that.up_dtm) && Objects.equals(up_id, that.up_id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(opt_seq, prod_cd, dc_cd, qty);
+        return Objects.hash(opt_seq, prod_cd, dc_cd, name, full_name, typ, qty, cnsmr_prc, sale_prc, use_yn, del_yn, rmk, in_dtm, in_id, up_dtm, up_id);
     }
     /*---------------------------------------------------------------*/
 
@@ -60,6 +65,7 @@ public class ProductOptionDto {
                 ", prod_cd='" + prod_cd + '\'' +
                 ", dc_cd='" + dc_cd + '\'' +
                 ", name='" + name + '\'' +
+                ", full_name='" + full_name + '\'' +
                 ", typ='" + typ + '\'' +
                 ", qty=" + qty +
                 ", cnsmr_prc=" + cnsmr_prc +
@@ -68,6 +74,7 @@ public class ProductOptionDto {
                 ", del_yn='" + del_yn + '\'' +
                 '}';
     }
+
 
     /*---------------------------------------------------------------*/
 
@@ -79,11 +86,11 @@ public class ProductOptionDto {
         this.opt_seq = opt_seq;
     }
 
-    public String getProd_cd() {
+    public Long getProd_cd() {
         return prod_cd;
     }
 
-    public void setProd_cd(String prod_cd) {
+    public void setProd_cd(Long prod_cd) {
         this.prod_cd = prod_cd;
     }
 
@@ -103,6 +110,11 @@ public class ProductOptionDto {
         this.name = name;
     }
 
+    public String getFull_name() { return full_name; }
+
+    public void setFull_name(String full_name) { this.full_name = full_name;  }
+
+
     public String getTyp() {
         return typ;
     }
@@ -111,27 +123,27 @@ public class ProductOptionDto {
         this.typ = typ;
     }
 
-    public int getQty() {
+    public Integer getQty() {
         return qty;
     }
 
-    public void setQty(int qty) {
+    public void setQty(Integer qty) {
         this.qty = qty;
     }
 
-    public int getCnsmr_prc() {
+    public Integer getCnsmr_prc() {
         return cnsmr_prc;
     }
 
-    public void setCnsmr_prc(int cnsmr_prc) {
+    public void setCnsmr_prc(Integer cnsmr_prc) {
         this.cnsmr_prc = cnsmr_prc;
     }
 
-    public int getSale_prc() {
+    public Integer getSale_prc() {
         return sale_prc;
     }
 
-    public void setSale_prc(int sale_prc) {
+    public void setSale_prc(Integer sale_prc) {
         this.sale_prc = sale_prc;
     }
 
