@@ -20,7 +20,7 @@ public class DeliveryAddressDaoImplTest {
 
     @Test
     public void defaultAddress() throws Exception {
-        DeliveryAddressDto defaultAddress = deliveryAddressDao.defaultAddress(1001L);
+        DeliveryAddressDto defaultAddress = deliveryAddressDao.selectDefaultAddress(1001L);
         Long addrId = defaultAddress.getAddr_id();
         assertSame(2L, addrId);
     }

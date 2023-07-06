@@ -2,145 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="tb_cart">
+<mapper namespace="cart">
 
     <!--    mbr_id를 통한 cart_seq 구하는 query-->
-    <select id="tb_cart_seq" resultType="Long">
+    <select id="cart_seq" resultType="Long">
         select cart_seq
         from tb_cart
         where mbr_id = #{mbrId};
     </select>
 
-    <!--  장바구니 들어가면 제일 먼저하는 품절 여부 확인 및 해당 정보 업데이트-->
-    <update id="soldOut_yn" parameterType="Long">
-        UPDATE tb_cart_product cp
-            JOIN tb_product_inventory pi
-        ON cp.prod_cd = pi.prod_cd
-            SET cp.soldout_yn = IF((pi.curr_inv - pi.safe_inv) &lt;= 0, 'y', 'n')
-        WHERE cp.mbr_id = #{mbrId}
-    </update>
-
-    <!--    구독과 일반 2개로 나누자  -> 나중에 동적쿼리문 -->
-    <!--    <select id="tb_cart_product-count" resultType="int">-->
-    <!--        select count(*)-->
-    <!--        from tb_cart_product cp-->
-    <!--        where del_yn &lt;&gt; 'y'-->
-    <!--        and cp.cart_seq = #{cartSeq}-->
-    <!--        <choose>-->
-    <!--            <when test="type == '일반'">-->
-    <!--                AND cp.typ &lt;&gt; '구독'-->
-    <!--            </when>-->
-    <!--            <when test="type == '구독'">-->
-    <!--                AND cp.typ = '구독'-->
-    <!--            </when>-->
-    <!--        </choose>-->
-    <!--        ;-->
-    <!--    </select>-->
-    <select id="tb_cart_product-count" resultType="int">
-        select count(*)
-        from tb_cart_product cp
-        where del_yn &lt;&gt; 'y'
-          and cp.cart_seq = #{cartSeq}
-          and cp.typ &lt;&gt; '구독'
-        ;
-    </select>
-
-    <select id="tb_cart_subscript-count" resultType="int">
-        select count(*)
-        from tb_cart_product cp
-        where del_yn &lt;&gt; 'y'
-          and cp.cart_seq = #{cartSeq}
-          and cp.typ = '구독'
-        ;
-    </select>
-
-
-    <!--    상품 보여주는 것도 2개 구독, 일반 -->
-<!--    구독상품
-TODO
-상품코드에서 식단표 날짜 가지고 와서 날짜 지나면 아예 상품을 날려버럼
--->
-    <select id="tb_cart_sub-product" resultType="CartProductDto">
-        select cp.prod_cd, cp.typ, cp.qty, p.name, p.cnsmr_prc, p.sale_prc
-        from tb_cart_product cp,
-             tb_product p
-        where cp.cart_seq = #{cartSeq}
-          and cp.prod_cd = p.prod_cd
-          and cp.typ = '구독'
-          and cp.del_yn &lt;&gt; 'y'
-        ;
-    </select>
-
-    <!--    전체 일반 상품-->
-    <select id="tb_cart_product" resultType="CartProductDto">
-        select cp.prod_cd, cp.typ, cp.qty, p.name, p.cnsmr_prc, p.sale_prc
-        from tb_cart_product cp,
-             tb_product p
---             tb_product_optioin po
-        where cp.cart_seq = #{cartSeq}
-          and cp.prod_cd = p.prod_cd
---           and p.prod_cd = po.prod_cd
-          and cp.typ &lt;&gt; '구독'
-          and cp.del_yn &lt;&gt; 'y'
-        ;
-    </select>
-
-    <!--    냉장-->
-    <select id="tb_cart_product_cold" resultType="CartProductDto">
-        select cp.prod_cd, cp.typ, cp.qty, p.name, p.cnsmr_prc, p.sale_prc
-        from tb_cart_product cp,
-             tb_product p
-        where cp.cart_seq = #{cartSeq}
-          and cp.prod_cd = p.prod_cd
-          and cp.typ = '냉장'
-          and cp.del_yn &lt;&gt; 'y'
-        ;
-    </select>
-
-    <!--    냉동-->
-    <select id="tb_cart_product_ice" resultType="CartProductDto">
-        select cp.prod_cd, cp.typ, cp.qty, p.name, p.cnsmr_prc, p.sale_prc
-        from tb_cart_product cp,
-             tb_product p
-        where cp.cart_seq = #{cartSeq}
-          and cp.prod_cd = p.prod_cd
-          and cp.typ = '냉동'
-          and cp.del_yn &lt;&gt; 'y'
-        ;
-    </select>
-
-    <!--    상온-->
-    <select id="tb_cart_product_outside" resultType="CartProductDto">
-        select cp.prod_cd, cp.typ, cp.qty, p.name, p.cnsmr_prc, p.sale_prc
-        from tb_cart_product cp,
-             tb_product p
-        where cp.cart_seq = #{cartSeq}
-          and cp.prod_cd = p.prod_cd
-          and cp.typ = '상온'
-          and cp.del_yn &lt;&gt; 'y'
-        ;
-    </select>
-
-    <select id="tb_delivery_address" resultType="DeliveryAddressDto">
-        select *
-        from tb_delivery_address
-        where mbr_id = #{mbrId}
-        ;
-    </select>
-
-
-    <!--동적쿼리, 상품 여러개 받아오기-->
-    <select id="select_prod" resultType="CartProductDto">
-        SELECT *
-        from tb_cart_product cp,
-        tb_product p
---         tb_product_discount pd
-        WHERE cp.cart_seq = #{cartSeq}
-          and cp.prod_cd = p.prod_cd
---           and p.dc_cd = pd.dc_cd
-        AND cp.prod_cd IN
-        <foreach item="item" collection="prodCdList" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-    </select>
+<!--    TODO insert 시, 장바구니 자동 생성 -->
+<!--    <insert id="insert">-->
+<!--        insert into tb_cart-->
+<!--    </insert>-->
 </mapper>

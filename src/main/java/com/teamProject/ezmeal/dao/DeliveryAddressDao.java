@@ -13,10 +13,9 @@ public class DeliveryAddressDao {
     private final SqlSession session;
     private static final String namespace = "tb_delivery_address.";
 
-// select
     // 기본 배송지
-    public DeliveryAddressDto defaultAddress(Long mbrId) throws Exception {
-        return session.selectOne(namespace + "defaultAddress", mbrId);
+    public DeliveryAddressDto selectDefaultAddress(Long mbrId) {
+        return session.selectOne(namespace + "default_address", mbrId);
     }
 
     // 배송지 list

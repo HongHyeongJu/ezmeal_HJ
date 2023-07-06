@@ -57,7 +57,7 @@
 
             <div class="cart__items_list">
                 <!-- 구독 ---------------------------------------------- -->
-                <c:if test="${not empty cartSubProducts}">
+                <c:if test="${not empty subscriptProducts}">
                     <h4 class="cart__items_list-type">
               <span>
                 <span><i class="fas fa-seedling" style="color: #2ebd46;"></i></span>
@@ -71,7 +71,7 @@
                     <!--cart__items_list-type 구독 끝-->
                     <ul class="cart__items__ul">
                         <!--반복 시작 -->
-                        <c:forEach items="${cartSubProducts}" var="item">
+                        <c:forEach items="${subscriptProducts}" var="item">
                             <!--구독 식품 반복 시작 -->
                             <li class="cart__item_list">
                                 <input type="checkbox"/>
@@ -111,7 +111,7 @@
                                 </div>
                                 <!--상품 가격 끝-->
 
-                                <button type="button" data-testid="delete">
+                                <button class="subCart__delete_btn" type="button" data-testid="delete">
                                     <span>x</span>
                                 </button>
                                 <!-- 삭제 버튼 끝 -->
@@ -134,7 +134,7 @@
                     <div class="dlvar_destination">
                         <p>${defaultAddress.desti} </p>
                         <p>${defaultAddress.desti_dtl}</p>
-                        <p>TODO | login 안했을 시, 로그인 해주세요!</p>
+                        <p>${loginYN == 0 ? "login을 해주세요!" : "" }</p>
                     </div>
                     <button class="dlvar_chg" type="button">
                         <span>배송지 변경</span>

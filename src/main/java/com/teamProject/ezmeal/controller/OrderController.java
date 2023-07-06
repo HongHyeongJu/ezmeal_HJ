@@ -2,6 +2,7 @@ package com.teamProject.ezmeal.controller;
 
 import com.teamProject.ezmeal.dao.*;
 import com.teamProject.ezmeal.domain.CartProductDto;
+import com.teamProject.ezmeal.domain.CouponJoinDto;
 import com.teamProject.ezmeal.domain.DeliveryAddressDto;
 import com.teamProject.ezmeal.domain.MemberDto;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +19,12 @@ import java.util.Map;
 @RequestMapping("/order")
 public class OrderController {
 
-    private final CartDao cartDao;
+    private final CartProductDao cartProductDao;
     private final DeliveryAddressDao deliveryAddressDao;
     private final MemberDao memberDao;
     private final PointTransactionHistoryDao pointTransactionHistoryDao;
     private final MemberGradeBenefitDao memberGradeBenefitDao;
+    private final CouponJoinDao couponJoinDao;
 
 
     @GetMapping("/general")
@@ -37,8 +39,8 @@ public class OrderController {
 
             // TODO 배송지는 일반 구독 나눠서 우선권이 선택된 배송지, 선택된 배송지 column 없을 시 기본 배송지 -> 지금은 너무 할게 많으니깐 그냥 배송지
             //  deliveryAddressDao.choiseAddress(memberId)
-            DeliveryAddressDto defaultAddress = deliveryAddressDao.defaultAddress(memberId);
-            List<CartProductDto> cartProductDtos = cartDao.cartProducts(memberId, orderProduct); // 상품, 할인 정보 존재
+            DeliveryAddressDto defaultAddress = deliveryAddressDao.selectDefaultAddress(memberId);
+            List<CartProductDto> cartProductDtos = cartProductDao.cartProducts(memberId, orderProduct); // 상품, 할인 정보 존재
             MemberDto memberInfo = memberDao.getMemberInfo(memberId);
 
             // 결제 금액 계산
@@ -67,11 +69,22 @@ public class OrderController {
             pointMap.put("usePoint", pointCanUse);
             pointMap.put("pointRate", pointRate);
 
+            // 쿠폰
+//            Map<String, Object> couponMap = new HashMap<>();
+            List<CouponJoinDto> coupons = couponJoinDao.couponList(memberId);
+            // TODO 사용가능 쿠폰 logic 생성 후 Map 사용할지 결정
+//            int couponCount = couponJoinDtos.size();
+//            couponMap.put("coupon", couponJoinDtos);
+//            couponMap.put("couponCount", couponCount);
+
+
             model.addAttribute("defaultAddress", defaultAddress);
             model.addAttribute("cartProductDtos", cartProductDtos);
             model.addAttribute("mbrInfo", memberInfo);
             model.addAttribute("priceMap", priceMap);
             model.addAttribute("pointMap", pointMap);
+//            model.addAttribute("couponMap", couponMap);
+            model.addAttribute("counpons", coupons);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -81,31 +94,4 @@ public class OrderController {
     }
 
     // js를 통해서 일반 url이면 window.location.href = "/order/general" 구독이면  window.location.href = "/order/subscript"
-    @GetMapping("/subscript")
-    public String getSubscriptOrder(@SessionAttribute Long memberId, @CookieValue String orderProduct, Model model) {
-        System.out.println(orderProduct);
-        try {
-            // session.get member id 해야한다.
-            int count = cartDao.subCount(memberId);
-            int updateSoldOut = cartDao.updateSoldOut(memberId);
-            if (updateSoldOut > 0) {
-                return "subCart";
-            }
-
-            List<CartProductDto> cartSubProducts = cartDao.subProdList(memberId);
-
-            // 배송지는 일반 구독 나눠서 우선권이 선택된 배송지, 선택된 배송지 column 없을 시 기본 배송지 -> 지금은 너무 할게 많으니깐 그냥 배송지
-//            deliveryAddressDao.choiseAddress(memberId)
-            DeliveryAddressDto defaultAddress = deliveryAddressDao.defaultAddress(memberId);
-
-            model.addAttribute("count", count);
-            model.addAttribute("cartSubProducts", cartSubProducts);
-            model.addAttribute("defaultAddress", defaultAddress);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        // cookie 정보 이용해서 데이터 전달하기
-        return "orderTest";
-    }
-
 }

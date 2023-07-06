@@ -1,7 +1,6 @@
-package com.teamProject.ezmeal.service;
+package com.teamProject.ezmeal.dao;
 
-import com.teamProject.ezmeal.dao.CartDao;
-import com.teamProject.ezmeal.domain.CartProductDto;
+import com.teamProject.ezmeal.domain.CouponJoinDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +13,13 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
-public class CartServiceImplTest {
-
+public class CouponJoinDaoTest {
 
     @Autowired
-    private CartServiceImpl cartService;
-
+    private CouponJoinDao couponJoinDao;
     @Test
-    public void getProduct() throws Exception {
-        List<CartProductDto> product = cartService.getProduct(1001L);
+    public void couponList() {
+        List<CouponJoinDto> couponJoinDtos = couponJoinDao.couponList(1001L);
+        System.out.println("couponJoinDtos = " + couponJoinDtos);
     }
 }
