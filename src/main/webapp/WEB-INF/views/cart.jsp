@@ -58,17 +58,13 @@ change this template use File | Settings | File Templates. --%>
                                 </div>
                                 <div class="cart__item__btn">
                                     <button type="button" class="count_down__btn">-</button>
-                                    <div class="count_num" po_qty="${item.po_qty}">${item.cp_qty}</div>
+                                    <input class="count_num" po_qty="${item.po_qty}" type="text" value="${item.cp_qty}"/>
                                     <button type="button" class="count_up__btn">+</button>
                                 </div>
                                 <div class="cart__item_price">
-                                    <span aria-label="할인 가격" data-testid="discount-price">${item.sale_prc}</span>
-                                    <c:if test="${item.cnsmr_prc ne item.sale_prc}">
-                            <span aria-label="판매 가격" data-testid="product-price"
-                                  class="cart__item_product-price">
-                                    ${item.cnsmr_prc}
-                            </span>
-                                    </c:if>
+                                    <span class="cart__item_sale_prc">${item.sale_prc}</span>
+                                    <span class="cart__item_product-price" ${item.cnsmr_prc eq item.sale_prc ? 'hidden' : ''}>${item.cnsmr_prc}</span>
+
                                 </div>
                                 <button class="cart__delete_btn" type="button" data-testid="delete">
                                     x
@@ -105,17 +101,12 @@ change this template use File | Settings | File Templates. --%>
                                 </div>
                                 <div class="cart__item__btn">
                                     <button type="button" class="count_down__btn">-</button>
-                                    <div class="count_num" po_qty="${item.po_qty}">${item.cp_qty}</div>
+                                    <input class="count_num" po_qty="${item.po_qty}" type="text" value="${item.cp_qty}"/>
                                     <button type="button" class="count_up__btn">+</button>
                                 </div>
                                 <div class="cart__item_price">
-                                    <span aria-label="할인 가격" data-testid="discount-price">${item.sale_prc}</span>
-                                    <c:if test="${item.cnsmr_prc ne item.sale_prc}">
-                            <span aria-label="판매 가격" data-testid="product-price"
-                                  class="cart__item_product-price">
-                                    ${item.cnsmr_prc}
-                            </span>
-                                    </c:if>
+                                    <span class="cart__item_sale_prc">${item.sale_prc}</span>
+                                    <span class="cart__item_product-price" ${item.cnsmr_prc eq item.sale_prc ? 'hidden' : ''}>${item.cnsmr_prc}</span>
                                 </div>
                                 <button class="cart__delete_btn" type="button" data-testid="delete">
                                     x
@@ -153,17 +144,12 @@ change this template use File | Settings | File Templates. --%>
 
                                 <div class="cart__item__btn">
                                     <button type="button" class="count_down__btn">-</button>
-                                    <div class="count_num" po_qty="${item.po_qty}">${item.cp_qty}</div>
+                                    <input class="count_num" po_qty="${item.po_qty}" type="text" value="${item.cp_qty}"/>
                                     <button type="button" class="count_up__btn">+</button>
                                 </div>
                                 <div class="cart__item_price">
-                                    <span aria-label="할인 가격" data-testid="discount-price">${item.sale_prc}</span>
-                                    <c:if test="${item.cnsmr_prc ne item.sale_prc}">
-                            <span aria-label="판매 가격" data-testid="product-price"
-                                  class="cart__item_product-price">
-                                    ${item.cnsmr_prc}
-                            </span>
-                                    </c:if>
+                                    <span class="cart__item_sale_prc">${item.sale_prc}</span>
+                                        <span class="cart__item_product-price" ${item.cnsmr_prc eq item.sale_prc ? 'hidden' : ''}>${item.cnsmr_prc}</span>
                                 </div>
                                 <button class="cart__delete_btn" type="button" data-testid="delete">
                                     x
@@ -258,6 +244,6 @@ change this template use File | Settings | File Templates. --%>
         crossorigin="anonymous"
 ></script>
 <script src="/javascript/cart.js"></script>
-<script type="module" src="/javascript/cartAPI.js"></script>
+<script src="/javascript/cartAPI.js"></script>
 </body>
 </html>
