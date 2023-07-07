@@ -33,7 +33,7 @@
         <button class="button-1" type="button" height="46" radius="3" onclick="window.location.href = '/';" >
           <span class="css-ymwvow e4nu7ef1">메인페이지</span>
         </button>
-        <button class="button" type="button" height="46" radius="3" onclick="window.location.href = '/mypage';" >
+        <button class="button" type="button" height="46" radius="3" onclick="window.location.href = '/mypage/main';" >
           <span class="css-ymwvow e4nu7ef1">마이페이지</span>
         </button>
         <button class="button" type="button" height="46" radius="3" onclick="window.location.href = '/productcatelist';" >
