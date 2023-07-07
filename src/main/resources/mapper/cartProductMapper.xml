@@ -70,7 +70,10 @@
     <update id="delete">
         UPDATE tb_cart_product
         SET del_yn = 'y'
-        WHERE cart_prod_seq = #{cartProdSeq}
+        WHERE cart_prod_seq in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
     </update>
 
     <!-- 해당 회원의 장바구니의 상품 존재여부 검증 -->
@@ -78,8 +81,18 @@
         select count(*)
         from tb_cart_product
         where cart_seq = #{cartSeq}
-          and cart_prod_seq = #{cartProdSeq}
+        and cart_prod_seq in
+        <foreach collection="cartProdSeq" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
     </select>
+
+<!--수량 update-->
+<update id="quantity">
+    update tb_cart_product
+    set qty = #{quantity}
+    where cart_prod_seq = #{cartProdSeq};
+</update>
 
     <!--  | 관리자 |  -->
 

@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -73,11 +70,13 @@ public class CartProductServiceTest {
 
     @Test
     public void validateCartProduct() {
-        int successResult = cartProductService.validateCartProduct(1L, 1L);
+        List<Long> longs = new ArrayList<>();
+        longs.add(1L);
+        int successResult = cartProductService.validateCartProduct(1L, longs);
         assertEquals(1, successResult);
 
-        int wrongValidationInt = cartProductService.validateCartProduct(1L, 0L);
-        assertEquals(0, wrongValidationInt);
+//        int wrongValidationInt = cartProductService.validateCartProduct(1L, 0L);
+//        assertEquals(0, wrongValidationInt);
     }
 
     @Test

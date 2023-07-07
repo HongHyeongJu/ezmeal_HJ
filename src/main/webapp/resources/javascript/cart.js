@@ -1,6 +1,6 @@
 const selectAllBtn = document.querySelector(".cart__items_nav__checkbox"); // 전체 선택
 const selectBtns = document.querySelectorAll(".cart__item_nav__checkbox"); // 선택
-let cartProdSeqList = [];
+let CART_PROD_SEQ_LIST = [];
 let dynamicNum = 0;
 
 // // event function
@@ -13,9 +13,9 @@ let dynamicNum = 0;
 //     // 초기화
 //     SELECTPRODUCTCODE = "";
 // }
-//
-// // logic -> TODO cart_seq 변경되어서 logic 수정 필요
-// // 1. cart checked prod_cd 찾기
+// //
+// // // logic -> TODO cart_seq 변경되어서 logic 수정 필요
+// // // 1. cart checked prod_cd 찾기
 // const checkChecked = function () {
 //     // 반복문이 돌 때마다 block(scope 생성) 이 생성이 되어서 const 사용이 가능하다.
 //     for (const product of products) {
@@ -30,7 +30,9 @@ let dynamicNum = 0;
 //                 prodText.indexOf("[") + 1,
 //                 prodText.indexOf("]")
 //             );
-
+//         }
+//     }
+// }
 
 // 모두 선택
 function selectAllProduct() {
@@ -40,30 +42,32 @@ function selectAllProduct() {
         console.log(selectAllBtn.checked);
         selectBtn.checked = check; // 우변의 checked 여부에 따라서 좌변의 checked 여부 변경
         const cartProdSeq = selectBtn.closest("li").getAttribute('cart_prod_seq');
+        const LongCartProdSeq = parseInt(cartProdSeq);
 
-        check ? cartProdSeqList.push(cartProdSeq) : (cartProdSeqList = []);
+        check ? CART_PROD_SEQ_LIST.push(LongCartProdSeq) : (CART_PROD_SEQ_LIST = []);
         // 중복 요소 제거
-        cartProdSeqList = cartProdSeqList.filter((value, index) => cartProdSeqList.indexOf(value) === index);
+        CART_PROD_SEQ_LIST = CART_PROD_SEQ_LIST.filter((value, index) => CART_PROD_SEQ_LIST.indexOf(value) === index);
     })
 
-    console.log("all : " + cartProdSeqList);
+    console.log("all : " + CART_PROD_SEQ_LIST);
 }
 
 function selectProduct(event) {
     const targetBtn = event.target;
     const cartProdSeq = targetBtn.parentNode.getAttribute('cart_prod_seq');
-    console.log("cartProdSeq" + cartProdSeq);
+    const LongCartProdSeq = parseInt(cartProdSeq);
+    console.log("cartProdSeq" + LongCartProdSeq);
     if (targetBtn.checked) {
-        cartProdSeqList.push(cartProdSeq);
+        CART_PROD_SEQ_LIST.push(LongCartProdSeq);
         dynamicNum++;
     } else {
         // filter : 해당 조건이 true인 경우 값을 남긴다
-        cartProdSeqList = cartProdSeqList.filter((item) => item !== cartProdSeq);
+        CART_PROD_SEQ_LIST = CART_PROD_SEQ_LIST.filter((item) => item !== LongCartProdSeq);
         dynamicNum--;
     }
     console.log("dynamicNum:" + dynamicNum)
     selectAllBtn.checked = (selectBtns.length === dynamicNum);
-    console.log("prod : " + cartProdSeqList)
+    console.log("prod : " + CART_PROD_SEQ_LIST)
 }
 
 // event

@@ -94,16 +94,16 @@ public class CartProductService {
 
 
     // 상품 삭제 update
-    public int removeCartProduct(Long cartProdSeq) {
+    public int removeCartProduct(List<Long> cartProdSeq) {
         return cartProductDao.deleteCartProduct(cartProdSeq);
     }
 
     // 해당 회원의 장바구니의 상품 존재여부 검증
-    public int validateCartProduct(Long cartSeq, Long cartProdSeq) {
+    public int validateCartProduct(Long cartSeq, List<Long> cartProdSeq) {
         int successMessage = 1;
         int failMessage = 0;
 
-        Map<String, Long> validationMap = new HashMap<>();
+        Map<String, Object> validationMap = new HashMap<>();
         validationMap.put("cartSeq", cartSeq);
         validationMap.put("cartProdSeq", cartProdSeq);
 
@@ -114,6 +114,16 @@ public class CartProductService {
 
     }
 
+    // 수량 update
+    public String changeQuantity(Map<String, Long> quantityMap){
+        try {
+            int updateResult = cartProductDao.updateQuantity(quantityMap);
+            if (updateResult != 1) return "fail";
+            return "success";
+        } catch (PersistenceException e) {
+            return "fail";
+        }
+    }
 
     // 관리자
 

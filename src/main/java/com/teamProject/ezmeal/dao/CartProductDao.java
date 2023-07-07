@@ -29,7 +29,6 @@ public class CartProductDao {
     }
 
     // 일반 상품 : 냉장/냉동/상온 map으로 저장
-    // TODO  option 확실해지면 다시 작성 필요 - option_cd 존재시, option 값(opt_val)을 상품 명 옆에 두고 | 가격은 옵션 가격으로 지정
     /* TODO  옵션 쿼리문 - 냉장 냉동, 상온에 조건 추가 하면 된다.
              -> 품절
                     단일상품 & 맛 & 무게 - 재고가 0이상인지 비교
@@ -69,14 +68,17 @@ public class CartProductDao {
     }
 
     // 개별 상품 삭제 : JS fetch를 이용한 rest API 수행
-    public int deleteCartProduct(Long cartProdSeq) {
+    public int deleteCartProduct(List<Long> cartProdSeq) {
         return session.update(namespace + "delete", cartProdSeq);
     }
 
-
     // 해당 회원의 장바구니의 상품 존재여부 검증
-    public int selectValidation(Map<String, Long> validationMap){
+    public int selectValidation(Map<String, Object> validationMap){
         return session.selectOne(namespace + "validation", validationMap);
+    }
+//    수량 update
+    public int updateQuantity(Map<String, Long> quantityMap){
+        return session.update(namespace + "quantity", quantityMap);
     }
     // TODO 담을수 있는 최대 수량
     // TODO 삭제된 상품들 중에서 up_dtm이 가장 낮은거 5개 보여주기

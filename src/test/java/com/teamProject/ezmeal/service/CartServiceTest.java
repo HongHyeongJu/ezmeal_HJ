@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,10 +34,12 @@ public class CartServiceTest {
     }
 
     @Test
-    public void delete() throws Exception{
+    public void delete(){
         Map map = new HashMap();
         map.put("mbrId", 1001L);
         map.put("prodCd", "p00001");
-        cartProductService.removeCartProduct(1L);
+        List<Long> longs = new ArrayList<>();
+        longs.add(1L);
+        cartProductService.removeCartProduct(longs);
     }
 }

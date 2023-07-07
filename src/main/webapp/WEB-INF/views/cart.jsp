@@ -57,9 +57,9 @@ change this template use File | Settings | File Templates. --%>
                                     </a>
                                 </div>
                                 <div class="cart__item__btn">
-                                    <button type="button" aria-label="수량내리기" disabled>-</button>
-                                    <div po_qty="${item.po_qty}">${item.cp_qty}</div>
-                                    <button type="button" aria-label="수량올리기">+</button>
+                                    <button type="button" class="count_down__btn">-</button>
+                                    <div class="count_num" po_qty="${item.po_qty}">${item.cp_qty}</div>
+                                    <button type="button" class="count_up__btn">+</button>
                                 </div>
                                 <div class="cart__item_price">
                                     <span aria-label="할인 가격" data-testid="discount-price">${item.sale_prc}</span>
@@ -71,7 +71,7 @@ change this template use File | Settings | File Templates. --%>
                                     </c:if>
                                 </div>
                                 <button class="cart__delete_btn" type="button" data-testid="delete">
-                                    <span>x</span>
+                                    x
                                 </button>
                             </li>
                         </c:forEach>
@@ -104,9 +104,9 @@ change this template use File | Settings | File Templates. --%>
                                     </a>
                                 </div>
                                 <div class="cart__item__btn">
-                                    <button type="button" aria-label="수량내리기">-</button>
-                                    <div po_qty="${item.po_qty}">${item.cp_qty}</div>
-                                    <button type="button" aria-label="수량올리기">+</button>
+                                    <button type="button" class="count_down__btn">-</button>
+                                    <div class="count_num" po_qty="${item.po_qty}">${item.cp_qty}</div>
+                                    <button type="button" class="count_up__btn">+</button>
                                 </div>
                                 <div class="cart__item_price">
                                     <span aria-label="할인 가격" data-testid="discount-price">${item.sale_prc}</span>
@@ -150,10 +150,11 @@ change this template use File | Settings | File Templates. --%>
                                         <p>${item.name}</p>
                                     </a>
                                 </div>
+
                                 <div class="cart__item__btn">
-                                    <button type="button" aria-label="수량내리기">-</button>
-                                    <div po_qty="${item.po_qty}">${item.cp_qty}</div>
-                                    <button type="button" aria-label="수량올리기">+</button>
+                                    <button type="button" class="count_down__btn">-</button>
+                                    <div class="count_num" po_qty="${item.po_qty}">${item.cp_qty}</div>
+                                    <button type="button" class="count_up__btn">+</button>
                                 </div>
                                 <div class="cart__item_price">
                                     <span aria-label="할인 가격" data-testid="discount-price">${item.sale_prc}</span>
@@ -257,6 +258,6 @@ change this template use File | Settings | File Templates. --%>
         crossorigin="anonymous"
 ></script>
 <script src="/javascript/cart.js"></script>
-<script src="/javascript/cartAPI.js"></script>
+<script type="module" src="/javascript/cartAPI.js"></script>
 </body>
 </html>

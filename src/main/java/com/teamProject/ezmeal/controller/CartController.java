@@ -6,12 +6,12 @@ import com.teamProject.ezmeal.service.CartProductService;
 import com.teamProject.ezmeal.service.CartService;
 import com.teamProject.ezmeal.service.DeliveryAddressService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.teamProject.ezmeal.service.CartProductService.TYPE_NAME;
 
@@ -48,7 +48,7 @@ public class CartController {
         for (int i = 0; i < productsMap.size(); i++) {
             List<CartJoinProductDto> products = productsMap.get(TYPE_NAME[i]);
             productCount += products.size();
-            model.addAttribute(productName[i], (products.size() !=0)? products: null);
+            model.addAttribute(productName[i], (products.size() != 0) ? products : null);
         }
 
         model.addAttribute("count", productCount);
@@ -60,21 +60,47 @@ public class CartController {
     // 개별 상품 삭제 : JS fetch를 이용한 rest API 수행
     @PatchMapping("/delete")
     @ResponseBody
-    public String patchSubscript(@SessionAttribute Long memberId, @RequestBody Long cartProdSeq) {
+    public String removeProduct(@SessionAttribute Long memberId, @RequestBody List<Long> cartProdSeqList) {
 //        // 예외1. 회원 세션 만료  TODO 장바구니로 이동 필요
-        System.out.println("memberId = " + memberId);
         if (memberId == null) return "no_memberId";
 
         // 예외2. service에서 검증 돌림
         Long cartSeq = cartService.getCartSeq(memberId);
-        int validationResult = cartProductService.validateCartProduct(cartSeq, cartProdSeq);
+        int validationResult = cartProductService.validateCartProduct(cartSeq, cartProdSeqList);
 
         // 예외3. 잘못된 상품으로 접근
         if (validationResult == 0) return "wrong product";
 
-        cartProductService.removeCartProduct(cartProdSeq);
+        cartProductService.removeCartProduct(cartProdSeqList);
         // TODO  2. 해당 jsp를 변수에 담이서 return한다. 3. js에서 html을 갈아엎는다.
 //        Map<String, List<CartJoinProductDto>> productsMap = cartProductService.getProducts(cartSeq);
         return "cartProductModule";
+    }
+
+    @PatchMapping("/update")
+    @ResponseBody
+    public String updateProductQuantity(@RequestBody List<Long> quantityList) {
+//        System.out.println("cartProdSeqList = " + quantityList); // [0]: cartProdSeq, [1]: quantity
+        Map<String, Long> quantityMap = new HashMap<>();
+        quantityMap.put("cartProdSeq", quantityList.get(0));
+        quantityMap.put("quantity", quantityList.get(1));
+
+        String result = cartProductService.changeQuantity(quantityMap);
+        if (result.equals("fail")) return "fail";
+        return result;
+    }
+
+    @PostMapping("/validation")
+    @ResponseBody
+    public String validateCartProduct(@SessionAttribute Long memberId, @RequestBody List<Long> cartProdSeqList) {
+        // 예외1. 회원 세션 만료  TODO 장바구니로 이동 필요
+        if (memberId == null) return "no_memberId";
+
+        // 예외2. service에서 검증 돌림
+        Long cartSeq = cartService.getCartSeq(memberId);
+        int validationResult = cartProductService.validateCartProduct(cartSeq, cartProdSeqList);
+        if (validationResult == 0) return "wrong product";
+
+        return cartSeq + "";
     }
 }
