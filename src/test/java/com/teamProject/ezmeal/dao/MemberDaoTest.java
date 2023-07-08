@@ -25,7 +25,7 @@ public class MemberDaoTest {
     }
     @Test
     public void checkNull() throws Exception {
-        Long login = loginService.getLogin("kimjava100", "asdf1234");
+        Long login = loginService.loginInfo("kimjava100");
         System.out.println("login = " + login);
     }
 
