@@ -15,12 +15,12 @@
 </head>
 <body>
 
-<form action="<c:url value="/member/signup/success"/>" method="post" onsubmit="return formCheck(this)">
+<form action="<c:url value="/member/signup"/>" method="post" onsubmit="return formCheck(this)">
   <div class="title">회원가입</div>
   <div id="msg" class="msg">
-    <c:if test="${not empty param.msg}">
-      <i class="fa fa-exclamation-circle"> ${URLDecoder.decode(param.msg)}</i>
-    </c:if>
+    <%--    <c:if test="${not empty msg}">--%>
+    <%--        <i class="fa fa-exclamation-circle"> ${URLDecoder.decode(msg)}</i>--%>
+    <%--    </c:if>--%>
   </div>
   <label for="">아이디 <span class="star">*</span></label>
   <input class="input-field" type="text" id="lgin_id" name="lgin_id" value="${memberDto.lgin_id}" placeholder="4~12자리의 영문 혹은 영문과 숫자 조합" autofocus>
