@@ -28,11 +28,11 @@ public class MemberService {
             String inputId =memberDto.getLgin_id(); // 회원가입란에 적은 id
             String id = memberDao.getLoginId(inputId);
 //validation 처리 - Controller에서
-            if (inputId.equals(id)){  // 요청한 ID가 DB에 없으면 회원가입한다.
+            if (inputId.equals(id)){
                 System.out.println("id가 이미 존재합니다.");
-                throw new Exception();
+                return 0;
             } else {
-                System.out.println("아이디 중복 체크");
+                System.out.println("아이디 중복 체크 완료"); // 요청한 ID가 DB에 없으면 회원가입한다.
                 return memberDao.registerMember(memberDto);
             }
         } catch (Exception e) {
