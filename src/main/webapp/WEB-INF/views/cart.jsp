@@ -192,19 +192,19 @@ change this template use File | Settings | File Templates. --%>
             <div class="payment">
                 <div class="payment__prod">
                     <span>상품금액</span>
-                    <span class="payment__prod_js">12000원</span>
+                    <span class="payment__prod_js">0 원</span>
                 </div>
                 <div class="payment__prod">
                     <span>상품할인금액</span>
-                    <span class="payment__prod-dc_js">2000원</span>
+                    <span class="payment__prod-dc_js">0 원</span>
                 </div>
                 <div class="payment__prod">
                     <span>결제예정금액</span>
-                    <span class="payment__prod-expect_js">10000원</span>
+                    <span class="payment__prod-expect_js">0 원</span>
                 </div>
                 <div class="payment__prod">
                     <span>적립예정포인트</span>
-                    <span class="payment__prod-expect__point">10 point</span>
+                    <span class="payment__prod-expect__point">0 point</span>
                 </div>
             </div>
             <!-- payment 끝 -->
@@ -244,6 +244,5 @@ change this template use File | Settings | File Templates. --%>
         crossorigin="anonymous"
 ></script>
 <script src="/javascript/cart.js"></script>
-<script src="/javascript/cartAPI.js"></script>
 </body>
 </html>

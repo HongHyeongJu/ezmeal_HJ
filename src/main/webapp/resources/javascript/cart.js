@@ -1,7 +1,6 @@
 const selectAllBtn = document.querySelector(".cart__items_nav__checkbox"); // 전체 선택
 const selectBtns = document.querySelectorAll(".cart__item_nav__checkbox"); // 선택
 
-const itemPriceSpan = document.querySelectorAll(".cart__item_price span"); // 가격 div 내부 실제가격
 const bannerPrice = document.querySelectorAll(".payment__prod span:last-child") // 배너 가격
 
 const deleteBtns = document.querySelectorAll(".cart__delete_btn"); // 삭제 표시 버튼
@@ -13,6 +12,7 @@ let dynamicNum = 0; // 체크박스 선택 수 확인
 let debounceInitTime = null; // 서버 부하 방지
 
 /* 재사용 함수 */
+// db 검증기
 const validation = function (cartProdSeqList) {
     return fetch("/cart/validation", {
         method: 'POST',
@@ -42,6 +42,7 @@ const validation = function (cartProdSeqList) {
             throw new Error(error);
         });
 }
+// 상품 수량 db 업데이트
 const updateProductQuantity = function (cartProdSeq_quantity_List) {
     return fetch('/cart/update', {
         method: 'PATCH',
@@ -67,6 +68,36 @@ const updateProductQuantity = function (cartProdSeq_quantity_List) {
         .catch(error => {
             console.error('Error:', error);
         });
+}
+// 결제 예상 가격 _ 그룹일 경우
+const groupExpectSalePrice = function () { // 다중 선택시 사용하는 가격 측정 function
+    let PRODUCT_PRICE = 0;
+    let SALE_PRICE = 0;
+    let EXPECTED_PRICE = 0;
+    let EXPECTED_POINT = 0;
+
+    CART_PROD_SEQ_LIST.forEach(seq => {
+        const selector = `li[cart_prod_seq="${seq}"]`;
+        const element = document.querySelector(selector); // 개별상품목록
+        const cartItemPriceSpans = element.querySelectorAll(".cart__item_price > span"); // 상품 가격 [0]: 판매가 [1]: 소비자가
+        const quantity = parseInt(element.querySelector(".count_num").value); // 상품 수량
+
+        const salePrice = parseInt(cartItemPriceSpans[0].textContent.replace("원", ''));
+        const productPrice = parseInt(cartItemPriceSpans[1].textContent.replace("point", ''));
+        PRODUCT_PRICE += quantity * productPrice;
+        SALE_PRICE += quantity * (productPrice - salePrice);
+        EXPECTED_PRICE += quantity * salePrice;
+        EXPECTED_POINT += quantity * (Math.floor(salePrice / 100));
+    })
+
+    bannerPrice[0].innerText = PRODUCT_PRICE + " 원";
+    bannerPrice[1].innerText = SALE_PRICE + " 원";
+    bannerPrice[2].innerText = EXPECTED_PRICE + " 원";
+    bannerPrice[3].innerText = EXPECTED_POINT + " point";
+}
+
+const expectSalePrice = function (plusMinus) {
+
 }
 
 /* EVENT 함수 */
@@ -148,6 +179,10 @@ function deleteCartProduct(event) {
                 return;
             }
             parentElement.remove();
+            CART_PROD_SEQ_LIST = CART_PROD_SEQ_LIST.filter(value => value !== parseInt(cartProdSeq)); // todo async
+            console.log(CART_PROD_SEQ_LIST);
+
+                groupExpectSalePrice();
         })
         .catch(error => {
             console.error('Error:', error);
@@ -183,13 +218,18 @@ function deleteCartProductAll() {
             CART_PROD_SEQ_LIST.forEach(seq => {
                 const selector = `li[cart_prod_seq="${seq}"]`;
                 const element = document.querySelector(selector);
-                element.remove();
+                if (element) {
+                    element.remove();
+                }
             });
-
+            selectAllBtn.checked = false;
+            selectAllProduct();
         })
         .catch(error => {
             console.error('Error:', error);
         });
+
+
 }
 
 
@@ -225,63 +265,38 @@ function deleteCartProductAll() {
 // }
 
 
-function expectedSalePrice(check) { // 다중 선택시 사용하는 가격 측정 function
-    let PRODUCT_PRICE = 0;
-    let SALE_PRICE = 0;
-    let EXPECTED_PRICE = 0;
-    let EXPECTED_POINT = 0;
-
-    if (check) {
-        CART_PROD_SEQ_LIST.forEach(seq => {
-            const selector = `li[cart_prod_seq="${seq}"]`;
-            const element = document.querySelector(selector); // 개별상품목록
-            const cartItemPriceSpans = element.querySelectorAll(".cart__item_price > span"); // 상품 가격 [0]: 판매가 [1]: 소비자가
-            const salePrice = parseInt(cartItemPriceSpans[0].textContent);
-            const productPrice = parseInt(cartItemPriceSpans[1].textContent);
-            PRODUCT_PRICE += productPrice;
-            SALE_PRICE += productPrice - salePrice;
-            EXPECTED_PRICE += salePrice;
-            EXPECTED_POINT += productPrice / 10;
-        })
-    }
-    bannerPrice[0].innerText = PRODUCT_PRICE;
-    bannerPrice[1].innerText = SALE_PRICE;
-    bannerPrice[2].innerText = EXPECTED_PRICE;
-    bannerPrice[3].innerText = EXPECTED_POINT;
-}
-
 // 상품 선택 함수
 function selectAllProduct() {
     const check = selectAllBtn.checked; // true, false(default)
 
     selectBtns.forEach(selectBtn => {
         selectBtn.checked = check; // 우변의 checked 여부에 따라서 좌변의 checked 여부 변경
-        const cartProdSeq = selectBtn.closest("li").getAttribute('cart_prod_seq');
-        const LongCartProdSeq = parseInt(cartProdSeq);
+        const cartProdSeq = parseInt(selectBtn.closest("li").getAttribute('cart_prod_seq')); // 장바구니 상품 pk
 
-        check ? CART_PROD_SEQ_LIST.push(LongCartProdSeq) : (CART_PROD_SEQ_LIST = []);
+        check ? CART_PROD_SEQ_LIST.push(cartProdSeq) : (CART_PROD_SEQ_LIST = []);
         // 중복 요소 제거
         CART_PROD_SEQ_LIST = CART_PROD_SEQ_LIST.filter((value, index) => CART_PROD_SEQ_LIST.indexOf(value) === index);
     })
     dynamicNum = check ? selectBtns.length : 0;
-    expectedSalePrice(check);
+
+    groupExpectSalePrice();
     console.log("all : " + CART_PROD_SEQ_LIST);
 
 }
 
 function selectProduct(event) {
     const targetBtn = event.target; // click한 btn 요소
-    const cartProdSeq = targetBtn.parentNode.getAttribute('cart_prod_seq'); // 해당 상품 리스트 tag
-    const LongCartProdSeq = parseInt(cartProdSeq); // 장바구니 상품 pk
+    const cartProdSeq = parseInt(targetBtn.parentNode.getAttribute('cart_prod_seq')); // 장바구니 상품 pk
     if (targetBtn.checked) {
-        CART_PROD_SEQ_LIST.push(LongCartProdSeq); // 리스트에 담음
+        CART_PROD_SEQ_LIST.push(cartProdSeq); // 리스트에 담음
         dynamicNum++; // 동적 숫자 - 전체상품 개수 확인용
     } else {
         // filter : 해당 조건이 true인 경우 값을 남긴다
-        CART_PROD_SEQ_LIST = CART_PROD_SEQ_LIST.filter((item) => item !== LongCartProdSeq); // unchecked 경우 제거
+        CART_PROD_SEQ_LIST = CART_PROD_SEQ_LIST.filter((item) => item !== cartProdSeq); // unchecked 경우 제거
         dynamicNum--; // 동적 숫자
     }
     selectAllBtn.checked = (selectBtns.length === dynamicNum);
+    groupExpectSalePrice();
     console.log("prod : " + CART_PROD_SEQ_LIST)
 }
 
