@@ -6,7 +6,6 @@ import com.teamProject.ezmeal.service.CartProductService;
 import com.teamProject.ezmeal.service.CartService;
 import com.teamProject.ezmeal.service.DeliveryAddressService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -101,6 +100,7 @@ public class CartController {
         int validationResult = cartProductService.validateCartProduct(cartSeq, cartProdSeqList);
         if (validationResult == 0) return "wrong product";
 
+        System.out.println("validationResult = sdkfljsdl");
         return cartSeq + "";
     }
 }

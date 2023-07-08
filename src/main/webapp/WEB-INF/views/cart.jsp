@@ -31,12 +31,13 @@ change this template use File | Settings | File Templates. --%>
             <!--cart__items_category_btns cart__items_nav 끝-->
             <%--------------------------------------------------------------------------------------------------------------------%>
             <div class="cart__items_list">
+                <%--TODO. 동적 html을 보여주는 곳--%>
                 <c:if test="${not empty productIce}">
                     <h4 class="cart__items_list-type">
-            <span>
-                <span><i class="fas fa-igloo" style="color: #306ed9"></i></span>
-                냉동 상품
-            </span>
+                    <span>
+                        <span><i class="fas fa-igloo" style="color: #306ed9"></i></span>
+                        냉동 상품
+                    </span>
                         <button class="cart__items_list__btn">
                             <i class="fas fa-chevron-down" style="color: #8d9096"></i>
                         </button>

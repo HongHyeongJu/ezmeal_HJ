@@ -79,7 +79,9 @@ const groupExpectSalePrice = function () { // 다중 선택시 사용하는 가�
     CART_PROD_SEQ_LIST.forEach(seq => {
         const selector = `li[cart_prod_seq="${seq}"]`;
         const element = document.querySelector(selector); // 개별상품목록
+        if (!element) return; // null인경우 예외 방지 -> !element = !null = true cf) 이렇게 안할거면 동적 html 수행 필요
         const cartItemPriceSpans = element.querySelectorAll(".cart__item_price > span"); // 상품 가격 [0]: 판매가 [1]: 소비자가
+
         const quantity = parseInt(element.querySelector(".count_num").value); // 상품 수량
 
         const salePrice = parseInt(cartItemPriceSpans[0].textContent.replace("원", ''));
@@ -95,9 +97,15 @@ const groupExpectSalePrice = function () { // 다중 선택시 사용하는 가�
     bannerPrice[2].innerText = EXPECTED_PRICE + " 원";
     bannerPrice[3].innerText = EXPECTED_POINT + " point";
 }
-
-const expectSalePrice = function (plusMinus) {
-
+// debounce _ db update
+async function debounceUpdateQuantity(event) {
+    if (debounceInitTime){
+        clearTimeout(debounceInitTime);
+    }
+    debounceInitTime = setTimeout(() => {
+        console.log('workINg');
+        updateCartProductQuantity(event)
+    }, 500);
 }
 
 /* EVENT 함수 */
@@ -121,7 +129,7 @@ function handleUpdateCartProductQuantity(event) {
         cartProductInputQuantity.value = ++QUANTITY;
 
 }
-
+// 상품 수량 업데이트 함수
 async function updateCartProductQuantity(event) {
     const cartProductList = event.target.parentNode.parentNode; // 장바구니 상품 리스트 <li></li>
     const cartProductSequence = cartProductList.getAttribute('cart_prod_seq'); // 장바구니 상품 리스트 pk
@@ -136,13 +144,9 @@ async function updateCartProductQuantity(event) {
     // 2. update 수행
     await updateProductQuantity(cartProdSeq_quantity_List); // [장바구니 상품 pk, 수량]
 
-}
+    // debounce 후 결제찬 상품 가격 올리기
+    groupExpectSalePrice();
 
-async function debounce(event) {
-    clearTimeout(debounceInitTime);
-    debounce = setTimeout(() => {
-        updateCartProductQuantity(event)
-    }, 500);
 }
 
 
@@ -182,13 +186,13 @@ function deleteCartProduct(event) {
             CART_PROD_SEQ_LIST = CART_PROD_SEQ_LIST.filter(value => value !== parseInt(cartProdSeq)); // todo async
             console.log(CART_PROD_SEQ_LIST);
 
-                groupExpectSalePrice();
+            groupExpectSalePrice();
         })
         .catch(error => {
             console.error('Error:', error);
         });
 }
-
+// 선택상품 삭제 함수
 function deleteCartProductAll() {
     // rest API 수행 , server로 값 보내기
     fetch("/cart/delete", {
@@ -265,11 +269,14 @@ function deleteCartProductAll() {
 // }
 
 
-// 상품 선택 함수
+// 전체 상품 선택 함수
 function selectAllProduct() {
     const check = selectAllBtn.checked; // true, false(default)
 
     selectBtns.forEach(selectBtn => {
+        if (selectBtn === null) {
+            return;
+        }
         selectBtn.checked = check; // 우변의 checked 여부에 따라서 좌변의 checked 여부 변경
         const cartProdSeq = parseInt(selectBtn.closest("li").getAttribute('cart_prod_seq')); // 장바구니 상품 pk
 
@@ -283,7 +290,7 @@ function selectAllProduct() {
     console.log("all : " + CART_PROD_SEQ_LIST);
 
 }
-
+// 상품 선택 함수
 function selectProduct(event) {
     const targetBtn = event.target; // click한 btn 요소
     const cartProdSeq = parseInt(targetBtn.parentNode.getAttribute('cart_prod_seq')); // 장바구니 상품 pk
@@ -302,19 +309,23 @@ function selectProduct(event) {
 
 
 /* Document EVENT */
+// 상품 선택 버튼
 selectBtns.forEach(selectBtn => {
     selectBtn.addEventListener("click", selectProduct);
 })
+// 전체 상품 선택 버튼
 selectAllBtn.addEventListener("click", selectAllProduct);
-
+// 상품 삭제 버튼
 deleteBtns.forEach(deleteBtn => {
     deleteBtn.addEventListener("click", deleteCartProduct);
 });
-
+// 선택상품 삭제 버튼
 deleteAllBtn.addEventListener("click", deleteCartProductAll);
-
+// 상품 수량 관련 버튼
 quantityDivs.forEach(quantityDiv => {
     quantityDiv.addEventListener("click", handleUpdateCartProductQuantity);
-    quantityDiv.addEventListener("click", debounce);
+    quantityDiv.addEventListener("click", debounceUpdateQuantity);
     quantityDiv.addEventListener("change", updateCartProductQuantity);
 })
+
+/* TODO 꼭 하고 만다... 동적 html */
