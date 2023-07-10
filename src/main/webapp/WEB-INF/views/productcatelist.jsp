@@ -19,6 +19,11 @@
 <!--헤더 내려오는 공백-->
 <div class="empty"></div>
 <ul class="지붕묶음" id="section1">
+  <input type="hidden" data-cate_cd="${cate_cd}">
+  <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=default" class="sort-link active" data-sort="default">추천순</a></li>
+  <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=new" class="sort-link" data-sort="new">신상품순</a></li>
+  <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=lowprc" class="sort-link" data-sort="lowprc">낮은가격순</a></li>
+  <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=highprc" class="sort-link" data-sort="higprc">높은가격순</a></li>
 
 </ul>
 
@@ -36,7 +41,7 @@
         <a> <!--상품 대표 이미지-->
           <c:set var="productImg" value="${prodImgList[status.index].url}"/>
           <img id="prod_top top_img"
-               src="/img/1.png"/>
+               src="/img/${prodList.getProd_cd()}.png"/>
 <%--               src="/img/${empty productImg ? 'ezmeal_logo' : productImg}.png"/>--%>
         </a>
       </figure>

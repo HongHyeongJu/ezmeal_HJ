@@ -38,37 +38,57 @@ public class ProductService {
     ProductReviewDao productReviewDao;
 
     private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
-/*여러 다오의 메서드 호출할 때, 왼쪽창 열고 다오랑, 맵퍼 주석 확인해서 상황에 적절한 메서드 호출하기*/
+    /*여러 다오의 메서드 호출할 때, 왼쪽창 열고 다오랑, 맵퍼 주석 확인해서 상황에 적절한 메서드 호출하기*/
 
-    /*카테고리 클릭시 -> 해당 카테고리 상품List(mini), 해당 상품관련 대표이미지 LIst, 옵션있는 상품일경우 옵션객체List(카테고리용), */
+    /*카테고리 클릭시 -> 해당 카테고리 상품List(mini), 해당 상품관련 대표이미지 List, 옵션있는 상품일경우 옵션객체List(카테고리용), */
     /*(상품 select에 재고 확인 조건 넣기) 할인코드 List(할인율 필요), 해당상품 리뷰 평점, 리뷰숫자 (업는건 0으로?)*/
     /* 분류코드로 상품 리스트받기 */
 
-    public HashMap getProductListByCateCd (String cate_cd) throws SQLException {
+    public HashMap getProductListByCateCd (String cate_cd, String sortkeyword) throws SQLException {
 
         try {
 
-                /*카테고리 상품 리스트*/
-                List<ProductDto> prodList = productDao.selectProductListByCateCdMini(cate_cd);
+            /*카테고리 상품 리스트*/
+            List<ProductDto> prodList;
 
-                /*카테고리 상품 '대표'이미지 리스트*/
-                List<ProductImgDto> prodImgList = productImgDao.selectCateCdImgTyp(cate_cd);
-                /*카테고리 상품의 옵션 리스트*/
-                List<ProductOptionDto> prodOptList =  productOptionDao.selectOptionInProductCategory(cate_cd);
-                /*할인율 강조를 위한 할인코드 리스트 */
-                List<ProductDiscountDto> discountList = productDiscountDao.selectDiscountListByCateCd();
-                /*상품 평점, 리뷰 숫자*/
-                Map<Long,Double> reviewAngMap = productReviewDao.selectReviewAvgForProdList(cate_cd);
-                /**/
-                Map<Long,Integer> reviewCntMap = productReviewDao.selectReviewCntForProdList(cate_cd);
-                HashMap ProdListMap = new HashMap<>();
-                ProdListMap.put("prodList",prodList);
-                ProdListMap.put("prodImgList",prodImgList);
-                ProdListMap.put("prodOptList",prodOptList);
-                ProdListMap.put("reviewAngMap",reviewAngMap);
-                ProdListMap.put("reviewCntMap",reviewCntMap);
+            if ("default".equals(sortkeyword)) {
+                prodList = productDao.selectProductListByCateCdMiniLowprc(cate_cd);
+                System.out.println("1");
+            } else if ("lowprc".equals(sortkeyword)) {
+                    prodList = productDao.selectProductListByCateCdMiniLowprc(cate_cd);
+                System.out.println("2");
+            } else if ("high".equals(sortkeyword)) {
+                    prodList = productDao.selectProductListByCateCdMiniHighprc(cate_cd);
+                System.out.println("3");
+            } else if ("new".equals(sortkeyword)) {
+                    prodList = productDao.selectProductListByCateCdMiniNew(cate_cd);
+                System.out.println("4");
+            } else {
+                prodList = productDao.selectProductListByCateCdMini(cate_cd);
+                System.out.println("5");
+            }
 
-                return ProdListMap;
+            System.out.println("sortkeyword: "+sortkeyword);
+            System.out.println("prodList.size(): "+ prodList);
+
+            /*카테고리 상품 '대표'이미지 리스트*/
+            List<ProductImgDto> prodImgList = productImgDao.selectCateCdImgTyp(cate_cd);
+            /*카테고리 상품의 옵션 리스트*/
+            List<ProductOptionDto> prodOptList =  productOptionDao.selectOptionInProductCategory(cate_cd);
+            /*할인율 강조를 위한 할인코드 리스트 */
+            List<ProductDiscountDto> discountList = productDiscountDao.selectDiscountListByCateCd();
+            /*상품 평점, 리뷰 숫자*/
+            Map<Long,Double> reviewAngMap = productReviewDao.selectReviewAvgForProdList(cate_cd);
+            Map<Long,Integer> reviewCntMap = productReviewDao.selectReviewCntForProdList(cate_cd);
+
+            HashMap ProdListMap = new HashMap<>();
+            ProdListMap.put("prodList",prodList);
+            ProdListMap.put("prodImgList",prodImgList);
+            ProdListMap.put("prodOptList",prodOptList);
+            ProdListMap.put("reviewAngMap",reviewAngMap);
+            ProdListMap.put("reviewCntMap",reviewCntMap);
+
+            return ProdListMap;
 
         } catch (SQLException e) {
             logger.error("Error occurred in getProductListByCateCd", e);
@@ -83,7 +103,7 @@ public class ProductService {
 
 
     /*상품 상세 페이지 -> 해당 상품코드 상품 1개 찾기, 이미지 모두 가져오기, 옵션있으면 옵션 상품 List로 전달, 해당 할인코드
-    * 리뷰평점, 리뷰숫자, 리뷰 List, 문의 List받아오기  없을때는, 예외는 0으로 반환(컨트롤러에서 해당상품이 없습니다.->index? )*/
+     * 리뷰평점, 리뷰숫자, 리뷰 List, 문의 List받아오기  없을때는, 예외는 0으로 반환(컨트롤러에서 해당상품이 없습니다.->index? )*/
 
 
 
@@ -115,7 +135,7 @@ public class ProductService {
 //@EnableRetry
 //public class ProductService {
 
-    /*이런게 있다고 함 */
+/*이런게 있다고 함 */
 //    @Retryable(value = SQLException.class, maxAttempts = 3, backoff = @Backoff(delay = 1000))
 //    @Recover
 //    public void recover(SQLException e) {

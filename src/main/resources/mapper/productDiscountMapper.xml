@@ -64,10 +64,11 @@
                                   tb_product.cnsmr_prc - tb_product_discount.prc)
                         FROM tb_product_discount
                         WHERE tb_product.dc_cd = tb_product_discount.dc_cd),
+            mgn_rate = (CASE WHEN opt_yn = 'n' THEN NULL ELSE ((IFNULL(sale_prc, 0) - sp_prc) / sp_prc * 100))
             up_dtm = now(),
             up_id = 'ateam'
-        WHERE tb_product.dc_cd IN (SELECT dc_cd
-                                   FROM tb_product_discount)
+        WHERE tb_product.opt_yn='n' AND  tb_product.dc_cd IN (SELECT dc_cd
+                                                              FROM tb_product_discount)
     </update>
 
     <!--트랜잭션의 셋째--> <!--할인코드 변경 했으니 옵션상품TB 판매가 수정하기-->

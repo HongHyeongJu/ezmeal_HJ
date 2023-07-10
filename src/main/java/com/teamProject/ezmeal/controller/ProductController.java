@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 //import org.json.JSONObject;
 import java.sql.SQLException;
@@ -33,16 +34,17 @@ public class ProductController {
 
     /*상품 리스트 페이지. 카테고리 코드로 검색해서 상품 리스트를 반환*/
     @GetMapping("/catelist")
-    public String productListByCateCd(Model model, String cate_cd) throws SQLException {
+    public String productListByCateCd(Model model, String cate_cd, @RequestParam(required = false) String sortkeyword) throws SQLException {
 
-        HashMap map = productService.getProductListByCateCd(cate_cd);
+        HashMap map = productService.getProductListByCateCd(cate_cd, sortkeyword);
         model.addAttribute("prodList",map.get("prodList"));
         model.addAttribute("prodImgList",map.get("prodImgList"));
         model.addAttribute("prodOptList",map.get("prodOptList"));
         model.addAttribute("reviewAngMap",map.get("reviewAngMap"));
         model.addAttribute("reviewCntMap",map.get("reviewCntMap"));
-
         model.addAttribute("cate_cd",cate_cd);
+        System.out.println(map.get("prodList").toString());
+        System.out.println("컨트롤러, sortkeyword: "+sortkeyword);
 
         return "productcatelist";
     }
