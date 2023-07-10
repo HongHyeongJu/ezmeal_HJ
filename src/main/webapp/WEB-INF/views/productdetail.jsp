@@ -20,13 +20,13 @@
 <div class="head_main">
   <div class="head_main_left">
 
-    <img class="main_img" src="/img/${productCateCdImgMap['대표']}.png" />
+    <img class="main_img" src="/img/${productCateCdImgMap['대표'] ? productCateCdImgMap['대표'] : 'ezmeal_logo'}.png" />
 
     <ul class="mini_img_set">
-      <a> <img class="mini_img 메인1" src="../../img/${productCateCdImgMap['메인1']}.png"> </a>
-      <a> <img class="mini_img 메인2" src="../../img/${productCateCdImgMap['메인2']}.png"> </a>
-      <a> <img class="mini_img 메인3" src="../../img/${productCateCdImgMap['메인3']}.png"> </a>
-      <a> <img class="mini_img 메인4" src="../../img/${productCateCdImgMap['메인4']}.png"> </a>
+      <a> <img class="mini_img 메인1" src="../../img/${productCateCdImgMap['메인1'] ? productCateCdImgMap['메인1'] : 'ezmeal_logo'}.png"> </a>
+      <a> <img class="mini_img 메인2" src="../../img/${productCateCdImgMap['메인2'] ? productCateCdImgMap['메인2'] : 'ezmeal_logo'}.png"> </a>
+      <a> <img class="mini_img 메인3" src="../../img/${productCateCdImgMap['메인3'] ? productCateCdImgMap['메인3'] : 'ezmeal_logo'}.png"> </a>
+      <a> <img class="mini_img 메인4" src="../../img/${productCateCdImgMap['메인4'] ? productCateCdImgMap['메인4'] : 'ezmeal_logo'}.png"> </a>
     </ul>
     <div class="main_left 아래 여백"></div>
   </div>
@@ -119,7 +119,7 @@
     <li class="detail_navi"><a href="#section3">상품후기</a></li>
     <li class="detail_navi"><a href="#section4">상품문의</a></li>
   </ul>
-  <img class="detail_img" src="../../img/${productCateCdImgMap['상세']}.png" >
+  <img class="detail_img" src="../../img/${productCateCdImgMap['상세'] ? productCateCdImgMap['상세'] : 'ezmeal_logo'}.png" >
 </div>
 <!-----------------------------------------  나중에 쇼핑몰 광고넣을 수 있음 ------------------------------------->
 <div class="middle_2" >
