@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="GradeBenefitDao">
+    <select id="getPointRate" resultType="int">
+        select val
+        from tb_member m, tb_member_grade_benefits mgb
+        where mbr_id = #{mbrId}
+          and m.mbr_grd = mgb.mbr_grd_cd
+          and mgb.use_yn = 'y'
+          and mgb.typ = '적립'
+        ;
+    </select>
+</mapper>

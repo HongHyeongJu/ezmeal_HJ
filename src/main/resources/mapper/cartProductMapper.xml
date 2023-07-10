@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cartProduct">
+
+    <!--resultMap _ CartJoinProductDto-->
+    <resultMap id="CartJoinProductDto" type="CartJoinProductDto">
+        <result property="cp_qty" column="cpQty"/>
+        <result property="po_qty" column="poQty"/>
+    </resultMap>
+
+    <!-- 품절 상품 업데이트 -->
+    <update id="soldOut_yn" parameterType="Long">
+        update tb_cart_product cp
+            JOIN tb_product p ON cp.prod_cd = p.prod_cd
+            join tb_product_inventory pi on cp.prod_cd = pi.prod_cd
+            LEFT JOIN tb_product_option po ON cp.opt_seq = po.opt_seq
+            SET cp.soldout_yn = if(if(po.qty is null, 1, po.qty) > pi.curr_inv, 'y', 'n')
+        WHERE cp.cart_seq = #{cartSeq}
+    </update>
+
+    <!-- 일반 상품 수량 | 품절, 삭제 제외 -->
+    <select id="count" resultType="int">
+        select count(*)
+        from tb_cart_product cp
+        where cp.cart_seq = #{cartSeq}
+          and del_yn &lt;&gt; 'y'
+          and soldout_yn &lt;&gt; 'y'
+    </select>
+
+
+    <!-- 일반 상품 : 냉장/냉동/상온 map으로 저장 -->
+    <select id="product" resultMap="CartJoinProductDto" resultType="CartJoinProductDto">
+        SELECT cp.cart_prod_seq,
+               cp.prod_cd,
+               cp.opt_seq,
+               cp.typ,
+               cp.soldout_yn,
+               cp.qty                                  as cpQty,
+               IFNULL(po.qty, 1)                       AS poQty,
+               IFNULL(CONCAT(p.name, po.name), p.name) AS name,
+               IFNULL(p.cnsmr_prc, po.cnsmr_prc)       AS cnsmr_prc,
+               IFNULL(p.sale_prc, po.sale_prc)         AS sale_prc
+        FROM tb_cart_product cp
+                 JOIN tb_product p ON cp.prod_cd = p.prod_cd
+                 LEFT JOIN tb_product_option po ON cp.opt_seq = po.opt_seq
+        WHERE cp.cart_seq = #{cartSeq}
+          AND cp.del_yn &lt;&gt; 'y'
+        order by cp.typ
+    </select>
+
+
+    <!-- 상품 삭제 -->
+    <update id="delete">
+        UPDATE tb_cart_product
+        SET del_yn = 'y'
+        WHERE cart_prod_seq in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+
+    <!-- 해당 회원의 장바구니의 상품 존재여부 검증 -->
+    <select id="validation" resultType="int">
+        select count(*)
+        from tb_cart_product
+        where cart_seq = #{cartSeq}
+        and cart_prod_seq in
+        <foreach collection="cartProdSeq" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--수량 update-->
+    <update id="quantity">
+        update tb_cart_product
+        set qty = #{quantity}
+        where cart_prod_seq = #{cartProdSeq};
+    </update>
+
+    <!-- 주문 선택 상품 선택 column check하기-->
+    <update id="select_Product">
+        UPDATE tb_cart_product
+        SET sel_prod = CASE
+        WHEN cart_prod_seq IN <foreach item="item" collection="cartProdSeqList" open="(" separator="," close=")">
+        #{item}
+    </foreach> THEN 'y'
+        WHEN cart_seq = #{cartSeq} THEN 'n'
+        ELSE sel_prod
+        END
+        where cart_seq = #{cartSeq}
+    </update>
+
+    <!-- 주문하기에 선택된 장바구니 상품 가져오기 -->
+    <select id="order_products" resultMap="CartJoinProductDto" resultType="CartJoinProductDto">
+        SELECT cp.cart_prod_seq,
+               cp.prod_cd,
+               cp.opt_seq,
+               cp.typ,
+               cp.qty                                  as cpQty,
+               IFNULL(po.qty, 1)                       AS poQty,
+               IFNULL(CONCAT(p.name, po.name), p.name) AS name,
+               IFNULL(p.cnsmr_prc, po.cnsmr_prc)       AS cnsmr_prc,
+               IFNULL(p.sale_prc, po.sale_prc)         AS sale_prc
+        FROM tb_cart_product cp
+                 JOIN tb_product p ON cp.prod_cd = p.prod_cd
+                 LEFT JOIN tb_product_option po ON cp.opt_seq = po.opt_seq
+        WHERE cp.cart_seq = #{cartSeq}
+          and cp.sel_prod = 'y'
+    </select>
+
+    <!-- 주문할 상품 품절현황 확인 -->
+    <select id="orderList_soldOut" resultType="int">
+        select cart_prod_seq
+        from tb_cart_product
+        where cart_prod_seq in
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and soldout_yn = 'y'
+    </select>
+
+<!--    &lt;!&ndash; 주문할 상품 재고파악&ndash;&gt;-->
+<!--    <select id="orderList_inventory" resultType="CartJoinProductDto">-->
+<!--        select cp.cart_prod_seq,-->
+<!--        pi.curr_inv-->
+<!--        from tb_cart_product cp-->
+<!--        JOIN tb_product p ON cp.prod_cd = p.prod_cd-->
+<!--        join tb_product_inventory pi on cp.prod_cd = pi.prod_cd-->
+<!--        LEFT JOIN tb_product_option po ON cp.opt_seq = po.opt_seq-->
+<!--        where cp.cart_prod_seq in-->
+<!--        <foreach item="item" collection="list" open="(" separator="," close=")">-->
+<!--            #{item}-->
+<!--        </foreach>-->
+<!--        and cp.del_yn &lt;&gt; 'y'-->
+<!--        and pi.curr_inv - (cp.qty * IF(po.qty IS NULL, 1, po.qty)) &lt; 0-->
+<!--    </select>-->
+
+    <!-- 주문할 상품 재고파악-->
+    <select id="orderList_inventory" resultType="CartJoinProductDto">
+        select cp.prod_cd,
+        pi.curr_inv
+        from tb_cart_product cp
+        JOIN tb_product p ON cp.prod_cd = p.prod_cd
+        join tb_product_inventory pi on cp.prod_cd = pi.prod_cd
+        LEFT JOIN tb_product_option po ON cp.opt_seq = po.opt_seq
+        where cp.cart_prod_seq in
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and cp.del_yn &lt;&gt; 'y'
+          group by cp.prod_cd
+        having (pi.curr_inv - sum(cp.qty * IF(po.qty IS NULL, 1, po.qty))) &lt; 0
+    </select>
+
+
+    <!--  | 관리자 |  -->
+
+    <!-- 장바구니에 존재하는 모든 상품 | 삭제 항목 제외 -->
+    <select id="all_product" resultType="CartProductDto">
+        select cp.prod_cd, cp.typ, cp.qty, p.name, p.cnsmr_prc, p.sale_prc
+        from tb_cart_product cp,
+             tb_product p
+        where cp.cart_seq = #{cartSeq}
+          and cp.prod_cd = p.prod_cd
+          and cp.del_yn &lt;&gt; 'y'
+    </select>
+
+</mapper>

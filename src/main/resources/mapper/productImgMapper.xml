@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tb_product_img">
+
+    <!--추가할 것. 이미지 변경, 이미지 삭제. 각 타입별로 1개만 들어갈 수 있도록 서비스 단에서 확인하는 쿼리문도 필요함.-->
+    <!--이미지 추가 쿼리. 이미지 추가하기 전에 del_yn = 'n'인 것중에 타입은 1개씩만 있도록 확인하는 쿼리문 필요 -->
+
+    <!-- 상품코드에 해당하는 모든 이미지 찾기 -->
+    <select id="select_prod_img_all" parameterType="String" resultType="ProductImgDto">
+        SELECT *
+        FROM tb_product_img
+        WHERE prod_cd = #{prod_cd} AND use_yn = 'y' AND del_yn = 'n' ;
+    </select>
+
+
+    <!-- 상품코드로  특정 이미지 찾기 -->
+    <select id="select_prod_type_img" parameterType="map" resultType="ProductImgDto">
+        SELECT *
+        FROM tb_product_img
+        WHERE prod_cd = #{prod_cd} and typ=#{typ} AND use_yn = 'y' AND del_yn = 'n' ;
+    </select>
+
+    <!-- 카테고리로 검색한 상품리스트의 대표이미지 리스트 -->
+    <select id="select_cate_cd_img_list" parameterType="String" resultType="ProductImgDto">
+        SELECT *
+        FROM tb_product_img
+        WHERE typ = '대표'  AND use_yn = 'y'
+          AND del_yn = 'n' AND prod_cd IN (SELECT prod_cd
+                                           FROM tb_product
+                                           WHERE cate_cd LIKE concat(#{cate_cd}, '%')  AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2));
+    </select>
+
+
+
+</mapper>
