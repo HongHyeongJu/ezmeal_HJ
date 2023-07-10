@@ -6,8 +6,125 @@
 
     <!--사용하는 상황. 상품에 할인코드가 있고 -> 이 할인코드는 어떤 할인인지 알려면 할인typ과 값이 필요하다(rate나 prc)-->
     <!--할인율 계산해주기. 상품코드의 할인코드 -> 해당 할인코드의 할인값 알려주기. 만약 할인코드가 없다면? 무조건 있게 만든다.-->
+    <!--상품의 카테코드가 여기 검색되면 할인가능(물론 와일드카드 적용)  전체품목일 경우 cate_cd는 0  => List '0%' -->
+    <!--고민... 어떤 상황에서 할인코드 맵퍼가 필요할까?
+    아예 상품객체에 할인코드값 ? 1천원인 경우 어떻게 하지 그러면 판매가 소비자가로 계산하는 변수 하나 넣어주자.
+    할인 코드를 사용할 수도 있지만 관리자가 임의로 값을 계산할 수도 있다. 그러면 할인코드 입력창에 직접 입력 옵션 선택지도 주자
+    대신 할인코드 선택하면 판매가 수정은 불가능한걸로. 할인율은 자스로 계산해주고.-->
+
+
+    <!--만들 맵퍼(메서드) 할인코드 은행을 위한 할인 객체 select/ 관리자 화면에서 할인코드 셀렉트옵션값로 줄 할인 미니
+     카테고리 선택하면 -> 선택 가능한 할인코드가 달라집니다. 그러면 카테코리 코드가 매개변수이겠지 /
+     할인 코드 수정같은건 나중에 할인코드 탭에서 필요할텐데 지금은 굳이!-->
+
+    <!--카테고리를 매개변수로 주면 나오는 할인코드들 아마 관리자 상품 등록 페이지에서 상품 카테고리 선택하면 보여줄듯
+    나중에 카테고리 선택으로 나온 할인코드를 누르고 다시 카테고리를 바꿔버리면...!
+    안된다고 말해줘야겠다 '할인코드 선택 후 카테고리를 변경할 수 없습니다.'--> <!--유효기기간 확인확인-->
+    <select id="get_discount_by_cate_cd" resultType="ProductDiscountDto">
+        SELECT dc_cd, cate_cd, typ, name, rate, prc
+        FROM tb_product_discount
+        WHERE use_yn = 'y' AND del_yn ='n'
+    </select>
+    <!--  And now()  between start_dt AND end_dt  잠시 빼둠  -->
+
+    <!--관리자 페이지 할인 탭에서 생성 및 수정할 수 있는 할인코드들. (읽기 및 수정을 위해. 삭제만 아니면 보여주자) -->
+    <select id="get_discount_by_cate_cd_for_mng"  resultType="ProductDiscountDto">
+        SELECT *
+        FROM tb_product_discount
+        WHERE del_yn ='n'
+    </select>
+
+    <!--할인코드 수정하기-->  <!--기존의 PK랑 중복이면 이미 사용중인 할인코드 입니다. 내가 해줘야함-->
+    <update id="update_discount" parameterType="ProductDiscountDto" >
+        UPDATE tb_product_discount
+        SET cate_cd=#{cate_cd}, typ=#{typ}, name=#{name}, start_dt=#{start_dt}, end_dt=#{end_dt},
+            target=#{target}, rate=#{rate}, prc=#{prc},
+            use_yn=#{use_yn}, del_yn=#{del_yn}, rmk=#{rmk}, up_dtm=now(), up_id='ateam'
+        WHERE dc_cd=#{dc_cd}
+    </update>
+
+    <!--할인코드 리스트-->
+    <select id="dc_cd_list_by_discount" resultType="List" >
+        SELECT dc_cd
+        FROM tb_product_discount
+    </select>
 
 
 
+    <!--할인 코드 변경됐으면 전체 상품이랑 옵션상품 가격도 변경시켜줘야함... 파장이 크군...!-->
+    <!--상품 테이블에서 할인코드가 있는 것 -> 할인 코드의 종류에 따라 소비자 * 할인효과 = 판매가 해서 판매가컬럼 수정-->
+    <!--옵션 테이블에서도 할인코드 확인 할인코드 종류에 따라 소비자 * 할인효과 = 판매가 해서 판매가컬럼  수정-->
+    <!--할인코드 수정 후 상품테이블 판매가 변경시키는 쿼리-->
+
+    <!--트랜잭션의 둘째--> <!--할인코드 변경 했으니 상품TB 판매가 수정하기-->
+    <update id="update_product_sale_price_due_to_discount_update" >
+        UPDATE tb_product
+        SET sale_prc = (SELECT IF(tb_product_discount.typ = 'pt',
+                                  tb_product.cnsmr_prc * (100 - tb_product_discount.rate) / 100,
+                                  tb_product.cnsmr_prc - tb_product_discount.prc)
+                        FROM tb_product_discount
+                        WHERE tb_product.dc_cd = tb_product_discount.dc_cd),
+            up_dtm = now(),
+            up_id = 'ateam'
+        WHERE tb_product.dc_cd IN (SELECT dc_cd
+                                   FROM tb_product_discount)
+    </update>
+
+    <!--트랜잭션의 셋째--> <!--할인코드 변경 했으니 옵션상품TB 판매가 수정하기-->
+    <update id="update_option_product_sale_price_due_to_discount_update" >
+        UPDATE tb_product_option
+        SET sale_prc = (SELECT IF(tb_product_discount.typ = 'pt',
+                                  tb_product_option.cnsmr_prc * (100 - tb_product_discount.rate) / 100,
+                                  tb_product_option.cnsmr_prc - tb_product_discount.prc)
+                        FROM tb_product_discount
+                        WHERE tb_product_option.dc_cd = tb_product_discount.dc_cd),
+            up_dtm = now(),
+            up_id = 'ateam'
+        WHERE tb_product_option.dc_cd IN (SELECT dc_cd
+                                          FROM tb_product_discount)
+    </update>
+
+
+
+    <!--할인코드 삭제하기(찐)-->
+    <delete id="delete_discount_for_tdd" parameterType="String"  >
+        DELETE
+        FROM tb_product_discount
+        WHERE dc_cd = #{dc_cd}
+    </delete>
+
+
+    <!--할인코드 삭제하기(del_yn = 'y')-->
+    <!--가짜 삭제-->
+    <update id="delete_discount_del_y" parameterType="String" >
+        UPDATE tb_product_discount
+        SET del_yn = 'y', use_yn = 'n', up_dtm = now(), up_id = 'ateam'
+        WHERE dc_cd = #{dc_cd}
+    </update>
+
+    <!--할인코드  사용 여부 변경 -->
+    <update id="delete_discount_use_yn" parameterType="Map" >
+        UPDATE tb_product_discount
+        SET use_yn = #{use_yn} , up_dtm = now(), up_id = 'ateam'
+        WHERE dc_cd = #{dc_cd}
+    </update>
+
+    <!--할인코드 생성 -->
+    <insert id="insert_discount" parameterType="ProductDiscountDto" >
+        insert into tb_product_discount
+                    (dc_cd, cate_cd, typ, name, start_dt, end_dt,
+                    target, rate, prc, use_yn, del_yn, rmk,
+                    in_dtm, in_id, up_dtm, up_id)
+        values ( #{dc_cd}, #{cate_cd}, #{typ}, #{name}, #{start_dt}, #{end_dt},
+                #{target}, #{rate}, #{prc}, #{use_yn}, #{del_yn}, #{rmk},
+                now(), #{in_id}, now(), #{up_id})
+    </insert>
+
+    <!--할인 코드 꺼내기-->
+    <select id="select_discount_by_dc_cd" parameterType="String"  resultType="ProductDiscountDto" >
+        select *
+        from tb_product_discount
+        where dc_cd = #{dc_cd}
+    </select>
 
 </mapper>

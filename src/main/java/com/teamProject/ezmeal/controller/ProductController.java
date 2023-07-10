@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 //import org.json.JSONObject;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,26 +35,15 @@ public class ProductController {
     @GetMapping("/catelist")
     public String productListByCateCd(Model model, String cate_cd) throws SQLException {
 
-        /*카테고리 코드로 검색해서 상품 리스트를 반환*/
-        List productCateCdList = productService.getProductListByCateCd(cate_cd);
+        HashMap map = productService.getProductListByCateCd(cate_cd);
+        model.addAttribute("prodList",map.get("prodList"));
+        model.addAttribute("prodImgList",map.get("prodImgList"));
+        model.addAttribute("prodOptList",map.get("prodOptList"));
+        model.addAttribute("reviewAngMap",map.get("reviewAngMap"));
+        model.addAttribute("reviewCntMap",map.get("reviewCntMap"));
 
-        /*각 상품의 대표 이미지 Map 받기. Map<String(prod_cd), ProductImgDto> */
-        Map<String, ProductImgDto> productCateCdImgMap = productImgService.selectCateCdImgMap(cate_cd);
+        model.addAttribute("cate_cd",cate_cd);
 
-//        /*각 상품의 할인율 Map 받기 Map<String(prod_cd), Integer(dc_rate)> */
-//        Map<String, Integer> discountRateMap = productService.getDiscountRateAll(cate_cd);
-//
-//        /*각 상품의 리뷰 개수 Map<String(prod_cd), Integer(리뷰카운트)>*/
-//        Map<String, Integer> reviewCountMap = productService.countProductReviewAll(cate_cd);
-//
-//        /*각 상품의 리뷰 별점평균 Map<String(prod_cd), Double(별점 평균)>*/
-//        Map<String, Double> reviewStarAvgMap = productService.countProductReviewStarAvgAll(cate_cd);
-
-        model.addAttribute("productCateCdList", productCateCdList);
-        model.addAttribute("productCateCdImgMap", productCateCdImgMap);
-//        model.addAttribute("discountRateMap",discountRateMap);
-//        model.addAttribute("reviewStarAvgMap",reviewStarAvgMap);
-//        model.addAttribute("reviewCountMap",reviewCountMap);
         return "productcatelist";
     }
 
@@ -62,32 +52,6 @@ public class ProductController {
     /*상품 상세 페이지. 나중에 모델에 상품코드관련 후기, 문의 전달해야함.*/
     @GetMapping("/detail")
     public String productDetailView(Model model, Long prod_cd, RedirectAttributes redirectAttributes) throws SQLException {
-
-        ProductDto productDto = productService.getProductByProdCd(prod_cd);
-        /*상품 코드로 검색해서 상품객체 1개를 반환*/
-        if (productDto==null){
-            redirectAttributes.addFlashAttribute("msg","판매중지된 상품입니다");
-            return "redirect:/product/catelist?cate_cd=01";
-        }
-
-        /*1개 상품에 대한 모든 이미지 맵으로 받기*/
-//        Map<String, String> typeAndUrlMap = productImgService.selectProdCdImgAlltoMap(prod_cd);
-        /*이미지 없는 경우 JSP에서 쇼핑몰 LOGO로 대체함*/
-
-//        /*1개 상품에 대한 현재 할인율*/
-//        Map<String, Integer> discountRateMap = productService.getDiscountRateOne(prod_cd);
-//
-//        /*1개 상품에 대한 별점 평균*/
-//        Map<String, Double> reviewStarAvgMap = productService.countProductReviewStarAvgOne(prod_cd);
-//
-//        /*1개 상품에 대한 리뷰카운트*/
-//        Map<String, Integer> reviewCountMap = productService.countProductReviewOne(prod_cd);
-
-        model.addAttribute("productDto", productDto);
-//        model.addAttribute("productCateCdImgMap", typeAndUrlMap);
-//        model.addAttribute("discountRateMap", discountRateMap);
-//        model.addAttribute("reviewStarAvgMap", reviewStarAvgMap);
-//        model.addAttribute("reviewCountMap", reviewCountMap);
 
         return "productdetail";
     }
@@ -107,7 +71,7 @@ public class ProductController {
     @GetMapping("/regist/read")
     public String productRegistPage(Model model, Long prod_cd) throws SQLException, JsonProcessingException {
         /*해당 상품코드의 상품객체 1개 전달*/
-        ProductDto productDto = productService.getProductByProdCd(prod_cd);
+//        ProductDto productDto = productService.getProductByProdCd(prod_cd);
         /*나중에는 이미지도 전달해야겠지...*/
 
         /*라디오 태그 값 뷰의 <script>로 전달 (이부분만 추출하는 메서드 만들어야함)*/
@@ -115,7 +79,7 @@ public class ProductController {
         model.addAttribute("jsonString", jsonString);
 
         /*모델에 담기*/
-        model.addAttribute("productDto", productDto);
+//        model.addAttribute("productDto", productDto);
         model.addAttribute("mode","READ");
 
         return "productRegistration";
@@ -136,7 +100,7 @@ public class ProductController {
     /*관리자 상품 CRUD page - WRITE */
     @PostMapping("/regist/write")
     public String productMngRegistWritePostPage(@RequestBody ProductDto productDto, Model model) throws SQLException {
-        int resultNum = productService.registerProduct(productDto);
+//        int resultNum = productService.registerProduct(productDto);
 //        if(resultNum==1) {
 //            model.addAttribute("mode", "WRITE_OK");
 //        }
@@ -150,9 +114,9 @@ public class ProductController {
     /*관리자 상품 CRUD page - UPDATE */ /*수정 시작하려는 화면!  업데이트문 아직*/
     @GetMapping("/regist/modify")
     public String productMngRegistModifyPage(Long prod_cd, Model model) throws SQLException {
-        ProductDto productDto = productService.getProductByProdCd(prod_cd);
+//        ProductDto productDto = productService.getProductByProdCd(prod_cd);
         /*모델에 담기*/
-        model.addAttribute("productDto", productDto);
+//        model.addAttribute("productDto", productDto);
         model.addAttribute("mode", "UPDATE_MODE");
 
         return "productRegistration";
@@ -195,13 +159,13 @@ public class ProductController {
 //        ProductDto productDto = productService.searchProdCd(prod_cd);
 
         /*카테고리 코드로 검색해서 상품 리스트를 반환*/
-        List productCateCdList = productService.getProductListByCateCd(cate_cd);
+//        List productCateCdList = productService.getProductListByCateCd(cate_cd);
 
         /*나중에는 이미지도 전달해야겠지...*/
 
         /*모델에 담기*/
 //        model.addAttribute("productDto", productDto);
-        model.addAttribute("productCateCdList", productCateCdList);
+//        model.addAttribute("productCateCdList", productCateCdList);
 
 
         return "productMngList";

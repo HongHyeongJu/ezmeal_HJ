@@ -49,12 +49,12 @@ public class ProductOptionDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductOptionDto that = (ProductOptionDto) o;
-        return qty == that.qty && cnsmr_prc == that.cnsmr_prc && sale_prc == that.sale_prc && Objects.equals(opt_seq, that.opt_seq) && Objects.equals(prod_cd, that.prod_cd) && Objects.equals(dc_cd, that.dc_cd) && Objects.equals(name, that.name) && Objects.equals(full_name, that.full_name) && Objects.equals(typ, that.typ) && Objects.equals(use_yn, that.use_yn) && Objects.equals(del_yn, that.del_yn) && Objects.equals(rmk, that.rmk) && Objects.equals(in_dtm, that.in_dtm) && Objects.equals(in_id, that.in_id) && Objects.equals(up_dtm, that.up_dtm) && Objects.equals(up_id, that.up_id);
+        return Objects.equals(opt_seq, that.opt_seq) && Objects.equals(prod_cd, that.prod_cd) && Objects.equals(dc_cd, that.dc_cd) && Objects.equals(name, that.name) && Objects.equals(full_name, that.full_name) && Objects.equals(typ, that.typ) && Objects.equals(qty, that.qty) && Objects.equals(cnsmr_prc, that.cnsmr_prc) && Objects.equals(sale_prc, that.sale_prc) && Objects.equals(use_yn, that.use_yn) && Objects.equals(del_yn, that.del_yn) && Objects.equals(rmk, that.rmk) && Objects.equals(in_dtm, that.in_dtm) && Objects.equals(in_id, that.in_id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(opt_seq, prod_cd, dc_cd, name, full_name, typ, qty, cnsmr_prc, sale_prc, use_yn, del_yn, rmk, in_dtm, in_id, up_dtm, up_id);
+        return Objects.hash(opt_seq, prod_cd, dc_cd, name, full_name, typ, qty, cnsmr_prc, sale_prc, use_yn, del_yn, rmk, in_dtm, in_id);
     }
     /*---------------------------------------------------------------*/
 

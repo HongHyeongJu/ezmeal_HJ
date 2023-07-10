@@ -4,57 +4,93 @@
 
 <mapper namespace="tb_product">
 
-    <!--product 관련 쿼리문: select_prod_cd, select_name, select_cate_cd_List, search_name-->
+    <!--상품찾기는 재고가 아니라 상품status가 중요. 왜냐면 재고 따라서 상품상태 변경할 것이기 때문.-->
+    <!--상품 찾을 때 재고가 0인건
+    상품의 재고가 0인 상품을 찾는다(재고 테이블에서)  ->  해당 상품의 상태를 재고관리 y이면 일시품절로 바꾼다. n면 완전품절로 바꾼다.     )
+     -->
 
-    <!--insert into tb_product (prod_cd, cate_cd, prod_stus, cust_cd, dc_cd, name, mng_prod_nm,
-    sfkp_stus, sfkp_mtd, sp_prc, cnsmr_prc, sale_prc, mgn_rate, dscpt, detail, min_qty, weight,
-    stnd, orplc, recipe, mtd, distb_tlmt, vld_start_dt, vld_end_dt, mng, fst_reg_dt, sub_yn,
-    sale_yn, dp_yn, del_yn, inv_yn,opt_yn, rmk, in_dtm, in_id, up_dtm, up_id)  values ();-->
-
-
-
-    <!-- 상품코드로 상품찾기 -->
+    <!-- 상품코드로 상품찾기 (상품상세용)-->
     <select id="select_product_by_prod_cd" parameterType="Long" resultType="ProductDto">
         SELECT *
         FROM tb_product
-        WHERE prod_cd = #{prod_cd} and sale_yn='y' and dp_yn='y' and del_yn='n'
+        WHERE prod_cd = #{prod_cd}  AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
     </select>
 
-    <!-- 분류코드로 상품리스트 받기 (상품 객체 전체값) -->
+    <!-- 상품코드로 상품찾기 (TDD용 상품코드만 있으면 됨)-->
+    <select id="select_product_by_prod_cd_for_TDD" parameterType="Long" resultType="ProductDto">
+        SELECT *
+        FROM tb_product
+        WHERE prod_cd = #{prod_cd}
+    </select>
+
+    <!-- 카테고리 분류코드로 상품리스트 받기 (상품 객체 전체값) -->
     <select id="select_product_list_by_cate_cd" parameterType="String" resultType="ProductDto">
         SELECT *
         FROM tb_product
-        WHERE cate_cd LIKE concat( #{cate_cd},'%') and sale_yn='y' and dp_yn='y' and del_yn='n'
+        WHERE cate_cd LIKE concat( #{cate_cd},'%') AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
     </select>
 
-    <!--추가할 것. 재고테이블에서 재고가 있는 것만 ㅠ, 옵션여부도 판단하기-->
 
-    <!-- 분류코드로 상품리스트 받기 , 전체 리스트에 출력되는 값만.-->
+<!-- ~~~~~ 카테고리 정렬기준 따라 호출하는 쿼리문 ~~~~~ -->
+
+    <!-- 카테고리 분류코드로 상품리스트 받기 (mini), 전체 카테고리 리스트에 출력되는 값만.-->
     <select id="select_product_list_cate_cd_mini" parameterType="String" resultType="ProductDto">
-        SELECT prod_cd, name, sale_prc
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc
         FROM tb_product
-        WHERE cate_cd LIKE concat(#{cate_cd}, '%')  and sale_yn='y' and dp_yn='y' and del_yn='n'
+        WHERE cate_cd LIKE concat(#{cate_cd}, '%')  AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
     </select>
 
+    <!--낮은 가격 순-->
+    <select id="select_product_list_cate_cd_mini_lowprc" parameterType="String" resultType="ProductDto">
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc
+        FROM tb_product USE INDEX (tb_product_sale_prc_index)
+        WHERE cate_cd LIKE concat(#{cate_cd}, '%')  AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
+        ORDER BY sale_prc
+    </select>
+
+    <!--높은 가격 순-->
+    <select id="select_product_list_cate_cd_mini_highprc" parameterType="String" resultType="ProductDto">
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc
+        FROM tb_product USE INDEX (tb_product_sale_prc_index)
+        WHERE cate_cd LIKE concat(#{cate_cd}, '%')  AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
+        ORDER BY sale_prc desc
+    </select>
+
+    <!--최근 등록 순-->
+    <select id="select_product_list_cate_cd_mini_new" parameterType="String" resultType="ProductDto">
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc
+        FROM tb_product USE INDEX (tb_product_fst_reg_dt_index)
+        WHERE cate_cd LIKE concat(#{cate_cd}, '%')  AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
+        ORDER BY fst_reg_dt desc
+    </select>
+
+    <!--후기 많은 순 , 판매량 순 이후에 추가할 수 있음-->
+<!--    <select id="select_product_list_cate_cd_mini_reivew" parameterType="String" resultType="ProductDto">-->
+<!--        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc-->
+<!--        FROM tb_product-->
+<!--        WHERE cate_cd LIKE concat(#{cate_cd}, '%')  AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)-->
+<!--        ORDER BY fst_reg_dt desc-->
+<!--    </select>-->
+
+
+<!-- ~~~~~ 카테고리 정렬기준 따라 호출하는 쿼리문(끝) ~~~~~ -->
 
 <!-- 컨트롤러는 흐름 서비스에서 준 결과로만, 서비스는 비즈니스 -->
 
-    <!-- 분류코드로 상품리스트 받기 "코드_%" + 판매가격 낮은 순--> <!--하드코딩.. 이게 맞아? -->
-    <select id="select_product_list_cate_cd__Cheap" parameterType="String" resultType="ProductDto">
-        SELECT *
-        FROM tb_product
-        WHERE cate_cd LIKE concat(#{cate_cd}, '%')  and sale_yn='y' and dp_yn='y' and del_yn='n'
-        ORDER By sale_prc
-    </select>
-
-
+<!--    &lt;!&ndash; 분류코드로 상품리스트 받기 "코드_%" + 판매가격 낮은 순&ndash;&gt; &lt;!&ndash;하드코딩.. 이게 맞아? &ndash;&gt;-->
+<!--    <select id="select_product_list_cate_cd__Cheap" parameterType="String" resultType="ProductDto">-->
+<!--        SELECT *-->
+<!--        FROM tb_product-->
+<!--        WHERE cate_cd LIKE concat(#{cate_cd}, '%')  AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)-->
+<!--        ORDER By sale_prc-->
+<!--    </select>-->
 
 
     <!-- 이름으로 상품 검색하기 LIKE "%단어% -->
     <select id="search_by_name" parameterType="String" resultType="ProductDto">
         SELECT *
         FROM tb_product
-        WHERE name LIKE concat( '%', #{name},'%') and sale_yn='y' and dp_yn='y' and del_yn='n'
+        WHERE name LIKE concat( '%', #{name},'%')  AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
     </select>
 
     <!--새 상품 추가하기-->
@@ -66,26 +102,54 @@
         VALUES (#{cate_cd}, #{prod_stus}, #{cust_cd}, #{dc_cd}, #{name}, #{mng_prod_nm}, #{sfkp_stus}, #{sfkp_mtd},
                 #{sp_prc}, #{cnsmr_prc}, #{sale_prc}, #{mgn_rate}, #{dscpt}, #{detail}, #{min_qty}, #{weight},
                 #{stnd}, #{orplc}, #{recipe}, #{mtd}, #{distb_tlmt}, #{vld_start_dt}, #{vld_end_dt}, #{mng},
-                #{fst_reg_dt}, #{sale_yn}, #{dp_yn}, #{del_yn}, #{inv_yn}, #{opt_yn}, #{rmk}, #{in_dtm},
-                #{in_id}, #{up_dtm}, #{up_id})
+                #{fst_reg_dt}, #{sale_yn}, #{dp_yn}, #{del_yn}, #{inv_yn}, #{opt_yn}, #{rmk}, now(),
+                #{in_id},  now(), #{up_id})
     </insert>
 
     <!-- 상품 정보 수정하기 -->
     <update id="update_product" parameterType="ProductDto" >
-        INSERT INTO tb_product (cate_cd, prod_stus, cust_cd, dc_cd, name, mng_prod_nm, sfkp_stus, sfkp_mtd, sp_prc,
-                                cnsmr_prc, sale_prc, mgn_rate, dscpt, detail, min_qty, weight, stnd, orplc, recipe,
-                                mtd, distb_tlmt, vld_start_dt, vld_end_dt, mng, fst_reg_dt, sale_yn, dp_yn,
-                                del_yn, inv_yn, opt_yn, rmk, in_dtm, in_id, up_dtm, up_id)
-        VALUES (#{cate_cd}, #{prod_stus}, #{cust_cd}, #{dc_cd}, #{name}, #{mng_prod_nm}, #{sfkp_stus}, #{sfkp_mtd},
-                #{sp_prc}, #{cnsmr_prc}, #{sale_prc}, #{mgn_rate}, #{dscpt}, #{detail}, #{min_qty}, #{weight},
-                #{stnd}, #{orplc}, #{recipe}, #{mtd}, #{distb_tlmt}, #{vld_start_dt}, #{vld_end_dt}, #{mng},
-                #{fst_reg_dt}, #{sale_yn}, #{dp_yn}, #{del_yn}, #{inv_yn}, #{opt_yn}, #{rmk}, #{up_dtm}, #{up_id})
+        UPDATE tb_product
+        SET cate_cd=#{cate_cd}, prod_stus=#{prod_stus}, cust_cd=#{cust_cd}, dc_cd=#{dc_cd}, name=#{name},
+            mng_prod_nm=#{mng_prod_nm}, sfkp_stus=#{sfkp_stus}, sfkp_mtd=#{sfkp_mtd}, sp_prc=#{sp_prc},
+            cnsmr_prc=#{cnsmr_prc}, sale_prc=#{sale_prc}, mgn_rate=#{mgn_rate}, dscpt=#{dscpt}, detail=#{detail},
+            min_qty=#{min_qty}, weight=#{weight}, stnd=#{stnd}, orplc=#{orplc}, recipe=#{recipe}, mtd=#{mtd},
+            distb_tlmt=#{distb_tlmt}, vld_start_dt=#{vld_start_dt}, vld_end_dt=#{vld_end_dt}, mng=#{mng}, fst_reg_dt=#{fst_reg_dt},
+            sale_yn=#{sale_yn}, dp_yn=#{dp_yn}, del_yn=#{del_yn}, inv_yn=#{inv_yn}, opt_yn=#{opt_yn}, rmk=#{rmk}, up_dtm=now(), up_id='prod_team'
+        WHERE prod_cd=#{prod_cd}
     </update>
 
-    <!-- 옵션 수정도 해야... 옵션 만들어야겠다 -->
+    <!--매일 04시 수량 비교 후 상태코드 업데이트-->   <!--  new  -->
+    <update id="update_all_product_status" >
+        UPDATE tb_product p
+            JOIN tb_product_inventory i ON p.prod_cd = i.prod_cd
+        SET p.prod_stus =
+            CASE
+                WHEN i.curr_inv > i.safe_inv THEN 1  -- 충분
+                WHEN i.curr_inv > 0 THEN 2                -- 품절임박
+                ELSE 3                                          -- 품절
+            END,
+            p.up_dtm = now(),
+            p.up_id = 'inv_team'
+        WHERE p.del_yn = 'n'
+    </update>
+
+    <!--주문시 다 사서 0 되었을 때 해당 상품코드만 상태 '품절'로 수정-->   <!--  new  -->
+    <update id="update_product_status_to_temp_soldout"  parameterType="Long">
+        UPDATE tb_product
+        SET prod_stus = 3 , up_dtm=now(), up_id='inv_team'    -- 품절
+        WHERE prod_cd=#{prod_cd}
+    </update>
 
 
-    <!-- 상품코드 제일 큰것(구독) -->
+    <!--진열중, 판매중인데 상태코드가 2,3 인것의 상품코드만 출력하기--> <!--찾아서 입고주문해야지-->   <!--  new  -->
+    <select id="select_prod_inv_danger" >
+        SELECT prod_cd
+        FROM tb_product
+        WHERE prod_stus IN (2,3)
+    </select>
+
+
+    <!-- 상품코드 제일 큰것 -->
     <select id="select_max_prod_cd" resultType="Long">
         SELECT Max(prod_cd)
         FROM tb_product
@@ -103,15 +167,15 @@
     <update id="delete_Product_del_y" parameterType="Long"  >
         UPDATE tb_product
         SET sale_yn='y' and dp_yn='y' and del_yn='y'
-        WHERE prod_cd = #{prod_cd};
+        WHERE prod_cd = #{prod_cd}
     </update>
 
     <!-- 카테고리별 개수 세기 -->
     <select id="count_cate_cd" resultType="Map">
         SELECT cate_cd, count(*)
         FROM tb_product
-        WHERE sale_yn='y' and dp_yn='y' and del_yn='n'
-        group by cate_cd
+        WHERE  AND sale_yn='y' AND dp_yn='y' AND del_yn='n'
+        GROUP BY cate_cd
     </select>
 
 

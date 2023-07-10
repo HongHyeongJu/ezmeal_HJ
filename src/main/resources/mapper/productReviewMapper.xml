@@ -24,10 +24,10 @@
         SELECT *
         FROM tb_product_review
         WHERE revw_id = (SELECT MAX(revw_id)
-                         FROM tb_product_review);
+                         FROM tb_product_review)
     </select>
 
-    <!--찐 삭제(관리자용)-->
+    <!--찐 삭제(관리자용/TDD용)-->
     <delete id="delete_my_review_for_tdd" parameterType="Long"  >
         DELETE
         FROM tb_product_review
@@ -55,8 +55,9 @@
         UPDATE tb_product_review
         SET title=#{title}, stmt=#{stmt}, wrt_dt=#{wrt_dt}, star=#{star}, revw_opub_yn=#{revw_opub_yn},
             del_yn=#{del_yn}, up_dtm = now()
-        WHERE revw_id = #{revw_id} AND mbr_id = #{mbr_id} AND now() between dlvry_cmpl_dt AND dlvry_cmpl_dt+31
+        WHERE revw_id = #{revw_id} AND mbr_id = #{mbr_id} AND now() between dlvry_cmpl_dt AND DATE_ADD(dlvry_cmpl_dt, INTERVAL 1 MONTH)
     </update>
+
 
     <!--리뷰 공개여부 변경하기  -->
     <update id="update_review_open_yn" parameterType="Map" >
@@ -87,21 +88,24 @@
 
     <!--해당 카테고리에 있는 별점 평균 받아오기 Map(prod_cd , round(avg(star),1))-->
     <select id="get_review_average_for_cate_list"  parameterType="String"   resultType="Map">
-        select prod_cd, Round(avg(star),1)
+        select prod_cd, Round(avg(star),1) as avg
         from tb_product_review
         where prod_cd In (select prod_cd
                           from tb_product
-                          where cate_cd Like concat(#{cate_cd},'%') ANd revw_opub_yn = 'y' AND del_yn='n' )
+                          where cate_cd LIKE concat(#{cate_cd}, '%')  AND sale_yn='y'
+                                AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2))
+
         GROUP BY prod_cd
     </select>
 
-    <!--해당 카테고리에 있는 리뷰 전체 받아오기 Map(prod_cd , count(*))-->
+    <!--해당 카테고리에 있는 리뷰 총개수 받아오기 Map(prod_cd , count(*))-->
     <select id="get_review_count_for_cate_list"  parameterType="String"   resultType="Map">
-        select prod_cd, count(*)
+        select prod_cd, count(*) as count
         from tb_product_review
         where prod_cd In (select prod_cd
                           from tb_product
-                          where cate_cd Like concat(#{cate_cd},'%') ANd revw_opub_yn = 'y' AND del_yn='n' )
+                          where cate_cd LIKE concat(#{cate_cd}, '%')  AND sale_yn='y'
+                            AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2))
         GROUP BY prod_cd
     </select>
 

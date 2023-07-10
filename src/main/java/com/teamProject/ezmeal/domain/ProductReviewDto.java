@@ -47,14 +47,13 @@ public class ProductReviewDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductReviewDto that = (ProductReviewDto) o;
-        return thumb == that.thumb && star == that.star && Objects.equals(revw_id, that.revw_id) && Objects.equals(ord_id, that.ord_id) && Objects.equals(mbr_id, that.mbr_id) && Objects.equals(prod_cd, that.prod_cd) && Objects.equals(title, that.title) && Objects.equals(stmt, that.stmt) && Objects.equals(dlvry_cmpl_dt, that.dlvry_cmpl_dt) && Objects.equals(revw_posbl_dt, that.revw_posbl_dt) && Objects.equals(wrt_dt, that.wrt_dt) && Objects.equals(revw_opub_yn, that.revw_opub_yn) && Objects.equals(del_yn, that.del_yn) && Objects.equals(in_dtm, that.in_dtm) && Objects.equals(in_id, that.in_id) && Objects.equals(up_dtm, that.up_dtm) && Objects.equals(up_id, that.up_id);
+        return Objects.equals(revw_id, that.revw_id) && Objects.equals(ord_id, that.ord_id) && Objects.equals(prod_cd, that.prod_cd) && Objects.equals(mbr_id, that.mbr_id) && Objects.equals(title, that.title) && Objects.equals(stmt, that.stmt) && Objects.equals(dlvry_cmpl_dt, that.dlvry_cmpl_dt) && Objects.equals(revw_opub_yn, that.revw_opub_yn) && Objects.equals(del_yn, that.del_yn);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(revw_id, ord_id, mbr_id, prod_cd, title, stmt, dlvry_cmpl_dt, revw_posbl_dt, wrt_dt, thumb, star, revw_opub_yn, del_yn, in_dtm, in_id, up_dtm, up_id);
+        return Objects.hash(revw_id, ord_id, prod_cd, mbr_id, title, stmt, dlvry_cmpl_dt, revw_opub_yn, del_yn);
     }
-
     /*-----------------------------------------------------------------------------*/
 
     @Override

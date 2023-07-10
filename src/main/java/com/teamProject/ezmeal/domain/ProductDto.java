@@ -96,14 +96,13 @@ public class ProductDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductDto that = (ProductDto) o;
-        return Objects.equals(prod_cd, that.prod_cd) && Objects.equals(cate_cd, that.cate_cd) && Objects.equals(in_dtm, that.in_dtm) && Objects.equals(in_id, that.in_id);
+        return Objects.equals(prod_cd, that.prod_cd) && Objects.equals(cate_cd, that.cate_cd) && Objects.equals(prod_stus, that.prod_stus) && Objects.equals(cust_cd, that.cust_cd) && Objects.equals(dc_cd, that.dc_cd) && Objects.equals(name, that.name) && Objects.equals(mng_prod_nm, that.mng_prod_nm) && Objects.equals(sfkp_stus, that.sfkp_stus) && Objects.equals(sfkp_mtd, that.sfkp_mtd) && Objects.equals(sp_prc, that.sp_prc) && Objects.equals(cnsmr_prc, that.cnsmr_prc) && Objects.equals(sale_prc, that.sale_prc) && Objects.equals(mgn_rate, that.mgn_rate) && Objects.equals(dscpt, that.dscpt) && Objects.equals(detail, that.detail) && Objects.equals(min_qty, that.min_qty) && Objects.equals(weight, that.weight) && Objects.equals(stnd, that.stnd) && Objects.equals(orplc, that.orplc) && Objects.equals(recipe, that.recipe) && Objects.equals(mtd, that.mtd) && Objects.equals(distb_tlmt, that.distb_tlmt) && Objects.equals(vld_start_dt, that.vld_start_dt) && Objects.equals(vld_end_dt, that.vld_end_dt) && Objects.equals(mng, that.mng) && Objects.equals(fst_reg_dt, that.fst_reg_dt) && Objects.equals(sale_yn, that.sale_yn) && Objects.equals(dp_yn, that.dp_yn) && Objects.equals(del_yn, that.del_yn) && Objects.equals(inv_yn, that.inv_yn) && Objects.equals(opt_yn, that.opt_yn) && Objects.equals(rmk, that.rmk) && Objects.equals(in_dtm, that.in_dtm) && Objects.equals(in_id, that.in_id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(prod_cd, cate_cd, in_dtm, in_id);
+        return Objects.hash(prod_cd, cate_cd, prod_stus, cust_cd, dc_cd, name, mng_prod_nm, sfkp_stus, sfkp_mtd, sp_prc, cnsmr_prc, sale_prc, mgn_rate, dscpt, detail, min_qty, weight, stnd, orplc, recipe, mtd, distb_tlmt, vld_start_dt, vld_end_dt, mng, fst_reg_dt, sale_yn, dp_yn, del_yn, inv_yn, opt_yn, rmk, in_dtm, in_id);
     }
-
 
     /*-------------------------------------------------------------------   [getter & setter 시작]   ---------*/
     public Long getProd_cd() {
@@ -182,7 +181,7 @@ public class ProductDto {
         return sp_prc;
     }
 
-    public void setSp_prc(int sp_prc) {
+    public void setSp_prc(Integer sp_prc) {
         this.sp_prc = sp_prc;
     }
 
@@ -190,7 +189,7 @@ public class ProductDto {
         return cnsmr_prc;
     }
 
-    public void setCnsmr_prc(int cnsmr_prc) {
+    public void setCnsmr_prc(Integer cnsmr_prc) {
         this.cnsmr_prc = cnsmr_prc;
     }
 
@@ -202,13 +201,9 @@ public class ProductDto {
         this.sale_prc = sale_prc;
     }
 
-    public Integer getMgn_rate() {
-        return mgn_rate;
-    }
+    public Integer getMgn_rate() { return mgn_rate; }
 
-    public void setMgn_rate(int mgn_rate) {
-        this.mgn_rate = mgn_rate;
-    }
+    public void setMgn_rate(Integer mgn_rate) { this.mgn_rate = mgn_rate; }
 
     public String getDscpt() {
         return dscpt;
@@ -230,7 +225,7 @@ public class ProductDto {
         return min_qty;
     }
 
-    public void setMin_qty(int min_qty) {
+    public void setMin_qty(Integer min_qty) {
         this.min_qty = min_qty;
     }
 
@@ -238,7 +233,7 @@ public class ProductDto {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(Integer weight) {
         this.weight = weight;
     }
 

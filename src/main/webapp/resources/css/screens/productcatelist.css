@@ -1,6 +1,10 @@
 body {
     font-family: 'FontName', sans-serif;
+    word-break: keep-all;   /*브라우저가 단어를 분리하지 않고 한 줄에 유지*/
+    overflow-wrap: break-word;   /* 텍스트가 주어진 컨테이너의 너비를 초과할 경우 단어를 분리하여 줄을 바꾸는 방식을 지정하는 데 사용*/
+    letter-spacing: -0.5px;
 }
+
 
 .empty {
     height: 200px;
@@ -146,6 +150,7 @@ body {
 }
 
 .prod_title  {
+    height: 6.4px;
     padding: 0%;
     display: block;
     margin-top: 0;
@@ -197,4 +202,8 @@ body {
 .submit_btn {
     border-radius: 20%;
     background-color: azure;
+}
+
+p {
+    height: 30px;
 }

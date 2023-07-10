@@ -1,8 +1,16 @@
 package com.teamProject.ezmeal.service;
 
-import com.teamProject.ezmeal.dao.ProductDao;
+import com.teamProject.ezmeal.dao.*;
+import com.teamProject.ezmeal.domain.ProductDiscountDto;
 import com.teamProject.ezmeal.domain.ProductDto;
+import com.teamProject.ezmeal.domain.ProductImgDto;
+import com.teamProject.ezmeal.domain.ProductOptionDto;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -18,143 +26,99 @@ public class ProductService {
 
     @Autowired
     ProductDao productDao;
+    @Autowired
+    ProductDiscountDao productDiscountDao;
+    @Autowired
+    ProductImgDao productImgDao;
+    @Autowired
+    ProductInventoryDao productInventoryDao;
+    @Autowired
+    ProductOptionDao productOptionDao;
+    @Autowired
+    ProductReviewDao productReviewDao;
 
-    /* 상품 코드로 찾기(1개) */
-    public ProductDto getProductByProdCd (Long prod_Cd) throws SQLException {
-        try {
-            return productDao.selectProductByProdCd(prod_Cd);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-    }
+    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
+/*여러 다오의 메서드 호출할 때, 왼쪽창 열고 다오랑, 맵퍼 주석 확인해서 상황에 적절한 메서드 호출하기*/
 
-    /* 상품 이름으로 검색(리스트) */
-    public List searchProductByName (String name) throws SQLException {
-        try {
-            return productDao.selectByName(name);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
+    /*카테고리 클릭시 -> 해당 카테고리 상품List(mini), 해당 상품관련 대표이미지 LIst, 옵션있는 상품일경우 옵션객체List(카테고리용), */
+    /*(상품 select에 재고 확인 조건 넣기) 할인코드 List(할인율 필요), 해당상품 리뷰 평점, 리뷰숫자 (업는건 0으로?)*/
     /* 분류코드로 상품 리스트받기 */
-    public List getProductListByCateCd (String cate_cd) throws SQLException {
+
+    public HashMap getProductListByCateCd (String cate_cd) throws SQLException {
+
         try {
-            return productDao.selectProductListByCateCd(cate_cd);
+
+                /*카테고리 상품 리스트*/
+                List<ProductDto> prodList = productDao.selectProductListByCateCdMini(cate_cd);
+
+                /*카테고리 상품 '대표'이미지 리스트*/
+                List<ProductImgDto> prodImgList = productImgDao.selectCateCdImgTyp(cate_cd);
+                /*카테고리 상품의 옵션 리스트*/
+                List<ProductOptionDto> prodOptList =  productOptionDao.selectOptionInProductCategory(cate_cd);
+                /*할인율 강조를 위한 할인코드 리스트 */
+                List<ProductDiscountDto> discountList = productDiscountDao.selectDiscountListByCateCd();
+                /*상품 평점, 리뷰 숫자*/
+                Map<Long,Double> reviewAngMap = productReviewDao.selectReviewAvgForProdList(cate_cd);
+                /**/
+                Map<Long,Integer> reviewCntMap = productReviewDao.selectReviewCntForProdList(cate_cd);
+                HashMap ProdListMap = new HashMap<>();
+                ProdListMap.put("prodList",prodList);
+                ProdListMap.put("prodImgList",prodImgList);
+                ProdListMap.put("prodOptList",prodOptList);
+                ProdListMap.put("reviewAngMap",reviewAngMap);
+                ProdListMap.put("reviewCntMap",reviewCntMap);
+
+                return ProdListMap;
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error occurred in getProductListByCateCd", e);
+            throw new RuntimeException("DB 조회 중 에러가 발생했습니다.", e);
         }
     }
 
-    /*상품목록 페이지를 위한 값 넘겨주기.  상품 리스트, 대표이미지(이미지 쿼리가 알아서 해줄꺼임),
-    할인율(할인코드&상품코드로 찾아서 ) */
 
-
-
-    /* 상품 생성 (WRITE) */
-    public int registerProduct (ProductDto productDto) throws SQLException {
-        return productDao.insertProduct(productDto);
-    }
-    /*컨트롤러에서 값 확인*/
-
-
-    /* 상품 수정 (UPDATE) */
-//  public int modifyProduct (ProductDto productDto) throws
-    /*상픔 등록 시 이미지도 (업데이트도)*/
-
-
-    /* 상품 찐삭제 (DELETE) */
-    public int removeProduct(Long prodCd) throws SQLException {
-        return productDao.deleteForTDD(prodCd);
-    }
-
-
-
-/* DB에서 처리하도록! 시퀀스로 하고 문자로 구분 있어보이는 쿼리 ㅎㅎ  이러면 쿼리 2번.  모든 대화는 서류로
-* 같은DB 안에서 처리하는 것이 매우매우 빠르다 */
-
-    /*할인율 계산해주는 메서드 { (소비자가-판매가)/소비자가 }*100  (k,v) = (prod_cd, dvc_rate) 맵으로 반환 */
-//    public Map<String, Integer> get?(String cate_cd) throws SQLException {
-//        List<ProductDto> productList = selectCateCd(cate_cd);
-//        Map<String, Integer> discountRateMap = productList.stream()
-//                .collect(Collectors.toMap(ProductDto::getProd_cd, ProductDto -> (int) (((ProductDto.getCnsmr_prc() - ProductDto.getSale_prc()) * 100) / ProductDto.getCnsmr_prc())));
-//        return discountRateMap;
-//    }
-
-    /*할인율 계산해주는 메서드 (1개 상품) { (소비자가-판매가)/소비자가 }*100  (k,v) = (prod_cd, dvc_rate) 맵으로 반환 */
-//    public Map<String, Integer> getDiscountRateOne(String prod_Cd) throws SQLException {
-//        ProductDto productDto = searchProdCd(prod_Cd);
-//        Map<String, Integer> discountRateMap = new HashMap<String, Integer>();
-//        Integer cnsmr_prc = productDto.getCnsmr_prc();
-//        Integer sale_prc = productDto.getSale_prc();
-//        discountRateMap.put(productDto.getProd_cd(),(int) ((cnsmr_prc-sale_prc)*100)/cnsmr_prc);
-//        return discountRateMap;
-//    }
-
-    /*카테고리 상품에 대한 리뷰 숫자 반환 메서드 MAP(상품코드, 상품코드별리뷰숫자)*/
-//    public Map<String, Integer> getReviewCount(String cate_cd) throws SQLException {
-//        List<ProductDto> catecCdList = selectCateCd(cate_cd);
-//        Map reviewCountMap = new HashMap();
-//        for(int i=0 ; i<catecCdList.size() ; i++){
-//            reviewCountMap.put(catecCdList.get(i).getProd_cd(),productDao.countProductReview(catecCdList.get(i).getProd_cd()));
-//        }
-//        return reviewCountMap;
-//    }
-
-    /*1개 상품에 대한 리뷰 숫자 반환 메서드 MAP(상품코드, 상품코드별리뷰숫자)*/
-//    public Map<String, Integer> countProductReviewOne(String prod_cd) throws SQLException {
-//        ProductDto productDto = productDao.selectProductByProdCd(prod_cd);
-//        Map reviewCountMap = new HashMap();
-//        reviewCountMap.put(productDto.getProd_cd() , productDao.countProductReview(productDto.getProd_cd()));
-//        return reviewCountMap;
-//    }
-
-    /*카테고리 상품에 대한 리뷰 별점평균 반환 메서드 MAP(상품코드, 별점평균)*/
-//    public Map<String, Double> reviewAverage(String cate_cd) throws SQLException {
-//        List<ProductDto> catecCdList = selectCateCd(cate_cd);
-//        Map reviewStarAvgMap = new HashMap();
-//        for(int i=0 ; i<catecCdList.size() ; i++){
-//            reviewStarAvgMap.put(catecCdList.get(i).getProd_cd(), Math.round(productDao.avgProductReviewStar(catecCdList.get(i).getProd_cd())*10)/10);
-//        }
-//        return reviewStarAvgMap;
-//    }
-
-    /*리뷰 mapper먼저 만들기 */
-
-    /*1개의 상품에 대한 리뷰 별점평균 반환 메서드 MAP(상품코드, 별점평균)*/
-//    public Map<String, Double> countProductReviewStarAvgOne(String prod_cd) throws SQLException {
-//        ProductDto productDto = productDao.selectProdCd(prod_cd);
-//        Map reviewStarAvgMap = new HashMap();
-//        reviewStarAvgMap.put(productDto.getProd_cd() , Math.round(productDao.avgProductReviewStar(productDto.getProd_cd())*10.0)/10.0);
-//        return reviewStarAvgMap;
-//    }
+    /*다양한 순서의 */
 
 
 
 
-//    /* 카테고리별 개수 세기 */
-//    public int countCateCd(String CateCd) throws Exception {
-//        Map<String, Integer> resultMap = productDao.countCateCd(CateCd);
-//        int count = resultMap.get(CateCd);
-//        return count;
-//    }
+    /*상품 상세 페이지 -> 해당 상품코드 상품 1개 찾기, 이미지 모두 가져오기, 옵션있으면 옵션 상품 List로 전달, 해당 할인코드
+    * 리뷰평점, 리뷰숫자, 리뷰 List, 문의 List받아오기  없을때는, 예외는 0으로 반환(컨트롤러에서 해당상품이 없습니다.->index? )*/
 
-    /* 상품 등록하기 */
-    /* 상품 수정하기 */
-    /* 유효일 조금 남은 것 찾기 */
-    /* 특정 할인코드 검색하기 */
-    /*  */
-    /*  */
-    /*  */
-    /*  */
-    /*  */
-    /*  */
-    /*  */
-    /*  */
-    /*  */
-    /*  */
+
+
+
+
+    /*-----------관리자용-------------------*/
+    /*상품 등록 페이지-> 상품, 할인, 이미지, 재고(0,safe), 옵션(y일 경우) n개 생성*/
+
+    /*상품 등록 트랜잭션-> 상품등록, 이미지등록, 재고(0,safe)생성, 옵션(y일 경우) n개 생성*/
+
+    /*상품 읽기/수정 페이지  전체 상품 목록을 가져온다. 할인, 이미지, 옵션 가져오기*/
+
+    /*상품 수정 완료 -> 전체상품목록이랑 비교해서 equals가 아닌것만 update, 이미지 리스트도 마찬가지. 옵션도 마찬가지*/
+
+
+
+
+
+
+    /*만들일 없을 것 같지만. 관리자의 할인코드 생성/수정/삭제 */
 
 
 
 }
+
+
+
+//@Service
+//@EnableRetry
+//public class ProductService {
+
+    /*이런게 있다고 함 */
+//    @Retryable(value = SQLException.class, maxAttempts = 3, backoff = @Backoff(delay = 1000))
+//    @Recover
+//    public void recover(SQLException e) {
+//        logger.error("Error occurred in getProductListByCateCd", e);
+//        throw new RuntimeException("DB 조회 중 에러가 발생했습니다.", e);
+//    }

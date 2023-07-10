@@ -15,19 +15,59 @@ public class ProductDao {
     private SqlSession session;
     private static String namespace = "tb_product.";
 
-    /* 상품코드로 상품 1개 찾기 */
+    /* 상품코드로 상품 1개 찾기 (상품상세용)*/
     public ProductDto selectProductByProdCd(Long prod_cd) throws SQLException {
         return session.selectOne(namespace+"select_product_by_prod_cd", prod_cd);
     }
+
+    /* 상품코드로 상품 1개 찾기(TDD용) */
+    public ProductDto selectProductByProdCdForTdd(Long prod_cd) throws SQLException {
+        return session.selectOne(namespace+"select_product_by_prod_cd", prod_cd);
+    }
+
 
     /* 분류코드로 상품 리스트 받기 */
     public List<ProductDto> selectProductListByCateCd(String cate_cd) throws SQLException {
         return session.selectList(namespace + "select_product_list_by_cate_cd", cate_cd);
     }
 
+    /* ----------------- 카테고리 정렬기준 따라 호출하는 쿼리문 -------------- */
+
+    /* 분류코드로 상품 리스트 받기 (mini)*/
     public List<ProductDto> selectProductListByCateCdMini(String cate_cd) throws SQLException {
         return session.selectList(namespace + "select_product_list_cate_cd_mini", cate_cd);
     }
+
+    /* 낮은 가격순 */
+    public List<ProductDto> selectProductListByCateCdMiniLowprc(String cate_cd) throws SQLException {
+        return session.selectList(namespace + "select_product_list_cate_cd_mini_lowprc", cate_cd);
+    }
+
+    /* 높은 가격순 */
+    public List<ProductDto> selectProductListByCateCdMiniHighprc(String cate_cd) throws SQLException {
+        return session.selectList(namespace + "select_product_list_cate_cd_mini_highprc", cate_cd);
+    }
+
+    /* 최근등록순 */
+    public List<ProductDto> selectProductListByCateCdMiniNew(String cate_cd) throws SQLException {
+        return session.selectList(namespace + "select_product_list_cate_cd_mini_new", cate_cd);
+    }
+
+    /* 상품후기 많은 순 */
+    /* ----------------- 카테고리 정렬기준 따라 호출하는 쿼리문 -------------- */
+
+
+    /*재고수량에 따른 새벽 04시 상품 상태코드 업데이트*/
+    public Integer updateAllProdStatus() throws SQLException {
+        return session.update(namespace + "update_all_product_status");
+    }
+
+
+    /*주문으로 인한 재고0으로 해당 상품코드 상태만 3으로 변경*/
+    public Integer updateProdStatusDueToInvTempSoldOut(Long prod_cd) throws SQLException {
+        return session.update(namespace + "update_product_status_to_temp_soldout", prod_cd);
+    }
+
 
 
 //    /* 분류코드로 상품 리스트 받기 (가격낮은 순 정렬) */

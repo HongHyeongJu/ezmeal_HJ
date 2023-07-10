@@ -5,21 +5,23 @@
 <mapper namespace="tb_product_option">
 
     <!-- 옵션 yn -> 카테고리에서 보여줄 때? 옵션SEQ, 짧은 옵션명, 수량, sale_prc -->
-    <select id="select_option_in_category" parameterType="Long" resultType="ProductOptionDto">
-        SELECT opt.opt_seq, opt.prod_cd, opt.name, opt.qty, opt.sale_prc
+    <select id="select_option_in_category" parameterType="String" resultType="ProductOptionDto">
+        SELECT opt.prod_cd, opt.opt_seq,  opt.name, opt.qty, opt.sale_prc
         FROM tb_product_option AS opt
                  INNER JOIN tb_product AS pd ON opt.prod_cd = pd.prod_cd
-        WHERE opt.prod_cd = #{prod_cd}  AND opt.use_yn = 'y' AND opt.del_yn ='n'
+        WHERE opt.use_yn = 'y' AND opt.del_yn ='n'
+              AND pd.cate_cd LIKE concat(#{cate_cd}, '%')  AND pd.sale_yn='y'
+              AND pd.dp_yn='y' AND pd.del_yn='n' AND pd.prod_stus IN (1,2)
     </select>
 
 
     <!-- 옵션 y -> 상세페이지에서 보여줄 떄?  -->
-    <select id="select_option_in_detail" parameterType="String" resultType="ProductOptionDto">
-        SELECT opt.opt_seq, opt.prod_cd, opt.name, concat( pd.name, opt.name ) as full_name,
+    <select id="select_option_in_detail" parameterType="Long" resultType="ProductOptionDto">
+        SELECT opt.opt_seq, opt.prod_cd, opt.dc_cd, opt.name, concat( pd.name, opt.name ) as full_name,
                opt.cnsmr_prc, opt.sale_prc, opt.typ, opt.qty
         FROM tb_product_option AS opt
                  INNER JOIN tb_product AS pd ON opt.prod_cd = pd.prod_cd
-        WHERE opt.prod_cd = #{prod_cd}  AND opt.use_yn = 'y' AND opt.del_yn ='n'
+        WHERE opt.use_yn = 'y' AND opt.del_yn ='n'
     </select>
 
     <!-- 옵션 -> 관리자페이지에서 봐야하는 옵션 정보 전체니까 *   -->
