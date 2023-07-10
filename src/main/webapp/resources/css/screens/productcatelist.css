@@ -1,0 +1,209 @@
+body {
+    font-family: 'FontName', sans-serif;
+    word-break: keep-all;   /*브라우저가 단어를 분리하지 않고 한 줄에 유지*/
+    overflow-wrap: break-word;   /* 텍스트가 주어진 컨테이너의 너비를 초과할 경우 단어를 분리하여 줄을 바꾸는 방식을 지정하는 데 사용*/
+    letter-spacing: -0.5px;
+}
+
+
+.empty {
+    height: 200px;
+}
+
+
+
+.지붕묶음 {
+    width: 980px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+.지붕 {
+    list-style-type: none;
+    margin: 0;
+    padding-right: 20px;
+    display: flex;
+    /*     justify-content: center;
+        align-items: center; */
+    position: relative;
+}
+
+
+
+/*상품 4개가 1 UL*/
+.prod_list_ul{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style-type: none;
+}
+
+/*상품 1개가 1 LI*/
+.prod_list_li {
+    box-sizing: border-box; /* 요소의 경계 상자 크기 설정을 위해 추가 */
+    padding: 0px; /* 각 항목의 패딩 설정 */
+    margin: 5px;
+    border: 0px #000;
+    margin-bottom: 0;
+    margin-top: 0;
+    list-style-type: none;
+}
+
+.prod_outer{
+    /* background-color:blueviolet; */
+    width: 220px;
+    height: 400px;
+    border: 0px #000;
+}
+
+/*상단 이미지 감싸는 figure*/
+.top_figure {
+    border: 0px solid #000;
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+
+}
+
+/*상품 이미지*/
+.prod_top img {
+    width: 96%;
+    height: 96%;
+    object-fit: contain;
+    margin: 2%;
+    border-radius: 5%;
+}
+
+/*이미지 아래부분 전체*/
+.prod_bottom{
+    width: 220px;
+    height: 150px;
+    /* background-color:gainsboro; */
+    border: 0px #000;
+}
+
+.review_set {
+    text-align: right;
+    margin-right: 6px;
+    margin-bottom : 6px;
+}
+
+.dc_cd {
+    color: cornflowerblue;
+    display: inline-block;
+    font-weight: bold;
+    padding-left:5px;
+    margin-bottom: 1%;}
+
+.prod_name {font-size: 90%;}
+
+.sale_prc {
+    display: inline-block;
+    color: black;
+    font-size: 120%;
+    font-weight: bold; /* 굵은 글꼴 설정 */
+    font-style: normal;
+}
+
+.cnsmr_prc {
+    color:gray;
+    text-decoration: line-through;
+    margin-top: 0%;
+    display: inline-block;
+    font-size: 80%;
+    margin-bottom: 10px;
+}
+
+.dc_cd_prod_dscpt_wrapper {
+    display: flex;
+}
+.dc_cd,.cnsmr_prc,.sale_prc {
+    width:min-content;
+    margin-bottom: 1%;
+    margin-left: 5%;
+    display: inline-block;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.star_img {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("../../img/star.png");
+    background-size: 100%;
+    background-repeat: no-repeat; /*그림 반복 막기*/
+}
+
+.star_img, .score, .total_num {
+    vertical-align: middle;   /*옆 스팬글자랑 이미지랑 높이 맞추기*/
+}
+
+.total_num {
+    margin-right: 5px;
+}
+
+.prod_title  {
+    height: 6.4px;
+    padding: 0%;
+    display: block;
+    margin-top: 0;
+    margin-bottom: 3%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+/*-------------------------------------------------------------------상품출력 끝--------------------*/
+
+
+.add_cart {
+    /* border: 1px solid #000; */
+    margin-top: 10px;
+    margin-left: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+
+.button_wrapper {
+    display: flex;
+    align-items: center;
+}
+
+#quantity {
+    border: none;
+    height: 25px;
+    width: 25px;
+    background-color: transparent;
+    font-size: 100%;
+    text-align: center;
+}
+
+#min_btn,
+#pls_btn {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: white;
+    font-size: 110%;
+    cursor: pointer;
+    border: 1px solid gainsboro;
+    display: inline;
+    margin-right: 5px
+
+}
+
+.submit_btn {
+    border-radius: 20%;
+    background-color: azure;
+}
+
+p {
+    height: 30px;
+}

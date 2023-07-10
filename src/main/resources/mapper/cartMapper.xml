@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cart">
+
+    <!--    mbr_id를 통한 cart_seq 구하는 query-->
+    <select id="cart_seq" resultType="Long">
+        select cart_seq
+        from tb_cart
+        where mbr_id = #{mbrId};
+    </select>
+
+<!--    TODO insert 시, 장바구니 자동 생성 -->
+<!--    <insert id="insert">-->
+<!--        insert into tb_cart-->
+<!--    </insert>-->
+</mapper>

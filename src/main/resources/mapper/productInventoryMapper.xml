@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tb_product_inventory">
+
+    <!--나중에 한 상품에 대한 재고 변화량 기록하기-->
+    <!--재고 맵퍼에는 뭐가 필요할까? 관리자 페이지에서 각 상품에 대한 재고 List있어야 하겠고
+        (V)*상품코드로 정렬은 당연하고(인덱스 사용) select
+        *안전재고보다 현재재고가 같거나 아래인것만 보기 select
+        *안전재고 * 0.5 -> 위험 알림줘야함. select(상품 이름도 필요해 알려줄 때)
+        헐.... 이거 눌를때마다 보이고 안보이고(기선님 고객센터 자주하는 질문)
+        (V)*재고 상황 변경하는 update문 (재고관리창에서 전체 변경하면 하도록 List<dto>로 던지고 반복 업데이트 시켜야겠다.) 반복update
+            -> 이건 보통 여러제품이 한번에 입고됐을 때 사용하겠지
+        (V)*상품 삭제로 인한 재고관리 안할 때 같단한 update문도(의미적으로 delete) update
+        (V)*새상품 등록으로 인한 재고관리 시작 (나중에는 상품이랑 재고랑 유기적으로 연동... 상품 등록하면 기본재고 시작으로..)
+         상품 등록 페이지에서 같이 생성해야 겠군. Insert
+        (V)*상품코드로 재고관리 로우 하나 찾는 것도 필요해! select
+        (V)*상품이 팔릴때마다... 재고숫자 줄여야함... 숫자만 변경하는! update
+        *거래처로부터 입고받았을 때 수량 체크후 변동 입력
+        다불러와서 히든처리?
+        *-->
+
+    <!--상품 등록 페이지에서 같이 생성  -> 상품코드 매개변수로 받겠다 아 이미 정보 받아서 객체로 오겠네-->
+    <insert id="insert_product_inventory" parameterType="ProductInventoryDto">
+        INSERT INTO tb_product_inventory
+                (prod_cd, curr_inv, safe_inv, last_gr_dt, gr_dura_dt, use_yn, del_yn,
+                rmk, in_dtm, in_id, up_dtm, up_id)
+        VALUES ( #{prod_cd}, #{curr_inv}, #{safe_inv}, #{last_gr_dt}, #{gr_dura_dt}, #{use_yn}, #{del_yn},
+                #{rmk}, now(), 'ateam', now(), 'ateam' )
+    </insert>
+
+    <!--상품코드로 재고관리 로우 하나 찾는 것도 필요해!-->
+    <select id="select_one_product_inventory" parameterType="Long" resultType="ProductInventoryDto">
+        SELECT *
+        FROM tb_product_inventory
+        WHERE prod_cd = #{prod_cd}
+    </select>
+
+    <!--상품이 팔릴때마다... 재고숫자 줄여야함... 숫자만 변경 매개변수:상품코드,재고 변화량  (주문으로인한(-), 반품으로인한(+)) -->
+    <update id="update_curr_inv_by_order_return"  parameterType="map">
+        UPDATE tb_product_inventory
+        SET curr_inv = curr_inv + #{chg_inv} , up_dtm = now() , up_id = 'ateam'
+        WHERE prod_cd= #{prod_cd}
+    </update>
+
+    <!--거래처로부터 입고받았을 때 수량 체크후 변동 입력-->
+    <update id="update_curr_inv_by_incoming"  parameterType="map">
+        UPDATE tb_product_inventory
+        SET curr_inv = curr_inv + #{chg_inv}, last_gr_dt = #{last_gr_dt}, up_dtm = now() , up_id = 'ateam'
+        WHERE prod_cd= #{prod_cd}
+    </update>
+
+    <!--관리자 페이지) 재고 상황 변경하는 update문(반복은 서비스에서...)-->
+    <update id="update_product_inventory">
+            UPDATE tb_product_inventory
+            SET curr_inv=#{curr_inv},
+            safe_inv=#{safe_inv},
+            last_gr_dt=#{last_gr_dt},
+            gr_dura_dt=#{gr_dura_dt},
+            use_yn=#{use_yn},
+            del_yn=#{del_yn},
+            rmk=#{rmk},
+            up_dtm=now(),
+            up_id='ateam'
+            WHERE prod_cd=#{prod_cd}
+    </update>
+
+
+<!--    &lt;!&ndash;관리자 페이지) 재고 상황 변경하는 update문(반복)&ndash;&gt;-->
+<!--    <update id="update_all_product_inventory" parameterType="java.util.List">-->
+<!--        <foreach collection="list" item="product_inv" separator=";">-->
+<!--            UPDATE tb_product_inventory-->
+<!--            SET curr_inv=#{product_inv.curr_inv},-->
+<!--            safe_inv=#{product_inv.safe_inv},-->
+<!--            last_gr_dt=#{product_inv.last_gr_dt},-->
+<!--            gr_dura_dt=#{product_inv.gr_dura_dt},-->
+<!--            use_yn=#{product_inv.use_yn},-->
+<!--            del_yn=#{product_inv.del_yn},-->
+<!--            rmk=#{product_inv.rmk},-->
+<!--            up_dtm=now(),-->
+<!--            up_id='ateam'-->
+<!--            WHERE prod_cd=#{product_inv.prod_cd}-->
+<!--        </foreach>-->
+<!--    </update>-->
+
+
+    <!--재고 찐 삭제-->
+    <delete id="delete_product_inventory_for_tdd"  parameterType="Long">
+        DELETE
+        FROM tb_product_inventory
+        WHERE prod_cd= #{prod_cd}
+    </delete>
+
+    <!--재고 의미적 삭제 ...-->
+    <update id="update_product_inventory_del_y"  parameterType="Long">
+        UPDATE tb_product_inventory
+        SET del_yn = 'y', use_yn = 'n', up_dtm = now(), up_id = 'ateam'
+        WHERE prod_cd= #{prod_cd}
+    </update>
+
+    <!--재고 현황(상품코드로 정렬, 인덱스 이용 -> 이미 PK가 인덱스임 USE INDEX (PRIMARY) )-->
+    <select id="select_all_product_inventory"  resultType="ProductInventoryDto">
+        SELECT *
+        FROM tb_product_inventory
+        WHERE use_yn = 'y' AND del_yn = 'n'
+    </select>
+
+    <!--위험 재고 현황-->
+    <select id="select_dangerous_product_inventory"  resultType="ProductInventoryDto">
+        SELECT *
+        FROM tb_product_inventory
+        WHERE curr_inv &lt; safe_inv AND use_yn = 'y' AND del_yn = 'n'
+    </select>
+
+
+
+</mapper>

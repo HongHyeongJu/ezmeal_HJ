@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tb_member">
+
+    <select id="lgin_pw" parameterType="String" resultType="String">
+        SELECT lgin_pw
+        FROM tb_member
+        WHERE lgin_id = #{loginId}
+    </select>
+
+    <select id="mbr_id" parameterType="String" resultType="long">
+        SELECT mbr_id
+        FROM tb_member
+        WHERE lgin_id = #{loginId}
+    </select>
+
+    <!--    id 중복체크누르면, 입력한 lgin_id이 존재하는지 조회한다. -->
+    <select id="lgin_id" parameterType="String" resultType="String">
+        SELECT lgin_id
+        FROM tb_member
+        WHERE lgin_id = #{lgin_id}
+    </select>
+
+    <!--  회원가입 쿼리문  -->
+    <insert id="mbr_signup" parameterType="MemberDto">
+        INSERT INTO tb_member (
+                               name
+                              ,sex
+                              ,birth
+                              ,phone
+                              ,email
+                              ,lgin_id
+                              ,lgin_pw
+        ) values (
+                     #{name}
+                 ,#{sex}
+                 ,#{birth}
+                 ,#{phone}
+                 ,#{email}
+                 ,#{lgin_id}
+                 ,#{lgin_pw}
+                 )
+    </insert>
+
+    <!--  회원정보를 조회하는 쿼리문  -->
+    <select id="mbr_Info" parameterType="Long" resultType="MemberDto">
+        select *
+        from tb_member
+        where mbr_id = #{memberId}
+    </select>
+
+    <!--회원탈퇴 쿼리문 delete가 아닌 del_yn(삭제여부)를 N에서 Y로 변경을 삭제로 간주-->
+    <update id="mbr_withdrawal" parameterType="long">
+        UPDATE tb_member
+        SET del_yn = 'y'
+        WHERE mbr_id = #{mbr_id}
+    </update>
+
+    <!--  회원정보 수정 쿼리문  -->
+    <update id="mbr_modify" parameterType="MemberDto">
+        UPDATE tb_member
+        SET lgin_pw =  #{lgin_pw}
+          ,name =      #{name}
+          ,email =     #{email}
+          ,phone =     #{phone}
+          ,sex =       #{sex}
+          ,birth =     #{birth}
+        WHERE lgin_id = #{lgin_id}
+    </update>
+
+
+</mapper>

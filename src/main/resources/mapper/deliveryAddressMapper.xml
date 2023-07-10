@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tb_delivery_address">
+
+    <!-- 기본 배송지 -->
+    <select id="default_address" resultType="DeliveryAddressDto">
+        select *
+        from tb_delivery_address
+        where mbr_id = #{mbrId}
+          and basic_yn = 'y'
+    </select>
+
+    <!-- 전체 배송지 list -->
+    <select id="addressList" resultType="DeliveryAddressDto">
+        select *
+        from tb_delivery_address
+        where mbr_id = #{mbrId}
+        ;
+    </select>
+
+    <!-- 선택된 배송지 - 수정 || 삭제 -->
+    <select id="selectedAddress" resultType="DeliveryAddressDto">
+        select *
+        from tb_delivery_address
+        where addr_id = #{addrId}
+        ;
+    </select>
+
+    <!-- insert
+     1) parameterType의 객체를 받아오고
+     2) Values 내부 #{} 부분이 해당 객체의 변수의 값을 의미한다.
+     3) 따로 resultType으로 insert가 된 행의 개수를 반환할 필요없이 자동 반환이 된다.
+    -->
+    <insert id="insertDeliveryAddress" parameterType="DeliveryAddressDto">
+        INSERT INTO tb_delivery_address (mbr_id, basic_yn, ncnm, rcpr, phone, desti, desti_dtl, in_id, up_id)
+        VALUES (#{mbr_id}, #{basic_yn}, #{ncnm}, #{rcpr}, #{phone}, #{desti}, #{desti_dtl}, #{in_id}, #{up_id})
+    </insert>
+
+    <!-- update -->
+    <!-- column 전체 update -->
+    <update id="updateDeliveryAddress" parameterType="DeliveryAddressDto">
+        UPDATE tb_delivery_address
+        SET mbr_id    = #{mbr_id},
+            basic_yn  = #{basic_yn},
+            ncnm      = #{ncnm},
+            rcpr      = #{rcpr},
+            phone     = #{phone},
+            desti     = #{desti},
+            desti_dtl = #{desti_dtl},
+            up_dtm    = default
+        WHERE addr_id = #{addr_id}
+    </update>
+
+    <!-- basic_yn n으로 설정 -->
+    <update id="resetAllBasicYNtoN" parameterType="DeliveryAddressDto">
+        update tb_delivery_address
+        set basic_yn = 'n'
+        where mbr_id = #{mbr_id}
+        ;
+    </update>
+
+    <!-- delete -->
+    <delete id="deleteDeliveryAddress" parameterType="Long">
+        DELETE
+        from tb_delivery_address
+        where addr_id = #{addr_id}
+    </delete>
+
+</mapper>
