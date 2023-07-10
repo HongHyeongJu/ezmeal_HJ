@@ -31,9 +31,10 @@
     <li><a href="/product/regist">관리자 상품 CRUD</a></li>
 
     <li><a href="/member/signup">회원가입</a></li>
-    <li><a href="/mypage/withdrawal">회원탈퇴</a></li>
 
-    <li><a href=""></a></li>
+<%--    <li><a href="/mypage/withdrawal">회원탈퇴</a></li>--%>
+    <li><a href="/mypage/main">마이페이지</a></li>
+
     <li><a href=""></a></li>
 </ul>
 </body>
