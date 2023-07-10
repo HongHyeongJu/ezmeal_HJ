@@ -43,7 +43,7 @@
                         <!--장바구니 식품 반복 시작 -->
                         <li class="order__item_list">
                             <a href="" class="order__item_list__a">
-                                <img src="img/goods.png"/>
+                                <img src="/img/${item.prod_cd}.png"/>
                             </a>
                             <!-- TODO 상품코드 필요 -->
                             <!--상품사진 끝-->
@@ -56,16 +56,14 @@
                             </div>
                             <!--상품명 끝-->
                             <div class="order__item__count">
-                                <div> ${item.qty}개</div>
+                                <div> ${item.cp_qty}개</div>
                                 <!--default value = 1-->
                             </div>
                             <!--상품수량 끝-->
 
                             <div class="order__item_price">
-                                <span aria-label="할인 가격" data-testid="discount-price">
-                                ${item.cnsmr_prc}원
-                                </span>
-                                <span aria-label="판매 가격" data-testid="product-price">
+                                <span> ${item.sale_prc}원 </span>
+                                <span ${item.cnsmr_prc eq item.sale_prc ? 'hidden' : ''}>
                                 ${item.sale_prc}원
                                 </span>
                             </div>
@@ -114,7 +112,7 @@
                         <!-- 배송 요청사항 - 선택란 -->
                         <div class="order_info_template__radiobox">
                             <div>
-                                <span>기본 배송지 (필수) </span>
+                                <span>기본 배송지 *</span>
                                 <label>
                                     <input type="radio" name="default_address" value="mail"/>
                                     <span>문 앞</span>
@@ -130,7 +128,7 @@
                             </div>
 
                             <div>
-                                <span>공동현관 출입방법 (필수)</span>
+                                <span>공동현관 출입방법 * </span>
                                 <label>
                                     <input type="radio" name="come_method" value="mail"/>
                                     <span>공동현관 비밀번호</span>
@@ -153,7 +151,7 @@
                             </div>
 
                             <div>
-                                <span>배송 완료 메시지 전송 (필수)</span>
+                                <span>배송 완료 메시지 전송 *</span>
                                 <label>
                                     <input type="radio" name="delivery_msg" value="mail"/>
                                     <span>예</span>
@@ -340,7 +338,7 @@
                     <c:if test="${item.val > 100}">
                         <td class="order__coupon_dc">${item.val}원 할인</td>
                     </c:if>
-                    <td class="order__coupon_date">${item.vld_start_dt} ~ ${item.vld_end_dt}s</td>
+                    <td class="order__coupon_date">${item.vld_start_dt} ~ ${item.vld_end_dt}</td>
                     <td class="order__coupon_rule">${item.use_base_prc} 이상 구매시 사용 가능</td>
                 </tr>
                 </c:forEach>

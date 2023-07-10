@@ -13,7 +13,7 @@ public class CartProductDto {
     private Long cart_prod_seq;
     private Long cart_seq;
     private Long mbr_id;
-    private String prod_cd;
+    private Long prod_cd;
     private String typ;
     private Integer seq;
     private Long opt_seq;
@@ -41,7 +41,7 @@ public class CartProductDto {
 
     // 장바구니에 뿌려줄 data
     // TODO  option 확실해지면 다시 작성 필요 - option_cd 존재시, option 값(opt_val)을 상품 명 옆에 두고 | 가격은 옵션 가격으로 지정
-    public CartProductDto(Long cart_prod_seq, String prod_cd, String typ, Long opt_seq, String soldout_yn, Integer qty, String name, Integer cnsmr_prc, Integer sale_prc,
+    public CartProductDto(Long cart_prod_seq, Long prod_cd, String typ, Long opt_seq, String soldout_yn, Integer qty, String name, Integer cnsmr_prc, Integer sale_prc,
                           String opt_name, Integer opt_qty, Integer opt_sale_prc, Integer opt_cnsmr_prc
     ) {
         this.cart_prod_seq = cart_prod_seq;

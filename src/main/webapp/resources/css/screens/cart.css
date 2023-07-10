@@ -205,13 +205,15 @@ button icon 누르면 위 아래로 변경되는 JS 수행 필요
 }
 
 /* 수량 */
-.cart__item__btn div {
+.cart__item__btn input {
     width: 30px;
     height: 28px;
     /* text 중앙에 두기 */
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    border: none;
 }
 
 /* 상품명 */

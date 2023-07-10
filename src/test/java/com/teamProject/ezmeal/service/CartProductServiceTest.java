@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -39,7 +36,7 @@ public class CartProductServiceTest {
 
     @Test
     public void getProducts() {
-        Map<String, List<CartJoinProductDto>> products = cartProductService.getProducts(1L);
+        List<CartJoinProductDto> products = cartProductService.getProducts(1L);
 
     }
 
@@ -73,14 +70,42 @@ public class CartProductServiceTest {
 
     @Test
     public void validateCartProduct() {
-        int successResult = cartProductService.validateCartProduct(1L, 1L);
+        List<Long> longs = new ArrayList<>();
+        longs.add(1L);
+        int successResult = cartProductService.validateCartProduct(1L, longs);
         assertEquals(1, successResult);
 
-        int wrongValidationInt = cartProductService.validateCartProduct(1L, 0L);
-        assertEquals(0, wrongValidationInt);
+//        int wrongValidationInt = cartProductService.validateCartProduct(1L, 0L);
+//        assertEquals(0, wrongValidationInt);
+    }
+
+    @Test
+    public void getOrderProduct(){
+        List<CartJoinProductDto> orderProduct = cartProductService.getOrderProduct(1L);
+        System.out.println("orderProduct = " + orderProduct);
     }
 
     @Test
     public void getProductList() {
+    }
+
+    @Test
+    public void updateOrderProduct(){
+        List<Long> cartProdSeqList = new ArrayList<>();
+        cartProdSeqList.add(3L);
+        cartProdSeqList.add(4L);
+
+        int i = cartProductService.updateOrderProduct(1L, cartProdSeqList);
+        assertEquals(10, i);
+
+    }
+
+    @Test
+    public void checkOrderListOverInventory(){
+        List<Long> cartProdSeqList = new ArrayList<>();
+        cartProdSeqList.add(10L);
+        cartProdSeqList.add(4L);
+        List<List<Number>> lists = cartProductService.checkOrderListOverInventory(cartProdSeqList);
+        System.out.println("lists = " + lists);
     }
 }

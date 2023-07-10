@@ -34,7 +34,7 @@ public class ProductImgDao {
         return session.selectOne(namespace+"select_prod_type_img", map);
     }
 
-    /* 카테고리로 검색한 상품리스트의 이미지 리스트 */
+    /* 카테고리로 검색한 상품리스트의 대표이미지 리스트 */
     public List<ProductImgDto> selectCateCdImgTyp(String cate_cd) throws SQLException {
         return session.selectList(namespace+"select_cate_cd_img_list", cate_cd);
     }

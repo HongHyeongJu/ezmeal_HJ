@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CartJoinProductDto {
     private Long cart_prod_seq;
-    private String prod_cd;
+    private Long prod_cd;
     private Long opt_seq;
     private String typ;
     private String soldout_yn;
@@ -18,5 +18,6 @@ public class CartJoinProductDto {
     private String name;
     private Integer cnsmr_prc;
     private Integer sale_prc;
+    private Integer curr_inv; // 주문넣을때 검증 재고 수량, 장바구니 상품 띄울 땐 최대 재고수량
 
 }
