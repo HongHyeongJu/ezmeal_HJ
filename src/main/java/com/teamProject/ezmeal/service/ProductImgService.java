@@ -42,6 +42,18 @@ public class ProductImgService {
     }
 
 
+    /*한 상품에 대한 전체 이미지 받기 List*/
+    public List<ProductImgDto> selectProdCdImgAll(String prod_cd) throws SQLException {
+        List<ProductImgDto> selectProdCdImgList = productImgDao.selectProdCdImgAll(prod_cd);
+        return selectProdCdImgList;
+    }
+
+    /*위에서 받은  list 타입별 map으로 변환하기 (대표,대표이미지)(메인,메인이미지),(상세, 상세이미지)*/
+    public Map<String,String> selectProdCdImgAlltoMap(String prod_cd) throws SQLException {
+        List<ProductImgDto> selectProdCdImgList = productImgDao.selectProdCdImgAll(prod_cd);
+        Map<String,String> typeAndUrlMap =  selectProdCdImgList.stream().collect(Collectors.toMap(ProductImgDto->ProductImgDto.getTyp(),ProductImgDto->ProductImgDto.getUrl()));
+        return typeAndUrlMap;
+    }
 
 
 

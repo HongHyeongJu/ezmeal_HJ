@@ -33,6 +33,19 @@ public class MemberDto {
 
     // 생성자 생성
     public MemberDto(){}
+
+    // 회원가입 최소값만 넣기위한 생성자
+    public MemberDto(String name, String sex, String birth, String phone,
+                     String email, String lgin_id, String lgin_pw) {
+        this.name = name;
+        this.sex = sex;
+        this.birth = birth;
+        this.phone = phone;
+        this.email = email;
+        this.lgin_id = lgin_id;
+        this.lgin_pw = lgin_pw;
+    }
+
     public MemberDto(long mbr_id, long rfnd_acc_id, String name, Integer role, String sex, String birth, String phone, String email,
                      String sc_typ, String sc_lgin_id, String lgin_id, String lgin_pw, String rcmdr_cd, String acct_now_stus,
                      String mbr_grd, String mbr_subs_agre, String usg_terms, String psnlinfo_usg_yn, String age_14_over_yn,

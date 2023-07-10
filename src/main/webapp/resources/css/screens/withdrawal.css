@@ -1,0 +1,141 @@
+html, button, input, select, textarea {
+    /* font-family: "Noto Sans", "malgun gothic", AppleGothic, dotum, sans-serif; */
+}
+body, button, input, select, textarea {
+    font-size: 14px;
+    color: #333;
+}
+html {
+    touch-action: manipulation;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+html {
+    line-height: 1.15;
+    -webkit-tap-highlight-color: transparent;
+}
+body {
+    margin: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #fff;
+    -webkit-tap-highlight-color: transparent;
+}
+*, :after, :before, legend, td, th {
+    padding: 0;
+}
+*, :after, :before {
+    box-sizing: border-box;
+    margin: 0;
+}
+div {
+    display: block;
+}
+.container{
+    width: 640px;
+    margin: 0px auto;
+}
+.title {
+    padding: 50px 0px 51px;
+    border-bottom: 2px solid rgb(51, 51, 51);
+    font-weight: 500;
+    font-size: 28px;
+    letter-spacing: -1px;
+    text-align: center;
+}
+.content-section {
+    color: rgb(102, 102, 102);
+    line-height: 22px;
+}
+.content {
+    display: inline-flex;
+    width: 100%;
+    padding: 10px 0px 10px 20px;
+}
+.content-side {
+    width: 139px;
+    padding-top: 12px;
+}
+.side {
+    font-weight: 500;
+    color: rgb(51, 51, 51);
+    line-height: 20px;
+}
+.content-main {
+    flex: 1 1 0%;
+}
+.msg1 {
+    padding-top: 10px;
+}
+.notice {
+    display: block;
+    padding: 19px 0px 12px;
+    font-weight: normal;
+    color: rgb(95, 0, 128);
+}
+
+.notice-list-title {
+    display: block;
+    /* list-style-type: disc; */
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    list-style-type: none;
+    /* padding-inline-start: 40px; */
+}
+.notice-list {
+    display: list-item;
+    text-align: -webkit-match-parent;
+    list-style-type: none;
+}
+.button-section {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding: 40px 0px 60px;
+}
+.button1 {
+    display: block;
+    padding: 0px 10px;
+    text-align: center;
+    overflow: hidden;
+    height: 44px;
+    color: rgb(95, 0, 128);
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(95, 0, 128);
+    width: 120px;
+    margin: 0px 4px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.button2 {
+    display: block;
+    padding: 0px 10px;
+    text-align: center;
+    overflow: hidden;
+    height: 44px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(95, 0, 128);
+    border: 0px none;
+    width: 120px;
+    margin: 0px 4px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.button-msg {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 500;
+}
+.button1 > span {
+    font-size: 14px;
+
+}
+.button2 > span {
+    font-size: 14px;
+
+}

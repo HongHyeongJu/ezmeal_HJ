@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cartProduct">
+
+    <!-- 품절 상품 업데이트 -->
+    <update id="soldOut_yn" parameterType="Long">
+        UPDATE tb_cart_product cp
+            JOIN tb_product_inventory pi
+        ON cp.prod_cd = pi.prod_cd
+            SET cp.soldout_yn = IF((pi.curr_inv - pi.safe_inv) &lt;= 0, 'y', 'n')
+        WHERE cp.cart_seq = #{cartSeq}
+    </update>
+
+    <!-- 일반 상품 수량 | 품절, 삭제 제외 -->
+    <select id="count" resultType="int">
+        select count(*)
+        from tb_cart_product cp
+        where cp.cart_seq = #{cartSeq}
+          and del_yn &lt;&gt; 'y'
+          and soldout_yn &lt;&gt; 'y'
+    </select>
+
+    <resultMap id="CartJoinProductDto" type="CartJoinProductDto">
+        <result property="cp_qty" column="cpQty"/>
+        <result property="po_qty" column="poQty"/>
+    </resultMap>
+
+    <!-- 일반 상품 : 냉장/냉동/상온 map으로 저장 -->
+    <select id="product" resultMap="CartJoinProductDto" resultType="CartJoinProductDto">
+        SELECT
+            cp.cart_prod_seq,
+            cp.prod_cd,
+            cp.opt_seq,
+            cp.typ,
+            cp.soldout_yn,
+            cp.qty as cpQty,
+            IFNULL(po.qty, 1) AS poQty,
+            IFNULL(CONCAT(p.name, po.name), p.name) AS name,
+            IFNULL(p.cnsmr_prc, po.cnsmr_prc) AS cnsmr_prc,
+            IFNULL(p.sale_prc, po.sale_prc) AS sale_prc
+        FROM tb_cart_product cp
+                 JOIN tb_product p ON cp.prod_cd = p.prod_cd
+                 LEFT JOIN tb_product_option po ON cp.opt_seq = po.opt_seq
+        WHERE cp.cart_seq = #{cartSeq}
+        AND cp.del_yn &lt;&gt; 'y'
+        order by cp.typ
+    </select>
+
+
+    <!-- 주문하기에 선택된 장바구니 상품 가져오기 -->
+    <!-- TODO 필요시 배열로 받아오는 방향으로 변경 -->
+
+    <select id="selected_prod" resultType="CartProductDto">
+        SELECT *
+        from tb_cart_product cp,
+        tb_product p
+        -- tb_product_discount pd
+        WHERE cp.cart_seq = #{cartSeq}
+        and cp.prod_cd = p.prod_cd
+        -- and p.dc_cd = pd.dc_cd
+        AND cp.prod_cd IN
+        <foreach item="item" collection="prodCdList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <!-- 상품 삭제 -->
+    <update id="delete">
+        UPDATE tb_cart_product
+        SET del_yn = 'y'
+        WHERE cart_prod_seq = #{cartProdSeq}
+    </update>
+
+    <!-- 해당 회원의 장바구니의 상품 존재여부 검증 -->
+    <select id="validation" resultType="int">
+        select count(*)
+        from tb_cart_product
+        where cart_seq = #{cartSeq}
+          and cart_prod_seq = #{cartProdSeq}
+    </select>
+
+    <!--  | 관리자 |  -->
+
+    <!-- 장바구니에 존재하는 모든 상품 | 삭제 항목 제외 -->
+    <select id="all_product" resultType="CartProductDto">
+        select cp.prod_cd, cp.typ, cp.qty, p.name, p.cnsmr_prc, p.sale_prc
+        from tb_cart_product cp,
+             tb_product p
+        where cp.cart_seq = #{cartSeq}
+          and cp.prod_cd = p.prod_cd
+          and cp.del_yn &lt;&gt; 'y'
+    </select>
+
+</mapper>

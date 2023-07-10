@@ -5,7 +5,6 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    margin-top: 156px 0 50px 0; /*상단 nav 공간 제공*/
 }
 
 /* 장바구니 title */
@@ -49,21 +48,7 @@
     height: 942px;
 }
 
-/* 1.1 category
-1.1.1 구독상품 일반상품 버튼 : type
-1.1.2 전체선택 선택삭제 버튼 : nav
-*/
-.cart__items_category {
-    /* layout 잡기 */
-    display: flex;
-    flex-direction: column;
-    width: 742px;
-    height: 122.4px;
-    box-sizing: border-box;
-    padding: 18px, 10px, 16px, 2px; /* padding 특징 : 내부 div가 더 padding 적용보다 더 크면 적용 안됨 */
-}
-
-/*1.1.1 & 1.1.2 공통부분  */
+/*1.1 전체선택 선택삭제 버튼 : nav*/
 .cart__items_category_btns {
     /* layout 잡기 */
     display: flex;
@@ -129,22 +114,16 @@ button icon 누르면 위 아래로 변경되는 JS 수행 필요
 
 /* 1.2.1 냉장, 냉동, 상온 icon */
 
-.fas {
-    font-size: 20px;
-    width: 30px;
-    height: 30px;
-}
+/*.fas {*/
+/*    font-size: 20px;*/
+/*    width: 30px;*/
+/*    height: 30px;*/
+/*}*/
 
 /* 1.2.1 상품접고 열기 button */
 .cart__items_list__btn {
     /* button 기본 css 설정 제거 */
     border: none;
-    background: inherit;
-    padding: 0;
-    margin: 0;
-    /* btn과 내부 icon or span 동일 적용 */
-    display: flex;
-    align-items: center;
 }
 
 /* 1.2.2. border 적용 */
@@ -177,6 +156,11 @@ button icon 누르면 위 아래로 변경되는 JS 수행 필요
     align-items: center;
 }
 
+.cart__item__soldout_y {
+    color: #8d9096;
+    text-decoration: line-through;
+}
+
 /* 상품 img 크기 조절 */
 .cart__item_list img {
     width: 60px;
@@ -193,7 +177,6 @@ button icon 누르면 위 아래로 변경되는 JS 수행 필요
     display: flex;
     align-items: center;
     /* button 기본 css 설정 제거 */
-    border: none;
     background: inherit;
     padding: 0;
     margin: 0;
@@ -252,36 +235,7 @@ button icon 누르면 위 아래로 변경되는 JS 수행 필요
     font-weight: bold;
 }
 
-/* 마지막 판매자 가격 선긋기 <- 할인 가격이 존재시에만 적용이 된다. */
-/* TODO
-JS를 이용해서 동적으로 판매자 가격 선긋기 수행
-예시 코드
-<div class="cart__item_price">
-  <span aria-label="할인 가격" data-testid="discount-price">
-    9000원
-  </span>
-  <span aria-label="판매 가격" data-testid="product-price">
-    10000원
-  </span>
-</div>
-
-<script>
-  // 할인된 가격이 존재하는지 확인
-  const discountPrice = document.querySelector('[data-testid="discount-price"]');
-  if (discountPrice) {
-    // 할인된 가격이 존재하면 마지막 span 요소에 클래스 추가
-    const productPrice = document.querySelector('[data-testid="product-price"]');
-    productPrice.classList.add('discounted');
-  }
-</script>
-
-<style>
-  .cart__item_price span:last-child.discounted {
-    color: gray;
-  }
-</style>
-*/
-.cart__item_price span:last-child {
+.cart__item_product-price{
     text-decoration: line-through;
     font-weight: 100;
     font-size: small;
@@ -432,14 +386,13 @@ JS를 이용해서 동적으로 판매자 가격 선긋기 수행
 /* checkbox 요소 - check 된 경우 */
 input[type="checkbox"] {
     appearance: none;
-    border: 2px solid rgb(188, 181, 181);
+    border: 1px solid rgb(188, 181, 181);
     outline: none;
     margin: 0 12px 0 0;
     width: 24px;
     height: 24px;
     position: relative;
     border-radius: 50%;
-    border-width: 1px;
     cursor: pointer;
 }
 

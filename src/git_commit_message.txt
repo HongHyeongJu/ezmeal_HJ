@@ -4,9 +4,9 @@
 -- wan : commit으로 합치는 용도로만 사용
 -- taewan : wan으로 부터 받은 merge가 잘 작동시 push 후 dev로 pull Request 수행
 
-- fetch rule
+- fetch rule (중요)
 -- wan : fetch를 받은 후 오류 검증을 거친다. -> 감당 안될시, wan 폐기 후 taewan으로 부터 branch 재 생성
--- taewan : wan에서 검증 받은 것을 merge 한 후, push 수행
+-- taewan : wan에서 검증 받은 것 필요시에만 merge. 웬만해서 내가 수행한 project만 합치기
 -- taewan에서 하위 branch로 merge 수행
 
 - 기능 branch rule
@@ -21,3 +21,14 @@
 -m "taewan_login : taewan_cart 작업 merge 후 login 1차 핵심 logic 구현"
 -m "taewan_cart  : JS와 배송지, 품절상품 등 상세 부분 제외하고 구현이 완료된 상태"
 -m "taewan & wan : taewan_cart작업 수행한 것 merge하고 push까지 한 상태"
+
+2023.06.26(월)
+-m "(refector) taewan_cart | cart mbr_id 실제 login id와 연결 및 Long type 수정
+
+직전 branch들 commit
+taewan_login : taewan_cart 작업 merge 후 login 1차 핵심 logic 구현 (유지)
+taewan_cart  : taewan_login merge & 나경님 login FE 부분 merge 상태
+
+taewan       : dev에서 merge 수행 - 나경님 front login 창 merge
+wan          : dev 받은 것 merge 수행 - 나경님 front login 창 merge
+"

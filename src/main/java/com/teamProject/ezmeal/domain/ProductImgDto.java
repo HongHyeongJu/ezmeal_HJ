@@ -1,6 +1,7 @@
 package com.teamProject.ezmeal.domain;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class ProductImgDto {
 
@@ -55,6 +56,20 @@ public class ProductImgDto {
                 ", use_yn='" + use_yn + '\'' +
                 ", del_yn='" + del_yn + '\'' +
                 '}';
+    }
+    /*------------------------------------------------------------------------------------------------------*/
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductImgDto that = (ProductImgDto) o;
+        return Objects.equals(seq, that.seq) && Objects.equals(prod_cd, that.prod_cd) && Objects.equals(typ, that.typ) && Objects.equals(detail, that.detail) && Objects.equals(url, that.url) && Objects.equals(verti_size, that.verti_size) && Objects.equals(width_size, that.width_size) && Objects.equals(extns, that.extns) && Objects.equals(file_size_lim, that.file_size_lim) && Objects.equals(use_yn, that.use_yn) && Objects.equals(del_yn, that.del_yn) && Objects.equals(rmk, that.rmk) && Objects.equals(in_dtm, that.in_dtm) && Objects.equals(in_id, that.in_id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(seq, prod_cd, typ, detail, url, verti_size, width_size, extns, file_size_lim, use_yn, del_yn, rmk, in_dtm, in_id);
     }
 
     /*-------------------------------------------------------------------- getter & setter ---------------------*/
