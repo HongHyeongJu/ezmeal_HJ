@@ -88,7 +88,6 @@ public class CartProductDaoTest {
 //        assertEquals(wrongValidationInt, 0);
     }
 
-
     // 수량 update
     @Test
     public void quantity(){
@@ -98,6 +97,49 @@ public class CartProductDaoTest {
         int i = cartProductDao.updateQuantity(quantityMap);
         assertEquals(i , 1 );
     }
+
+    // 주문 선택 상품 선택 업데이트
+    @Test
+    public void updateSelectedProduct(){
+        Map<String, Object> selectProductMap = new HashMap<>();
+        List<Long> lists = new ArrayList<>();
+        lists.add(1L);
+        lists.add(2L);
+        selectProductMap.put("cartSeq", 1);
+        selectProductMap.put("cartProdSeqList", lists);
+
+        int i = cartProductDao.updateSelectedProduct(selectProductMap);
+        assertEquals(10, i);
+    }
+
+
+    // 주문하기에 선택된 장바구니 상품 가져오기
+    @Test
+    public void orderProducts(){
+        List<CartJoinProductDto> cartJoinProductDtos = cartProductDao.selectOrderProducts(1L);
+        assertEquals(cartJoinProductDtos.size(), 2);
+    }
+
+
+    @Test
+    public void checkOrderListSoldOut(){
+        List<Long> cartProdSeqList = new ArrayList<>();
+        cartProdSeqList.add(11L);
+        cartProdSeqList.add(22L);
+
+        List<Long> longs = cartProductDao.selectOrderListSoldOut(cartProdSeqList);
+        System.out.println("longs = " + longs);
+    }
+    @Test
+    public void selectOrderListInventory(){
+        List<Long> cartProdSeqList = new ArrayList<>();
+        cartProdSeqList.add(10L);
+        cartProdSeqList.add(4L);
+
+        List<CartJoinProductDto> longs = cartProductDao.selectOrderListInventory(cartProdSeqList);
+        System.out.println("longs = " + longs);
+    }
+
     /* 관리자 */
 
     // 장바구니에 존재하는 모든 상품 - 삭제 항목 제외

@@ -1,3 +1,5 @@
+/* DOM 가져오기 */
+
 const selectAllBtn = document.querySelector(".cart__items_nav__checkbox"); // 전체 선택
 const selectBtns = document.querySelectorAll(".cart__item_nav__checkbox"); // 선택
 
@@ -7,11 +9,97 @@ const deleteBtns = document.querySelectorAll(".cart__delete_btn"); // 삭제 표
 const deleteAllBtn = document.querySelector(".cart__items_nav__btn_rm"); // 선택상품 삭제
 const quantityDivs = document.querySelectorAll('.cart__item__btn'); // 수량 관련 div
 
+const orderBtn = document.querySelector('.payment-detail__btn'); // 상품 주문 버튼
+
 let CART_PROD_SEQ_LIST = []; // 선택된 장바구니 상품 pk
 let dynamicNum = 0; // 체크박스 선택 수 확인
 let debounceInitTime = null; // 서버 부하 방지
 
-/* 재사용 함수 */
+/* REST API 함수 */
+
+// 재고 수량 파악 함수
+const inventoryValidation = function () {
+    return fetch("/cart/inventoryValidation", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        // 요청 보내는 경우, 형식을 지켜줘야함
+        body: JSON.stringify(CART_PROD_SEQ_LIST)
+    })
+        .then(response => {
+            if (response.ok) return response.json();
+            else throw new Error('Error: ' + response.status);
+        })
+        .then(data => {
+            console.log(data);  // [] | [Array(2), Array(2), Array(2)] -> 0:(2) [4, 2] 1:(2) [10, 2] 2:(2) [11, 2]
+            const length = data.length;
+            console.log(length);
+            if (length === 0) {
+                return;
+            }
+            if (length !== 0) {
+                alert("재고부족 상품이 있습니다.\n옵션을 가진 동일 상품이 여러개 존재시, 개별재고가 아닌 전체 재고를 고지합니다.")
+                data.forEach(arr => {
+                    const seq = arr[0];
+                    const currInv = arr[1];
+                    const selector = `li[prod_cd="${seq}"]`;
+                    const cartLiElement = document.querySelectorAll(selector);
+                    cartLiElement.forEach(cartLi => {
+                        const quantityElement = cartLi.querySelector('.cart__item__btn'); // 상품 수량
+                        quantityElement.style.border = "2px solid red";
+                    })
+                    // TODO JS 해당 수량 div 쪽 (quantityElement)에 currInv 최대 수량을 고지해줘야함
+                });
+                throw new Error('재고부족 상품이 있습니다.');
+            }
+        })
+}
+
+// 주문서 이동 함수
+const moveOrderPage = function () {
+    fetch("/cart/select", {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(CART_PROD_SEQ_LIST)
+    })
+        .then(response => {
+            if (response.ok) return response.text();
+            else throw new Error('Error: ' + response.status);
+        })
+        .then(data => {
+            console.log(data)
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    window.location.href = "/order";
+}
+
+// 품절상품 검증기
+const soldOutValidation = function () {
+    return fetch("/cart/soldOutValidation", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(CART_PROD_SEQ_LIST)
+    })
+        .then(response => {
+            if (response.ok) return response.text(); // array로 반환
+            else throw new Error('Error: ' + response.status);
+        })
+        .then(data => {
+            if (data !== 'success') {
+                alert("품절상품이 있습니다.")
+                location.reload();
+                throw new Error('품절상품이 있습니다.');
+            }
+        });
+}
+
 // db 검증기
 const validation = function (cartProdSeqList) {
     return fetch("/cart/validation", {
@@ -97,9 +185,10 @@ const groupExpectSalePrice = function () { // 다중 선택시 사용하는 가�
     bannerPrice[2].innerText = EXPECTED_PRICE + " 원";
     bannerPrice[3].innerText = EXPECTED_POINT + " point";
 }
+
 // debounce _ db update
 async function debounceUpdateQuantity(event) {
-    if (debounceInitTime){
+    if (debounceInitTime) {
         clearTimeout(debounceInitTime);
     }
     debounceInitTime = setTimeout(() => {
@@ -129,6 +218,7 @@ function handleUpdateCartProductQuantity(event) {
         cartProductInputQuantity.value = ++QUANTITY;
 
 }
+
 // 상품 수량 업데이트 함수
 async function updateCartProductQuantity(event) {
     const cartProductList = event.target.parentNode.parentNode; // 장바구니 상품 리스트 <li></li>
@@ -192,6 +282,7 @@ function deleteCartProduct(event) {
             console.error('Error:', error);
         });
 }
+
 // 선택상품 삭제 함수
 function deleteCartProductAll() {
     // rest API 수행 , server로 값 보내기
@@ -223,6 +314,7 @@ function deleteCartProductAll() {
                 const selector = `li[cart_prod_seq="${seq}"]`;
                 const element = document.querySelector(selector);
                 if (element) {
+                    // dom에선 삭제 되지만 nodeList에선 제거가 안된다. querySelectsAll 시, null 발생
                     element.remove();
                 }
             });
@@ -236,37 +328,18 @@ function deleteCartProductAll() {
 
 }
 
+// 주문하기 이벤트
+async function handleOrderBtn() {
+    try {
+        await validation(CART_PROD_SEQ_LIST); // 상품존재유무 파악
+        await soldOutValidation(); // 품절 파악
+        await inventoryValidation(); // 재고 파악
+        await moveOrderPage(); // 주문서 이동
 
-// // event function
-// function handleOrder() {
-//     checkChecked(); // string type 데이터
-//
-//     // 쿠키 참조 blog: https://velog.io/@rudnf003/javascript-%EC%BF%A0%ED%82%A4-%EC%83%9D%EC%84%B1-%EB%B0%8F-%EA%B4%80%EB%A6%AC
-//     document.cookie = "orderProduct=" + SELECTPRODUCTCODE + "; path=/; domain=localhost";
-//     window.location.href = "/order/general";
-//     // 초기화
-//     SELECTPRODUCTCODE = "";
-// }
-// //
-// // // logic -> TODO cart_seq 변경되어서 logic 수정 필요
-// // // 1. cart checked prod_cd 찾기
-// const checkChecked = function () {
-//     // 반복문이 돌 때마다 block(scope 생성) 이 생성이 되어서 const 사용이 가능하다.
-//     for (const product of products) {
-//         // checked 된 것 확인 - html attribute는 고정이여도 동적으로 변하는 property를 인식해서 checked 신경 쓸 필요 X
-//         const checkbox = product.querySelector("input[type='checkbox']");
-//
-//         if (checkbox.checked) {
-//             // checked 된 document의 상품 코드 받아오기
-//             const checkedProd = product.querySelector(".cart__item_list_prod_cd");
-//             const prodText = checkedProd.textContent; // "[상품 code]"
-//             const prodCode = prodText.substring(
-//                 prodText.indexOf("[") + 1,
-//                 prodText.indexOf("]")
-//             );
-//         }
-//     }
-// }
+    } catch (e) {
+        console.log('runTime Exception : ' + e);
+    }
+}
 
 
 // 전체 상품 선택 함수
@@ -290,6 +363,7 @@ function selectAllProduct() {
     console.log("all : " + CART_PROD_SEQ_LIST);
 
 }
+
 // 상품 선택 함수
 function selectProduct(event) {
     const targetBtn = event.target; // click한 btn 요소
@@ -309,23 +383,28 @@ function selectProduct(event) {
 
 
 /* Document EVENT */
-// 상품 선택 버튼
+
+// 상품 선택 이벤트
 selectBtns.forEach(selectBtn => {
     selectBtn.addEventListener("click", selectProduct);
 })
-// 전체 상품 선택 버튼
+// 전체 상품 선택 이벤트
 selectAllBtn.addEventListener("click", selectAllProduct);
-// 상품 삭제 버튼
+
+// 상품 삭제 이벤트
 deleteBtns.forEach(deleteBtn => {
     deleteBtn.addEventListener("click", deleteCartProduct);
 });
-// 선택상품 삭제 버튼
+// 선택상품 삭제 이벤트
 deleteAllBtn.addEventListener("click", deleteCartProductAll);
-// 상품 수량 관련 버튼
+
+// 상품 수량 이벤트
 quantityDivs.forEach(quantityDiv => {
     quantityDiv.addEventListener("click", handleUpdateCartProductQuantity);
     quantityDiv.addEventListener("click", debounceUpdateQuantity);
     quantityDiv.addEventListener("change", updateCartProductQuantity);
 })
 
+// 상품 주문 이벤트
+orderBtn.addEventListener("click", handleOrderBtn);
 /* TODO 꼭 하고 만다... 동적 html */

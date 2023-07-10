@@ -44,29 +44,6 @@ public class CartProductDao {
         return session.selectList(namespace + "product", cartSeq);
     }
 
-    // 주문하기에 선택된 장바구니 상품 가져오기
-    // TODO 필요시 배열로 받아오는 방향으로 변경
-    public List<CartProductDto> cartProducts(Long cartSeq, String prodCodeString)  {
-
-        // 하나로 되어있는 string 배열로 쪼개기
-        String[] parts = prodCodeString.split("p");
-
-        ArrayList<String> prodCdList = new ArrayList<>();
-        for (String part : parts) {
-            if (!part.isEmpty()) {
-                String prodCd = "p" + part; // TODO 구독상품은 p -> g
-                prodCdList.add(prodCd);
-            }
-        }
-
-        // map으로 다른 것들 담기
-        Map map = new HashMap<>();
-        map.put("cartSeq", cartSeq);
-        map.put("prodCdList", prodCdList);
-
-        return session.selectList(namespace + "selected_prod", map);
-    }
-
     // 개별 상품 삭제 : JS fetch를 이용한 rest API 수행
     public int deleteCartProduct(List<Long> cartProdSeq) {
         return session.update(namespace + "delete", cartProdSeq);
@@ -76,10 +53,32 @@ public class CartProductDao {
     public int selectValidation(Map<String, Object> validationMap){
         return session.selectOne(namespace + "validation", validationMap);
     }
-//    수량 update
+    // 수량 update
     public int updateQuantity(Map<String, Long> quantityMap){
         return session.update(namespace + "quantity", quantityMap);
     }
+
+    // 주문하기에 선택된 장바구니 상품 컬럼 업데이트
+    public int updateSelectedProduct (Map<String, Object> selectProductMap){
+        return session.update(namespace + "select_Product", selectProductMap);
+    }
+
+    // 주문하기에 선택된 장바구니 상품 가져오기
+    // TODO 필요시 배열로 받아오는 방향으로 변경
+    public List<CartJoinProductDto> selectOrderProducts(Long cartSeq)  {
+        return session.selectList(namespace + "order_products", cartSeq);
+    }
+
+    // 주문하려니깐 품절된 상품 보여주기
+    public List<Long> selectOrderListSoldOut(List<Long> cartProdSeq) {
+        return session.selectList(namespace + "orderList_soldOut", cartProdSeq);
+    }
+
+    // 재고가 부족한 상품 cartProdPk, 실 재고량 정보 가지고 옴
+    public List<CartJoinProductDto> selectOrderListInventory(List<Long> cartProdSeq) {
+        return session.selectList(namespace + "orderList_inventory", cartProdSeq);
+    }
+
     // TODO 담을수 있는 최대 수량
     // TODO 삭제된 상품들 중에서 up_dtm이 가장 낮은거 5개 보여주기
     // TODO 상품 목록에서 클릭시, 장바구니 insert하기

@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-import static com.teamProject.ezmeal.service.CartProductService.TYPE_NAME;
-
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/cart")
@@ -22,15 +20,12 @@ public class CartController {
     private final CartService cartService;
     private final CartProductService cartProductService;
     private final DeliveryAddressService deliveryAddressService;
+    private static final String[] TYPE_NAME = {"냉동", "냉장", "상온"};
+    private static final String[] productName = {"productIce", "productCold", "productOutside"};
 
     @GetMapping
     public String getGeneral(@SessionAttribute(required = false) Long memberId, Model model) {
         // TODO 회원 session 유무로 비회원, 회원 장바구니 접근 logic 수행
-        if (memberId == null) {
-            // TODO 일반 장바구니 임시 table 값 들고 오기 - return 필수
-        }
-
-        // TODO 새로고침 여러번 올 경우 품절상품 업데이트 멈추기 10분에 1번
         // 회원 장바구니 가져오기
         Long cartSeq = cartService.getCartSeq(memberId);
         // 품절 상품 업데이트
@@ -38,17 +33,23 @@ public class CartController {
         // 기본 배송지
         // todo 선택 배송지 존재시, 선택배송지가 되도록 logic 작성 필요 - selectAddress
         DeliveryAddressDto defaultAddress = deliveryAddressService.getDefaultAddress(memberId);
-        // 일반 상품 : 냉장/냉동/상온 map으로 저장
-        Map<String, List<CartJoinProductDto>> productsMap = cartProductService.getProducts(cartSeq);
-        int productCount = 0;
+        // 상품 list
+        List<CartJoinProductDto> productsList = cartProductService.getProducts(cartSeq);
+        int productCount = productsList.size();
 
-        String[] productName = {"productIce", "productCold", "productOutside"};
-        // jsp에서 풀어서 작업하는 것보다 java에서 냉동/냉장/상온을 푸는 것이 더 빠르다.
-        for (int i = 0; i < productsMap.size(); i++) {
-            List<CartJoinProductDto> products = productsMap.get(TYPE_NAME[i]);
-            productCount += products.size();
-            model.addAttribute(productName[i], (products.size() != 0) ? products : null);
+        // 상품 목록 type별로 분리하기
+        List<CartJoinProductDto> iceList = new ArrayList<>();
+        List<CartJoinProductDto> coldList = new ArrayList<>();
+        List<CartJoinProductDto> outSideList = new ArrayList<>();
+
+        for (CartJoinProductDto product : productsList) {
+            if (product.getTyp().equals(TYPE_NAME[0])) iceList.add(product);
+            else if (product.getTyp().equals(TYPE_NAME[1])) coldList.add(product);
+            else if (product.getTyp().equals(TYPE_NAME[2])) outSideList.add(product);
         }
+        model.addAttribute(productName[0], (iceList.size() != 0) ? iceList : null);
+        model.addAttribute(productName[1], (coldList.size() != 0) ? coldList : null);
+        model.addAttribute(productName[2], (outSideList.size() != 0) ? outSideList : null);
 
         model.addAttribute("count", productCount);
         model.addAttribute("defaultAddress", defaultAddress);
@@ -76,6 +77,18 @@ public class CartController {
         return "cartProductModule";
     }
 
+    @PatchMapping("/select")
+    @ResponseBody
+    public String updateOrderProduct(@SessionAttribute Long memberId, @RequestBody List<Long> cartProdSeqList) {
+        System.out.println("cartProdSeqList = " + cartProdSeqList);
+        // TODO cartProdSeqList 만약 값이 비어있을 경우, return
+        Long cartSeq = cartService.getCartSeq(memberId);
+
+        int updateNum = cartProductService.updateOrderProduct(cartSeq, cartProdSeqList);
+        if (updateNum > 0) return "success";
+        else return "false";
+    }
+
     @PatchMapping("/update")
     @ResponseBody
     public String updateProductQuantity(@RequestBody List<Long> quantityList) {
@@ -100,7 +113,27 @@ public class CartController {
         int validationResult = cartProductService.validateCartProduct(cartSeq, cartProdSeqList);
         if (validationResult == 0) return "wrong product";
 
-        System.out.println("validationResult = sdkfljsdl");
         return cartSeq + "";
     }
+
+    @PostMapping("/soldOutValidation")
+    @ResponseBody
+    public String validateSoldOut(@SessionAttribute Long memberId, @RequestBody List<Long> cartProdSeqList) {
+        Long cartSeq = cartService.getCartSeq(memberId);
+        int updatedCnt = cartProductService.checkSoldOut(cartSeq);
+        if (updatedCnt == 0) return "success";
+
+        List<Long> longs = cartProductService.checkOrderListSoldOut(cartProdSeqList);
+        if (longs.size() == 0) return "success";
+
+        else return "fail";
+    }
+
+    @PostMapping("/inventoryValidation")
+    @ResponseBody
+    public String checkQuantity(@RequestBody List<Long> cartProdSeqList) {
+        List<List<Number>> lists = cartProductService.checkOrderListOverInventory(cartProdSeqList);
+        return lists + "";
+    }
+
 }

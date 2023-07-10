@@ -55,7 +55,6 @@ public class LoginController {
          * redirect인 경우는 model로 담은 값들이 url에 그대로 나타나게 된다.
          * 따라서 session에 값을 넣어서 보내는 방법을 택해야한다.
          * */
-
         Long memberId = loginService.getLogin(tryMbrId, tryMbrPw);
 
             // login 검증

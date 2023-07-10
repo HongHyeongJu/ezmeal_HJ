@@ -36,7 +36,7 @@ public class CartProductServiceTest {
 
     @Test
     public void getProducts() {
-        Map<String, List<CartJoinProductDto>> products = cartProductService.getProducts(1L);
+        List<CartJoinProductDto> products = cartProductService.getProducts(1L);
 
     }
 
@@ -80,6 +80,32 @@ public class CartProductServiceTest {
     }
 
     @Test
+    public void getOrderProduct(){
+        List<CartJoinProductDto> orderProduct = cartProductService.getOrderProduct(1L);
+        System.out.println("orderProduct = " + orderProduct);
+    }
+
+    @Test
     public void getProductList() {
+    }
+
+    @Test
+    public void updateOrderProduct(){
+        List<Long> cartProdSeqList = new ArrayList<>();
+        cartProdSeqList.add(3L);
+        cartProdSeqList.add(4L);
+
+        int i = cartProductService.updateOrderProduct(1L, cartProdSeqList);
+        assertEquals(10, i);
+
+    }
+
+    @Test
+    public void checkOrderListOverInventory(){
+        List<Long> cartProdSeqList = new ArrayList<>();
+        cartProdSeqList.add(10L);
+        cartProdSeqList.add(4L);
+        List<List<Number>> lists = cartProductService.checkOrderListOverInventory(cartProdSeqList);
+        System.out.println("lists = " + lists);
     }
 }
