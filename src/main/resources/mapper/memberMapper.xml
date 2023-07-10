@@ -27,7 +27,7 @@
     <insert id="mbr_signup" parameterType="MemberDto">
         INSERT INTO tb_member (
                                name
-                              ,sex
+                              ,gender
                               ,birth
                               ,phone
                               ,email
@@ -35,7 +35,7 @@
                               ,lgin_pw
         ) values (
                      #{name}
-                 ,#{sex}
+                 ,#{gender}
                  ,#{birth}
                  ,#{phone}
                  ,#{email}
@@ -65,7 +65,7 @@
           ,name =      #{name}
           ,email =     #{email}
           ,phone =     #{phone}
-          ,sex =       #{sex}
+          ,gender =       #{gender}
           ,birth =     #{birth}
         WHERE lgin_id = #{lgin_id}
     </update>

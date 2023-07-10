@@ -3,6 +3,7 @@ package com.teamProject.ezmeal.controller;
 import com.teamProject.ezmeal.domain.MemberDto;
 import com.teamProject.ezmeal.service.LoginService;
 import com.teamProject.ezmeal.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,17 +15,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/mypage")
 public class MypageController {
-    @Autowired
-    MemberService memberService;
+
+    private final MemberService memberService;
 
 
     @GetMapping("/withdrawal")
     public String withdrawal() {
         return "withdrawal"; // 회원정보수정에서 회원탈퇴 버튼을 누르면, 회원탈퇴 페이지로 이동한다.
     }
-
 
     @PostMapping("/withdrawal")     // 회원탈퇴페이지에서 회원탈퇴확인을 누르면 main으로 돌아간다.
     public String mbrWithdrawal(HttpSession session, Model model) {
@@ -54,8 +55,8 @@ public class MypageController {
     }
 
     @GetMapping("/modify")  // 회원정보수정 페이지
-    public String modify(HttpServletRequest req, Model model){
-        HttpSession session = req.getSession();
+    public String modify(HttpSession session, Model model){
+//        HttpSession session = req.getSession();
         Long memberId = (Long) session.getAttribute("memberId");    // 현재로그인 중인 회원번호를 가져온다.
         try {
             MemberDto loginMbrInfo = memberService.mbrInfo(memberId);   // 현재 로그인중인 회원정보를 조회한다.

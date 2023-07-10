@@ -15,12 +15,12 @@
 </head>
 <body>
 
-<form action="<c:url value="/member/signup/success"/>" method="post" onsubmit="return formCheck(this)">
+<form action="<c:url value="/member/signup"/>" method="post" onsubmit="return formCheck(this)">
   <div class="title">회원가입</div>
   <div id="msg" class="msg">
-    <c:if test="${not empty param.msg}">
-      <i class="fa fa-exclamation-circle"> ${URLDecoder.decode(param.msg)}</i>
-    </c:if>
+    <%--    <c:if test="${not empty msg}">--%>
+    <%--        <i class="fa fa-exclamation-circle"> ${URLDecoder.decode(msg)}</i>--%>
+    <%--    </c:if>--%>
   </div>
   <label for="">아이디 <span class="star">*</span></label>
   <input class="input-field" type="text" id="lgin_id" name="lgin_id" value="${memberDto.lgin_id}" placeholder="4~12자리의 영문 혹은 영문과 숫자 조합" autofocus>
@@ -41,8 +41,8 @@
   <input class="input-field" type="text" name="birth" value="${memberDto.birth}" placeholder="2020/12/31">
   <div class="gender">
     <label for="">성별</label>
-    <label><input type="radio" name="sex" id="m" value="m" ${memberDto.sex == 'm' ? 'checked' : ''}/>남자</label>
-    <label><input type="radio" name="sex" id="f" value="f" ${memberDto.sex == 'f' ? 'checked' : ''}/>여자</label>
+    <label><input type="radio" name="gender" id="m" value="m" ${memberDto.gender == 'm' ? 'checked' : ''}/>남자</label>
+    <label><input type="radio" name="gender" id="f" value="f" ${memberDto.gender == 'f' ? 'checked' : ''}/>여자</label>
   </div>
   <input type="image" src="/img/signup.png" id="button" alt="회원가입">
   <%--        <button>회원 가입</button>--%>

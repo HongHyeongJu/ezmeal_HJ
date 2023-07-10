@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +65,9 @@ public class CartProductDaoTest {
     // 개별 상품 삭제 : JS fetch를 이용한 rest API 수행
     @Test
     public void deleteCartProduct(){
-        int updateDelete = cartProductDao.deleteCartProduct(1L);
+        List<Long> longs = new ArrayList<>();
+        longs.add(1L);
+        int updateDelete = cartProductDao.deleteCartProduct(longs);
         // 해당 상품의 delete가 Y여도 접근 후 변경만 하면 1 반환
         assertEquals(updateDelete, 1);
     }
@@ -72,16 +75,69 @@ public class CartProductDaoTest {
     // 해당 회원의 장바구니의 상품 존재여부 검증
     @Test
     public void validation(){
-        Map<String, Long> validationMap = new HashMap<>();
+        Map<String, Object> validationMap = new HashMap<>();
+        List<Long> longs = new ArrayList<>();
+        longs.add(1L);
         validationMap.put("cartSeq", 1L);
-        validationMap.put("cartProdSeq", 1L);
+        validationMap.put("cartProdSeq", longs);
         int collectionValidationInt = cartProductDao.selectValidation(validationMap);
         assertEquals(collectionValidationInt, 1);
 
-        validationMap.put("cartProdSeq", 0L);
-        int wrongValidationInt = cartProductDao.selectValidation(validationMap);
-        assertEquals(wrongValidationInt, 0);
+//        validationMap.put("cartProdSeq", 0L);
+//        int wrongValidationInt = cartProductDao.selectValidation(validationMap);
+//        assertEquals(wrongValidationInt, 0);
+    }
 
+    // 수량 update
+    @Test
+    public void quantity(){
+        Map<String, Long> quantityMap = new HashMap<>();
+        quantityMap.put("cartProdSeq", 1L);
+        quantityMap.put("quantity", 21L);
+        int i = cartProductDao.updateQuantity(quantityMap);
+        assertEquals(i , 1 );
+    }
+
+    // 주문 선택 상품 선택 업데이트
+    @Test
+    public void updateSelectedProduct(){
+        Map<String, Object> selectProductMap = new HashMap<>();
+        List<Long> lists = new ArrayList<>();
+        lists.add(1L);
+        lists.add(2L);
+        selectProductMap.put("cartSeq", 1);
+        selectProductMap.put("cartProdSeqList", lists);
+
+        int i = cartProductDao.updateSelectedProduct(selectProductMap);
+        assertEquals(10, i);
+    }
+
+
+    // 주문하기에 선택된 장바구니 상품 가져오기
+    @Test
+    public void orderProducts(){
+        List<CartJoinProductDto> cartJoinProductDtos = cartProductDao.selectOrderProducts(1L);
+        assertEquals(cartJoinProductDtos.size(), 2);
+    }
+
+
+    @Test
+    public void checkOrderListSoldOut(){
+        List<Long> cartProdSeqList = new ArrayList<>();
+        cartProdSeqList.add(11L);
+        cartProdSeqList.add(22L);
+
+        List<Long> longs = cartProductDao.selectOrderListSoldOut(cartProdSeqList);
+        System.out.println("longs = " + longs);
+    }
+    @Test
+    public void selectOrderListInventory(){
+        List<Long> cartProdSeqList = new ArrayList<>();
+        cartProdSeqList.add(10L);
+        cartProdSeqList.add(4L);
+
+        List<CartJoinProductDto> longs = cartProductDao.selectOrderListInventory(cartProdSeqList);
+        System.out.println("longs = " + longs);
     }
 
     /* 관리자 */

@@ -29,7 +29,6 @@ public class CartProductDao {
     }
 
     // 일반 상품 : 냉장/냉동/상온 map으로 저장
-    // TODO  option 확실해지면 다시 작성 필요 - option_cd 존재시, option 값(opt_val)을 상품 명 옆에 두고 | 가격은 옵션 가격으로 지정
     /* TODO  옵션 쿼리문 - 냉장 냉동, 상온에 조건 추가 하면 된다.
              -> 품절
                     단일상품 & 맛 & 무게 - 재고가 0이상인지 비교
@@ -45,39 +44,41 @@ public class CartProductDao {
         return session.selectList(namespace + "product", cartSeq);
     }
 
-    // 주문하기에 선택된 장바구니 상품 가져오기
-    // TODO 필요시 배열로 받아오는 방향으로 변경
-    public List<CartProductDto> cartProducts(Long cartSeq, String prodCodeString)  {
-
-        // 하나로 되어있는 string 배열로 쪼개기
-        String[] parts = prodCodeString.split("p");
-
-        ArrayList<String> prodCdList = new ArrayList<>();
-        for (String part : parts) {
-            if (!part.isEmpty()) {
-                String prodCd = "p" + part; // TODO 구독상품은 p -> g
-                prodCdList.add(prodCd);
-            }
-        }
-
-        // map으로 다른 것들 담기
-        Map map = new HashMap<>();
-        map.put("cartSeq", cartSeq);
-        map.put("prodCdList", prodCdList);
-
-        return session.selectList(namespace + "selected_prod", map);
-    }
-
     // 개별 상품 삭제 : JS fetch를 이용한 rest API 수행
-    public int deleteCartProduct(Long cartProdSeq) {
+    public int deleteCartProduct(List<Long> cartProdSeq) {
         return session.update(namespace + "delete", cartProdSeq);
     }
 
-
     // 해당 회원의 장바구니의 상품 존재여부 검증
-    public int selectValidation(Map<String, Long> validationMap){
+    public int selectValidation(Map<String, Object> validationMap){
         return session.selectOne(namespace + "validation", validationMap);
     }
+    // 수량 update
+    public int updateQuantity(Map<String, Long> quantityMap){
+        return session.update(namespace + "quantity", quantityMap);
+    }
+
+    // 주문하기에 선택된 장바구니 상품 컬럼 업데이트
+    public int updateSelectedProduct (Map<String, Object> selectProductMap){
+        return session.update(namespace + "select_Product", selectProductMap);
+    }
+
+    // 주문하기에 선택된 장바구니 상품 가져오기
+    // TODO 필요시 배열로 받아오는 방향으로 변경
+    public List<CartJoinProductDto> selectOrderProducts(Long cartSeq)  {
+        return session.selectList(namespace + "order_products", cartSeq);
+    }
+
+    // 주문하려니깐 품절된 상품 보여주기
+    public List<Long> selectOrderListSoldOut(List<Long> cartProdSeq) {
+        return session.selectList(namespace + "orderList_soldOut", cartProdSeq);
+    }
+
+    // 재고가 부족한 상품 cartProdPk, 실 재고량 정보 가지고 옴
+    public List<CartJoinProductDto> selectOrderListInventory(List<Long> cartProdSeq) {
+        return session.selectList(namespace + "orderList_inventory", cartProdSeq);
+    }
+
     // TODO 담을수 있는 최대 수량
     // TODO 삭제된 상품들 중에서 up_dtm이 가장 낮은거 5개 보여주기
     // TODO 상품 목록에서 클릭시, 장바구니 insert하기
