@@ -19,43 +19,49 @@ public class DeliveryAddressDaoImplTest {
     private DeliveryAddressDao deliveryAddressDao;
 
     @Test
-    public void defaultAddress() throws Exception {
+    public void defaultAddress() {
         DeliveryAddressDto defaultAddress = deliveryAddressDao.selectDefaultAddress(1001L);
         Long addrId = defaultAddress.getAddr_id();
         assertSame(2L, addrId);
     }
 
     @Test
-    public void addressList() throws Exception {
+    public void addressList() {
         List<DeliveryAddressDto> address = deliveryAddressDao.addressList(1001L);
         assertEquals(address.size(),2);
     }
 
     // address insert test
     @Test
-    public void insertAddress() throws Exception {
+    public void insertAddress() {
         DeliveryAddressDto deliveryAddressDto = new DeliveryAddressDto(1001L, "n", "ncnm","rcpr","010-1234-1234","desti","desti_dtl", "ezmeal", "ezmeal");
         int updateNum = deliveryAddressDao.insertDeliveryAddress(deliveryAddressDto);
         assertEquals(updateNum, 1);
     }
     @Test
-    public void updateAddress() throws Exception {
-        DeliveryAddressDto deliveryAddressDto = new DeliveryAddressDto(22L, 1001L, "n", "edit","edit","010-1234-1234","desti","desti_dtl", now(),"ezmeal", now(),"ezmeal");
+    public void updateAddress() {
+        DeliveryAddressDto deliveryAddressDto = new DeliveryAddressDto(22L, 1001L, "n", "y","edit","edit","010-1234-1234","desti","desti_dtl", now(),"ezmeal", now(),"ezmeal");
         int i = deliveryAddressDao.updateDeliveryAddress(deliveryAddressDto);
         System.out.println("i = " + i);
         assertEquals(i, 1);
     }
 
     @Test
-    public void resetBasicYN() throws Exception {
+    public void resetBasicYN() {
         DeliveryAddressDto deliveryAddressDto = new DeliveryAddressDto(23L, 1001L);
         int i = deliveryAddressDao.resetAllBasicYNtoN(deliveryAddressDto);
         assertEquals(i, 1);
     }
 
     @Test
-    public void deleteAddress() throws Exception {
+    public void deleteAddress() {
         int i = deliveryAddressDao.deleteDeliveryAddress(21L);
         assertEquals(i, 1);
+    }
+
+    @Test
+    public void orderAddress(){
+        DeliveryAddressDto deliveryAddressDto = deliveryAddressDao.selectOrderAddress(1001L);
+        assertEquals(deliveryAddressDto.getSelect_yn(), "y");
     }
 }

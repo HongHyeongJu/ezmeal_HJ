@@ -32,20 +32,16 @@
                         <i class="fas fa-chevron-down" style="color: #0c0c0c"></i>
                     </button>
                 </h4>
-                <%-- TODO
-                        <p> 처음 주문 상품 값 ${cartProductDtos.get(0)} <br>
-                        주문 상품 총 개수 ${cartProductDtos.size()}</p>
-                --%>
+                <p class="order__prod_summary"> ${cartProductList.get(0).name} 외 ${cartProductList.size()} 건 </p>
                 <!-- 주문상품 title 끝-->
                 <ul class="order__items__ul">
-                    <c:forEach var="item" items="${cartProductDtos}">
+                    <c:forEach var="item" items="${cartProductList}">
                         <!--반복 시작 -->
                         <!--장바구니 식품 반복 시작 -->
                         <li class="order__item_list">
-                            <a href="" class="order__item_list__a">
+                            <a href="/productlist/${item.prod_cd}" class="order__item_list__a">
                                 <img src="/img/${item.prod_cd}.png"/>
                             </a>
-                            <!-- TODO 상품코드 필요 -->
                             <!--상품사진 끝-->
                             <div class="order__item_list_description">
                                 <a href="">
@@ -63,9 +59,7 @@
 
                             <div class="order__item_price">
                                 <span> ${item.sale_prc}원 </span>
-                                <span ${item.cnsmr_prc eq item.sale_prc ? 'hidden' : ''}>
-                                ${item.sale_prc}원
-                                </span>
+                                <span class="cart__item_product-price" ${item.cnsmr_prc eq item.sale_prc ? 'hidden' : ''}>${item.cnsmr_prc}</span>
                             </div>
                             <!--상품 가격 끝-->
                         </li>
@@ -83,15 +77,15 @@
                 <div class="order_info_template">
                     <div class="order_info_template__title">
                         <span>보내는 분</span>
-                        <div>${mbrInfo.name}</div>
+                        <div>${memberInfo.name}</div>
                     </div>
                     <div class="order_info_template__title">
                         <span>휴대폰</span>
-                        <div>${mbrInfo.phone}</div>
+                        <div>${memberInfo.phone}</div>
                     </div>
                     <div class="order_info_template__title">
                         <span>이메일</span>
-                        <div>${mbrInfo.email}</div>
+                        <div>${memberInfo.email}</div>
                     </div>
                 </div>
                 <!--order_info_template 주문자 정보 끝 -->
@@ -105,14 +99,20 @@
                 <div class="order_info_template">
                     <div class="order_info_template__title">
                         <span>배송지</span>
-                        <div>${defaultAddress.basic_yn} | ${defaultAddress.desti} | ${defaultAddress.desti_dtl}</div>
+                        <div delivary_address_id="${selectedAddress.addr_id}">
+                            <div> 수령지 별명 : ${selectedAddress.rcpr}</div>
+                            <div> 수령지 기본 주소 : ${selectedAddress.desti}</div>
+                            <div> 수령지 상세 주소 : ${selectedAddress.desti_dtl}</div>
+                            <div> 수령인 : ${selectedAddress.rcpr}</div>
+                            <div> 수령인 연락처 : ${selectedAddress.phone}</div>
+                        </div>
                     </div>
                     <div class="order_info_template__title">
                         <span>배송 요청사항</span>
                         <!-- 배송 요청사항 - 선택란 -->
                         <div class="order_info_template__radiobox">
                             <div>
-                                <span>기본 배송지 *</span>
+                                <span>받으실 장소*</span>
                                 <label>
                                     <input type="radio" name="default_address" value="mail"/>
                                     <span>문 앞</span>
@@ -128,7 +128,7 @@
                             </div>
 
                             <div>
-                                <span>공동현관 출입방법 * </span>
+                                <span>공동현관 출입방법* </span>
                                 <label>
                                     <input type="radio" name="come_method" value="mail"/>
                                     <span>공동현관 비밀번호</span>
@@ -183,7 +183,7 @@
                             <div class="order_info_template__title">
                                 <span>쿠폰적용</span>
                                 <button class="order__btn order__coupon btn-open-popup">
-                                    사용가능 쿠폰 N장 / 전체 쿠폰 ${counpons.size()}장
+                                    사용가능 쿠폰 N장 / 전체 쿠폰 ${couponList.size()}장
                                 </button>
                                 <div class="order__coupon_pk" hidden>pk</div>
                             </div>
@@ -201,7 +201,7 @@
                                     class="order_info_template__title order_info_template__title_point1"
                             >
                                 <span>적립금 적용</span>
-                                <button class="order__btn order__point">0</button>
+                                <button class="order__btn order__point">0 point</button>
                                 <button class="order__btn order__point_alluse">
                                     모두사용
                                 </button>
@@ -210,7 +210,7 @@
                                     class="order_info_template__title order_info_template__title_point2"
                             >
                                 <span></span> <!-- 들여쓰기 용도 -->
-                                사용가능 적립금 ${pointMap.get("usePoint")}원
+                                사용가능 적립금 ${pointMap.get("userPoint")}원
                             </div>
                         </div>
                         <!--order_info_template 적립금 끝 -->
@@ -224,19 +224,15 @@
                         <div class="order_info_template_small">
                             <div class="order_info_template__title">
                                 <span>결제수단 선택</span>
-                                <button
-                                        class="order__btn order_btn_method order__btn_creditCard"
-                                >
-                                    신용카드
-                                </button>
-                                <button
-                                        class="order__btn order_btn_method order__btn_kakao"
-                                >
-                                    kakao
-                                </button>
-                                <button class="order__btn order_btn_method order__btn_toss">
-                                    Toss
-                                </button>
+                                <input type="radio" name="payment" id="creditCard" value="신용카드"/>
+                                <label for="creditCard" class="order__btn order_btn_method order__btn_creditCard"
+                                       value="신용카드">신용카드</label>
+                                <input type="radio" name="payment" id="kakao" value="kakao"/>
+                                <label for="kakao" class="order__btn order_btn_method order__btn_kakao" value="kakao">
+                                    kakao</label>
+                                <input type="radio" name="payment" id="Toss" value="Toss"/>
+                                <label for="Toss" class="order__btn order_btn_method order__btn_toss"
+                                       value="kakao">Toss</label>
                             </div>
                         </div>
                         <!--order_info_template 결제수단 끝 -->
@@ -261,7 +257,7 @@
                         <!--order_info_template 개인정보 수집 제공 끝 -->
                         <!-- subject : 개인정보 수집 제공 끝 -->
                         <div class="order__price_div">
-                            <button class="order__btn order__price">JS(쿠폰, 적립금 때문)원 결제하기</button>
+                            <button class="order__btn order__price">${priceMap.get("orderPrice")} 원 결제하기</button>
                         </div>
                     </div>
                     <!-- subject_small 끝-->
@@ -289,16 +285,16 @@
 
                             <div class="order_benu__title">
                                 <span>쿠폰할인</span>
-                                <span class="order_benu__number">JS원</span>
+                                <span class="order_benu__number">0 원</span>
                             </div>
                             <div class="order_benu__title">
                                 <span>적립금사용</span>
-                                <span class="order_benu__number">JS</span>
+                                <span class="order_benu__number">0</span>
                             </div>
                             <div class="order_benu__title">
                                 <span>최종결제 금액</span>
-                                <span class="order_benu__number">JS원</span>
-                                <p>적립 예정 금액 : JS - back에서 다시 계산 필요</p>
+                                <span class="order_benu__number">${priceMap.get("orderPrice")}원</span>
+                                <p>적립 예정 포인트 : ${pointMap.get("pointRate")}</p>
                             </div>
                         </div>
                         <!-- order_benu 끝 -->
@@ -327,20 +323,20 @@
                     <th>사용 시작기간 ~ 사용 마감일</th>
                     <th>사용기준</th>
                 </tr>
-                <c:forEach var="item" items="${counpons}">
-                <tr class="order__modal_table_instance">
-                    <td hidden>${item.mbr_coupn_id}</td>
-                    <td><input type="radio" name="coupon"/></td>
-                    <td class="order__coupon_name">${item.name}</td>
-                    <c:if test="${item.val <= 100}">
-                        <td class="order__coupon_dc">${item.val}% 할인 (최대 ${item.max_prc})</td>
-                    </c:if>
-                    <c:if test="${item.val > 100}">
-                        <td class="order__coupon_dc">${item.val}원 할인</td>
-                    </c:if>
-                    <td class="order__coupon_date">${item.vld_start_dt} ~ ${item.vld_end_dt}</td>
-                    <td class="order__coupon_rule">${item.use_base_prc} 이상 구매시 사용 가능</td>
-                </tr>
+                <c:forEach var="item" items="${couponList}">
+                    <tr class="order__modal_table_instance">
+                        <td hidden>${item.mbr_coupn_id}</td>
+                        <td><input type="radio" name="coupon"/></td>
+                        <td class="order__coupon_name">${item.name}</td>
+                        <c:if test="${item.val <= 100}">
+                            <td class="order__coupon_dc">${item.val}% 할인 (최대 ${item.max_prc})</td>
+                        </c:if>
+                        <c:if test="${item.val > 100}">
+                            <td class="order__coupon_dc">${item.val}원 할인</td>
+                        </c:if>
+                        <td class="order__coupon_date">${item.vld_start_dt} ~ ${item.vld_end_dt}</td>
+                        <td class="order__coupon_rule">${item.use_base_prc} 이상 구매시 사용 가능</td>
+                    </tr>
                 </c:forEach>
             </table>
             <!-- Modal  table 끝 -->

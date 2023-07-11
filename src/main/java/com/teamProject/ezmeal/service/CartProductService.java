@@ -105,7 +105,7 @@ public class CartProductService {
         }
     }
 
-    // 주문하기에 선택된 장바구니 상품 컬럼 업데이트
+    // 주문하기에 선택된 장바구니 상품 컬럼 업데이트 (sel_prod n -> y)
     public int updateOrderProduct(Long cartSeq, List<Long> cartProdSeqList) {
         Map<String, Object> selectProductMap = new HashMap<>();
         selectProductMap.put("cartSeq", cartSeq);

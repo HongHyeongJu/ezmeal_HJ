@@ -17,17 +17,23 @@
         select *
         from tb_delivery_address
         where mbr_id = #{mbrId}
-        ;
     </select>
 
-    <!-- 선택된 배송지 - 수정 || 삭제 -->
+    <!-- 선택된 배송지 - 마이페이지 수정, 삭제용 -->
     <select id="selectedAddress" resultType="DeliveryAddressDto">
         select *
         from tb_delivery_address
         where addr_id = #{addrId}
-        ;
     </select>
 
+    <!-- 선택된 배송지 - 주문서용, 장바구니용 -->
+    <select id="orderAddress" resultType="DeliveryAddressDto">
+        SELECT *
+        FROM tb_delivery_address
+        WHERE mbr_id = #{mbrId}
+        AND (select_yn = 'y' OR (select_yn &lt;&gt; 'y' AND basic_yn = 'y' AND
+        NOT EXISTS (SELECT * FROM tb_delivery_address WHERE mbr_id = #{mbrId} AND select_yn = 'y')))
+    </select>
     <!-- insert
      1) parameterType의 객체를 받아오고
      2) Values 내부 #{} 부분이 해당 객체의 변수의 값을 의미한다.
@@ -58,7 +64,6 @@
         update tb_delivery_address
         set basic_yn = 'n'
         where mbr_id = #{mbr_id}
-        ;
     </update>
 
     <!-- delete -->

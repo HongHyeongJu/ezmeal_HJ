@@ -64,7 +64,6 @@ public class CartProductDao {
     }
 
     // 주문하기에 선택된 장바구니 상품 가져오기
-    // TODO 필요시 배열로 받아오는 방향으로 변경
     public List<CartJoinProductDto> selectOrderProducts(Long cartSeq)  {
         return session.selectList(namespace + "order_products", cartSeq);
     }
