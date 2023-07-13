@@ -1,55 +1,130 @@
 
-
-/*작동 안함!!*/
-
 /*상품별 장바구니 버튼의 동작  (감소) */
-function decreaseQuantity(button) {
-    let quantityElement = button.nextElementSibling;
-    let quantity = parseInt(quantityElement.textContent);
-    if (quantity > 1) {
-        quantityElement.textContent = quantity - 1;
+function decreaseQuantity(btn) {
+    let qtyElement = btn.nextElementSibling;
+    let qty = parseInt(qtyElement.textContent);
+    if (qty > 1) {
+        qtyElement.textContent = qty - 1;
     }
 }
 
 /*상품별 장바구니 버튼의 동작  (증가) */
-function increaseQuantity(button) {
-    let quantityElement = button.previousElementSibling;
-    let quantity = parseInt(quantityElement.textContent);
-    quantityElement.textContent = quantity + 1;
+function increaseQuantity(btn) {
+    let qtyElement = btn.previousElementSibling;
+    let qty = parseInt(qtyElement.textContent);
+    qtyElement.textContent = qty + 1;
 }
 
 
-document.querySelectorAll('.cart_form').forEach((form) => {
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        let quantityElement  = this.querySelector('.quantity');
-        let prodCdElement = this.querySelector('.prod_cd');
+/*------------  찜하기 버튼  --------*/
 
-        let qty = parseInt(quantityElement.textContent);
+document.querySelectorAll('.wishlist_btn').forEach((button) => {
+    button.addEventListener('click', function() {
+        let buttonId = this.id;
+        let index = buttonId.split('_')[2];
+
+        let prodCdElement = document.getElementById(`prod_cd_${index}`);
         let prod_cd = prodCdElement.value;
 
-        if (qty >= 1) {
-            $.ajax({
-                url: "/addcart", // 서버의 경로 설정
-                type: "POST", // 요청 방식 (POST 또는 GET)
-                data: {
-                    prod_cd: prod_cd, // 상품 코드 전달
-                    qty: qty // 수량 전달
-                },
-                success: function(response) {
-                    alert("장바구니 담기 성공!");
-                },
-                error: function(xhr, status, error) {
-                    alert("장바구니 담기 실패!");
-                }
-            });
-        }
+        /*나중에 세션에서 받아오는 것으로 수정*/
+        // let mbr_id = '<%= session.getAttribute("mbr_id") %>';
+        let mbr_id = 1008;
+        // let mbr_id;
+
+        $.ajax({
+            url: "/wishlist/add",
+            type: "POST",
+            data: JSON.stringify({ prod_cd: prod_cd, mbr_id: mbr_id}),
+            contentType: "application/json",
+            success: function(response) {
+                alert("찜하기 성공!");
+            },
+            error: function(xhr, status, error) {
+                /*비로그인시에는 눌러도 아무 효과 없음*/
+                // alert(xhr.responseText);
+            }
+        });
+    });
+});
+
+/*---------------- 찜하기 /장바구니 호버 -----------*/
+
+// 모든 .wishlist_btn 요소 선택
+let wishlistBtns = document.querySelectorAll('.wishlist_btn');
+let submitBtns = document.querySelectorAll('.submit_btn');
+
+
+// 각 버튼에 이벤트 리스너 등록
+wishlistBtns.forEach((button) => {
+    button.addEventListener('mouseenter', function() {
+        button.classList.add('hover'); // 호버 상태 클래스 추가
+    });
+
+    button.addEventListener('mouseleave', function() {
+        button.classList.remove('hover'); // 호버 상태 클래스 제거
+    });
+});
+
+submitBtns.forEach((button) => {
+    button.addEventListener('mouseenter', function() {
+        button.classList.add('hover'); // 호버 상태 클래스 추가
+    });
+
+    button.addEventListener('mouseleave', function() {
+        button.classList.remove('hover'); // 호버 상태 클래스 제거
     });
 });
 
 
 
+/*----------------  장바구니 버튼  -------------*/
 
+document.querySelectorAll('.submit_btn').forEach((button) => {
+    button.addEventListener('click', function() {
+        /* 버튼 id가져오기 */
+        let buttonId = this.id;
+        let index = buttonId.split('_')[2];
+
+        /* 수량 가져오기 */
+        let qtyElement = document.getElementById(`qty_${index}`);
+        let qty = parseInt(qtyElement.textContent);
+
+        /* 상품코드 가져오기 */
+        let prodCdElement = document.getElementById(`prod_cd_${index}`);
+        let prod_cd = prodCdElement.value;
+
+        /* 옵션SEQ가져오기 */
+        let optDiv = document.getElementById(`opt_div_${index}`);
+        let opt_seq = null;
+        if (optDiv) {
+            let optSelect = document.getElementById(`opt_select_${index}`);
+            opt_seq = optSelect.value;
+        }
+
+        /*나중에 세션에서 받아오는 것으로 수정*/
+        // let mbr_id = '<%= session.getAttribute("mbr_id") %>';
+        let mbr_id = 1008;
+        // let mbr_id;
+
+        $.ajax({
+            url: "/tttest",
+            type: "POST",
+            data: JSON.stringify({
+                prod_cd: prod_cd,
+                qty: qty,
+                opt_seq: opt_seq,
+                mbr_id: mbr_id
+            }),
+            contentType: "application/json",
+            success: function(response) {
+                alert("장바구니 담기 성공!");
+            },
+            error: function(xhr, status, error) {
+                alert("장바구니 담기 실패!");
+            }
+        });
+    });
+});
 
 
 

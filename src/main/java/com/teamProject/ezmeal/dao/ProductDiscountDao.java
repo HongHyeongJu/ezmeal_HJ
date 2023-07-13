@@ -48,12 +48,12 @@ public class ProductDiscountDao {
         return session.selectList(namespace+"dc_cd_list_by_discount");
     }
 
-    /*할인 코드 수정 후 -> 상품TB 판매과 일괄 수정*/
+    /*할인 코드 수정 후 -> TB_상품 판매가 일괄 수정*/
     public Integer updateProductSalePrcDueToDiscountUpdate() throws SQLException {
         return session.update(namespace+"update_product_sale_price_due_to_discount_update");
     }
 
-    /*할인 코드 수정 후 -> 옵션상품TB 판매과 일괄 수정*/
+    /*할인 코드 수정 후 -> TB_옵션상품 판매가 일괄 수정*/
     public Integer updateOptionProductSalePrcDueToDiscountUpdate() throws SQLException {
         return session.update(namespace+"update_option_product_sale_price_due_to_discount_update");
     }
@@ -85,6 +85,10 @@ public class ProductDiscountDao {
     /*dc_cd로 할인코드 하나 꺼내기*/
     public ProductDiscountDto selectDiscount(String dc_cd) throws SQLException {
         return session.selectOne(namespace+"select_discount_by_dc_cd", dc_cd);
+    }
+
+    public Integer updateMngRateTest() throws  SQLException {
+        return session.update(namespace+"update_product_sale_price_due_to_discount_update");
     }
 
 }

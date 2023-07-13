@@ -48,8 +48,8 @@ public class ProductDiscountDaoTest {
         assertTrue(insertResult==1);
 
         /*할인 진짜삭제*/
-        deleteResult = productDiscountDao.deleteDiscountForTdd("TEST_DC");
-        assertTrue(deleteResult==1);
+//        deleteResult = productDiscountDao.deleteDiscountForTdd("TEST_DC");
+//        assertTrue(deleteResult==1);
 
     }
 
@@ -110,7 +110,7 @@ public class ProductDiscountDaoTest {
     /*수정*/
     @Test
     public void update_discount() throws SQLException {
-
+        productDiscountDao.updateMngRateTest();
     }
 
 

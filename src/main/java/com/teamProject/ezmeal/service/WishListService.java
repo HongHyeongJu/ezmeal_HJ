@@ -1,7 +1,9 @@
 package com.teamProject.ezmeal.service;
 
 import com.teamProject.ezmeal.dao.ProductImgDao;
+import com.teamProject.ezmeal.dao.WishListDao;
 import com.teamProject.ezmeal.domain.ProductImgDto;
+import com.teamProject.ezmeal.domain.WishListDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,48 +13,30 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductImgService {
+public class WishListService {
     @Autowired
-    ProductImgDao productImgDao;
+    WishListDao wishListDao;
 
-    /*상품 코드 입력해서 모든 이미지 List로 반환하기 */
-    public List<ProductImgDto> selectProdCdImg (String prodCd) throws SQLException {
-        return productImgDao.selectProdCdImgAll(prodCd);
-    }
+    /*매개변수로 받는 wishListDto 있는지 확인하고 같으면 0반환, Insert*/
+    public boolean insertWishList(WishListDto wishListDto) throws SQLException {
+        System.out.println("--------서비스 진입---------");
+        boolean existSelect = wishListDao.selectWishList(wishListDto)==null ? false : true;  /*없을 때 false*/
 
-    /* 상품코드로 이미지 찾는데 특정 타입 이미지가 필요할 때 */
-    public ProductImgDto selectProdCdTypImg (String prodCd, String typ) throws SQLException {
-        return productImgDao.selectProdCdTypImg(prodCd, typ);
-    }
+        try {
+            if (!existSelect){
+                System.out.println("[서비스] select 없음 = insert 가능");
+                Integer insertResult = wishListDao.insertWishList(wishListDto);
+                return insertResult==1 ? true : false;
+            } else {
+                System.out.println("[서비스] select 있음 = insert 못한다고 말해");
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            e.getMessage();
+            return false;
+        }
 
-
-    /* 카테고리로 검색한 상품리스트의 대표 이미지 리스트 (와일드카드 사용) */
-    public List<ProductImgDto> selectCateCdImg (String cate_cd) throws SQLException {
-        String like_cate_cd = cate_cd+"%";
-        return productImgDao.selectCateCdImgTyp(like_cate_cd);
-    }
-
-
-    /* 위의  List<ProductImgDto> -> 변환 -> Map<String(Prod_cd), ProductImgDto> */
-    public Map<String, ProductImgDto> selectCateCdImgMap (String cate_cd) throws SQLException {
-        List<ProductImgDto> selectCateCdImgList = selectCateCdImg(cate_cd);
-        Map<String, ProductImgDto> selectCateCdImgMap
-                = selectCateCdImgList.stream().collect(Collectors.toMap(ProductImgDto->ProductImgDto.getProd_cd(), ProductImgDto->ProductImgDto));
-        return  selectCateCdImgMap;
-    }
-
-
-    /*한 상품에 대한 전체 이미지 받기 List*/
-    public List<ProductImgDto> selectProdCdImgAll(String prod_cd) throws SQLException {
-        List<ProductImgDto> selectProdCdImgList = productImgDao.selectProdCdImgAll(prod_cd);
-        return selectProdCdImgList;
-    }
-
-    /*위에서 받은  list 타입별 map으로 변환하기 (대표,대표이미지)(메인,메인이미지),(상세, 상세이미지)*/
-    public Map<String,String> selectProdCdImgAlltoMap(String prod_cd) throws SQLException {
-        List<ProductImgDto> selectProdCdImgList = productImgDao.selectProdCdImgAll(prod_cd);
-        Map<String,String> typeAndUrlMap =  selectProdCdImgList.stream().collect(Collectors.toMap(ProductImgDto->ProductImgDto.getTyp(),ProductImgDto->ProductImgDto.getUrl()));
-        return typeAndUrlMap;
     }
 
 

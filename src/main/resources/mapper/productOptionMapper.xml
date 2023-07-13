@@ -6,14 +6,13 @@
 
     <!-- 옵션 yn -> 카테고리에서 보여줄 때? 옵션SEQ, 짧은 옵션명, 수량, sale_prc -->
     <select id="select_option_in_category" parameterType="String" resultType="ProductOptionDto">
-        SELECT opt.prod_cd, opt.opt_seq,  opt.name, opt.qty, opt.sale_prc
+        SELECT opt.opt_seq, opt.prod_cd, opt.name, opt.qty, opt.sale_prc
         FROM tb_product_option AS opt
                  INNER JOIN tb_product AS pd ON opt.prod_cd = pd.prod_cd
         WHERE opt.use_yn = 'y' AND opt.del_yn ='n'
               AND pd.cate_cd LIKE concat(#{cate_cd}, '%')  AND pd.sale_yn='y'
               AND pd.dp_yn='y' AND pd.del_yn='n' AND pd.prod_stus IN (1,2)
     </select>
-
 
     <!-- 옵션 y -> 상세페이지에서 보여줄 떄?  -->
     <select id="select_option_in_detail" parameterType="Long" resultType="ProductOptionDto">
@@ -30,7 +29,6 @@
         FROM tb_product_option
         WHERE prod_cd = #{prod_cd}
     </select>
-
 
     <!-- 상품에서 opt_yn이 y라면? 여기서 상품코드로 검색해서 줌 -->
     <select id="select_option_product_by_prod_cd" parameterType="Long" resultType="ProductOptionDto">

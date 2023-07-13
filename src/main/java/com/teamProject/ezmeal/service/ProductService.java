@@ -74,9 +74,9 @@ public class ProductService {
             /*카테고리 상품 '대표'이미지 리스트*/
             List<ProductImgDto> prodImgList = productImgDao.selectCateCdImgTyp(cate_cd);
             /*카테고리 상품의 옵션 리스트*/
-            List<ProductOptionDto> prodOptList =  productOptionDao.selectOptionInProductCategory(cate_cd);
+            Map<Long,List<ProductOptionDto>> prodOptMap =  prodCdListChangeToOptionMap(cate_cd);
             /*할인율 강조를 위한 할인코드 리스트 */
-            List<ProductDiscountDto> discountList = productDiscountDao.selectDiscountListByCateCd();
+//            List<ProductDiscountDto> discountList = productDiscountDao.selectDiscountListByCateCd();
             /*상품 평점, 리뷰 숫자*/
             Map<Long,Double> reviewAngMap = productReviewDao.selectReviewAvgForProdList(cate_cd);
             Map<Long,Integer> reviewCntMap = productReviewDao.selectReviewCntForProdList(cate_cd);
@@ -84,7 +84,8 @@ public class ProductService {
             HashMap ProdListMap = new HashMap<>();
             ProdListMap.put("prodList",prodList);
             ProdListMap.put("prodImgList",prodImgList);
-            ProdListMap.put("prodOptList",prodOptList);
+            ProdListMap.put("prodOptMap",prodOptMap);
+//            ProdListMap.put("discountList",discountList);
             ProdListMap.put("reviewAngMap",reviewAngMap);
             ProdListMap.put("reviewCntMap",reviewCntMap);
 
@@ -97,8 +98,15 @@ public class ProductService {
     }
 
 
-    /*다양한 순서의 */
-
+    public Map<Long,List<ProductOptionDto>> prodCdListChangeToOptionMap(String cate_cd) throws SQLException {
+        List<Long> prodCdList = productDao.selectProductProdCdListByCateCd(cate_cd);
+        HashMap map = new HashMap();
+        for(Long prod_cd : prodCdList){
+            List<ProductOptionDto> list = productOptionDao.selectOptionProductsByProdCd(prod_cd);
+            map.put(prod_cd,list);
+        }
+        return map;
+    }
 
 
 

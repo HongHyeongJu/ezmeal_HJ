@@ -31,6 +31,11 @@ public class ProductDao {
         return session.selectList(namespace + "select_product_list_by_cate_cd", cate_cd);
     }
 
+    /* 분류코드로 상품코드 리스트 받기 */
+    public List<Long> selectProductProdCdListByCateCd(String cate_cd) throws SQLException {
+        return session.selectList(namespace + "select_product_prod_cd_list_by_cate_cd", cate_cd);
+    }
+
     /* ----------------- 카테고리 정렬기준 따라 호출하는 쿼리문 -------------- */
 
     /* 분류코드로 상품 리스트 받기 (mini)*/

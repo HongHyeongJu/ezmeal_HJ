@@ -39,11 +39,14 @@ public class ProductController {
         HashMap map = productService.getProductListByCateCd(cate_cd, sortkeyword);
         model.addAttribute("prodList",map.get("prodList"));
         model.addAttribute("prodImgList",map.get("prodImgList"));
-        model.addAttribute("prodOptList",map.get("prodOptList"));
+        model.addAttribute("prodOptMap",map.get("prodOptMap"));
         model.addAttribute("reviewAngMap",map.get("reviewAngMap"));
         model.addAttribute("reviewCntMap",map.get("reviewCntMap"));
         model.addAttribute("cate_cd",cate_cd);
         System.out.println(map.get("prodList").toString());
+        System.out.println();
+        System.out.println("prodOptMap: "+map.get("prodOptMap").toString());
+        System.out.println();
         System.out.println("컨트롤러, sortkeyword: "+sortkeyword);
 
         return "productcatelist";

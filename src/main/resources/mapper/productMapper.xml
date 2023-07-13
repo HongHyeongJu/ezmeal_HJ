@@ -30,8 +30,16 @@
         WHERE cate_cd LIKE concat( #{cate_cd},'%') AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
     </select>
 
+    <!-- 카테고리 분류코드로 상품리스트 받기 (옵션용이라서 옵션 y 만!! )(상품 코드만) -->
+    <select id="select_product_prod_cd_list_by_cate_cd" parameterType="String" resultType="Long">
+        SELECT prod_cd
+        FROM tb_product
+        WHERE cate_cd LIKE concat( #{cate_cd},'%') AND sale_yn='y' AND opt_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
+    </select>
 
-<!-- ~~~~~ 카테고리 정렬기준 따라 호출하는 쿼리문 ~~~~~ -->
+
+
+    <!-- ~~~~~ 카테고리 정렬기준 따라 호출하는 쿼리문 ~~~~~ -->
 
     <!-- 카테고리 분류코드로 상품리스트 받기 (mini), 전체 카테고리 리스트에 출력되는 값만.-->
     <select id="select_product_list_cate_cd_mini" parameterType="String" resultType="ProductDto">
