@@ -140,6 +140,13 @@ public class CartProductDaoTest {
         System.out.println("longs = " + longs);
     }
 
+    //  주문한 상품 수량 받아오기
+    @Test
+    public void selectOrderProductNum(){
+        int i = cartProductDao.selectOrderProductNum(1L);
+        assertEquals(i, 7);
+    }
+
     /* 관리자 */
 
     // 장바구니에 존재하는 모든 상품 - 삭제 항목 제외

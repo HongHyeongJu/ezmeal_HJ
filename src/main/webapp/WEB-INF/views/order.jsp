@@ -32,7 +32,7 @@
                         <i class="fas fa-chevron-down" style="color: #0c0c0c"></i>
                     </button>
                 </h4>
-                <p class="order__prod_summary"> ${cartProductList.get(0).name} 외 ${cartProductList.size()} 건 </p>
+                <p class="order__prod_summary" product__cnt="${cartProductList.size()}"> ${cartProductList.get(0).name} 외 ${cartProductList.size()} 건 </p>
                 <!-- 주문상품 title 끝-->
                 <ul class="order__items__ul">
                     <c:forEach var="item" items="${cartProductList}">
@@ -59,7 +59,7 @@
 
                             <div class="order__item_price">
                                 <span> ${item.sale_prc}원 </span>
-                                <span class="cart__item_product-price" ${item.cnsmr_prc eq item.sale_prc ? 'hidden' : ''}>${item.cnsmr_prc}</span>
+                                <span class="cart__item_product-price" ${item.cnsmr_prc eq item.sale_prc ? 'hidden' : ''}>${item.cnsmr_prc} 원</span>
                             </div>
                             <!--상품 가격 끝-->
                         </li>
@@ -185,7 +185,7 @@
                                 <button class="order__btn order__coupon btn-open-popup">
                                     사용가능 쿠폰 N장 / 전체 쿠폰 ${couponList.size()}장
                                 </button>
-                                <div class="order__coupon_pk" hidden>pk</div>
+                                <div class="order__coupon_pk" hidden>0</div>
                             </div>
                         </div>
                         <!--order_info_template 쿠폰 끝 -->
@@ -201,7 +201,7 @@
                                     class="order_info_template__title order_info_template__title_point1"
                             >
                                 <span>적립금 적용</span>
-                                <button class="order__btn order__point">0 point</button>
+                                <input class="order__btn order__point" value="0"/>
                                 <button class="order__btn order__point_alluse">
                                     모두사용
                                 </button>
@@ -292,9 +292,14 @@
                                 <span class="order_benu__number">0</span>
                             </div>
                             <div class="order_benu__title">
-                                <span>최종결제 금액</span>
-                                <span class="order_benu__number">${priceMap.get("orderPrice")}원</span>
-                                <p>적립 예정 포인트 : ${pointMap.get("pointRate")}</p>
+                                <div>
+                                    <span>최종결제 금액</span>
+                                    <span class="order_benu__number">${priceMap.get("orderPrice")}원</span>
+                                </div>
+                                <div>
+                                    <span>적립 예정 포인트</span>
+                                    <span> ${pointMap.get("pointRate")} point</span>
+                                </div>
                             </div>
                         </div>
                         <!-- order_benu 끝 -->
@@ -348,10 +353,9 @@
 
 </main>
 <!--order 끝-->
-<script
-        src="https://kit.fontawesome.com/6478f529f2.js"
-        crossorigin="anonymous"
-></script>
+<script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script> <!-- 결제 api -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script> <!-- 결제 api -->
 <script src="/javascript/modal.js"></script>
 <script src="/javascript/order.js"></script>
 </body>

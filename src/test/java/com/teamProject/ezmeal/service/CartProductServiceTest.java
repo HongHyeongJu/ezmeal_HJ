@@ -108,4 +108,11 @@ public class CartProductServiceTest {
         List<List<Number>> lists = cartProductService.checkOrderListOverInventory(cartProdSeqList);
         System.out.println("lists = " + lists);
     }
+
+    //  주문한 상품 수량 받아오기
+    @Test
+    public void selectOrderProductNum(){
+        int i = cartProductService.countOrderProduct(1L);
+        assertEquals(i, 7);
+    }
 }

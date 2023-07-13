@@ -78,6 +78,11 @@ public class CartProductDao {
         return session.selectList(namespace + "orderList_inventory", cartProdSeq);
     }
 
+    // 주문한 상품 수량 받아오기
+    public int selectOrderProductNum(Long cartSeq){
+        return session.selectOne(namespace + "count_orderProduct", cartSeq);
+    }
+
     // TODO 담을수 있는 최대 수량
     // TODO 삭제된 상품들 중에서 up_dtm이 가장 낮은거 5개 보여주기
     // TODO 상품 목록에서 클릭시, 장바구니 insert하기

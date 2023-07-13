@@ -26,7 +26,7 @@ public class MemberDao {
     public int registerMember(MemberDto memberDto) throws Exception {    // 회원가입 resisterMember
         return session.insert(namespace + "mbr_signup", memberDto);
     }
-    public MemberDto getMemberInfo(Long memberId) throws Exception {    // 회원정보 조회
+    public MemberDto getMemberInfo(Long memberId) {    // 회원정보 조회
         return session.selectOne(namespace + "mbr_Info", memberId);
     }
 

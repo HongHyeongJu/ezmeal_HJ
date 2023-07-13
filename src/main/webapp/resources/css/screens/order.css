@@ -334,7 +334,17 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
     border-bottom: 0.1px solid rgb(188, 181, 181);
 }
 
-/* order-modal detail */
+.order_benu__title:nth-child(6) {
+    display: block;
+}
+
+.order_benu__title:nth-child(6) div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3px;
+}
+
+    /* order-modal detail */
 .modal_body {
     display: flex;
     flex-direction: column;

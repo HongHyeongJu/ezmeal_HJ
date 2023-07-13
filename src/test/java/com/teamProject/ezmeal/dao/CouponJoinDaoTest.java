@@ -22,4 +22,12 @@ public class CouponJoinDaoTest {
         List<CouponJoinDto> couponJoinDtos = couponJoinDao.couponList(1001L);
         System.out.println("couponJoinDtos = " + couponJoinDtos);
     }
+
+    @Test
+    public void couponPrice(){
+        CouponJoinDto couponJoinDtos = couponJoinDao.couponPrice(1000121211L);
+        System.out.println("couponJoinDtos = " + couponJoinDtos);
+//        System.out.println("couponJoinDtos.getVal() = " + couponJoinDtos.getVal());
+//        System.out.println("couponJoinDtos.getMax_prc() = " + couponJoinDtos.getMax_prc());
+    }
 }

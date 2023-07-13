@@ -139,6 +139,10 @@ public class CartProductService {
         return productInfoList; //[cartProdSeq, inventory]
     }
 
+    public Integer countOrderProduct(Long cartSeq){
+        return cartProductDao.selectOrderProductNum(cartSeq);
+    }
+
     // 관리자
 
     // 장바구니에 존재하는 모든 상품

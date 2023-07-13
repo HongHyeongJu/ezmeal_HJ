@@ -30,6 +30,9 @@
         <typeAlias alias="MemberCouponDto" type="com.teamProject.ezmeal.domain.MemberCouponDto"/>
 <!--join dto-->
         <typeAlias alias="CouponJoinDto" type="com.teamProject.ezmeal.domain.CouponJoinDto"/>
+<!-- 주문/결제 dto -->
+        <typeAlias alias="OrderMasterDto" type="com.teamProject.ezmeal.domain.OrderMasterDto"/>
+
 
 
     </typeAliases>

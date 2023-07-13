@@ -17,4 +17,8 @@ public class CouponJoinDao {
         return session.selectList(namespace + "coupon_list", mbrId);
     }
 
+    public CouponJoinDto couponPrice(Long mbrCouponId) {
+        return session.selectOne(namespace + "coupon_price", mbrCouponId);
+    }
+
 }
