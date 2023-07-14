@@ -1,7 +1,6 @@
 package com.teamProject.ezmeal.service;
 
-import com.teamProject.ezmeal.domain.CartJoinProductDto;
-import com.teamProject.ezmeal.domain.CartProductDto;
+import com.teamProject.ezmeal.domain.joinDomain.CartJoinProductDto;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.junit.Test;
 import org.junit.runner.RunWith;

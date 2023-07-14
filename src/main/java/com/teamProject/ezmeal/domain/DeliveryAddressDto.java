@@ -15,11 +15,11 @@ public class DeliveryAddressDto {
     private Long mbr_id;
     private String basic_yn;
     private String select_yn;
-    private String ncnm;
-    private String rcpr;
-    private String phone;
-    private String desti;
-    private String desti_dtl;
+    private String ncnm; // 별명
+    private String rcpr; // 수령인 이름
+    private String phone; // 수령인 연락처
+    private String desti; // 수령인 기본주소
+    private String desti_dtl; // 수령인 상세주소
     private LocalDateTime in_dtm;
     private String in_id;
     private LocalDateTime up_dtm;

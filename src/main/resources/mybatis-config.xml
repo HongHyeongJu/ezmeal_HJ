@@ -10,7 +10,7 @@
 <!--        cart , cartProduct 추가 필요-->
         <typeAlias alias="CartDto" type="com.teamProject.ezmeal.domain.CartDto"/>
         <typeAlias alias="CartProductDto" type="com.teamProject.ezmeal.domain.CartProductDto"/>
-        <typeAlias alias="CartJoinProductDto" type="com.teamProject.ezmeal.domain.CartJoinProductDto"/>
+        <typeAlias alias="CartJoinProductDto" type="com.teamProject.ezmeal.domain.joinDomain.CartJoinProductDto"/>
         <typeAlias alias="DeliveryAddressDto" type="com.teamProject.ezmeal.domain.DeliveryAddressDto"/>
         <typeAlias alias="MemberDto" type="com.teamProject.ezmeal.domain.MemberDto"/>
 <!--상품 , 상품이미지 , 상품할인, 상품옵션, 상품후기, 상품재고-->
@@ -29,9 +29,14 @@
         <typeAlias alias="CouponIssueDto" type="com.teamProject.ezmeal.domain.CouponIssueDto"/>
         <typeAlias alias="MemberCouponDto" type="com.teamProject.ezmeal.domain.MemberCouponDto"/>
 <!--join dto-->
-        <typeAlias alias="CouponJoinDto" type="com.teamProject.ezmeal.domain.CouponJoinDto"/>
+        <typeAlias alias="CouponJoinDto" type="com.teamProject.ezmeal.domain.joinDomain.CouponJoinDto"/>
 <!-- 주문/결제 dto -->
         <typeAlias alias="OrderMasterDto" type="com.teamProject.ezmeal.domain.OrderMasterDto"/>
+        <typeAlias alias="PaymentMasterDto" type="com.teamProject.ezmeal.domain.PaymentMasterDto"/>
+        <typeAlias alias="OrderStatusHistoryDto" type="com.teamProject.ezmeal.domain.OrderStatusHistoryDto"/>
+        <typeAlias alias="OrderPaymentDto" type="com.teamProject.ezmeal.domain.OrderPaymentDto"/>
+        <typeAlias alias="OrderDetailDto" type="com.teamProject.ezmeal.domain.OrderDetailDto"/>
+        <typeAlias alias="DeliveryMasterDto" type="com.teamProject.ezmeal.domain.DeliveryMasterDto"/>
 
 
 

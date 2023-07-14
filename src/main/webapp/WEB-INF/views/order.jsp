@@ -99,7 +99,7 @@
                 <div class="order_info_template">
                     <div class="order_info_template__title">
                         <span>배송지</span>
-                        <div delivary_address_id="${selectedAddress.addr_id}">
+                        <div class="delivery_address_id" delivery_address_id="${selectedAddress.addr_id}">
                             <div> 수령지 별명 : ${selectedAddress.rcpr}</div>
                             <div> 수령지 기본 주소 : ${selectedAddress.desti}</div>
                             <div> 수령지 상세 주소 : ${selectedAddress.desti_dtl}</div>
@@ -111,53 +111,57 @@
                         <span>배송 요청사항</span>
                         <!-- 배송 요청사항 - 선택란 -->
                         <div class="order_info_template__radiobox">
-                            <div>
+                            <div class="order_info_delivery_place">
                                 <span>받으실 장소*</span>
                                 <label>
-                                    <input type="radio" name="default_address" value="mail"/>
+                                    <input type="radio" name="default_address" value="문 앞"/>
                                     <span>문 앞</span>
                                 </label>
                                 <label>
-                                    <input type="radio" name="default_address" value="mail"/>
+                                    <input type="radio" name="default_address" value="경비실"/>
                                     <span>경비실</span>
                                 </label>
                                 <label>
-                                    <input type="radio" name="default_address" value="mail"/>
+                                    <input type="radio" name="default_address" value="택배함"/>
                                     <span>택배함</span>
                                 </label>
                             </div>
 
-                            <div>
+                            <div class="order_info_delivery_place_detail">
                                 <span>공동현관 출입방법* </span>
                                 <label>
-                                    <input type="radio" name="come_method" value="mail"/>
-                                    <span>공동현관 비밀번호</span>
+                                    <input type="radio" name="come_method" value="공동현관"/>
+                                    <span>공동현관</span>
                                 </label>
                                 <label>
-                                    <input type="radio" name="come_method" value="mail"/>
+                                    <input type="radio" name="come_method" value="자유 출입 가능"/>
                                     <span>자유 출입 가능</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="come_method" value="기타"/>
+                                    <span>기타</span>
                                 </label>
                             </div>
                             <!-- TODO 숨김 JS 수행 필요 -->
-                            <div class="door_password">
-                                <span>👉 공동현관 비밀번호</span>
+                            <div class="order_info_delivery_place_detail__input">
+                                <span>👉 공동현관 비밀번호</span> <!--기타 누르면 변경되도록 JS-->
                                 <label>
                                     <input
                                             type="text"
                                             name="come_method"
                                             placeholder="공동현관 비밀번호"
-                                    />
+                                    />  <!--기타 누르면 변경되도록 JS-->
                                 </label>
                             </div>
 
-                            <div>
+                            <div class="order_info_delivery_msgYN">
                                 <span>배송 완료 메시지 전송 *</span>
                                 <label>
-                                    <input type="radio" name="delivery_msg" value="mail"/>
+                                    <input type="radio" name="delivery_msg" value="y"/>
                                     <span>예</span>
                                 </label>
                                 <label>
-                                    <input type="radio" name="delivery_msg" value="mail"/>
+                                    <input type="radio" name="delivery_msg" value="n"/>
                                     <span>아니오</span>
                                 </label>
                             </div>

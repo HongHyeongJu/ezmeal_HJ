@@ -23,7 +23,7 @@ public class DeliveryAddressDao {
         return session.selectList(namespace + "addressList", mbrId);
     }
 
-    // 선택된 배송지 - 마이페이지 수정, 삭제용
+    // 선택된 배송지 - 마이페이지 수정, 삭제용, 일반 선택용
     public DeliveryAddressDto selectedAddress(Long addrId) {
         return session.selectOne(namespace + "selectedAddress", addrId);
     }
