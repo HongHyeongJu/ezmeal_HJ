@@ -55,13 +55,13 @@ public class MemberController {
     }
 
     @GetMapping("/signup")
-    public String signUp() {    // 회원가입 버튼 클릭시 signup.jsp 화면 보여준다
+    public String getMemberAdd() {    // 회원가입 버튼 클릭시 signup.jsp 화면 보여준다
         return "signup";
     }
     // PostMapping(/signup)
     // View success.jsp
     @PostMapping("/signup")
-    public String signupSuccess(MemberDto memberDto, String lgin_id, String lgin_pw ,Model model,
+    public String postMemberAdd(MemberDto memberDto, String lgin_id, String lgin_pw ,Model model,
                                 RedirectAttributes rattr, HttpServletRequest req) {
         // 1. 유효성 검사
 //        if (!isValid(memberDto)) {

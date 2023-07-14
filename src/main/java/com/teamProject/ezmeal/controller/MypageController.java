@@ -23,12 +23,12 @@ public class MypageController {
 
 
     @GetMapping("/withdrawal")
-    public String withdrawal() {
+    public String getMemberRemove() {
         return "withdrawal"; // 회원정보수정에서 회원탈퇴 버튼을 누르면, 회원탈퇴 페이지로 이동한다.
     }
 
     @PostMapping("/withdrawal")     // 회원탈퇴페이지에서 회원탈퇴확인을 누르면 main으로 돌아간다.
-    public String mbrWithdrawal(HttpSession session, Model model) {
+    public String postMemberRemove(HttpSession session, Model model) {
         // 회원 로그인id를 구한다.
 //        String lgin_id = "scared100"; // 일단 하드코딩
 
@@ -55,7 +55,7 @@ public class MypageController {
     }
 
     @GetMapping("/modify")  // 회원정보수정 페이지
-    public String modify(HttpSession session, Model model){
+    public String getMemberModify(HttpSession session, Model model){
 //        HttpSession session = req.getSession();
         Long memberId = (Long) session.getAttribute("memberId");    // 현재로그인 중인 회원번호를 가져온다.
         try {
@@ -72,7 +72,7 @@ public class MypageController {
     }
 
     @PostMapping("/modify") // 회원정보수정이 완료되면 마이페이지로 돌아감
-    public String modifySuccess(MemberDto memberDto) {
+    public String postMemberModify(MemberDto memberDto) {
         try {
             // int 값 확인 필요
             memberService.modifyMember(memberDto);
