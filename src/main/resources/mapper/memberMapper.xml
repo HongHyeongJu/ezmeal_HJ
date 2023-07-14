@@ -23,6 +23,13 @@
         WHERE lgin_id = #{lgin_id}
     </select>
 
+    <!--  email 조회 쿼리문  -->
+    <select id="email" parameterType="String" resultType="String">
+        SELECT email
+        FROM tb_member
+        WHERE email = #{email}
+    </select>
+
     <!--  회원가입 쿼리문  -->
     <insert id="mbr_signup" parameterType="MemberDto">
         INSERT INTO tb_member (

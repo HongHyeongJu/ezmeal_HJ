@@ -27,8 +27,12 @@
     <title>ezMeal-test</title>
 </head>
 <body>
-<ul>
-<<<<<<< HEAD
+
+<jsp:include page="header.jsp" />
+<div style="padding-top: 100px">
+    <ul>
+        <li><a href="/product/catelist?cate_cd=02">상품 목록</a></li>
+        <li><a href="/product/detail?prod_cd=P00006">상품 상세</a></li>
     <li><a href="/login">로그인</a></li>
     <li><a href="/logout">로그아웃</a></li>
 
@@ -38,23 +42,28 @@
     <li><a href="/cart">장바구니</a></li>
     <li><a href="/product/catelist?cate_cd=02">상품 목록</a></li>
     <li><a href="/product/detail?prod_cd=P00006">상품 상세</a></li>
+        <c:if test="${not empty loginMbrInfo}">
+            <li><a href="/mypage/main">회원명 : ${loginMbrInfo.name}</a></li>
+        </c:if>
+        <li><a href="<c:url value='${loginOutLink}'/>">${loginOut}</a></li>
 
-    <c:if test="${not empty loginMbrInfo}">
-        <li><a href="/mypage/main">회원명 : ${loginMbrInfo.name}</a></li>
-    </c:if>
-    <li><a href="<c:url value='${loginOutLink}'/>">${loginOut}</a></li>
+        <li><a href="/cart">일반 장바구니</a></li>
+        <li><a href="//productcatelist">상품 목록</a></li>
 
+        <li><a href="/address">배송지</a></li>
     <li><a href="/address">배송지</a></li>
 
-    <li><a href=""></a></li>
-    <li><a href="/product/regist">관리자 상품 CRUD</a></li>
+        <li><a href=""></a></li>
+        <li><a href="/product/regist">관리자 상품 CRUD</a></li>
 
-    <li><a href="/member/signup">회원가입</a></li>
+        <li><a href="/member/signup">회원가입</a></li>
 
-<%--    <li><a href="/mypage/withdrawal">회원탈퇴</a></li>--%>
-    <li><a href="/mypage/main">마이페이지</a></li>
+    <%--    <li><a href="/mypage/withdrawal">회원탈퇴</a></li>--%>
+        <li><a href="/mypage/main">마이페이지</a></li>
 
-    <li><a href=""></a></li>
-</ul>
+        <li><a href=""></a></li>
+    </ul>
+</div>
+    <jsp:include page="footer.jsp" />
 </body>
 </html>

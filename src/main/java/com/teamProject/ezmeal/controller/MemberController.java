@@ -39,6 +39,21 @@ public class MemberController {
         }
     }
 
+    @PostMapping("/checkEmailDuplicate")
+    @ResponseBody
+    public Map<String, Boolean> checkEmailDuplicate(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        try {
+            boolean emailCheck = memberService.checkEmailDuplicate(email);
+            Map<String, Boolean> response = new HashMap<>();
+            response.put("emailCheck", emailCheck);
+            return response;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     @GetMapping("/signup")
     public String signUp() {    // 회원가입 버튼 클릭시 signup.jsp 화면 보여준다
         return "signup";
