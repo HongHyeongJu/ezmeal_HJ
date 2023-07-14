@@ -14,4 +14,9 @@ public class OrderPaymentAddressData {
     private String prodSummaryName;
     private Long paymentPk;
     private String paymentMethod;
+    private Long deliveryPk;
+    private  String deliveryPlace;
+    private String deliveryDetail;
+    private String deliveryInput;
+    private String deliveryMsg;
 }
