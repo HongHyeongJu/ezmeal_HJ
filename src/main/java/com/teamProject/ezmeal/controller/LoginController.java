@@ -80,7 +80,7 @@ public class LoginController {
         // id와 pwd가 일치하면
         HttpSession session = request.getSession();
         session.setAttribute("memberId", memberId);
-        MemberDto loginMbrInfo = memberService.mbrInfo(memberId);
+        MemberDto loginMbrInfo = memberService.getMemberInfo(memberId);
         session.setAttribute("loginMbrInfo",loginMbrInfo);
 //        model.addAttribute("checkLoginSuccess", "login success!!");
 //        redirectAttrs.addFlashAttribute("loginMbrInfo",loginMbrInfo);
