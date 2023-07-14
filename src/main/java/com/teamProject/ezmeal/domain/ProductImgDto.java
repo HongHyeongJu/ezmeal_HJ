@@ -5,8 +5,8 @@ import java.util.Objects;
 
 public class ProductImgDto {
 
-    private Long seq;
-    private String prod_cd, typ, detail, url;
+    private Long seq, prod_cd;
+    private String typ, detail, url;
     private Integer verti_size, width_size;
     private String extns;
     private Integer file_size_lim;
@@ -21,7 +21,7 @@ public class ProductImgDto {
 
     }
 
-    public ProductImgDto(Long seq, String prod_cd, String typ, String detail, String url, Integer verti_size,
+    public ProductImgDto(Long seq, Long prod_cd, String typ, String detail, String url, Integer verti_size,
                          Integer width_size, String extns, Integer file_size_lim, String use_yn, String del_yn,
                          String rmk, LocalDateTime in_dtm, String in_id, LocalDateTime up_dtm, String up_id) {
         this.seq = seq;
@@ -81,11 +81,11 @@ public class ProductImgDto {
         this.seq = seq;
     }
 
-    public String getProd_cd() {
+    public Long getProd_cd() {
         return prod_cd;
     }
 
-    public void setProd_cd(String prod_cd) {
+    public void setProd_cd(Long prod_cd) {
         this.prod_cd = prod_cd;
     }
 

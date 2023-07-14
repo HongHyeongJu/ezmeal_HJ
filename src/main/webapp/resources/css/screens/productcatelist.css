@@ -5,6 +5,10 @@ body {
     letter-spacing: -0.5px;
 }
 
+/** {*/
+/*    font-family: 'Black Han Sans', sans-serif;*/
+/*    font-family: 'Nanum Gothic', sans-serif;*/
+/*}*/
 
 .empty {
     height: 200px;
@@ -40,6 +44,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     list-style-type: none;
+    padding-left:0;
 }
 
 /*상품 1개가 1 LI*/
@@ -55,8 +60,10 @@ body {
 
 .prod_outer{
     /* background-color:blueviolet; */
+    margin-left: 5px;
+    margin-right: 5px;
     width: 220px;
-    height: 400px;
+    height: 430px;
     border: 0px #000;
 }
 
@@ -67,7 +74,7 @@ body {
     overflow: hidden;
     display: flex;
     align-items: center;
-
+    position: relative;
 }
 
 /*상품 이미지*/
@@ -79,10 +86,31 @@ body {
     border-radius: 5%;
 }
 
+/*보관방법*/
+.iceTyp {
+    position: absolute;
+    bottom: 15px;
+    left: 20px;
+    width: 15px;
+    height: 15px;
+    display: flex; /* Flexbox를 사용합니다 */
+    align-items: center; /* 세로 가운데 정렬 */
+    justify-content: center; /* 가로 가운데 정렬 */
+    background-color: white; /* 배경색 */
+    border-radius: 50%; /* 동그랗게 만들기 위한 설정 */
+    padding: 6px; /* 아이콘과 배경 사이의 공간 */
+    opacity: 0.8;
+}
+
+.iceTyp i {
+    color: #75c5ff; /* 아이콘 색상 */
+}
+/*-----------------------------------------------------*/
+
 /*이미지 아래부분 전체*/
 .prod_bottom{
     width: 220px;
-    height: 150px;
+    height: 190px;   /* 옵션있어서*/
     /* background-color:gainsboro; */
     border: 0px #000;
 }
@@ -90,52 +118,13 @@ body {
 .review_set {
     text-align: right;
     margin-right: 6px;
-    margin-bottom : 6px;
-}
-
-.dc_cd {
-    color: cornflowerblue;
-    display: inline-block;
-    font-weight: bold;
-    padding-left:5px;
-    margin-bottom: 1%;}
-
-.prod_name {font-size: 90%;}
-
-.sale_prc {
-    display: inline-block;
-    color: black;
-    font-size: 120%;
-    font-weight: bold; /* 굵은 글꼴 설정 */
-    font-style: normal;
-}
-
-.cnsmr_prc {
-    color:gray;
-    text-decoration: line-through;
-    margin-top: 0%;
-    display: inline-block;
-    font-size: 80%;
-    margin-bottom: 10px;
-}
-
-.dc_cd_prod_dscpt_wrapper {
-    display: flex;
-}
-.dc_cd,.cnsmr_prc,.sale_prc {
-    width:min-content;
-    margin-bottom: 1%;
-    margin-left: 5%;
-    display: inline-block;
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
+    margin-bottom : 5px;
 }
 
 .star_img {
     display: inline-block;
-    width: 20px;
-    height: 20px;
+    width: 19px;
+    height: 19px;
     background-image: url("../../img/star.png");
     background-size: 100%;
     background-repeat: no-repeat; /*그림 반복 막기*/
@@ -149,44 +138,101 @@ body {
     margin-right: 5px;
 }
 
+/*------------------------------------*/
+
+.in_middle {
+    height: 70px;
+}
+
 .prod_title  {
-    height: 6.4px;
     padding: 0%;
     display: block;
     margin-top: 0;
-    margin-bottom: 3%;
-    margin-left: 2%;
-    margin-right: 2%;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    word-break: break-all;
 }
+
+.prod_name {font-size: 100%;}
+
+.dc_cd {
+    color: cornflowerblue;
+    display: inline-block;
+    font-weight: bold;
+    padding-left:8px;
+    margin-bottom: 1%;
+    margin-right: -8px;
+}
+
+span.sale_prc {
+    display: inline-block;
+    color: black;
+    margin-left: 12px;
+    margin-right: 5px;
+    font-size: 120%;
+    font-weight: bold; /* 굵은 글꼴 설정 */
+    font-style: normal;
+}
+
+
+.cnsmr_prc {
+    color:gray;
+    text-decoration: line-through;
+    margin-top: 2px;
+    display: inline-block;
+    font-size: 80%;
+    margin-bottom: 10px;
+}
+
+.dc_cd_prod_dscpt_wrapper {
+    display: flex;
+}
+
+.dc_cd,  .sale_prc,  .cnsmr_prc {
+    width:min-content;
+    margin-bottom: 2px;
+    display: inline-block;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+
 
 /*-------------------------------------------------------------------상품출력 끝--------------------*/
 
-
-.add_cart {
-    /* border: 1px solid #000; */
-    margin-top: 10px;
-    margin-left: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: left;
-}
+/*.add_cart {*/
+/*    !* border: 1px solid #000; *!*/
+/*    margin-top: 10px;*/
+/*    margin-left: 10px;*/
+/*    display: flex;*/
+/*    flex-wrap: wrap;*/
+/*    justify-content: left;*/
+/*}*/
 
 .button_wrapper {
     display: flex;
     align-items: center;
+    margin-top: 5px;
 }
 
-#quantity {
-    border: none;
-    height: 25px;
-    width: 25px;
+.qty {
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 23px;
+    width: 17px;
     background-color: transparent;
     font-size: 100%;
     text-align: center;
 }
 
-#min_btn,
-#pls_btn {
+.min_btn {
+    margin-left: 10px;
+}
+
+.min_btn,
+.pls_btn {
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -194,16 +240,82 @@ body {
     font-size: 110%;
     cursor: pointer;
     border: 1px solid gainsboro;
-    display: inline;
-    margin-right: 5px
-
+    display: inline-block;
 }
 
-.submit_btn {
-    border-radius: 20%;
-    background-color: azure;
+
+.submit_btn{
+    width : 39px;
+    height : 35px;
+    margin-right: 20px;
+    margin-left: 5px;
+    margin-bottom: 3px;
+    border: 1px solid gray;
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    background-color: #ddf1ff ;
+    cursor: pointer;
 }
 
-p {
-    height: 30px;
+.wishlist_btn {
+    width : 35px;
+    height : 35px;
+    margin-left: 25px;
+    margin-right: 5px;
+    margin-bottom: 1px;
+    border: 1px solid gray;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+
+.fas {
+    font-size: 16px; /* 아이콘 크기 조정 */
+    color: #60b3ed ;
+}
+
+.far {
+    font-size: 18px; /* 아이콘 크기 조정 */
+    color: #2c94de ;
+}
+
+/*-----------------------------------*/
+.select_box {
+    margin-top: 7px;
+    margin-left: 10px;
+    width: 90px;
+    height: 20px;
+    border: 1px solid #d3d3d3;
+    color: #297aad;
+}
+
+.hidden_option  option  {
+    color: #6c6c6c;
+    background-color: #ffffff;
+}
+
+/*-------------상품 정렬 키워드 속성------------*/
+a {
+    text-decoration: none;  /* 밑줄 제거 */
+    color: inherit;  /* 부모 요소의 색상 상속 */
+}
+
+a:hover,
+a:focus {
+    color: inherit;  /* 부모 요소의 색상 상속 */
+}
+
+/*------------찜하기 호버-----------*/
+.wishlist_btn .fa-heart {
+    color: #dad9d9; /* 기본 색상 */
+}
+
+.wishlist_btn.hover .fa-heart {
+    color: #ffbcd1 /* 호버 상태 색상 */
+}
+
+.submit_btn.hover .fa-shopping-cart {
+    color: #116cbe /* 호버 상태 색상 */
 }

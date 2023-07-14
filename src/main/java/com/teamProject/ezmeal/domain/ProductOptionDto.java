@@ -58,23 +58,6 @@ public class ProductOptionDto {
     }
     /*---------------------------------------------------------------*/
 
-    @Override
-    public String toString() {
-        return "ProductDiscoumtDto{" +
-                "opt_seq=" + opt_seq +
-                ", prod_cd='" + prod_cd + '\'' +
-                ", dc_cd='" + dc_cd + '\'' +
-                ", name='" + name + '\'' +
-                ", full_name='" + full_name + '\'' +
-                ", typ='" + typ + '\'' +
-                ", qty=" + qty +
-                ", cnsmr_prc=" + cnsmr_prc +
-                ", sale_prc=" + sale_prc +
-                ", use_yn='" + use_yn + '\'' +
-                ", del_yn='" + del_yn + '\'' +
-                '}';
-    }
-
 
     /*---------------------------------------------------------------*/
 

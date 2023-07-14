@@ -22,13 +22,18 @@ public class ProductDao {
 
     /* 상품코드로 상품 1개 찾기(TDD용) */
     public ProductDto selectProductByProdCdForTdd(Long prod_cd) throws SQLException {
-        return session.selectOne(namespace+"select_product_by_prod_cd", prod_cd);
+        return session.selectOne(namespace+"select_product_by_prod_cd_for_TDD", prod_cd);
     }
 
 
     /* 분류코드로 상품 리스트 받기 */
     public List<ProductDto> selectProductListByCateCd(String cate_cd) throws SQLException {
         return session.selectList(namespace + "select_product_list_by_cate_cd", cate_cd);
+    }
+
+    /* 분류코드로 상품코드 리스트 받기 */
+    public List<Long> selectProductProdCdListByCateCd(String cate_cd) throws SQLException {
+        return session.selectList(namespace + "select_product_prod_cd_list_by_cate_cd", cate_cd);
     }
 
     /* ----------------- 카테고리 정렬기준 따라 호출하는 쿼리문 -------------- */

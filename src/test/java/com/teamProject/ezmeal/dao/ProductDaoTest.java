@@ -45,6 +45,35 @@ public class ProductDaoTest {
 
     }
 
+    /*상품 왜 안꺼내지지?*/
+    @Test
+    public void selectTest() throws SQLException {
+        ProductDto selectProd = productDao.selectProductByProdCd(2L);
+        System.out.println(selectProd.toString());
+    }
+
+
+    /*재고수량에 따른 새벽 상품 상태코드 업데이트*/
+    @Test
+    public void updateAllProdStatus() throws SQLException {
+        Integer update_num = productDao.updateAllProdStatus();
+        System.out.println("update_num:"+update_num);
+    }
+
+
+    /*주문으로 인한 재고0으로 해당 상품코드 상태만 3으로 변경*/
+    @Test
+    public void updateInvTempSoldOutDueToProdStatus() throws SQLException {
+        Integer update_num = productDao.updateProdStatusDueToInvTempSoldOut(30L);
+        assertTrue(update_num==1);
+        System.out.println("update_num: "+update_num);
+        ProductDto selectProd = productDao.selectProductByProdCdForTdd(30L);
+        if (selectProd != null) {
+            System.out.println(selectProd.toString());
+        } else {
+            System.out.println("Product not found");
+        }
+    }
 
 
     /* 가장 큰 prod_cd 찾기 */
