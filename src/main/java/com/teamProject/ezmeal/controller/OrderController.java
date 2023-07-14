@@ -39,7 +39,7 @@ public class OrderController {
             DeliveryAddressDto defaultAddress = deliveryAddressDao.selectDefaultAddress(memberId);
 
             List<CartJoinProductDto> cartProductList = cartProductService.getOrderProduct(cartSeq); // 주문할 상품 목록
-            MemberDto memberInfo = memberDao.getMemberInfo(memberId);
+            MemberDto memberInfo = memberDao.selectMemberInfo(memberId);
 
             // 결제 금액 계산
             Map<String, Integer> priceMap = new HashMap<>();

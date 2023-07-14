@@ -73,7 +73,7 @@ public class MemberController {
 //        }
         // 2. DB에 신규회원 정보를 저장
         try {
-            int rowCnt = memberService.signup(memberDto);    // insert
+            int rowCnt = memberService.registerMember(memberDto);    // insert
 
             if (rowCnt!=1) {  // insert가 되지않았을 때 signup페이지로 가도록 함
                 rattr.addFlashAttribute("msg","회원가입이 되지 않았습니다. 다시 시도해주세요");

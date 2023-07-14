@@ -36,7 +36,7 @@ public class MypageController {
         System.out.println("mbr_id = " + mbr_id);
         try {
             // session의 memberId로 현재 로그인중인 회원번호에 해당하는 회원의 탈퇴를 진행
-            memberService.withdrawal(mbr_id);
+            memberService.removeMember(mbr_id);
             // 탈퇴처리후에 session도 없애야하지 않나??, logout = session.invalidate
             if (session != null) session.invalidate();
             return "index"; // withdrawal.jsp의 ajax가 경로처리
@@ -59,7 +59,7 @@ public class MypageController {
 //        HttpSession session = req.getSession();
         Long memberId = (Long) session.getAttribute("memberId");    // 현재로그인 중인 회원번호를 가져온다.
         try {
-            MemberDto loginMbrInfo = memberService.mbrInfo(memberId);   // 현재 로그인중인 회원정보를 조회한다.
+            MemberDto loginMbrInfo = memberService.getMemberInfo(memberId);   // 현재 로그인중인 회원정보를 조회한다.
 //            System.out.println("loginMbrInfo.getLgin_id() = " + loginMbrInfo.getLgin_id());
 //            System.out.println("loginMbrInfo.getName() = " + loginMbrInfo.getName());
 //            System.out.println("loginMbrInfo.getEmail() = " + loginMbrInfo.getEmail());
@@ -75,7 +75,7 @@ public class MypageController {
     public String modifySuccess(MemberDto memberDto) {
         try {
             // int 값 확인 필요
-            memberService.modify(memberDto);
+            memberService.modifyMember(memberDto);
             return "mypage";
         } catch (Exception e) {
             throw new RuntimeException(e);

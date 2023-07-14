@@ -13,8 +13,8 @@ public class LoginService {
     private final MemberDao memberDao;
 
     public boolean loginCheck(String loginId, String loginPw) throws Exception {
-        String id = memberDao.getLoginId(loginId);  // 로그인시 입력한 loginId로 가입된 loginId를 얻어온다
-        String password = memberDao.getPassword(loginId);   // 로그인시 입력한 loginPw로 가입된 password를 얻는다
+        String id = memberDao.selectLoginId(loginId);  // 로그인시 입력한 loginId로 가입된 loginId를 얻어온다
+        String password = memberDao.selectPassword(loginId);   // 로그인시 입력한 loginPw로 가입된 password를 얻는다
 //        System.out.println("loginId = " + loginId);
 //        System.out.println("loginPw = " + loginPw);
 //        System.out.println("id = " + id);
@@ -23,7 +23,7 @@ public class LoginService {
     }
 
     public Long loginInfo(String loginId) throws Exception {
-        return memberDao.getMemberId(loginId);
+        return memberDao.selectMemberId(loginId);
         // controller에서는 다시 Long type으로 변경 필요
     }
 }
