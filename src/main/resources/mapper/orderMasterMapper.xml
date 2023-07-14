@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="orderMaster">
+    <!-- 주문 master 추가 -->
+    <insert id="insertOrder" parameterType="OrderMasterDto">
+        INSERT INTO tb_order_master (ord_id, mbr_id, stus, expct_pnt, prod_smry )
+        VALUES (#{ord_id}, #{mbr_id}, #{stus}, #{expct_pnt}, #{prod_smry})
+    </insert>
+    <select id="selectOrderMaster" >
+        select *
+        from tb_order_master
+    </select>
+</mapper>

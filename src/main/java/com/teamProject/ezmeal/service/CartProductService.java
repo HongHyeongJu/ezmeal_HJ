@@ -1,15 +1,12 @@
 package com.teamProject.ezmeal.service;
 
 import com.teamProject.ezmeal.dao.CartProductDao;
-import com.teamProject.ezmeal.dao.ProductDao;
-import com.teamProject.ezmeal.domain.CartJoinProductDto;
+import com.teamProject.ezmeal.domain.joinDomain.CartJoinProductDto;
 import com.teamProject.ezmeal.domain.CartProductDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.PrinterException;
-import java.lang.reflect.Array;
 import java.util.*;
 
 // TODO transaction이 핵심 -> 이거의 예외, service 단의 목적
@@ -105,7 +102,7 @@ public class CartProductService {
         }
     }
 
-    // 주문하기에 선택된 장바구니 상품 컬럼 업데이트
+    // 주문하기에 선택된 장바구니 상품 컬럼 업데이트 (sel_prod n -> y)
     public int updateOrderProduct(Long cartSeq, List<Long> cartProdSeqList) {
         Map<String, Object> selectProductMap = new HashMap<>();
         selectProductMap.put("cartSeq", cartSeq);
@@ -137,6 +134,10 @@ public class CartProductService {
             productInfoList.add(productInfo);
         }
         return productInfoList; //[cartProdSeq, inventory]
+    }
+
+    public Integer countOrderProduct(Long cartSeq){
+        return cartProductDao.selectOrderProductNum(cartSeq);
     }
 
     // 관리자
