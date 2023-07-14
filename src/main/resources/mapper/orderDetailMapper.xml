@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="orderDetailDao">
+    <insert id="insertOrderDetail" parameterType="map">
+        INSERT INTO tb_order_detail (
+        ord_prod_dtl_id, prod_cd, ord_id, opt_cd, name,
+        cnsmr_prc, seler_prc, qty, tot_prc, dc_prc, setl_expct_prc, stus)
+        VALUES
+        <foreach collection="list" item="orderDetail" index="index" separator=",">
+            (CONCAT(#{orderDetail.ord_id}, LPAD(${index+1}, 2, '0')), #{orderDetail.prod_cd}, #{orderDetail.ord_id},
+            #{orderDetail.opt_cd},
+            #{orderDetail.name},
+            #{orderDetail.cnsmr_prc}, #{orderDetail.seler_prc}, #{orderDetail.qty}, #{orderDetail.tot_prc},
+            #{orderDetail.dc_prc},
+            #{orderDetail.setl_expct_prc}, #{orderDetail.stus})
+        </foreach>
+    </insert>
+</mapper>

@@ -1,7 +1,7 @@
 package com.teamProject.ezmeal.controller;
 
-import com.teamProject.ezmeal.domain.CartJoinProductDto;
 import com.teamProject.ezmeal.domain.CartProductDto;
+import com.teamProject.ezmeal.domain.joinDomain.CartJoinProductDto;
 import com.teamProject.ezmeal.domain.DeliveryAddressDto;
 import com.teamProject.ezmeal.service.CartProductService;
 import com.teamProject.ezmeal.service.CartService;

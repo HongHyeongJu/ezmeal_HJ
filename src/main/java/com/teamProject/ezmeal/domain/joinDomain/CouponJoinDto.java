@@ -1,4 +1,4 @@
-package com.teamProject.ezmeal.domain;
+package com.teamProject.ezmeal.domain.joinDomain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

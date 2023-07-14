@@ -40,14 +40,10 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String postLogin(HttpServletRequest request,
-                            HttpServletResponse response,
+    public String postLogin(HttpServletRequest request, HttpServletResponse response,
                             @RequestParam(defaultValue = "/") String redirectURL,
-                            RedirectAttributes redirectAttrs,
-                            String loginId,
-                            String loginPw,
-                            boolean remember,
-                            Model model
+                            RedirectAttributes redirectAttrs, Model model,
+                            String loginId, String loginPw, boolean remember
     ) throws Exception {
 //        // checkbox가 click시 on 아닐 시, null 반환해서 nullPointException 막기 위해 검증
 
@@ -85,8 +81,9 @@ public class LoginController {
         HttpSession session = request.getSession();
         session.setAttribute("memberId", memberId);
         MemberDto loginMbrInfo = memberService.mbrInfo(memberId);
+        session.setAttribute("loginMbrInfo",loginMbrInfo);
 //        model.addAttribute("checkLoginSuccess", "login success!!");
-        redirectAttrs.addFlashAttribute("loginMbrInfo",loginMbrInfo);
+//        redirectAttrs.addFlashAttribute("loginMbrInfo",loginMbrInfo);
         return "redirect:" + redirectURL;
         // 이제 session에 있는 pk를 이용해서 값을 유지할 수 있다.
     }

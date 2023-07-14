@@ -4,10 +4,16 @@
 <mapper namespace="couponJoinDao">
 
     <select id="coupon_list" resultType="CouponJoinDto">
-        select mc.mbr_coupn_id, mc.vld_start_dt, mc.vld_end_dt, ci.name, ci.val, ci.max_prc, use_base_prc
+        select mc.mbr_coupn_id, mc.vld_start_dt, mc.vld_end_dt, ci.name, ci.val, ci.max_prc, ci.use_base_prc
         from  tb_member_coupon mc,tb_coupon_issue ci
         where mc.mbr_id = #{mbrId}
           and mc.coupn_issu_cd = ci.coupn_issu_cd
-        ;
+    </select>
+    <select id="coupon_price" resultType="CouponJoinDto">
+        select ci.val,
+               if(ci.max_prc is null , ci.val, ci.max_prc) as max_prc
+        from  tb_member_coupon mc,tb_coupon_issue ci
+        where mc.mbr_coupn_id = #{mbrCoupnId}
+          and mc.coupn_issu_cd = ci.coupn_issu_cd
     </select>
 </mapper>

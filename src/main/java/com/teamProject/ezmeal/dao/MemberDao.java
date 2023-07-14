@@ -19,6 +19,10 @@ public class MemberDao {
         return session.selectOne(namespace+"lgin_pw", loginId);
     }
 
+    public String getEmail(String email) throws Exception {
+        return session.selectOne(namespace + "email", email);
+    }
+
     public Long getMemberId(String loginId) throws Exception {  // mbr_id(회원번호) 조회
         return session.selectOne(namespace+"mbr_id", loginId);
     }
@@ -26,7 +30,7 @@ public class MemberDao {
     public int registerMember(MemberDto memberDto) throws Exception {    // 회원가입 resisterMember
         return session.insert(namespace + "mbr_signup", memberDto);
     }
-    public MemberDto getMemberInfo(Long memberId) throws Exception {    // 회원정보 조회
+    public MemberDto getMemberInfo(Long memberId) {    // 회원정보 조회
         return session.selectOne(namespace + "mbr_Info", memberId);
     }
 

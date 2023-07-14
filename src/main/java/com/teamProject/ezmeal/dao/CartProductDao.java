@@ -1,13 +1,11 @@
 package com.teamProject.ezmeal.dao;
 
-import com.teamProject.ezmeal.domain.CartJoinProductDto;
+import com.teamProject.ezmeal.domain.joinDomain.CartJoinProductDto;
 import com.teamProject.ezmeal.domain.CartProductDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,7 +62,6 @@ public class CartProductDao {
     }
 
     // 주문하기에 선택된 장바구니 상품 가져오기
-    // TODO 필요시 배열로 받아오는 방향으로 변경
     public List<CartJoinProductDto> selectOrderProducts(Long cartSeq)  {
         return session.selectList(namespace + "order_products", cartSeq);
     }
@@ -77,6 +74,11 @@ public class CartProductDao {
     // 재고가 부족한 상품 cartProdPk, 실 재고량 정보 가지고 옴
     public List<CartJoinProductDto> selectOrderListInventory(List<Long> cartProdSeq) {
         return session.selectList(namespace + "orderList_inventory", cartProdSeq);
+    }
+
+    // 주문한 상품 수량 받아오기
+    public int selectOrderProductNum(Long cartSeq){
+        return session.selectOne(namespace + "count_orderProduct", cartSeq);
     }
 
     // TODO 담을수 있는 최대 수량
