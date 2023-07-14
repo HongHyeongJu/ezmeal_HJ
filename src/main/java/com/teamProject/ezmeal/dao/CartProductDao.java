@@ -96,4 +96,31 @@ public class CartProductDao {
 
     // TEST
     // TODO - test용 insert, update, delete 생성
+
+
+
+    /*회원 장바구니에 해당 상품이 있는지 확인.  */
+    public CartProductDto selectProductInCart(Long mbr_id, Long prod_cd) {
+        System.out.println("[다오] select");
+        HashMap map = new HashMap();
+        map.put("mbr_id",mbr_id);
+        map.put("prod_cd",prod_cd);
+        return session.selectOne(namespace + "select_product_in_cart", map);
+    }
+
+
+    /*장바구니에 이미 담긴 상품 수량 업데이트 하기 */
+    public int updateCartOfProductQty(CartProductDto cartProductDto) {
+        System.out.println("[다오] update");
+        return session.update(namespace + "update_product_qty_in_cart", cartProductDto);
+    }
+
+    /*상품 목록, 상품 상세에서 장바구니에 상품 담기  (seq 자동증가 버전) */
+    public int insertAddCart(CartProductDto cartProductDto) {
+        System.out.println("[다오] insert");
+        return session.insert(namespace + "add_product_to_cart_seq", cartProductDto);
+    }
+
+
+
 }

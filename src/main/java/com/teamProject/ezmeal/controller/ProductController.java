@@ -36,6 +36,7 @@ public class ProductController {
     @GetMapping("/catelist")
     public String productListByCateCd(Model model, String cate_cd, @RequestParam(required = false) String sortkeyword) throws SQLException {
 
+        /*상품목록 표현에 필요한 것 모두 받아오기*/
         HashMap map = productService.getProductListByCateCd(cate_cd, sortkeyword);
         model.addAttribute("prodList",map.get("prodList"));
         model.addAttribute("prodImgList",map.get("prodImgList"));
@@ -43,11 +44,8 @@ public class ProductController {
         model.addAttribute("reviewAngMap",map.get("reviewAngMap"));
         model.addAttribute("reviewCntMap",map.get("reviewCntMap"));
         model.addAttribute("cate_cd",cate_cd);
-        System.out.println(map.get("prodList").toString());
-        System.out.println();
-        System.out.println("prodOptMap: "+map.get("prodOptMap").toString());
-        System.out.println();
-        System.out.println("컨트롤러, sortkeyword: "+sortkeyword);
+        System.out.println("prodList: "+map.get("prodList").toString());
+        System.out.println("[컨트롤러] sortkeyword: "+sortkeyword);
 
         return "productcatelist";
     }
@@ -56,9 +54,28 @@ public class ProductController {
     /*컨트롤러에서 중요한 것. 유효성 검사. 다른 페이지로 잘 넘겨주는 것(페이지 이동). 간단하게. 흐름보이게. 예외처리. */
     /*상품 상세 페이지. 나중에 모델에 상품코드관련 후기, 문의 전달해야함.*/
     @GetMapping("/detail")
-    public String productDetailView(Model model, Long prod_cd, RedirectAttributes redirectAttributes) throws SQLException {
+    public String productDetailView(Model model, Long prod_cd, String cate_cd,  RedirectAttributes redirectAttributes) throws SQLException {
+
+        /*상품 상세페이지에 필요한 것 모두 받아오기*/
+        HashMap map = productService.getOneProductByProdCd(prod_cd);
+
+        /*품절된 상품인 경우*/
+        if(map.get("product")==null){
+            redirectAttributes.addAttribute("msg","품절된 상품입니다.");
+            return "redirect:/product/catelist?cate_cd="+cate_cd ;
+        }
+
+        model.addAttribute("product",map.get("product"));
+        model.addAttribute("optList",map.get("optList"));
+        model.addAttribute("imgList",map.get("imgList"));
+        model.addAttribute("reivewAvg",map.get("reivewAvg"));
+        model.addAttribute("reviewCount",map.get("reviewCount"));
+        model.addAttribute("reviewList",map.get("reviewList"));
+//        /*상품문의 추가하기*/
+//        model.addAttribute("상품문의",map.get("상품문의"));
 
         return "productdetail";
+
     }
     /*서비스에서 묶어 오기 중간에 에러났을 때 대처는 서비스에서  ->  묶어도 3개로 됨. 고민해보기 값 없을 떄*/
     /*DB가 꺼진다면,,? select도 안됨.  db연결 직접 끊기..ㅋㅋ  */

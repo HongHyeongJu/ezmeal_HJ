@@ -1,5 +1,5 @@
 
-/*상품별 장바구니 버튼의 동작  (감소) */
+/* 상품 수량 감소 */
 function decreaseQuantity(btn) {
     let qtyElement = btn.nextElementSibling;
     let qty = parseInt(qtyElement.textContent);
@@ -8,7 +8,7 @@ function decreaseQuantity(btn) {
     }
 }
 
-/*상품별 장바구니 버튼의 동작  (증가) */
+/* 상품 수량 증가 */
 function increaseQuantity(btn) {
     let qtyElement = btn.previousElementSibling;
     let qty = parseInt(qtyElement.textContent);
@@ -26,15 +26,10 @@ document.querySelectorAll('.wishlist_btn').forEach((button) => {
         let prodCdElement = document.getElementById(`prod_cd_${index}`);
         let prod_cd = prodCdElement.value;
 
-        /*나중에 세션에서 받아오는 것으로 수정*/
-        // let mbr_id = '<%= session.getAttribute("mbr_id") %>';
-        let mbr_id = 1008;
-        // let mbr_id;
-
         $.ajax({
             url: "/wishlist/add",
             type: "POST",
-            data: JSON.stringify({ prod_cd: prod_cd, mbr_id: mbr_id}),
+            data: JSON.stringify({ prod_cd: prod_cd}),
             contentType: "application/json",
             success: function(response) {
                 alert("찜하기 성공!");
@@ -85,13 +80,13 @@ document.querySelectorAll('.submit_btn').forEach((button) => {
         let buttonId = this.id;
         let index = buttonId.split('_')[2];
 
-        /* 수량 가져오기 */
-        let qtyElement = document.getElementById(`qty_${index}`);
-        let qty = parseInt(qtyElement.textContent);
-
         /* 상품코드 가져오기 */
         let prodCdElement = document.getElementById(`prod_cd_${index}`);
         let prod_cd = prodCdElement.value;
+
+        /*보관방법*/
+        let typElement = document.querySelector(`.sfkp-stus[data-index="${index}"]`);
+        let typ = typElement.getAttribute('value');
 
         /* 옵션SEQ가져오기 */
         let optDiv = document.getElementById(`opt_div_${index}`);
@@ -101,19 +96,19 @@ document.querySelectorAll('.submit_btn').forEach((button) => {
             opt_seq = optSelect.value;
         }
 
-        /*나중에 세션에서 받아오는 것으로 수정*/
-        // let mbr_id = '<%= session.getAttribute("mbr_id") %>';
-        let mbr_id = 1008;
-        // let mbr_id;
+        /* 수량 가져오기 */
+        let qtyElement = document.getElementById(`qty_${index}`);
+        let qty = parseInt(qtyElement.textContent);
+
 
         $.ajax({
-            url: "/tttest",
+            url: "/cart/add",
             type: "POST",
             data: JSON.stringify({
                 prod_cd: prod_cd,
-                qty: qty,
+                typ: typ,
                 opt_seq: opt_seq,
-                mbr_id: mbr_id
+                qty: qty
             }),
             contentType: "application/json",
             success: function(response) {

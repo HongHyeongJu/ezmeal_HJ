@@ -22,7 +22,7 @@ public class ProductDao {
 
     /* 상품코드로 상품 1개 찾기(TDD용) */
     public ProductDto selectProductByProdCdForTdd(Long prod_cd) throws SQLException {
-        return session.selectOne(namespace+"select_product_by_prod_cd", prod_cd);
+        return session.selectOne(namespace+"select_product_by_prod_cd_for_TDD", prod_cd);
     }
 
 

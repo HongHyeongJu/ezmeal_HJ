@@ -1,10 +1,7 @@
 package com.teamProject.ezmeal.service;
 
 import com.teamProject.ezmeal.dao.*;
-import com.teamProject.ezmeal.domain.ProductDiscountDto;
-import com.teamProject.ezmeal.domain.ProductDto;
-import com.teamProject.ezmeal.domain.ProductImgDto;
-import com.teamProject.ezmeal.domain.ProductOptionDto;
+import com.teamProject.ezmeal.domain.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +41,7 @@ public class ProductService {
     /*(상품 select에 재고 확인 조건 넣기) 할인코드 List(할인율 필요), 해당상품 리뷰 평점, 리뷰숫자 (업는건 0으로?)*/
     /* 분류코드로 상품 리스트받기 */
 
+    /*카테고리별 상품목록을 위한 메서드*/
     public HashMap getProductListByCateCd (String cate_cd, String sortkeyword) throws SQLException {
 
         try {
@@ -97,7 +95,7 @@ public class ProductService {
         }
     }
 
-
+    /*각 카테고리별 옵션 있는 상품은 K:상품코드 V:옵션리스트 Map으로 전달*/
     public Map<Long,List<ProductOptionDto>> prodCdListChangeToOptionMap(String cate_cd) throws SQLException {
         List<Long> prodCdList = productDao.selectProductProdCdListByCateCd(cate_cd);
         HashMap map = new HashMap();
@@ -109,11 +107,33 @@ public class ProductService {
     }
 
 
-
     /*상품 상세 페이지 -> 해당 상품코드 상품 1개 찾기, 이미지 모두 가져오기, 옵션있으면 옵션 상품 List로 전달, 해당 할인코드
      * 리뷰평점, 리뷰숫자, 리뷰 List, 문의 List받아오기  없을때는, 예외는 0으로 반환(컨트롤러에서 해당상품이 없습니다.->index? )*/
+    public HashMap getOneProductByProdCd (Long prod_cd) throws SQLException {
+        /*상품 객체*/
+        ProductDto product = productDao.selectProductByProdCd(prod_cd);
+        /*옵션 List*/
+        List<ProductOptionDto> optList = productOptionDao.selectOptionProductsByProdCd(prod_cd);
+        /*이미지 List*/
+        List<ProductImgDto> imgList = productImgDao.selectProdCdImgAll(prod_cd);
+        /*리뷰평점,리뷰숫자*/
+        Double reivewAvg = productReviewDao.reviewAverageOneProduct(prod_cd);
+        Integer reviewCount = productReviewDao.countReviewOneProduct(prod_cd);
+        /*리뷰 List*/
+        List<ProductReviewDto> reviewList= productReviewDao.getAllReviewByProdCd(prod_cd);
+        /*문의 List...*/
 
+        HashMap prodDetailMap = new HashMap();
+        prodDetailMap.put("product",product);
+        prodDetailMap.put("optList",optList);
+        prodDetailMap.put("imgList",imgList);
+        prodDetailMap.put("reivewAvg",reivewAvg);
+        prodDetailMap.put("reviewCount",reviewCount);
+        prodDetailMap.put("reviewList",reviewList);
+        /* (+) 문의 추가해야함...*/
 
+        return prodDetailMap;
+    }
 
 
 

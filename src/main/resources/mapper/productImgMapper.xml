@@ -8,7 +8,7 @@
     <!--이미지 추가 쿼리. 이미지 추가하기 전에 del_yn = 'n'인 것중에 타입은 1개씩만 있도록 확인하는 쿼리문 필요 -->
 
     <!-- 상품코드에 해당하는 모든 이미지 찾기 -->
-    <select id="select_prod_img_all" parameterType="String" resultType="ProductImgDto">
+    <select id="select_prod_img_all" parameterType="Long" resultType="ProductImgDto">
         SELECT *
         FROM tb_product_img
         WHERE prod_cd = #{prod_cd} AND use_yn = 'y' AND del_yn = 'n' ;

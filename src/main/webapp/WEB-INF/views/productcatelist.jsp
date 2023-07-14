@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
   <link rel="stylesheet" href="/css/screens/productcatelist.css?ver=2"/>
 </head>
 <body>
@@ -48,16 +48,40 @@
                src="/img/${prod.getProd_cd()}.png"/>
 <%--               src="/img/${empty productImg ? 'ezmeal_logo' : productImg}.png"/>--%>
         </a>
+
+        <!--냉동/냉장/상온 아이콘-->
+          <c:if test="${prod.getSfkp_stus() == '냉동'}">
+                <span class="iceTyp sfkp-stus" data-index="${status.index}" value="${prod.getSfkp_stus()}">
+                    <i class="fas fa-igloo"></i>
+                </span>
+          </c:if>
+          <c:if test="${prod.getSfkp_stus() == '냉장'}">
+                <span class="iceTyp sfkp-stus" data-index="${status.index}" value="${prod.getSfkp_stus()}">
+                    <i class="fas fa-tint"></i>
+                </span>
+          </c:if>
+          <c:if test="${prod.getSfkp_stus() == '상온'}">
+                <span class="iceTyp sfkp-stus" data-index="${status.index}" value="${prod.getSfkp_stus()}">
+                    <i class="fas fa-seedling"></i>
+                </span>
+          </c:if>
+
+
       </figure>
       <!--------------------------------------------------------------------------------------------->
       <div class="prod_bottom">
           <!--상품 관련 평균평점 및 리뷰 (리뷰테이블이 오면 값넣음)-->
           <div class="review_set">
-            <span class="star_img"></span> <!--별 이미지(고정)-->
+
+
+  <!--별 이미지(고정)-->
+            <span class="star_img"></span>
             <c:set var="starAvg" value="${reviewAngMap[prod.prod_cd].avg}" />
-            <span class="score">${empty starAvg ? 0 : starAvg}</span> <!--평균 점수-->
+            <!--평균 점수-->
+            <span class="score">${empty starAvg ? 0 : starAvg}</span>
             <c:set var="reviewCnt" value="${reviewCntMap[prod.prod_cd].count}" />
-            <span class="total_num">(${empty reviewCnt ? 0 : reviewCnt})</span> <!--리뷰 수-->
+            <!--리뷰 수-->
+            <span class="total_num">(${empty reviewCnt ? 0 : reviewCnt})</span>
           </div>
 
         <div class="in_middle">

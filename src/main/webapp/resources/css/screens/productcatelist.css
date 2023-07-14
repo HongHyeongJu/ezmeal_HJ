@@ -74,7 +74,7 @@ body {
     overflow: hidden;
     display: flex;
     align-items: center;
-
+    position: relative;
 }
 
 /*상품 이미지*/
@@ -85,6 +85,27 @@ body {
     margin: 2%;
     border-radius: 5%;
 }
+
+/*보관방법*/
+.iceTyp {
+    position: absolute;
+    bottom: 15px;
+    left: 20px;
+    width: 15px;
+    height: 15px;
+    display: flex; /* Flexbox를 사용합니다 */
+    align-items: center; /* 세로 가운데 정렬 */
+    justify-content: center; /* 가로 가운데 정렬 */
+    background-color: white; /* 배경색 */
+    border-radius: 50%; /* 동그랗게 만들기 위한 설정 */
+    padding: 6px; /* 아이콘과 배경 사이의 공간 */
+    opacity: 0.8;
+}
+
+.iceTyp i {
+    color: #75c5ff; /* 아이콘 색상 */
+}
+/*-----------------------------------------------------*/
 
 /*이미지 아래부분 전체*/
 .prod_bottom{
@@ -249,9 +270,10 @@ span.sale_prc {
     cursor: pointer;
 }
 
+
 .fas {
-    font-size: 20px; /* 아이콘 크기 조정 */
-    color: #2c94de ;
+    font-size: 16px; /* 아이콘 크기 조정 */
+    color: #60b3ed ;
 }
 
 .far {
@@ -287,11 +309,11 @@ a:focus {
 
 /*------------찜하기 호버-----------*/
 .wishlist_btn .fa-heart {
-    color: #d2e9f9; /* 기본 색상 */
+    color: #dad9d9; /* 기본 색상 */
 }
 
 .wishlist_btn.hover .fa-heart {
-    color: #61a9e9 /* 호버 상태 색상 */
+    color: #ffbcd1 /* 호버 상태 색상 */
 }
 
 .submit_btn.hover .fa-shopping-cart {

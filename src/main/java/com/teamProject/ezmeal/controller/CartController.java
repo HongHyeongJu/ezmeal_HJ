@@ -1,14 +1,18 @@
 package com.teamProject.ezmeal.controller;
 
 import com.teamProject.ezmeal.domain.CartJoinProductDto;
+import com.teamProject.ezmeal.domain.CartProductDto;
 import com.teamProject.ezmeal.domain.DeliveryAddressDto;
 import com.teamProject.ezmeal.service.CartProductService;
 import com.teamProject.ezmeal.service.CartService;
 import com.teamProject.ezmeal.service.DeliveryAddressService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 
@@ -135,5 +139,41 @@ public class CartController {
         List<List<Number>> lists = cartProductService.checkOrderListOverInventory(cartProdSeqList);
         return lists + "";
     }
+
+
+    /*상품 목록, 상품 상세에서 장바구니에 상품 담기  (seq 자동증가 X 버전) */
+    @PostMapping("/add")
+    public ResponseEntity<String> addCart(@RequestBody CartProductDto cartProductDto, @SessionAttribute Long memberId, RedirectAttributes reAtt) {
+
+        System.out.println("------------컨트롤러 진입-----------");
+        System.out.println("memberId: "+memberId);
+        System.out.println("cartProductDto: "+cartProductDto.toString());
+
+        memberId = 1006L;
+        System.out.println("memberId: "+memberId);
+
+
+        // mbr_id 값 체크
+        if(memberId == null) {
+            System.out.println("[컨트롤러]mbr_id 없음");
+            /* 현재 카트에 추가하려는 상품및수량 챙겨서 로그인 페이지로 보내기.*/
+            reAtt.addAttribute("msg","noLoginMember_From_CartAdd");
+            /* 수정해야할 부분 */
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비로그인 회원 장바구니 추가. 로그인으로 보내버려");
+        }
+
+        boolean addCartResult = cartProductService.addProductToCart(memberId, cartProductDto);
+
+        /*insert 실패했을 때*/
+        if(addCartResult){
+            System.out.println("[컨트롤러] insert 성공");
+            return ResponseEntity.ok("Success message");
+        } else {
+            System.out.println("[컨트롤러] insert 실패");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("insert 실패");
+        }
+
+    }
+
 
 }

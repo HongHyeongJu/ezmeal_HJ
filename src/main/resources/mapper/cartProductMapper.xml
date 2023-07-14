@@ -167,4 +167,42 @@
           and cp.del_yn &lt;&gt; 'y'
     </select>
 
+
+
+
+<!--상품 추가 mapper (+)-->
+
+    <!--mbr_id, prod_cd로 해당상품이 장바구니에 이미 담겨있는지 확인하기-->
+    <select id="select_product_in_cart" parameterType="Map"  resultType="CartProductDto">
+        SELECT *
+        FROM tb_cart_product
+        WHERE mbr_id = #{mbr_id} AND prod_cd = #{prod_cd}
+    </select>
+
+    <!--이미 담겨있는지 상품 수량 변경-->
+    <update id="update_product_qty_in_cart" parameterType="CartProductDto" >
+        UPDATE tb_cart_product
+        SET qty = qty + #{qty},
+        del_yn = #{del_yn},
+        add_dt = #{add_dt},
+        up_dtm = now(),
+        up_id = 'ateam'
+        WHERE mbr_id = #{mbr_id} AND prod_cd = #{prod_cd}
+        <if test="opt_seq == null"> AND opt_seq IS NULL </if>
+        <if test="opt_seq != null"> AND opt_seq = #{opt_seq} </if>
+    </update>
+
+
+    <!--상품 목록, 상품 상세에서 장바구니에 상품 담기  (seq 자동증가 버전)-->
+    <insert id="add_product_to_cart_seq" parameterType="CartProductDto">
+        insert into tb_cart_product (prod_cd, cart_seq, mbr_id,
+                                     sel_prod, typ, opt_seq, soldout_yn, qty,
+                                     add_dt, del_yn, in_dtm, in_id, up_dtm, up_id)
+        values ( #{prod_cd}, #{cart_seq}, #{mbr_id},
+                 #{sel_prod}, #{typ}, #{opt_seq}, #{soldout_yn}, #{qty},
+                 #{add_dt}, #{del_yn}, now(), 'ateam', now(), 'ateam')
+    </insert>
+
+
+
 </mapper>
