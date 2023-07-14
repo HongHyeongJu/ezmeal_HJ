@@ -51,7 +51,7 @@ public class OrderController {
         Long cartSeq = cartService.getCartSeq(memberId);
         DeliveryAddressDto selectedAddress = deliveryAddressService.getOrderAddress(memberId); // 선택된 배송지, 없으면 기본배송지
         List<CartJoinProductDto> cartProductList = cartProductService.getOrderProduct(cartSeq); // 주문할 상품 목록
-        MemberDto memberInfo = memberDao.getMemberInfo(memberId); // 회원정보
+        MemberDto memberInfo = memberDao.selectMemberInfo(memberId); // 회원정보
 
         // 결제 금액 계산
         Map<String, Integer> priceMap = new HashMap<>();
@@ -213,7 +213,7 @@ public class OrderController {
         couponPrice = getCouponPrice(salePrice, couponPrice, couponPriceList); // coupon 할인 가격
         finalPrice = salePrice - point - couponPrice; // 최종 결제 가격
 
-        MemberDto memberInfo = memberDao.getMemberInfo(memberId);
+        MemberDto memberInfo = memberDao.selectMemberInfo(memberId);
         return new PaymentAPIData(paymentPk, finalPrice, memberInfo.getName(), memberInfo.getPhone(), memberInfo.getEmail());
     }
 

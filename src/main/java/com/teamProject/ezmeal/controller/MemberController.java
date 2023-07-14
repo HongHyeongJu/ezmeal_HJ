@@ -55,13 +55,13 @@ public class MemberController {
     }
 
     @GetMapping("/signup")
-    public String signUp() {    // 회원가입 버튼 클릭시 signup.jsp 화면 보여준다
+    public String getMemberAdd() {    // 회원가입 버튼 클릭시 signup.jsp 화면 보여준다
         return "signup";
     }
     // PostMapping(/signup)
     // View success.jsp
     @PostMapping("/signup")
-    public String signupSuccess(MemberDto memberDto, String lgin_id, String lgin_pw ,Model model,
+    public String postMemberAdd(MemberDto memberDto, String lgin_id, String lgin_pw ,Model model,
                                 RedirectAttributes rattr, HttpServletRequest req) {
         // 1. 유효성 검사
 //        if (!isValid(memberDto)) {
@@ -73,7 +73,7 @@ public class MemberController {
 //        }
         // 2. DB에 신규회원 정보를 저장
         try {
-            int rowCnt = memberService.signup(memberDto);    // insert
+            int rowCnt = memberService.registerMember(memberDto);    // insert
 
             if (rowCnt!=1) {  // insert가 되지않았을 때 signup페이지로 가도록 함
                 rattr.addFlashAttribute("msg","회원가입이 되지 않았습니다. 다시 시도해주세요");
