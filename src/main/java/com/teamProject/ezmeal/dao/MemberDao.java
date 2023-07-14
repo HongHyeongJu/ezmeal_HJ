@@ -19,6 +19,10 @@ public class MemberDao {
         return session.selectOne(namespace+"lgin_pw", loginId);
     }
 
+    public String getEmail(String email) throws Exception {
+        return session.selectOne(namespace + "email", email);
+    }
+
     public Long getMemberId(String loginId) throws Exception {  // mbr_id(회원번호) 조회
         return session.selectOne(namespace+"mbr_id", loginId);
     }
