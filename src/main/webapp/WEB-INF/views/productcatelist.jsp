@@ -42,7 +42,7 @@
     <div class="prod_outer"  data-prod-idx="${status.index}">
       <!--------------------------------------------------------------------------------------------->
       <figure class="prod_top top_figure">
-        <a> <!--상품 대표 이미지-->
+        <a href="/product/detail?cate_cd=05&prod_cd=${prod.getProd_cd()}"> <!--상품 대표 이미지-->
           <c:set var="productImg" value="${prodImgList[status.index].url}"/>
           <img id="prod_top top_img"
                src="/img/${prod.getProd_cd()}.png"/>
@@ -72,7 +72,7 @@
       <div class="prod_bottom">
           <!--상품 관련 평균평점 및 리뷰 (리뷰테이블이 오면 값넣음)-->
           <div class="review_set">
-
+              <a href="/product/detail?cate_cd=05&prod_cd=${prod.getProd_cd()}#section3">
 
   <!--별 이미지(고정)-->
             <span class="star_img"></span>
@@ -82,12 +82,14 @@
             <c:set var="reviewCnt" value="${reviewCntMap[prod.prod_cd].count}" />
             <!--리뷰 수-->
             <span class="total_num">(${empty reviewCnt ? 0 : reviewCnt})</span>
+              </a>
           </div>
 
         <div class="in_middle">
+          <a href="/product/detail?cate_cd=05&prod_cd=${prod.getProd_cd()}">
 
           <p class="prod_title"> <!--상품 이름-->
-              <a class="prod_title prod_name">${prod.getName()}</a>
+              <span class="prod_title prod_name" >${prod.getName()}</span>
           </p>
 
           <div class="dc_cd_prod_dscpt_wrapper"> <!-- 할인정보, 판매가격, 소비자가격 세트 -->
@@ -146,7 +148,8 @@
                 </c:otherwise>
             </c:choose>
 
-          </div>
+            </div>
+          </a>
         </div>
 
         <!--------------------------------------------------------------------------------------------->

@@ -132,14 +132,30 @@ div.prod_price_set {
 
 /*-------- 리뷰 관련 ----------*/
 
-.star_img {
+.stars_set{
+    display: inline-block;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.star_1_img {
     display: inline-block;
     width: 20px;
     height: 20px;
-    background-image: url("../../img/star.png");
+    background-image: url("../../img/star1.png");
     background-size: 100%;
     background-repeat: no-repeat; /*그림 반복 막기*/
-    vertical-align: middle;
+    vertical-align:sub;
+}
+
+.star_0_5_img {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("../../img/star0_5.png");
+    background-size: 100%;
+    background-repeat: no-repeat; /*그림 반복 막기*/
+    vertical-align:sub;
 }
 
 .star_img.fst {padding-left: 2%;}
@@ -312,7 +328,6 @@ div.prod_price_set {
     background-color: #cde5ff ;
 }
 
-
 .wishlist_btn i,
 .addcart_btn i,
 .order_btn i {
@@ -327,21 +342,24 @@ div.prod_price_set {
     color: #2c94de ;
 }
 
-
-/*------------호버-----------*/
-.wishlist_btn .fa-heart {
+.fa-heart {
     color: #ffdddd; /* 기본 색상 */
 }
+
+/*------------호버-----------*/
 
 .wishlist_btn.hover .fa-heart {
     color: #ffbcd1 /* 호버 상태 색상 */
 }
 
-.submit_btn.hover .fa-shopping-cart {
-    color: #116cbe /* 호버 상태 색상 */
+.addcart_btn.hover .fa-shopping-cart {
+    color: #0d88ca /* 호버 상태 색상 */
 }
 
 
+.order_btn.hover .fa-credit-card {
+    color: #1152be /* 호버 상태 색상 */
+}
 
 /*----------------------네비게이션 시작-------------------------------*/
 

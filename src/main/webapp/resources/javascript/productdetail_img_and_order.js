@@ -136,4 +136,16 @@ document.querySelectorAll('.addcart_btn').forEach((button) => {
 
 /*------------   호버    [찜하기] [장바구니] [주문하기]   호버   --------*/
 
+let buttons = document.querySelectorAll('.wishlist_btn, .addcart_btn, .order_btn');
 
+function addHover(button) {
+    button.addEventListener('mouseenter', function() {
+        button.classList.add('hover');
+    });
+
+    button.addEventListener('mouseleave', function() {
+        button.classList.remove('hover');
+    });
+}
+
+buttons.forEach(addHover);

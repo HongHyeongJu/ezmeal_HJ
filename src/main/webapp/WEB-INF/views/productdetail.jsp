@@ -43,15 +43,12 @@
       <p class="prod_name"><strong>${product.getName()}</strong></p>
     </div>
     <div class="review_set">
-      <!--별점만큼 반복-->
-      <span class="star_img"></span>
-      <span class="star_img"></span>
-      <span class="star_img"></span>
-      <span class="star_img"></span>
-      <span class="star_img"></span>
-      &nbsp;
+      <!--별점만큼 보여주기-->
+      <div class="stars_set">
+
+      </div>
       <!--별점 평균-->
-      <span class="score">${reivewAvg}</span>점
+      <span class="score" id="reviewAvg" data-avg="${reivewAvg}">${reivewAvg}</span>점
       <!--리뷰 개수-->
       (
       <span class="total_num">${reviewCount}</span>
