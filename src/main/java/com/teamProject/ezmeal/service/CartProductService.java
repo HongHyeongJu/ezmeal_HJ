@@ -186,7 +186,7 @@ public class CartProductService {
             System.out.println("cartProductDto: "+cartProductDto.toString());
 
             boolean existProduct =
-                    cartProductDao.selectProductInCart(mbrId, cartProductDto.getProd_cd())==null ? false : true;
+                    cartProductDao.selectProductInCart(mbrId, cartProductDto.getProd_cd(), cartProductDto.getOpt_seq())==null ? false : true;
 
             /* 이미 그 상품이 있으면 수량 변경, del_yn 'n'으로 */
             if(existProduct){

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -102,11 +103,12 @@ public class CartProductDao {
 
 
     /*회원 장바구니에 해당 상품이 있는지 확인.  */
-    public CartProductDto selectProductInCart(Long mbr_id, Long prod_cd) {
+    public CartProductDto selectProductInCart(Long mbr_id, Long prod_cd, Long opt_seq) {
         System.out.println("[다오] select");
         HashMap map = new HashMap();
         map.put("mbr_id",mbr_id);
         map.put("prod_cd",prod_cd);
+        map.put("opt_seq",opt_seq);
         return session.selectOne(namespace + "select_product_in_cart", map);
     }
 

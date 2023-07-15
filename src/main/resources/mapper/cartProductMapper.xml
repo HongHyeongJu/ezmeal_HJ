@@ -168,6 +168,8 @@
         SELECT *
         FROM tb_cart_product
         WHERE mbr_id = #{mbr_id} AND prod_cd = #{prod_cd}
+        <if test="opt_seq == null"> AND opt_seq IS NULL </if>
+        <if test="opt_seq != null"> AND opt_seq = #{opt_seq} </if>
     </select>
 
     <!--이미 담겨있는지 상품 수량 변경-->

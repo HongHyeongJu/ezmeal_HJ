@@ -96,6 +96,7 @@
     </div>
 
     <!------------------- 상품 안내 테이블------------------------->
+
     <div class="prod_info_set">
       <table class="info_table">
         <tr>
@@ -113,10 +114,11 @@
         <tr>
           <th>보관방법</th>
           <td>[${product.getSfkp_stus()}]&nbsp;${product.getSfkp_mtd()}</td>
+          <imput type="hidden" id="typ_is" value="${product.getSfkp_stus()}"></imput>
         </tr>
       </table>
     </div>
-
+    <div id="prod_cd_is" hidden="hidden" data-value="${product.getProd_cd()}"></div>
     <!------------------- 옵션 셀렉트 박스 ------------------------->
     <div id="is_opt" hidden="hidden" data-value="${optList.size()}"></div>
     <div class="prod_order_set">
@@ -356,6 +358,7 @@
 <!------------------------------------- 자바스크립트 ------------------------------------------->
 <script src="/javascript/productdetail.js"></script>
 <script src="/javascript/productdetailoption.js"></script>
+<script src="/javascript/productdetail_img_and_order.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script>
   src="https://kit.fontawesome.com/6478f529f2.js"

@@ -20,8 +20,9 @@ function increaseQuantity(btn) {
 
 window.onload = function() {
     /*페이지 로드 시 기본으로 가격 업데이트*/
+    imgFunction();
     updatePrice();
-
+    changeMainImage(document.getElementById("main_img"))
 
     /*선택한 옵션으로 바로 가격 바뀌도록*/
     let optSelect = document.getElementById("opt_select");
@@ -90,25 +91,25 @@ document.getElementById('calculation_btn').addEventListener('click', function() 
     ul.className = "make_ul"
     ul.dataset.value = "make_ul_"+ qty + "_" + selectedOptPrc + "_" + selectedOptSeq;
 
-    /*<li class="choice_opt">어쩌구저쩌구 불닭볶음밥 20개 세트 * 2 </li>*/
+    /*만들것: <li class="choice_opt">어쩌구저쩌구 불닭볶음밥 20개 세트 * 2 </li>*/
     let liChoice = document.createElement('li');
     liChoice.className = "choice_opt";
     liChoice.textContent = selectedOptionFullName + "  *  " + qty + "개";
     liChoice.value = qty; /*장바구니에 넘길 수량*/
 
-    /*<li class="price_opt">40,000원 </li>*/
+    /*만들것: <li class="price_opt">40,000원 </li>*/
     let liPrice = document.createElement('li');
     liPrice.className = "price_opt";
     liPrice.textContent = (selectedOptPrc * qty).toLocaleString('ko-KR') + "원";
 
-    /*<input type="hidden" id="hidden_opt_seq" value="옵션시퀀스"/>*/
+    /*만들것: <input type="hidden" id="hidden_opt_seq" value="옵션시퀀스"/>*/
     let inputHidden = document.createElement('input');
     inputHidden.className = "hidden_opt_seq";
     inputHidden.type = 'hidden';
     inputHidden.id = "hidden_opt_seq_" + selectedOptSeq;
     inputHidden.value = selectedOptSeq; /*장바구니에 넘길 opt_seq*/
 
-    /*<button type="button" class="del_btn" id="del_btn_옵션시퀀스">X</button>*/
+    /*만들것: <button type="button" class="del_btn" id="del_btn_옵션시퀀스">X</button>*/
     let delButton = document.createElement('button');
     delButton.className = 'del_btn';
     delButton.id = "del_btn_" + selectedOptSeq;
