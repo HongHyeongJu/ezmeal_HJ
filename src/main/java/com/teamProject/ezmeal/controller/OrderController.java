@@ -197,6 +197,7 @@ public class OrderController {
     @PostMapping("/paymentData")
     @ResponseBody
     public PaymentAPIData setOrder(@SessionAttribute Long memberId, @RequestBody List<Long> event) {
+        System.out.println("event = " + event);
         long paymentPk = Long.parseLong(getDate() + paymentNumber++); // 결제 master pk
         int salePrice = 0; // 적립금 제외한 판매가
         int point = event.get(0).intValue(); // 적립금

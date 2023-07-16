@@ -25,10 +25,10 @@ const oderInfoOptionInput = document.querySelector(".order_info_option input"); 
 
 const deliveryMsg = document.querySelectorAll('.order_info_delivery_msgYN > label'); // 배송 메시지 수신여부
 
-
 const orderBtn = document.querySelector(".order__price"); // 최종 주문 button
 
 let COUPON_NAME; // 쿠폰 명
+let COUPON_DC; // 쿠폰 할인가
 let COUPON_PK; // 쿠폰 pk
 let EVENT_LIST = []; // [ 사용할 적립금, 사용할 쿠폰 pk ]
 
@@ -119,6 +119,7 @@ function handleClickRow(event) {
     // 클릭된 행 찾기
     const clickedRow = event.target.closest(".order__modal_table_instance");
     COUPON_NAME = clickedRow.querySelector(".order__coupon_name").innerHTML; // coupon 명 변수에 저장
+    COUPON_DC = clickedRow.querySelector(".order__coupon_dc").innerHTML; // coupon 할인 가를 변수에 저장
     COUPON_PK = clickedRow.querySelector("td[hidden]").innerHTML; // coupon pk 변수에 저장
     // table row 누르면 radio btn click 되게 하기
     if (clickedRow) {
@@ -127,6 +128,7 @@ function handleClickRow(event) {
     }
 }
 
+// 쿠폰 적용 및 실제 결제창에 값 적용
 function handleSelectOrderModal(event) {
     if (event.target === selectOrderModal) {
         modal.classList.toggle("show"); // 모달 적용
@@ -134,11 +136,32 @@ function handleSelectOrderModal(event) {
         if (!modal.classList.contains("show")) body.style.overflow = "auto"; // body scroll 원상 복구
         if (COUPON_NAME === undefined || COUPON_NAME === "") return;
 
-        orderCouponTitle.innerHTML = COUPON_NAME; // modal 밖 coupon에 적용
+        orderCouponTitle.innerHTML = COUPON_NAME + " " + COUPON_DC; // modal 밖 coupon에 적용
         orderCouponPk.innerHTML = COUPON_PK; // modal 밖 hidden에 적용
+
+        const dcList = extractNumbersFromString(COUPON_DC);
+        const useCoupon = document.querySelector(".order_benu__coupon");
+
+        if (dcList.length === 1) {
+            useCoupon.textContent = "-" + dcList[0] + "원";
+        } else {
+            const orderPrice = document.querySelector(".order_benu__order_price").textContent;
+            const beforeMaxRateDC = regexWonToNum(orderPrice) / 100 * dcList[0];
+            const afterMaxRateDC = beforeMaxRateDC > dcList[1] ? dcList[1] : beforeMaxRateDC;
+            console.log(afterMaxRateDC);
+            useCoupon.textContent = "-" + afterMaxRateDC + "원";
+        }
+
+        changePaymentPrice(); // 최종결제 금액 변경
     }
 }
 
+// 쿠폰 할인가 정규화. list 이용
+function extractNumbersFromString(string) {
+    const regex = /\d+/g;
+    const matches = string.match(regex);
+    return matches.map(match => parseInt(match)); // list로 만들어준다.
+}
 
 function handleSelectDeliveryPlace(event) {
     DELIVERY_PLACE = event.target.value;
@@ -186,28 +209,37 @@ function handleShowInfoInput(event) {
 }
 
 
-// 5. point 사용 검증
-const regexMaxPoint = function (placeholder) {
-    const regexPoint = /\d+/; // 숫자 정규식
-    const maxPointList = placeholder.match(regexPoint);
-    const maxPoint = parseInt(maxPointList[0]);
-    return maxPoint;
+// 5. point 사용 검증 : 음수까지 가능
+const regexWonToNum = function (numberWithWon) {
+    const regexPoint = /(-?\d+)/; // 숫자 정규식
+    const maxPointList = numberWithWon.match(regexPoint);
+    return parseInt(maxPointList[0]);
 };
 
 // point 초과시 검증
 function handleValidatePoint() {
     const inputPoint = parseInt(orderPoint.value);
     const placeholder = orderPoint.placeholder;
-    const maxPoint = regexMaxPoint(placeholder);
-    const usePoint = inputPoint > maxPoint ? maxPoint : inputPoint;
-    orderPoint.value = usePoint;
+    const maxPoint = regexWonToNum(placeholder);
+    orderPoint.value = inputPoint > maxPoint ? maxPoint : inputPoint;
 }
 
-// 모두 사용
+// 모든 적립금 사용
 function handleUseAllPoint() {
     const placeholder = orderPoint.placeholder;
-    const maxPoint = regexMaxPoint(placeholder);
-    orderPoint.value = maxPoint;
+    orderPoint.value = regexWonToNum(placeholder);
+}
+
+// 쿠폰, 적립금 사용시 결제가 변동되는 함수
+const changePaymentPrice = function () {
+    const paymentList = document.querySelectorAll('.change_payment_price');
+    let totalPaymentPrice = 0;
+    paymentList.forEach((payment) => {
+        totalPaymentPrice += regexWonToNum(payment.textContent);
+        console.log(totalPaymentPrice);
+    })
+    document.querySelector(".order__price").textContent = totalPaymentPrice + " 원 결제하기";
+    document.querySelector(".order_benu__total").textContent = totalPaymentPrice + " 원";
 }
 
 
@@ -223,12 +255,15 @@ async function order() {
     //  현재 결제 금액으로부터 사용가능한 coupon인지 검증 필요
     //  배송지 필수정보 다 넣었는지 확인 필요
     try {
-        EVENT_LIST.push(orderPoint.value);
+        EVENT_LIST.push(orderPoint.value === '' ? 0 : orderPoint.value); // 값이 없어서 list에서 출력시, null이지만 실제로는''로 적용된다.
         EVENT_LIST.push(orderCouponPk.textContent);
         console.log('get data for using paymentAPI');
+        console.log(EVENT_LIST);
         const paymentData = await getPaymentData(EVENT_LIST); // 결제 api에 보낼 정보
         console.log(paymentData);
         const productSummaryName = productSummary.textContent;
+        console
+        // const encodingName = encodeURIComponent(productSummaryName);
         paymentData.name = productSummaryName; // 결제 api에 보낼 추가 정보
 
         console.log('start paymentAPI');

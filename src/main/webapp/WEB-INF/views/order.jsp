@@ -34,10 +34,8 @@
                 </h4>
                 <!-- 주문상품 title 끝-->
                 <ul class="order__items__ul">
-                    <li class="order__prod_summary"
-                        product_cnt="${cartProductList.size()}"> ${cartProductList.get(0).name}
-                        외 ${cartProductList.size() -1}건
-                    </li>
+                    <%--TODO 이거 절대로 li 다음줄로 넘기면 안됨. 개행문자 적용이 되어서 kakao pay시 문제를 발생시킨다.--%>
+                    <li class="order__prod_summary" product_cnt="${cartProductList.size()}">${cartProductList.get(0).name}외 ${cartProductList.size() -1}건 </li>
                     <c:forEach var="item" items="${cartProductList}">
                         <!--반복 시작 -->
                         <!--장바구니 식품 반복 시작 -->
@@ -264,7 +262,7 @@
                         <div class="order_benu">
                             <div class="order_benu__title">
                                 <span>주문금액</span>
-                                <span class="order_benu__number">${priceMap.get("orderPrice")}원</span>
+                                <span class="order_benu__order_price change_payment_price">${priceMap.get("orderPrice")}원</span>
                             </div>
 
                             <div class="order_benu__title">
@@ -273,21 +271,21 @@
                             </div>
                             <div class="order_benu__title">
                                 <span> - 할인금액</span>
-                                <span class="order_benu__number">-${priceMap.get("productsDiscount")}원</span>
+                                <span class="order_benu__number ">-${priceMap.get("productsDiscount")}원</span>
                             </div>
 
                             <div class="order_benu__title">
                                 <span>쿠폰할인</span>
-                                <span class="order_benu__number">0 원</span>
+                                <span class="order_benu__coupon change_payment_price">0 원</span>
                             </div>
                             <div class="order_benu__title">
                                 <span>적립금사용</span>
-                                <span class="order_benu__number">0</span>
+                                <span class="order_benu__point change_payment_price">0</span>
                             </div>
                             <div class="order_benu__title">
                                 <div>
                                     <span>최종결제 금액</span>
-                                    <span class="order_benu__number">${priceMap.get("orderPrice")}원</span>
+                                    <span class="order_benu__total">${priceMap.get("orderPrice")}원</span>
                                 </div>
                                 <div>
                                     <span>적립 예정 포인트</span>
@@ -327,7 +325,7 @@
                         <td><input type="radio" name="coupon"/></td>
                         <td class="order__coupon_name">${item.name}</td>
                         <c:if test="${item.val <= 100}">
-                            <td class="order__coupon_dc">${item.val}% 할인 (최대 ${item.max_prc})</td>
+                            <td class="order__coupon_dc">${item.val}% 할인 - (최대 ${item.max_prc}원)</td>
                         </c:if>
                         <c:if test="${item.val > 100}">
                             <td class="order__coupon_dc">${item.val}원 할인</td>
