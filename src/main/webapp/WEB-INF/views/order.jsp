@@ -32,13 +32,16 @@
                         <i class="fas fa-chevron-down" style="color: #0c0c0c"></i>
                     </button>
                 </h4>
-                <p class="order__prod_summary" product__cnt="${cartProductList.size()}"> ${cartProductList.get(0).name} 외 ${cartProductList.size()} 건 </p>
                 <!-- 주문상품 title 끝-->
                 <ul class="order__items__ul">
+                    <li class="order__prod_summary"
+                        product_cnt="${cartProductList.size()}"> ${cartProductList.get(0).name}
+                        외 ${cartProductList.size() -1}건
+                    </li>
                     <c:forEach var="item" items="${cartProductList}">
                         <!--반복 시작 -->
                         <!--장바구니 식품 반복 시작 -->
-                        <li class="order__item_list">
+                        <li class="order__item_list order_li_hidden">
                             <a href="/productlist/${item.prod_cd}" class="order__item_list__a">
                                 <img src="/img/${item.prod_cd}.png"/>
                             </a>
@@ -97,7 +100,7 @@
                 </h4>
                 <!-- 배송정보 title 끝-->
                 <div class="order_info_template">
-                    <div class="order_info_template__title">
+                    <div class="order_info_template__title order_info_delivery">
                         <span>배송지</span>
                         <div class="delivery_address_id" delivery_address_id="${selectedAddress.addr_id}">
                             <div> 수령지 별명 : ${selectedAddress.rcpr}</div>
@@ -143,14 +146,10 @@
                                 </label>
                             </div>
                             <!-- TODO 숨김 JS 수행 필요 -->
-                            <div class="order_info_delivery_place_detail__input">
-                                <span>👉 공동현관 비밀번호</span> <!--기타 누르면 변경되도록 JS-->
+                            <div class="order_info_option" style="display: none">
+                                <span></span>
                                 <label>
-                                    <input
-                                            type="text"
-                                            name="come_method"
-                                            placeholder="공동현관 비밀번호"
-                                    />  <!--기타 누르면 변경되도록 JS-->
+                                    <input type="text" name="come_method" placeholder=""/>
                                 </label>
                             </div>
 
@@ -201,20 +200,10 @@
                         </h4>
                         <!--적립금 title 끝-->
                         <div class="order_info_template_small">
-                            <div
-                                    class="order_info_template__title order_info_template__title_point1"
-                            >
+                            <div class="order_info_template__title order_info_template__title_point1">
                                 <span>적립금 적용</span>
-                                <input class="order__btn order__point" value="0"/>
-                                <button class="order__btn order__point_alluse">
-                                    모두사용
-                                </button>
-                            </div>
-                            <div
-                                    class="order_info_template__title order_info_template__title_point2"
-                            >
-                                <span></span> <!-- 들여쓰기 용도 -->
-                                사용가능 적립금 ${pointMap.get("userPoint")}원
+                                <input class="order__btn order__point" placeholder="사용가능 적립금 1000원"/>
+                                <button class="order__btn order__point_alluse"> 모두사용</button>
                             </div>
                         </div>
                         <!--order_info_template 적립금 끝 -->
@@ -349,7 +338,10 @@
                 </c:forEach>
             </table>
             <!-- Modal  table 끝 -->
-            <button class="order__modal_ok">확인</button>
+            <div class="order__modal_btn">
+                <button class="order__modal_ok">확인</button>
+                <button class="order__modal_cancel">선택 취소</button>
+            </div>
         </div>
         <!-- modal main contents-->
     </div>

@@ -1,14 +1,28 @@
+const orderProdSummary = document.querySelector(".order__prod_summary"); // 주문 상품 요약 요소
+const orderProdItemList = document.querySelectorAll(".order__item_list"); // 주문 상품 전체 리스트 요소
+const orderProdOpenClose = document.querySelector(".order__items_list__btn > i"); // 주문상품 토글 요소
+
 const clickRow = document.querySelector(".order__modal_table"); // modal 내부 쿠폰 table
-const closeOrderModal = document.querySelector(".order__modal_ok"); // modal 확인 버튼
+const selectOrderModal = document.querySelector(".order__modal_ok"); // modal 쿠폰선택
+const cancelOrderModal = document.querySelector(".order__modal_cancel"); // modal 쿠폰선택 취소
 const orderCouponTitle = document.querySelector(".order__coupon"); // 선택된 쿠폰 나오는 버튼
 const orderCouponPk = document.querySelector(".order__coupon_pk"); // hidden으로 처리된 쿠폰 번호
+
 const orderPoint = document.querySelector(".order__point"); // 사용할 적립금
+const orderAllPointBtn = document.querySelector(".order__point_alluse");// 전체선택 쿠폰
+
 const productSummary = document.querySelector(".order__prod_summary"); // 상품명 요약
 
 const deliveryPk = document.querySelector('.delivery_address_id').getAttribute('delivery_address_id'); // 선택된 배송지 pk
 const deliveryPlace = document.querySelectorAll('.order_info_delivery_place > label'); // 받으실 장소
 const deliveryPlaceDetail = document.querySelectorAll('.order_info_delivery_place_detail > label'); // 받으실 장소 상세
-const deliveryPlaceDetailInput = document.querySelector('.order_info_delivery_place_detail__input input'); // 받으실 장소 상세 - 작성란
+const deliveryPlaceDetailInput = document.querySelector('.order_info_option input'); // 받으실 장소 상세 - 작성란
+
+const orderInfoLabel = document.querySelectorAll(".order_info_template__radiobox input[name='come_method']"); // 공동출입구, 기타, 자유출입구
+const orderInfoOption = document.querySelector(".order_info_option"); // 공동출입구
+const orderInfoOptionSpan = document.querySelector(".order_info_option > span"); // span
+const oderInfoOptionInput = document.querySelector(".order_info_option input"); // 공동출입구 placdholder
+
 const deliveryMsg = document.querySelectorAll('.order_info_delivery_msgYN > label'); // 배송 메시지 수신여부
 
 
@@ -113,8 +127,8 @@ function handleClickRow(event) {
     }
 }
 
-function handleCloseOrderModal(event) {
-    if (event.target === closeOrderModal) {
+function handleSelectOrderModal(event) {
+    if (event.target === selectOrderModal) {
         modal.classList.toggle("show"); // 모달 적용
 
         if (!modal.classList.contains("show")) body.style.overflow = "auto"; // body scroll 원상 복구
@@ -142,6 +156,61 @@ function handleSelectDeliveryMsg(event) {
     DELIVERY_MSG = event.target.value;
 }
 
+// open toggle 누르면 해당 li hidden 없애기
+// TODO - 현재는 selectAll을 이용해서 toggle적용을 하였지만 html에서 해당 부분을 div로 감싸서 작동하도록 수행해도 된다.
+//      - 현 상황에서 빠르게 프로젝트를 끝내야하므로 일단은 이 방법으로 진행하고 나중에 div로 css 부분까지 해결하고 변경하도록 한다.
+function handleOpenCloseProduct(event) {
+    const icon = event.target;
+    icon.classList.toggle("fa-chevron-up");
+    icon.classList.toggle("fa-chevron-down");
+    orderProdSummary.classList.toggle("order_li_hidden");
+    orderProdItemList.forEach((orderProdItem) => {
+        orderProdItem.classList.toggle("order_li_hidden");
+    })
+}
+
+// 공동현관, 기타 누를시 동적 html 생성하기
+function handleShowInfoInput(event) {
+    const value = event.target.value; // 공동현관, 기타
+    if (value === "자유 출입 가능")
+        return (orderInfoOption.style.display = "none");
+    orderInfoOption.style.display = "";
+    if (value === "공동현관") {
+        orderInfoOptionSpan.textContent = "👉 공동현관 비밀번호";
+        oderInfoOptionInput.placeholder = "공동현관 비밀번호";
+    }
+    if (value === "기타") {
+        orderInfoOptionSpan.textContent = "👉 기타 작성란";
+        oderInfoOptionInput.placeholder = "기타 작성란";
+    }
+}
+
+
+// 5. point 사용 검증
+const regexMaxPoint = function (placeholder) {
+    const regexPoint = /\d+/; // 숫자 정규식
+    const maxPointList = placeholder.match(regexPoint);
+    const maxPoint = parseInt(maxPointList[0]);
+    return maxPoint;
+};
+
+// point 초과시 검증
+function handleValidatePoint() {
+    const inputPoint = parseInt(orderPoint.value);
+    const placeholder = orderPoint.placeholder;
+    const maxPoint = regexMaxPoint(placeholder);
+    const usePoint = inputPoint > maxPoint ? maxPoint : inputPoint;
+    orderPoint.value = usePoint;
+}
+
+// 모두 사용
+function handleUseAllPoint() {
+    const placeholder = orderPoint.placeholder;
+    const maxPoint = regexMaxPoint(placeholder);
+    orderPoint.value = maxPoint;
+}
+
+
 // 결제 버튼
 async function order() {
     // todo 수행 - 1. 검증 - 현재 결제 금액으로부터 사용가능한 coupon인지 검증 필요 -> 쿠폰 사용가능 조건 금액, 쿠폰 최대 적용 금액 | 최대 적립금 확인
@@ -158,6 +227,7 @@ async function order() {
         EVENT_LIST.push(orderCouponPk.textContent);
         console.log('get data for using paymentAPI');
         const paymentData = await getPaymentData(EVENT_LIST); // 결제 api에 보낼 정보
+        console.log(paymentData);
         const productSummaryName = productSummary.textContent;
         paymentData.name = productSummaryName; // 결제 api에 보낼 추가 정보
 
@@ -195,8 +265,11 @@ async function order() {
 // 클릭된 쿠폰 정보 변수 저장 및 input check 해주기
 clickRow.addEventListener("click", handleClickRow);
 // 확인 버튼 누르면 쿠폰 정보 화면에 넣은 후 닫기
-closeOrderModal.addEventListener("click", handleCloseOrderModal);
+selectOrderModal.addEventListener("click", handleSelectOrderModal);
 orderBtn.addEventListener("click", order);
+//  point 사용 검증
+orderPoint.addEventListener("change", handleValidatePoint);
+orderAllPointBtn.addEventListener("click", handleUseAllPoint);
 
 // 배송관련정보 받아오기
 deliveryPlace.forEach(label => {
@@ -209,4 +282,11 @@ deliveryPlaceDetailInput.addEventListener('change', handleSelectDeliveryPlaceDet
 
 deliveryMsg.forEach(label => {
     label.addEventListener('click', handleSelectDeliveryMsg)
+});
+
+// open toggle 누르면 해당 li hidden 없애기
+orderProdOpenClose.addEventListener("click", handleOpenCloseProduct);
+// 공동현관, 기타 누를시 동적 html 생성하기
+orderInfoLabel.forEach((label) => {
+    label.addEventListener("click", handleShowInfoInput);
 });
