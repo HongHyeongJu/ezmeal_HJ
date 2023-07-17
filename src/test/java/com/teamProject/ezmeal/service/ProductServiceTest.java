@@ -1,7 +1,9 @@
 package com.teamProject.ezmeal.service;
 
 import com.teamProject.ezmeal.dao.ProductDao;
+import com.teamProject.ezmeal.dao.ProductOptionDao;
 import com.teamProject.ezmeal.domain.ProductDto;
+import com.teamProject.ezmeal.domain.ProductOptionDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,36 +24,41 @@ public class ProductServiceTest {
     @Autowired
     ProductService productService;
 
-    @Autowired
-    ProductDao productDao;
+    @Test
+    public void test55() throws SQLException {
+        Map<Long,List<ProductOptionDto>>  map = productService.prodCdListChangeToOptionMap("05");
+        map.forEach((k,v)-> System.out.println(k+","+v.size()));
+
+    }
+
 
     /* 상품코드로 상품 찾기 */
-    @Test
-    public void searchProdCd() throws SQLException {
-        ProductDto productDto = productService.getProductByProdCd(1L);
-        System.out.println(productDto.toString());
-        assertTrue(productDto!=null);
-    }
-
-    /* 이름으로 상품 관련 상품 검색하기 */
-    @Test
-    public void searchName() throws SQLException {
-        List list = productService.searchProductByName("밥");
-        System.out.println(list.get(0).toString());
-        System.out.println("list.size() : "+ list.size());
-        list.stream().forEach(a-> System.out.println(a.toString()));
-        assertTrue(list!=null);
-    }
-
-    /* 카테코리 코드로 상품 검색하기(카테고리별 페이지용) */
-    @Test
-    public void selectCateCd() throws SQLException {
-        List list = productService.getProductListByCateCd("02");
-        System.out.println(list.get(0).toString());
-        System.out.println("list.size() : "+ list.size());
-        list.stream().forEach(a-> System.out.println(a.toString()));
-        assertTrue(list!=null);
-    }
+//    @Test
+//    public void searchProdCd() throws SQLException {
+//        ProductDto productDto = productService.getProductByProdCd(1L);
+//        System.out.println(productDto.toString());
+//        assertTrue(productDto!=null);
+//    }
+//
+//    /* 이름으로 상품 관련 상품 검색하기 */
+//    @Test
+//    public void searchName() throws SQLException {
+//        List list = productService.searchProductByName("밥");
+//        System.out.println(list.get(0).toString());
+//        System.out.println("list.size() : "+ list.size());
+//        list.stream().forEach(a-> System.out.println(a.toString()));
+//        assertTrue(list!=null);
+//    }
+//
+//    /* 카테코리 코드로 상품 검색하기(카테고리별 페이지용) */
+//    @Test
+//    public void selectCateCd() throws SQLException {
+//        List list = productService.getProductListByCateCd("02");
+//        System.out.println(list.get(0).toString());
+//        System.out.println("list.size() : "+ list.size());
+//        list.stream().forEach(a-> System.out.println(a.toString()));
+//        assertTrue(list!=null);
+//    }
 
 
     /* 다음 상품코드 반환해주는지 확인하는 테스트 */

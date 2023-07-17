@@ -23,18 +23,21 @@ public class ProductOptionDaoTest {
     /*카테고리에 내보낼 옵션 객체*/
     @Test
     public void selectOptionInCategory() throws SQLException {
-        Map<Long, ProductOptionDto> map = productOptionDao.selectOptionInProductCategory(17L);
-        assertTrue(map!=null);
-        map.forEach((k,v)-> System.out.println(v.toString()));
+        List<ProductOptionDto> list = productOptionDao.selectOptionInProductCategory("05");
+        assertTrue(list!=null);
+        System.out.println(list.size());
+//        map.forEach((k,v)-> System.out.println("K: "+k+", v :"+v.toString()));
+
+
 
     }
 
     /*상세 페이지에 내보낼 옵션 객체*/
     @Test
     public void selectOptionInDetail() throws SQLException {
-        Map<Long, ProductOptionDto> map = productOptionDao.selectOptionInProductCategory(17L);
-        assertTrue(map!=null);
-        map.forEach((k,v)-> System.out.println(v.toString()));
+        List<ProductOptionDto> list = productOptionDao.selectOptionInProductDetail(16L);
+        assertTrue(list!=null);
+        list.forEach(a-> System.out.println(a.toString()));
 
     }
 

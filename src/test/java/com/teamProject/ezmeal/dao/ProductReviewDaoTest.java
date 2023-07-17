@@ -27,8 +27,8 @@ public class ProductReviewDaoTest {
     public void insertReview() throws SQLException {
         /*리뷰 생성*/
         LocalDate today = LocalDate.now();
-        ProductReviewDto dto = new ProductReviewDto(9999L, 30L, 1010L, "맛있네요", "후기를 30자나쓰라니 힘드네요",
-                today, today.plusDays(30), today, 0 , 5, "y", "n", LocalDateTime.now(),"ateam", LocalDateTime.now(),"ateam" );
+        ProductReviewDto dto = new ProductReviewDto(9999L, 30L, 1010L, "김*바","  맛있네요", "후기를 30자나쓰라니 힘드네요",
+                today, today.plusDays(30), today, 0 , 5, "y", "n", "ateam", "ateam" );
         assertTrue(dto!=null);
         System.out.println(dto.toString());
 

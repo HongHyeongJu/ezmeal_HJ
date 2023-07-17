@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="paymentMasterDao">
+    <!--    결제 완료시 결제 master 1st insert-->
+    <insert id="insertPayment" parameterType="PaymentMasterDto">
+        INSERT INTO tb_payment_master (pay_id, ord_id, mbr_id, mbr_coupn_id, coupn_issu_cd,
+                                       pay_typ, pay_dtm, pay_mtd,
+                                       ord_tot_prc, tot_dc_prc, coupn_use_prc, use_pnt, dc_prc, pay_prc)
+        VALUES (#{pay_id}, #{ord_id}, #{mbr_id}, #{mbr_coupn_id}, #{coupn_issu_cd}, #{pay_typ}, #{pay_dtm}, #{pay_mtd},
+                #{ord_tot_prc}, #{tot_dc_prc}, #{coupn_use_prc}, #{use_pnt}, #{dc_prc}, #{pay_prc});
+    </insert>
+</mapper>

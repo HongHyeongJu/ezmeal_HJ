@@ -12,138 +12,291 @@
 <head>
   <title>회원가입</title>
   <link rel="stylesheet" href="/css/screens/signup.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+<jsp:include page="header.jsp"/>
+<section class="section">
+  <c:if test="${not empty errorMsg}">
+    <script>
+      // 회원가입 란 중에 비어있는 칸 경고창
+      const errorMessage = "${errorMsg}";
+      alert(errorMessage);
+    </script>
+  </c:if>
 
-<form action="<c:url value="/member/signup/success"/>" method="post" onsubmit="return formCheck(this)">
   <div class="title">회원가입</div>
-  <div id="msg" class="msg">
-    <c:if test="${not empty param.msg}">
-      <i class="fa fa-exclamation-circle"> ${URLDecoder.decode(param.msg)}</i>
-    </c:if>
-  </div>
-  <label for="">아이디 <span class="star">*</span></label>
-  <input class="input-field" type="text" id="lgin_id" name="lgin_id" value="${memberDto.lgin_id}" placeholder="4~12자리의 영문 혹은 영문과 숫자 조합" autofocus>
-  <button type="button" onclick="checkIdDuplicate()">중복확인</button>
-  <div id="id-result-msg"></div>
-  <div id="idmsg" class="idmsg"> </div>
-  <label for="">비밀번호</label>
-  <input class="input-field" type="password" id="password" name="lgin_pw" value="${memberDto.lgin_pw}" placeholder="최소 4자 이상 입력">
-  <span id="idCheckMessage"></span> <!-- 중복 체크 결과 메시지를 표시할 영역 -->
-  <div id="pwdmsg" class="pwdmsg"> </div>
-  <label for="">이름</label>
-  <input class="input-field" type="text" name="name" value="${memberDto.name}" placeholder="이름을 입력해 주세요">
-  <label for="">휴대전화</label>
-  <input class="input-field" type="tel" name="phone" value="${memberDto.phone}" placeholder="010-0000-0000">
-  <label for="">이메일</label>
-  <input class="input-field" type="text" name="email" value="${memberDto.email}" placeholder="예: ezmeal@meal.com">
-  <label for="">생년월일</label>
-  <input class="input-field" type="text" name="birth" value="${memberDto.birth}" placeholder="2020/12/31">
-  <div class="gender">
-    <label for="">성별</label>
-    <label><input type="radio" name="sex" id="m" value="m" ${memberDto.sex == 'm' ? 'checked' : ''}/>남자</label>
-    <label><input type="radio" name="sex" id="f" value="f" ${memberDto.sex == 'f' ? 'checked' : ''}/>여자</label>
-  </div>
-  <input type="image" src="/img/signup.png" id="button" alt="회원가입">
-  <%--        <button>회원 가입</button>--%>
-</form>
+  <!-- 회원가입 타이틀 끝 -->
 
-<%--<script src="/javascript/signup.js"></script>--%>
+  <form action="<c:url value="/member/signup"/>" method="post" onsubmit="return validateForm()">
+    <div id="msg" class="msg"></div>
+    <div class="content-section">
+      <div class="top">
+        <span class="star">*</span>필수입력사항
+      </div>
+      <div class="content-main">
+        <div class="form-row">
+          <div class="label">
+            <label for="lgin_id" class="label-value">아이디
+              <span class="star">*</span>
+            </label>
+          </div>
+          <div class="value">
+            <div class="input">
+              <input class="input-field" type="text" id="lgin_id" name="lgin_id" oninput="validateIdInput()" value="${memberDto.lgin_id}" placeholder="4~12자리의 영문 혹은 영문과 숫자 조합" autofocus>
+            </div>
+            <div class="msg"> <p id="id-msg" class="valid-msg"></p> </div>
+          </div>
+          <div class="button-section">
+            <button class="button" type="button" onclick="checkIdDuplicate()">
+              <span class="button-value">중복확인</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="label">
+            <label for="lgin_pw" class="label-value">비밀번호
+              <span class="star">*</span>
+            </label>
+          </div>
+          <div class="value">
+            <div class="input">
+              <input class="input-field" type="password" id="lgin_pw" name="lgin_pw" oninput="validatePwInput()" value="${memberDto.lgin_pw}" maxlength="16" placeholder="비밀번호를 입력해 주세요.">
+            </div>
+            <div class="msg"> <p id="pw-msg" class="valid-msg"></p> </div>
+          </div>
+          <div class="button-section"></div>
+        </div>
+
+        <div class="form-row">
+          <div class="label">
+            <label for="confirmPw" class="label-value">비밀번호확인
+              <span class="star">*</span>
+            </label>
+          </div>
+          <div class="value">
+            <div class="input">
+              <input class="input-field" type="password" id="confirmPw" name="confirmPw" oninput="validateConfirmPwInput()"  maxlength="16" placeholder="비밀번호를 한번 더 입력해 주세요">
+            </div>
+            <div class="msg"> <p id="confirmPw-msg" class="valid-msg"></p> </div>
+          </div>
+          <div class="button-section"></div>
+        </div>
+
+        <div class="form-row">
+          <div class="label">
+            <label for="name" class="label-value">이름
+              <span class="star">*</span>
+            </label>
+          </div>
+          <div class="value">
+            <div class="input">
+              <input class="input-field" type="text" id="name" name="name" value="${memberDto.name}" oninput="validateNameInput()" placeholder="이름을 입력해 주세요.">
+            </div>
+            <div class="msg"> <p id="name-msg" class="valid-msg"></p> </div>
+          </div>
+          <div class="button-section"></div>
+        </div>
+
+        <div class="form-row">
+          <div class="label">
+            <label for="email" class="label-value">이메일
+              <span class="star">*</span>
+            </label>
+          </div>
+          <div class="value">
+            <div class="input">
+              <input class="input-field" type="text" id="email" name="email" value="${memberDto.email}" oninput="validateEmailInput()" placeholder="예: ezmeal@meal.com">
+            </div>
+            <div class="msg"> <p id="email-msg" class="valid-msg"></p> </div>
+          </div>
+          <div class="button-section">
+            <button class="button" id="emailButton" type="button" onclick="checkEmailDuplicate()">
+              <span class="button-value">중복확인</span>
+              <!-- 기존 로그인된 이메일이면 disable, 수정하면 중복확인버튼 on -->
+            </button>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="label">
+            <label for="phone" class="label-value">휴대폰
+              <span class="star">*</span>
+            </label>
+          </div>
+          <div class="value">
+            <div class="input">
+              <input class="input-field" type="tel" id="phone" name="phone" value="${memberDto.phone}" oninput="validatePhoneInput(event)" maxlength="11" placeholder="숫자만 입력해 주세요.">
+            </div>
+            <div class="msg"> <p id="phone-msg" class="valid-msg"></p> </div>
+          </div>
+          <div class="button-section">
+            <button class="button" type="button">
+              <span class="button-value">인증번호 받기</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="label">
+            <label class="gender" class="label-value">성별
+              <span class="star">*</span>
+            </label>
+          </div>
+          <div class="value">
+            <div class="gender-section">
+              <label class="gender-label" for="gender-man">
+                <input data-testid="radio-MALE" id="m" name="gender" type="radio" class="gender-input" value="m" ${memberDto.gender == 'm' ? 'checked' : ''}/>
+                <!-- <span class="gender-span">
+                    <div class="span-mini"></div>
+                </span> -->
+                <span aria-labelledby="gender-man" class="gender-value">남자</span>
+              </label>
+
+              <label class="gender-label" for="gender-woman">
+                <input data-testid="radio-FEMALE" id="f" name="gender" type="radio" class="gender-input" value="f" ${memberDto.gender == 'f' ? 'checked' : ''}/>
+                <!-- <span class="gender-span">
+                    <div class="span-mini"></div>
+                </span> -->
+                <span aria-labelledby="gender-woman" class="gender-value">여자</span>
+              </label>
+              <label class="gender-label" for="gender-none"></label>
+            </div>
+          </div>
+          <div class="button-section"></div>
+        </div>
+
+        <div class="form-row">
+          <div class="label">
+            <label class="birth" class="label-value">생년월일
+              <span class="star">*</span>
+            </label>
+          </div>
+          <div class="value" height="40">
+            <input class="input-field" height="40" type="text" id="birth" name="birth" value="${memberDto.birth}" oninput="validateBirthInput()" placeholder="숫자만 입력해 주세요(YYYY/MM/DD)">
+            <div class="msg"> <p id="birth-msg" class="valid-msg"></p> </div>
+          </div>
+          <div class="button-section"></div>
+        </div>
+      </div>
+      <!-- content-main의 끝 -->
+
+      <div class="bottom-lane"></div>
+
+      <div class="bottom">
+        <div class="bottom-section">
+          <div class="bottom-side">
+            <label class="bottom-side-label">이용약관동의
+              <span class="star">*</span>
+            </label>
+          </div>
+          <!-- bottom-side의 끝 -->
+
+          <div class="bottom-main">
+
+            <div class="bottom-row">
+              <label class="agreeAll-label">
+                <input id="TermsAgreeAll" class="required-input" type="checkbox" >
+                <!-- <div class="requiredTerms">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.5 12C23.5 18.3513 18.3513 23.5 12 23.5C5.64873 23.5 0.5 18.3513 0.5 12C0.5 5.64873 5.64873 0.5 12 0.5C18.3513 0.5 23.5 5.64873 23.5 12Z" stroke="#ddd" fill="#fff"></path><path d="M7 12.6667L10.3846 16L18 8.5" stroke="#ddd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </div> -->
+                <span>전체 동의합니다.</span>
+              </label>
+              <p class="css-nygcgj e1sjmfnv6">선택항목에 동의하지 않은 경우도 회원가입 및 일반적인 서비스를 이용할 수 있습니다.</p>
+            </div>
+
+            <div class="bottom-row">
+              <div class="required">
+                <label class="required-label">
+                  <input id="RequiredTermsCondition" type="checkbox" class="required-input">
+                  <!-- <div class="requiredTerms">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.5 12C23.5 18.3513 18.3513 23.5 12 23.5C5.64873 23.5 0.5 18.3513 0.5 12C0.5 5.64873 5.64873 0.5 12 0.5C18.3513 0.5 23.5 5.64873 23.5 12Z" stroke="#ddd" fill="#fff"></path><path d="M7 12.6667L10.3846 16L18 8.5" stroke="#ddd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div> -->
+                  <span>이용약관 동의</span>
+                </label>
+                <span class="bottom-span">(필수)</span>
+              </div>
+              <!-- <a class="css-7chi73 e1sjmfnv3">약관보기</a> -->
+            </div>
+
+            <div class="bottom-row">
+              <div class="required">
+                <label class="required-label">
+                  <input type="checkbox" class="required-input">
+                  <!-- <div class="requiredTerms">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.5 12C23.5 18.3513 18.3513 23.5 12 23.5C5.64873 23.5 0.5 18.3513 0.5 12C0.5 5.64873 5.64873 0.5 12 0.5C18.3513 0.5 23.5 5.64873 23.5 12Z" stroke="#ddd" fill="#fff"></path><path d="M7 12.6667L10.3846 16L18 8.5" stroke="#ddd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div> -->
+                  <span>개인정보 수집∙이용 동의</span>
+                </label>
+                <span class="bottom-span">(필수)</span>
+              </div>
+              <!-- <a class="css-7chi73 e1sjmfnv3">약관보기</a> -->
+            </div>
+
+            <div class="bottom-row">
+              <div class="required">
+                <label class="required-label">
+                  <input type="checkbox" class="required-input">
+                  <!-- <div class="requiredTerms">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.5 12C23.5 18.3513 18.3513 23.5 12 23.5C5.64873 23.5 0.5 18.3513 0.5 12C0.5 5.64873 5.64873 0.5 12 0.5C18.3513 0.5 23.5 5.64873 23.5 12Z" stroke="#ddd" fill="#fff"></path><path d="M7 12.6667L10.3846 16L18 8.5" stroke="#ddd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div> -->
+                  <span>마케팅 및 광고 수신 동의</span>
+                </label>
+                <span class="bottom-span">(선택)</span>
+              </div>
+              <!-- <a class="css-7chi73 e1sjmfnv3">약관보기</a> -->
+            </div>
+
+            <div class="bottom-row">
+              <div class="required">
+                <label class="required-label">
+                  <input type="checkbox" class="required-input">
+                  <!-- <div class="requiredTerms">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.5 12C23.5 18.3513 18.3513 23.5 12 23.5C5.64873 23.5 0.5 18.3513 0.5 12C0.5 5.64873 5.64873 0.5 12 0.5C18.3513 0.5 23.5 5.64873 23.5 12Z" stroke="#ddd" fill="#fff"></path><path d="M7 12.6667L10.3846 16L18 8.5" stroke="#ddd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div> -->
+                  <span>이벤트 및 할인 혜택 안내 동의</span>
+                </label>
+                <span class="bottom-span">(선택)</span>
+              </div>
+              <!-- <a class="css-7chi73 e1sjmfnv3">약관보기</a> -->
+            </div>
+
+            <div class="bottom-row">
+              <div class="required">
+                <label class="required-label">
+                  <input type="checkbox" class="required-input">
+                  <!-- <div class="requiredTerms">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.5 12C23.5 18.3513 18.3513 23.5 12 23.5C5.64873 23.5 0.5 18.3513 0.5 12C0.5 5.64873 5.64873 0.5 12 0.5C18.3513 0.5 23.5 5.64873 23.5 12Z" stroke="#ddd" fill="#fff"></path><path d="M7 12.6667L10.3846 16L18 8.5" stroke="#ddd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div> -->
+                  <span>본인은 만 14세 이상입니다.</span>
+                </label>
+                <span class="bottom-span">(필수)</span>
+              </div>
+              <!-- <a class="css-7chi73 e1sjmfnv3">약관보기</a> -->
+            </div>
+
+          </div>
+          <!-- bottom-main의 끝 -->
+        </div>
+        <!-- bottom-section의 끝 -->
+      </div>
+      <!-- bottom의 끝 -->
+      <div class="signup-button-section">
+        <button class="signup-button" type="submit" width="240" height="56" radius="3">
+          <span class="signup-value">가입하기</span>
+        </button>
+      </div>
+
+    </div>
+    <!-- content-section의 끝 -->
+  </form>
+</section>
 
 <script>
-
-  var msg = "${msg}";
-  if (msg !== "") {
-    alert(msg);
-  }
-
-  function checkIdDuplicate() {
-    var idInput = document.getElementById("lgin_id");
-    var idResultMsg = document.getElementById("id-result-msg");
-
-    var id = idInput.value;
-
-    // AJAX 요청을 생성하여 중복 체크 요청을 서버에 보냄
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/member/checkIdDuplicate", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var response = JSON.parse(xhr.responseText);
-        var isDuplicate = response.isDuplicate;
-
-        if (isDuplicate) {
-          idResultMsg.innerHTML = "이미 사용 중인 ID입니다.";
-          idInput.classList.add("invalid");
-        } else {
-          idResultMsg.innerHTML = "사용 가능한 ID입니다.";
-          idInput.classList.remove("invalid");
-        }
-      }
-    };
-
-    var data = JSON.stringify({ "id": id });
-    xhr.send(data);
-  }
-
-
-  <%--function formCheck(frm) {--%>
-  <%--  let msg ='';--%>
-
-  <%--  if(frm.id.value.length<3) {--%>
-  <%--    setMessage('id의 길이는 3이상이어야 합니다.', frm.id);--%>
-  <%--    return false;--%>
-  <%--  }--%>
-
-  <%--  if(frm.pwd.value.length<3) {--%>
-  <%--    setMessage('pwd의 길이는 3이상이어야 합니다.', frm.pwd);--%>
-  <%--    return false;--%>
-  <%--  }--%>
-
-  <%--  return true;--%>
-  <%--}--%>
-
-  <%--function setMessage(msg, element){--%>
-  <%--  document.getElementById("msg").innerHTML = `<i class="fa fa-exclamation-circle"> ${'${msg}'}</i>`;--%>
-
-  <%--  if(element) {--%>
-  <%--    element.select();--%>
-  <%--  }--%>
-  <%--}--%>
-
-
-  <%--function formCheck(frm) {--%>
-  <%--  let msg = `${msg}`;--%>
-  <%--  if (msg==Signup_ERR) alert("회원가입에 실패했습니다. 다시 시도해 주세요.");--%>
-  <%--  var idmsg ='';--%>
-  <%--  var pwmsg ='';--%>
-  <%--  var namemsg ='';--%>
-
-  <%--  if(frm.lgin_id.value.length<3) {--%>
-  <%--    setidMessage('id의 길이는 3이상이어야 합니다.', frm.lgin_id);--%>
-  <%--    return false;--%>
-  <%--  }--%>
-  <%--  if(frm.lgin_pw.value.length<3) {--%>
-  <%--    setpwdMessage('pw의 길이는 3이상이어야 합니다.', frm.lgin_pw);--%>
-  <%--    return false;--%>
-  <%--  }--%>
-  <%--  return true;--%>
-  <%--}--%>
-
-  <%--function setidMessage(idmsg, element){--%>
-  <%--  document.getElementById("idmsg").innerHTML = `<i class="fa fa-exclamation-circle"> ${idmsg}</i>`;--%>
-
-  <%--  if(element) {--%>
-  <%--    element.select();--%>
-  <%--  }--%>
-  <%--}--%>
-  <%--function setpwdMessage(pwmsg, element){--%>
-  <%--  document.getElementById("pwdmsg").innerHTML = `<i class="fa fa-exclamation-circle"> ${pwmsg}</i>`;--%>
-
-  <%--  if(element) {--%>
-  <%--    element.select();--%>
-  <%--  }--%>
-  <%--}--%>
+  const msg = "${msg}";
 </script>
+<script src="/javascript/signup.js"></script>
+<%--<jsp:include page="footer.jsp"/>--%>
 </body>
 </html>

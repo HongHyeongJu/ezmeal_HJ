@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MemberCouponDto {
     private Long mbr_coupn_id;               // 사용자 쿠폰 ID
-    private String coupon_issu_cd;            // 쿠폰 발행 코드
+    private String coupn_issu_cd;            // 쿠폰 발행 코드
     private Integer mbr_id;                  // 회원 번호 ID
     private LocalDateTime issu_dtm;         // 쿠폰 발행 일시
     private String use_yn;                   // 쿠폰 사용 가능 여부

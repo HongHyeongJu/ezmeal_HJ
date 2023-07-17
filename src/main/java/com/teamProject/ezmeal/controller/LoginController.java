@@ -1,7 +1,10 @@
 package com.teamProject.ezmeal.controller;
 
+import com.teamProject.ezmeal.domain.MemberDto;
 import com.teamProject.ezmeal.service.LoginService;
+import com.teamProject.ezmeal.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,12 +12,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
+
+    private final MemberService memberService;
     private final LoginService loginService;
 
     @GetMapping("/login")
@@ -24,68 +31,61 @@ public class LoginController {
         return "login";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        // logout 기능 수행
+//        if (session != null) session.invalidate(); // null 이 아니면 바로 invalidate로 넘기기
+        session.invalidate();
+        return "redirect:/";
+    }
+
     @PostMapping("/login")
-    public String postLogin(HttpServletRequest req,
+    public String postLogin(HttpServletRequest request, HttpServletResponse response,
                             @RequestParam(defaultValue = "/") String redirectURL,
-                            RedirectAttributes redirectAttrs,
-                            String tryMbrId,
-                            String tryMbrPw,
-                            Model model
+                            RedirectAttributes redirectAttrs, Model model,
+                            String loginId, String loginPw, boolean remember
     ) throws Exception {
 //        // checkbox가 click시 on 아닐 시, null 반환해서 nullPointException 막기 위해 검증
-//        boolean exisitCookie = remember != null;
-//        // cookie 설정하는 logic
+
 //        // clicked on이면 if문 돌고 아니면 그전에 있던 cookie 제거
-//        if (exisitCookie) {
-//            Cookie cookie = new Cookie("id", tryMbrId);
-//            res.addCookie(cookie);
-//        } else {
-//            Cookie[] cookies = req.getCookies();
-//            for (Cookie removeCookie : cookies) {
-//                if (removeCookie.getName().equals("id")) {
-//                    removeCookie.setMaxAge(0);
-//                    res.addCookie(removeCookie);
-//                    break;
-//                }
-//            }
-//        }
-//        // rememberId cookie logic 끝
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /* 개인 정보를 jsp로 보낼 경우, 특히 redirect를 하는 경우는 조심!!!!!
          * redirect인 경우는 model로 담은 값들이 url에 그대로 나타나게 된다.
          * 따라서 session에 값을 넣어서 보내는 방법을 택해야한다.
          * */
+        boolean loginCheck = loginService.loginCheck(loginId,loginPw);
+        Long memberId = loginService.loginInfo(loginId);
 
-        Long memberId = loginService.getLogin(tryMbrId, tryMbrPw);
-
-            // login 검증
-            // session도 없고 session 있는데 login 정보 없을 때 들어옴
-            if (memberId == 1L) {
-                redirectAttrs.addFlashAttribute("tryMbrId", tryMbrId);
-                redirectAttrs.addFlashAttribute("wrongIdMsg", "id가 올바르지 않습니다.");
-                return "redirect:" + "/login"; // redirect:는 get만 있다.
-
-            } else if (memberId == 2L) {
-                redirectAttrs.addFlashAttribute("tryMbrId", tryMbrId);
-                redirectAttrs.addFlashAttribute("wrongPwMsg", "pw가 올바르지 않습니다.");
-                return "redirect:" + "/login";
-
+        System.out.println("remember = " + remember);
+        if (remember) {
+            // ID기억하기 - 쿠키생성
+            Cookie cookie = new Cookie("id", loginId);
+            response.addCookie(cookie);
         } else {
-            // login성공시 filter에서 구분할 session 넣어주기
-            HttpSession session = req.getSession();
-            session.setAttribute("memberId", memberId);
-            model.addAttribute("checkLoginSuccess", "login success!!");
-            return "redirect:" + redirectURL;
-            // 이제 session에 있는 pk를 이용해서 값을 유지할 수 있다.
+            // ID기억하기 체크해제 - 쿠키삭제
+            Cookie removeCookie = new Cookie("id",loginId);
+            removeCookie.setMaxAge(0);
+            response.addCookie(removeCookie);
         }
+        // login 검증
+        // session도 없고 session 있는데 login 정보 없을 때 들어옴
 
-    }
+        // id, pwd가 일치하지 않으면
+        if (!loginCheck) {
+            redirectAttrs.addFlashAttribute("loginId", loginId);
+            redirectAttrs.addFlashAttribute("loginFailMsg", "아이디, 비밀번호를 확인해주세요.");
+            return "redirect:" + "/login"; // redirect:는 get만 있다.
 
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        // logout 기능 수행
-        if (session != null) session.invalidate(); // null 이 아니면 바로 invalidate로 넘기기
-        return "redirect:/";
+        }
+        // login성공시 filter에서 구분할 session 넣어주기
+        // id와 pwd가 일치하면
+        HttpSession session = request.getSession();
+        session.setAttribute("memberId", memberId);
+        MemberDto loginMbrInfo = memberService.getMemberInfo(memberId);
+        session.setAttribute("loginMbrInfo",loginMbrInfo);
+//        model.addAttribute("checkLoginSuccess", "login success!!");
+//        redirectAttrs.addFlashAttribute("loginMbrInfo",loginMbrInfo);
+        return "redirect:" + redirectURL;
+        // 이제 session에 있는 pk를 이용해서 값을 유지할 수 있다.
     }
 
     /* Todo

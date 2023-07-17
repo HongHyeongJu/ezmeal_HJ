@@ -31,21 +31,21 @@ change this template use File | Settings | File Templates. --%>
             <!--cart__items_category_btns cart__items_nav 끝-->
             <%--------------------------------------------------------------------------------------------------------------------%>
             <div class="cart__items_list">
+                <%--TODO. 동적 html을 보여주는 곳--%>
                 <c:if test="${not empty productIce}">
                     <h4 class="cart__items_list-type">
-            <span>
-                <span><i class="fas fa-igloo" style="color: #306ed9"></i></span>
-                냉동 상품
-            </span>
+                    <span>
+                        <span><i class="fas fa-igloo" style="color: #306ed9"></i></span>
+                        냉동 상품
+                    </span>
                         <button class="cart__items_list__btn">
                             <i class="fas fa-chevron-down" style="color: #8d9096"></i>
                         </button>
                     </h4>
                     <ul class="cart__items__ul">
                         <c:forEach items="${productIce}" var="item">
-                            <li class="cart__item_list  cart__item__soldout_${item.soldout_yn}">
-                                <input type="checkbox"
-                                       cart_prod_seq="${item.cart_prod_seq}" ${item.soldout_yn eq 'y' ? 'disabled' : ''}/>
+                            <li class="cart__item_list  cart__item__soldout_${item.soldout_yn}" cart_prod_seq="${item.cart_prod_seq}" prod_cd="${item.prod_cd}"  opt_seq = ${item.opt_seq}>
+                                <input type="checkbox" ${item.soldout_yn eq 'y' ? 'disabled' : 'class="cart__item_nav__checkbox"'}/>
                                 <a href="/productlist/${item.prod_cd}" class="cart__item_list__a">
                                     <img src="/img/${item.prod_cd}.png"/>
                                 </a>
@@ -58,21 +58,17 @@ change this template use File | Settings | File Templates. --%>
                                     </a>
                                 </div>
                                 <div class="cart__item__btn">
-                                    <button type="button" aria-label="수량내리기" disabled>-</button>
-                                    <div po_qty="${item.po_qty}">${item.cp_qty}</div>
-                                    <button type="button" aria-label="수량올리기">+</button>
+                                    <button type="button" class="count_down__btn">-</button>
+                                    <input class="count_num" po_qty="${item.po_qty}" type="text" value="${item.cp_qty}"/>
+                                    <button type="button" class="count_up__btn">+</button>
                                 </div>
                                 <div class="cart__item_price">
-                                    <span aria-label="할인 가격" data-testid="discount-price">${item.sale_prc}</span>
-                                    <c:if test="${item.cnsmr_prc ne item.sale_prc}">
-                            <span aria-label="판매 가격" data-testid="product-price"
-                                  class="cart__item_product-price">
-                                    ${item.cnsmr_prc}
-                            </span>
-                                    </c:if>
+                                    <span class="cart__item_sale_prc">${item.sale_prc}</span>
+                                    <span class="cart__item_product-price" ${item.cnsmr_prc eq item.sale_prc ? 'hidden' : ''}>${item.cnsmr_prc}</span>
+
                                 </div>
                                 <button class="cart__delete_btn" type="button" data-testid="delete">
-                                    <span>x</span>
+                                    x
                                 </button>
                             </li>
                         </c:forEach>
@@ -91,9 +87,8 @@ change this template use File | Settings | File Templates. --%>
                     </h4>
                     <ul class="cart__items__ul">
                         <c:forEach items="${productCold}" var="item">
-                            <li class="cart__item_list  cart__item__soldout_${item.soldout_yn}" opt_seq = ${item.opt_seq}>
-                                <input type="checkbox"
-                                       cart_prod_seq="${item.cart_prod_seq}" ${item.soldout_yn eq 'y' ? 'disabled' : ''}/>
+                            <li class="cart__item_list  cart__item__soldout_${item.soldout_yn}" cart_prod_seq="${item.cart_prod_seq}" prod_cd="${item.prod_cd}" opt_seq = ${item.opt_seq}>
+                                <input type="checkbox" ${item.soldout_yn eq 'y' ? 'disabled' : 'class="cart__item_nav__checkbox"'}/>
                                 <a href="/productlist/${item.prod_cd}" class="cart__item_list__a">
                                     <img src="/img/${item.prod_cd}.png"/>
                                 </a>
@@ -106,18 +101,13 @@ change this template use File | Settings | File Templates. --%>
                                     </a>
                                 </div>
                                 <div class="cart__item__btn">
-                                    <button type="button" aria-label="수량내리기">-</button>
-                                    <div po_qty="${item.po_qty}">${item.cp_qty}</div>
-                                    <button type="button" aria-label="수량올리기">+</button>
+                                    <button type="button" class="count_down__btn">-</button>
+                                    <input class="count_num" po_qty="${item.po_qty}" type="text" value="${item.cp_qty}"/>
+                                    <button type="button" class="count_up__btn">+</button>
                                 </div>
                                 <div class="cart__item_price">
-                                    <span aria-label="할인 가격" data-testid="discount-price">${item.sale_prc}</span>
-                                    <c:if test="${item.cnsmr_prc ne item.sale_prc}">
-                            <span aria-label="판매 가격" data-testid="product-price"
-                                  class="cart__item_product-price">
-                                    ${item.cnsmr_prc}
-                            </span>
-                                    </c:if>
+                                    <span class="cart__item_sale_prc">${item.sale_prc}</span>
+                                    <span class="cart__item_product-price" ${item.cnsmr_prc eq item.sale_prc ? 'hidden' : ''}>${item.cnsmr_prc}</span>
                                 </div>
                                 <button class="cart__delete_btn" type="button" data-testid="delete">
                                     x
@@ -139,9 +129,8 @@ change this template use File | Settings | File Templates. --%>
                     </h4>
                     <ul class="cart__items__ul">
                         <c:forEach items="${productOutside}" var="item">
-                            <li class="cart__item_list  cart__item__soldout_${item.soldout_yn}" opt_seq = ${item.opt_seq}>
-                                <input type="checkbox"
-                                       cart_prod_seq="${item.cart_prod_seq}" ${item.soldout_yn eq 'y' ? 'disabled' : ''}/>
+                            <li class="cart__item_list  cart__item__soldout_${item.soldout_yn}" cart_prod_seq="${item.cart_prod_seq}" prod_cd="${item.prod_cd}"  opt_seq = ${item.opt_seq}>
+                                <input type="checkbox" ${item.soldout_yn eq 'y' ? 'disabled' : 'class="cart__item_nav__checkbox"'}/>
                                 <a href="/productlist/${item.prod_cd}" class="cart__item_list__a">
                                     <img src="/img/${item.prod_cd}.png"/>
                                 </a>
@@ -153,19 +142,15 @@ change this template use File | Settings | File Templates. --%>
                                         <p>${item.name}</p>
                                     </a>
                                 </div>
+
                                 <div class="cart__item__btn">
-                                    <button type="button" aria-label="수량내리기">-</button>
-                                    <div po_qty="${item.po_qty}">${item.cp_qty}</div>
-                                    <button type="button" aria-label="수량올리기">+</button>
+                                    <button type="button" class="count_down__btn">-</button>
+                                    <input class="count_num" po_qty="${item.po_qty}" type="text" value="${item.cp_qty}"/>
+                                    <button type="button" class="count_up__btn">+</button>
                                 </div>
                                 <div class="cart__item_price">
-                                    <span aria-label="할인 가격" data-testid="discount-price">${item.sale_prc}</span>
-                                    <c:if test="${item.cnsmr_prc ne item.sale_prc}">
-                            <span aria-label="판매 가격" data-testid="product-price"
-                                  class="cart__item_product-price">
-                                    ${item.cnsmr_prc}
-                            </span>
-                                    </c:if>
+                                    <span class="cart__item_sale_prc">${item.sale_prc}</span>
+                                        <span class="cart__item_product-price" ${item.cnsmr_prc eq item.sale_prc ? 'hidden' : ''}>${item.cnsmr_prc}</span>
                                 </div>
                                 <button class="cart__delete_btn" type="button" data-testid="delete">
                                     x
@@ -190,7 +175,7 @@ change this template use File | Settings | File Templates. --%>
                     <div class="dlvar_destination">
                         <c:choose>
                             <c:when test="${empty defaultAddress}">
-                                <a href="/login">로그인해주세요</a>
+                                <a href="/login?redirectURL=/cart">로그인해주세요</a>
                             </c:when>
                             <c:otherwise>
                                 <p>${defaultAddress.desti}</p>
@@ -208,19 +193,19 @@ change this template use File | Settings | File Templates. --%>
             <div class="payment">
                 <div class="payment__prod">
                     <span>상품금액</span>
-                    <span class="payment__prod_js">12000원</span>
+                    <span class="payment__prod_js">0 원</span>
                 </div>
                 <div class="payment__prod">
                     <span>상품할인금액</span>
-                    <span class="payment__prod-dc_js">2000원</span>
+                    <span class="payment__prod-dc_js">0 원</span>
                 </div>
                 <div class="payment__prod">
                     <span>결제예정금액</span>
-                    <span class="payment__prod-expect_js">10000원</span>
+                    <span class="payment__prod-expect_js">0 원</span>
                 </div>
                 <div class="payment__prod">
                     <span>적립예정포인트</span>
-                    <span class="payment__prod-expect__point">10 point</span>
+                    <span class="payment__prod-expect__point">0 point</span>
                 </div>
             </div>
             <!-- payment 끝 -->
@@ -260,6 +245,5 @@ change this template use File | Settings | File Templates. --%>
         crossorigin="anonymous"
 ></script>
 <script src="/javascript/cart.js"></script>
-<script src="/javascript/cartAPI.js"></script>
 </body>
 </html>

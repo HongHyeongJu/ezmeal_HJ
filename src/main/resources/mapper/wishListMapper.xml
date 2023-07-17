@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tb_wishlist">
+
+
+    <!--리뷰 생성-->
+    <insert id="insertWishList" parameterType="WishListDto" >
+        INSERT INTO tb_wishlist (mbr_id, prod_cd, in_dtm, in_id, up_dtm, up_id)
+        VALUES (#{mbr_id}, #{prod_cd}, now(),'ateam', now(), 'ateam' )
+    </insert>
+
+    <delete id="deleteWishList" parameterType="WishListDto">
+        DELETE
+        FROM tb_wishlist
+        WHERE mbr_id = #{mbr_id} AND  prod_cd = #{prod_cd}
+    </delete>
+
+    <select id="selectOneWishList" parameterType="WishListDto" resultType="WishListDto">
+        SELECT *
+        FROM tb_wishlist
+        WHERE mbr_id = #{mbr_id} AND  prod_cd = #{prod_cd}
+    </select>
+
+</mapper>
+
+
+
+

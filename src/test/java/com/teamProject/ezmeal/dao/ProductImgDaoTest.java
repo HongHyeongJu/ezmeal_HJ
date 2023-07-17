@@ -22,16 +22,15 @@ public class ProductImgDaoTest {
     /* 특정코드로 상품 찾고 모든 이미지 객체 toString (현재는 대표이미지만 데이터 있어서 하나 나오지만 최대 5개) */
     @Test
     public void selectProdCdImgAll() throws SQLException {
-        List<ProductImgDto> imgList = productImgDao.selectProdCdImgAll("G00034");
+        List<ProductImgDto> imgList = productImgDao.selectProdCdImgAll(22L);
         System.out.println(imgList.size());
         System.out.println(imgList.get(0).toString());
-
     }
 
     /* 상품코드로 */
     @Test
     public void selectProdCdImgTyp() throws SQLException {
-        ProductImgDto img = productImgDao.selectProdCdTypImg("G00034","대표");
+        ProductImgDto img = productImgDao.selectProdCdTypImg(3L,"대표");
         System.out.println(img.toString());
 
     }
@@ -39,7 +38,7 @@ public class ProductImgDaoTest {
     /* 없는 상품코드?? */
     @Test
     public void selectProdCdImgTyp2() throws SQLException {
-        ProductImgDto img = productImgDao.selectProdCdTypImg("G00031","메인1");
+        ProductImgDto img = productImgDao.selectProdCdTypImg(6L,"메인1");
         System.out.println(img.toString());
 
     }
@@ -47,7 +46,7 @@ public class ProductImgDaoTest {
     /*  */
     @Test
     public void selectCateCdImgTyp() throws SQLException {
-        List<ProductImgDto> imgList = productImgDao.selectCateCdImgTyp("0603%");
+        List<ProductImgDto> imgList = productImgDao.selectCateCdImgTyp("02");
         System.out.println(imgList.size());
 
     }
