@@ -23,7 +23,7 @@ public class ProductImgDto {
 
     public ProductImgDto(Long seq, Long prod_cd, String typ, String detail, String url, Integer verti_size,
                          Integer width_size, String extns, Integer file_size_lim, String use_yn, String del_yn,
-                         String rmk, LocalDateTime in_dtm, String in_id, LocalDateTime up_dtm, String up_id) {
+                         String rmk, String in_id, String up_id) {
         this.seq = seq;
         this.prod_cd = prod_cd;
         this.typ = typ;
@@ -36,9 +36,7 @@ public class ProductImgDto {
         this.use_yn = use_yn;
         this.del_yn = del_yn;
         this.rmk = rmk;
-        this.in_dtm = in_dtm;
         this.in_id = in_id;
-        this.up_dtm = up_dtm;
         this.up_id = up_id;
     }
 

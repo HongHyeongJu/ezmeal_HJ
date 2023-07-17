@@ -26,13 +26,19 @@
 <div class="head_main">
   <div class="head_main_left">
 
-    <img class="main_img" src="../img/6.png" />
+    <c:forEach var="img" items="${imgList}" varStatus="status">
+      <c:if test="${img.typ=='대표'}">
+        <img class="main_img" src="../img/${img.url}.png"  id="main_img"/>
+      </c:if>
+    </c:forEach>
+
 
     <ul class="mini_img_set">
-      <img class="mini_img 메인1" src="../img/3.png" />
-      <img class="mini_img 메인2" src="../img/30.png" />
-      <img class="mini_img 메인3" src="../img/31.png" />
-      <img class="mini_img 메인4" src="../img/32.png" />
+      <c:forEach var="img" items="${imgList}">
+        <c:if test="${img.typ=='메인'}">
+          <img class="mini_img 메인" src="../img/${img.url}.png" />
+        </c:if>
+      </c:forEach>
     </ul>
     <div class="main_left 아래 여백"></div>
   </div>
@@ -43,15 +49,12 @@
       <p class="prod_name"><strong>${product.getName()}</strong></p>
     </div>
     <div class="review_set">
-      <!--별점만큼 반복-->
-      <span class="star_img"></span>
-      <span class="star_img"></span>
-      <span class="star_img"></span>
-      <span class="star_img"></span>
-      <span class="star_img"></span>
-      &nbsp;
+      <!--별점만큼 보여주기-->
+      <div class="stars_set">
+
+      </div>
       <!--별점 평균-->
-      <span class="score">${reivewAvg}</span>점
+      <span class="score" id="reviewAvg" data-avg="${reivewAvg}">${reivewAvg}</span>점
       <!--리뷰 개수-->
       (
       <span class="total_num">${reviewCount}</span>
@@ -96,6 +99,7 @@
     </div>
 
     <!------------------- 상품 안내 테이블------------------------->
+
     <div class="prod_info_set">
       <table class="info_table">
         <tr>
@@ -113,10 +117,11 @@
         <tr>
           <th>보관방법</th>
           <td>[${product.getSfkp_stus()}]&nbsp;${product.getSfkp_mtd()}</td>
+          <imput type="hidden" id="typ_is" value="${product.getSfkp_stus()}"></imput>
         </tr>
       </table>
     </div>
-
+    <div id="prod_cd_is" hidden="hidden" data-value="${product.getProd_cd()}"></div>
     <!------------------- 옵션 셀렉트 박스 ------------------------->
     <div id="is_opt" hidden="hidden" data-value="${optList.size()}"></div>
     <div class="prod_order_set">
@@ -200,7 +205,12 @@
     <li class="detail_navi"><a href="#section3">상품후기</a></li>
     <li class="detail_navi"><a href="#section4">상품문의</a></li>
   </ul>
-  <img class="detail_img" src="../ezmeal/lomg_img.png">
+  <c:forEach var="img" items="${imgList}">
+    <c:if test="${img.typ=='상세'}">
+      <img class="detail_img" src="../ezmeal/"${img.url}".png">
+    </c:if>
+  </c:forEach>
+
 </div>
 <!-----------------------------------------  나중에 쇼핑몰 광고넣을 수 있음 ------------------------------------->
 <div class="middle_2">
@@ -249,26 +259,26 @@
   <dt class="bottm_title">&nbsp;&nbsp;상품 후기</dt>
   <button class="make_review_btn" ><a href="/index">리뷰쓰기</a></button>
 </div>
+
 <!--------------------------------------  상품후기 (내용)  --------------------------------------------->
+<c:forEach var="review" items="${reviewList}">
+  <ul class="rv_container">
+    <li class="rv_set">
+      <span class="rv_wrt">${review.writer}</span>
+      <span class="rv_wrt_dt">${review.wrt_dt}</span>
+      <span class="rv_star">${'★'.repeat(review.star)}</span>
+      <span class="rv_kword">여기 키워드리뷰.... 가져와야서 반복출력...</span>
+      <span class="rv_title">${review.title}</span>
+      <span class="rv_stmt">${review.stmt}</span>
+      <span class="rv_img"><img src="../../img/P005.png" width="100px" height="100px" id="img01"></span>
+    </li>
+  </ul>
+</c:forEach>
+
+
 <ul class="rv_container">
   <li class="rv_set">
-    <span class="rv_wrt">김자바</span>
-    <span class="rv_wrt_dt">2023.06.12.</span>
-    <span class="rv_star">★★★★★</span>
-    <span class="rv_kword">가성비 굿</span>
-    <span class="rv_title">맛있어요</span>
-    <span class="rv_stmt">또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.
-                        또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.
-                        또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.
-                    </span>
-    <span class="rv_img"><img src="../../img/G005.png" width="100px" height="100px" id="img01"></span>
-
-  </li>
-
-</ul>
-<ul class="rv_container">
-  <li class="rv_set">
-    <span class="rv_wrt">김자바</span>
+    <span class="rv_wrt">강*바</span>
     <span class="rv_wrt_dt">2023.06.12.</span>
     <span class="rv_star">★★★★★</span>
     <span class="rv_kword">가성비 굿</span>
@@ -356,6 +366,7 @@
 <!------------------------------------- 자바스크립트 ------------------------------------------->
 <script src="/javascript/productdetail.js"></script>
 <script src="/javascript/productdetailoption.js"></script>
+<script src="/javascript/productdetail_img_and_order.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script>
   src="https://kit.fontawesome.com/6478f529f2.js"

@@ -55,8 +55,7 @@ public class ProductDiscountDto {
 
     public ProductDiscountDto(String dc_cd, String cate_cd, String typ, String name,
                               LocalDate start_dt, LocalDate end_dt, String target, Integer rate, Integer prc,
-                              String use_yn, String del_yn, String rmk,
-                              LocalDateTime in_dtm, String in_id, LocalDateTime up_dtm, String up_id) {
+                              String use_yn, String del_yn, String rmk, String in_id, String up_id) {
         this.dc_cd = dc_cd;
         this.cate_cd = cate_cd;
         this.typ = typ;
@@ -69,9 +68,7 @@ public class ProductDiscountDto {
         this.use_yn = use_yn;
         this.del_yn = del_yn;
         this.rmk = rmk;
-        this.in_dtm = in_dtm;
         this.in_id = in_id;
-        this.up_dtm = up_dtm;
         this.up_id = up_id;
     }
     public ProductDiscountDto(){}

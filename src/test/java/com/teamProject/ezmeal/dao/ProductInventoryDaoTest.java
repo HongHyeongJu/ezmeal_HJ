@@ -41,7 +41,7 @@ public class ProductInventoryDaoTest {
 
         /*30번 관련 재고 객체 생성*/
         String today = LocalDate.now().toString().replace("-","/");
-        ProductInventoryDto dto = new ProductInventoryDto(30L,20,100, today ,10,"y","n","테스트재고입니다.",null,"test",null,"test");
+        ProductInventoryDto dto = new ProductInventoryDto(30L,20,100, today ,10,"y","n","테스트재고입니다.","test","test");
         System.out.println("[2] dto: "+dto.toString());
         Integer insertNum = productInventoryDao.insertProductInventory(dto);
         System.out.println("[3] insertNum: "+insertNum);

@@ -156,8 +156,8 @@ public class CartProductService {
 
 
 
-
-    //장바구니에 상품 추가하기
+    /*----- HHJ -----*/
+    //장바구니에 상품 추가하기       /*<!-- (변경부분) boolean existProduct에서 opt_seq도 비교하도록 추가함 -->*/
     public boolean addProductToCart(Long mbrId, CartProductDto cartProductDto) {
         System.out.println("------------서비스 진입-----------");
         /*카트에 상품이 있는지 확인한다.
@@ -186,7 +186,7 @@ public class CartProductService {
             System.out.println("cartProductDto: "+cartProductDto.toString());
 
             boolean existProduct =
-                    cartProductDao.selectProductInCart(mbrId, cartProductDto.getProd_cd())==null ? false : true;
+                    cartProductDao.selectProductInCart(mbrId, cartProductDto.getProd_cd(), cartProductDto.getOpt_seq())==null ? false : true;
 
             /* 이미 그 상품이 있으면 수량 변경, del_yn 'n'으로 */
             if(existProduct){

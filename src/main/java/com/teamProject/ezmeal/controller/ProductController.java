@@ -92,16 +92,15 @@ public class ProductController {
     /*관리자 상품 CRUD page - READ */
     @GetMapping("/regist/read")
     public String productRegistPage(Model model, Long prod_cd) throws SQLException, JsonProcessingException {
-        /*해당 상품코드의 상품객체 1개 전달*/
-//        ProductDto productDto = productService.getProductByProdCd(prod_cd);
-        /*나중에는 이미지도 전달해야겠지...*/
-
-        /*라디오 태그 값 뷰의 <script>로 전달 (이부분만 추출하는 메서드 만들어야함)*/
-        String jsonString = "{\"sub_yn\": \"y\", \"sale_yn\": \"n\", \"dp_yn\": \"y\", \"del_yn\": \"n\", \"inv_yn\": \"y\"}";
-        model.addAttribute("jsonString", jsonString);
+        /*관리자용 상품 페이지(읽기)에 필요한 것 모두 받아오기*/
+        HashMap map = productService.getOneProductByProdCd(prod_cd);
 
         /*모델에 담기*/
-//        model.addAttribute("productDto", productDto);
+        model.addAttribute("product", map.get("product"));
+        model.addAttribute("optList", map.get("optList"));
+        model.addAttribute("imgList", map.get("imgList"));
+        model.addAttribute("imgList", map.get("imgList"));
+        model.addAttribute("imgList", map.get("imgList"));
         model.addAttribute("mode","READ");
 
         return "productRegistration";

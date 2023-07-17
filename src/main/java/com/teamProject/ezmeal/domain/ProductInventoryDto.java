@@ -18,8 +18,7 @@ public class ProductInventoryDto {
 
     public ProductInventoryDto(Long prod_cd, Integer curr_inv,
                                Integer safe_inv, String last_gr_dt,
-                               Integer gr_dura_dt, String use_yn, String del_yn, String rmk,
-                               LocalDateTime in_dtm, String in_id, LocalDateTime up_dtm, String up_id) {
+                               Integer gr_dura_dt, String use_yn, String del_yn, String rmk,String in_id,  String up_id) {
         this.prod_cd = prod_cd;
         this.curr_inv = curr_inv;
         this.safe_inv = safe_inv;
@@ -28,9 +27,7 @@ public class ProductInventoryDto {
         this.use_yn = use_yn;
         this.del_yn = del_yn;
         this.rmk = rmk;
-        this.in_dtm = in_dtm;
         this.in_id = in_id;
-        this.up_dtm = up_dtm;
         this.up_id = up_id;
     }
     public ProductInventoryDto(){}

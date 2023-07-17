@@ -34,7 +34,7 @@ public class ProductDto {
                String stnd,String orplc,String recipe,String mtd,String distb_tlmt,
                String vld_start_dt,String vld_end_dt,String mng,String fst_reg_dt,
                String sale_yn,String dp_yn,String del_yn,String inv_yn,String opt_yn,String rmk,
-               LocalDateTime in_dtm,String in_id, LocalDateTime up_dtm, String up_id){
+               String in_id,String up_id){
         this.cate_cd=cate_cd;
         this.prod_stus=prod_stus;
         this.cust_cd=cust_cd;
@@ -66,9 +66,7 @@ public class ProductDto {
         this.inv_yn=inv_yn;
         this.opt_yn=opt_yn;
         this.rmk=rmk;
-        this.in_dtm=in_dtm;
         this.in_id=in_id;
-        this.up_dtm=up_dtm;
         this.up_id=up_id;
     }
 
