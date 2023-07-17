@@ -31,6 +31,12 @@
             margin-bottom: 45px;
         }
 
+        img {
+            width: 180px;
+            height: 205px;
+            margin-bottom: 45px;
+        }
+
         p {
             margin-bottom: 20px;
         }
@@ -61,7 +67,8 @@
 <body>
 <div class="container">
     <h1>주문이 완료되었습니다!</h1>
-    <i class="fas fa-cart-arrow-down" style="color: #00c728"></i>
+<%--    <i class="fas fa-cart-arrow-down" style="color: #00c728"></i>--%>
+    <img src="/img/penguin.png" alt="penguin" />
     <p>주문해 주셔서 감사합니다.</p>
     <p>주문 번호: ${orderId}</p>
     <p>주문 내역 및 상세 정보는 아래의 링크를 통해 확인할 수 있습니다.</p>
@@ -70,8 +77,8 @@
     <a href="/">주문 상세 확인하기</a>
 </div>
 </body>
-<script
-        src="https://kit.fontawesome.com/6478f529f2.js"
-        crossorigin="anonymous"
-></script>
+<%--<script--%>
+<%--        src="https://kit.fontawesome.com/6478f529f2.js"--%>
+<%--        crossorigin="anonymous"--%>
+<%--></script>--%>
 </html>

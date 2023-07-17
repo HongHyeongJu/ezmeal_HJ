@@ -55,7 +55,7 @@
     <update id="delete">
         UPDATE tb_cart_product
         SET del_yn = 'y',
-            qty = 0
+        qty = 0
         WHERE cart_prod_seq in
         <foreach collection="list" item="item" open="(" close=")" separator=",">
             #{item}
@@ -200,7 +200,8 @@
     <update id="update_after_order">
         UPDATE tb_cart_product
         SET sel_prod = IF(del_yn = 'y', 'n', sel_prod),
-            del_yn   = IF(del_yn = 'n' AND sel_prod = 'y', 'y', del_yn),
+            qty      = IF(sel_prod = 'y' and del_yn = 'n', 0, qty),
+            del_yn   = IF(sel_prod = 'y' and del_yn = 'n', 'y', del_yn),
             up_id    = IF(sel_prod = 'y' and del_yn = 'y', 'ezmeal', up_id),
             up_dtm   = IF(sel_prod = 'y' and del_yn = 'y', now(), up_dtm)
         WHERE cart_seq = #{cartSeq};
