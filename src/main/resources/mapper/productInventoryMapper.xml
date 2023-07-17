@@ -113,6 +113,22 @@
         WHERE curr_inv &lt; safe_inv AND use_yn = 'y' AND del_yn = 'n'
     </select>
 
+    <!--taewan-->
+    <!-- 상품 주문이 다중일 때, 한번에 update 필요해서 update 쿼리 생성 -->
+    <update id="update_qty_after_payment" parameterType="List">
 
+        UPDATE tb_product_inventory
+        SET curr_inv = CASE
+        <foreach item="data" collection="list">
+            WHEN prod_cd = #{data.prodCd} THEN curr_inv - #{data.qty}
+        </foreach>
+        END,
+        up_dtm = now(),
+        up_id = 'ezmeal'
+        WHERE prod_cd in
+        <foreach item="data" collection="list" open="(" separator="," close=")">
+            #{data.prodCd}
+        </foreach>
+    </update>
 
 </mapper>

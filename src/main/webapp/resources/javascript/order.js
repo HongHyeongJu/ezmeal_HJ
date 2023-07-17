@@ -82,9 +82,24 @@ const getPaymentData = function (EVENT_LIST) {
         })
 }
 
-const orderPaymentAddressUpdate = function (data) {
+//  TODO insert, update fetch 하나로 통합하기
+const orderPaymentAddressInsert = function (data) {
     return fetch("/order", {
         method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => {
+            if (response.ok) return response.text();
+            else throw new Error('Error: ' + response.status);
+        })
+}
+
+const updateDataAfterPayment = function (data) {
+    return fetch("/order", {
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -209,7 +224,7 @@ function handleShowInfoInput(event) {
 }
 
 
-// 5. point 사용 검증 : 음수까지 가능
+// point 사용 검증 : 음수까지 가능
 const regexWonToNum = function (numberWithWon) {
     const regexPoint = /(-?\d+)/; // 숫자 정규식
     const maxPointList = numberWithWon.match(regexPoint);
@@ -222,12 +237,17 @@ function handleValidatePoint() {
     const placeholder = orderPoint.placeholder;
     const maxPoint = regexWonToNum(placeholder);
     orderPoint.value = inputPoint > maxPoint ? maxPoint : inputPoint;
+    const usePoint = document.querySelector(".order_benu__point");
+    usePoint.textContent = "-" + orderPoint.value + " point";
+    changePaymentPrice();
 }
 
 // 모든 적립금 사용
 function handleUseAllPoint() {
-    const placeholder = orderPoint.placeholder;
-    orderPoint.value = regexWonToNum(placeholder);
+    orderPoint.value = regexWonToNum(orderPoint.placeholder);
+    const usePoint = document.querySelector(".order_benu__point");
+    usePoint.textContent = "-" + orderPoint.value + " point";
+    changePaymentPrice();
 }
 
 // 쿠폰, 적립금 사용시 결제가 변동되는 함수
@@ -236,7 +256,6 @@ const changePaymentPrice = function () {
     let totalPaymentPrice = 0;
     paymentList.forEach((payment) => {
         totalPaymentPrice += regexWonToNum(payment.textContent);
-        console.log(totalPaymentPrice);
     })
     document.querySelector(".order__price").textContent = totalPaymentPrice + " 원 결제하기";
     document.querySelector(".order_benu__total").textContent = totalPaymentPrice + " 원";
@@ -262,7 +281,6 @@ async function order() {
         const paymentData = await getPaymentData(EVENT_LIST); // 결제 api에 보낼 정보
         console.log(paymentData);
         const productSummaryName = productSummary.textContent;
-        console
         // const encodingName = encodeURIComponent(productSummaryName);
         paymentData.name = productSummaryName; // 결제 api에 보낼 추가 정보
 
@@ -272,7 +290,6 @@ async function order() {
         console.log('finish paymentAPI');
 
         if (!paymentResultData.success) return;
-        // todo 결제 api 성공시 모든 관련 data insert
 
         console.log('start orderPaymentAddressData');
         // 객체 생성
@@ -283,10 +300,16 @@ async function order() {
         console.log('finish orderPaymentAddressData');
 
         console.log('start update DB : order, payment, address');
-        const success = await orderPaymentAddressUpdate(orderPaymentAddressData);
-        console.log(success);
+        const insert = await orderPaymentAddressInsert(orderPaymentAddressData);
+        console.log(insert);
         console.log('finish update DB : order, payment, address');
         console.log('finish orderRESTAPI : this for update data');
+        // todo. 재고날리기, 쿠폰 사용한거 날리기, 적립금 줄이기, 장바구니 상품 n으로 변경
+        console.log('start update inventory')
+        // [장바구니 상품코드 list, eventcodelist]
+        // const cartProdSeqList = Array.from(orderProdCartSeq).map(cartProdSeq => cartProdSeq.getAttribute("cart_prod_seq"));
+        const update = await updateDataAfterPayment(EVENT_LIST);
+        console.log(update);
 
     } catch (e) {
         console.log(e);

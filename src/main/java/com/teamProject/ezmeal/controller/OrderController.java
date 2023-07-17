@@ -4,6 +4,7 @@ import com.teamProject.ezmeal.dao.*;
 import com.teamProject.ezmeal.domain.*;
 import com.teamProject.ezmeal.domain.joinDomain.CartJoinProductDto;
 import com.teamProject.ezmeal.domain.joinDomain.CouponJoinDto;
+import com.teamProject.ezmeal.domain.restAPIDomain.InventoryData;
 import com.teamProject.ezmeal.domain.restAPIDomain.OrderPaymentAddressData;
 import com.teamProject.ezmeal.domain.restAPIDomain.PaymentAPIData;
 import com.teamProject.ezmeal.service.*;
@@ -39,6 +40,8 @@ public class OrderController {
     private final MemberCouponService memberCouponService;
 
     private final OrderPaymentAddressService orderPaymentAddressService;
+
+    private final InventoryEventService inventoryEventService;
 
 
     //    private static Long orderNumber = 0L;
@@ -193,6 +196,31 @@ public class OrderController {
         System.out.println("delivery master finish ");
         return "success";
     }
+
+    @PatchMapping
+    @ResponseBody
+    public String setPayment(@SessionAttribute Long memberId, @RequestBody List<List<Long>> productEventDataList) {
+        System.out.println("productEventDataList = " + productEventDataList); //[[6, 7], [0, 0]] == [[장바구니상품seq, eventseq]]
+        Long cartSeq = cartService.getCartSeq(memberId);
+        List<CartJoinProductDto> orderProductList = cartProductService.getOrderProduct(cartSeq); // 주문 상품 list
+
+        // 재고 update에 사용될 데이터 : list[객체(prodCd, qty), 객체(prodCd, qty), ...];
+        List<InventoryData> inventoryDataList = new ArrayList<>();
+
+        for (CartJoinProductDto orderProduct : orderProductList) {
+            InventoryData data = new InventoryData();
+            data.setProdCd(orderProduct.getProd_cd());
+            data.setQty(orderProduct.getCp_qty() * orderProduct.getPo_qty());
+            inventoryDataList.add(data);
+        }
+        System.out.println("inventoryDataList = " + inventoryDataList);
+        Integer integer = inventoryEventService.decreaseInventoryAfterPayment(inventoryDataList); // 상품재고 update
+
+
+
+        return "success";
+    }
+
 
     @PostMapping("/paymentData")
     @ResponseBody

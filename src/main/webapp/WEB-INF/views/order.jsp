@@ -39,7 +39,7 @@
                     <c:forEach var="item" items="${cartProductList}">
                         <!--반복 시작 -->
                         <!--장바구니 식품 반복 시작 -->
-                        <li class="order__item_list order_li_hidden">
+                        <li class="order__item_list order_li_hidden" cart_prod_seq="${item.cart_prod_seq}">
                             <a href="/productlist/${item.prod_cd}" class="order__item_list__a">
                                 <img src="/img/${item.prod_cd}.png"/>
                             </a>
@@ -280,7 +280,7 @@
                             </div>
                             <div class="order_benu__title">
                                 <span>적립금사용</span>
-                                <span class="order_benu__point change_payment_price">0</span>
+                                <span class="order_benu__point change_payment_price">0 point</span>
                             </div>
                             <div class="order_benu__title">
                                 <div>
