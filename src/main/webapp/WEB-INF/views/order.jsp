@@ -200,7 +200,7 @@
                         <div class="order_info_template_small">
                             <div class="order_info_template__title order_info_template__title_point1">
                                 <span>적립금 적용</span>
-                                <input class="order__btn order__point" placeholder="사용가능 적립금 1000원"/>
+                                <input class="order__btn order__point" placeholder="사용가능 적립금 ${pointMap.userPoint}"/>
                                 <button class="order__btn order__point_alluse"> 모두사용</button>
                             </div>
                         </div>
@@ -248,7 +248,7 @@
                         <!--order_info_template 개인정보 수집 제공 끝 -->
                         <!-- subject : 개인정보 수집 제공 끝 -->
                         <div class="order__price_div">
-                            <button class="order__btn order__price">${priceMap.get("orderPrice")} 원 결제하기</button>
+                            <button class="order__btn order__price">${priceMap.orderPrice} 원 결제하기</button>
                         </div>
                     </div>
                     <!-- subject_small 끝-->
@@ -262,16 +262,16 @@
                         <div class="order_benu">
                             <div class="order_benu__title">
                                 <span>주문금액</span>
-                                <span class="order_benu__order_price change_payment_price">${priceMap.get("orderPrice")}원</span>
+                                <span class="order_benu__order_price change_payment_price">${priceMap.orderPrice}원</span>
                             </div>
 
                             <div class="order_benu__title">
                                 <span> - 상품금액</span>
-                                <span class="order_benu__number">${priceMap.get("productPrice")}원</span>
+                                <span class="order_benu__number">${priceMap.productPrice}원</span>
                             </div>
                             <div class="order_benu__title">
                                 <span> - 할인금액</span>
-                                <span class="order_benu__number ">-${priceMap.get("productsDiscount")}원</span>
+                                <span class="order_benu__number ">-${priceMap.productsDiscount}원</span>
                             </div>
 
                             <div class="order_benu__title">
@@ -285,11 +285,11 @@
                             <div class="order_benu__title">
                                 <div>
                                     <span>최종결제 금액</span>
-                                    <span class="order_benu__total">${priceMap.get("orderPrice")}원</span>
+                                    <span class="order_benu__total">${priceMap.orderPrice}원</span>
                                 </div>
                                 <div>
                                     <span>적립 예정 포인트</span>
-                                    <span> ${pointMap.get("pointRate")} point</span>
+                                    <span> ${pointMap.pointRate} point</span>
                                 </div>
                             </div>
                         </div>

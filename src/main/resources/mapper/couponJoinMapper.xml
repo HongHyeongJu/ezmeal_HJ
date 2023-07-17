@@ -8,6 +8,9 @@
         from  tb_member_coupon mc,tb_coupon_issue ci
         where mc.mbr_id = #{mbrId}
           and mc.coupn_issu_cd = ci.coupn_issu_cd
+          and mc.use_yn = 'n'
+          and mc.del_yn = 'n'
+        # and STR_TO_DATE(vld_end_dt, '%Y/%m/%d') &lt; CURDATE(); todo 조금있다가 날짜 확인하는 것도 넣기
     </select>
     <select id="coupon_price" resultType="CouponJoinDto">
         select ci.val,

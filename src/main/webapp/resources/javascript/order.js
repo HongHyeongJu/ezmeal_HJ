@@ -308,7 +308,7 @@ async function order() {
         console.log('start update inventory')
         // [장바구니 상품코드 list, eventcodelist]
         // const cartProdSeqList = Array.from(orderProdCartSeq).map(cartProdSeq => cartProdSeq.getAttribute("cart_prod_seq"));
-        const update = await updateDataAfterPayment(EVENT_LIST);
+        const update = await updateDataAfterPayment(orderPaymentAddressData);
         console.log(update);
 
     } catch (e) {

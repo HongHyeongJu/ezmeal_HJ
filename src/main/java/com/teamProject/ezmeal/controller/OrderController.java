@@ -191,7 +191,7 @@ public class OrderController {
         DeliveryMasterDto deliveryMasterDto = new DeliveryMasterDto(orderPk, orderAddress.getRcpr(), orderAddress.getPhone(), "주문_묶음",
                 "(주)ezmeal 종로69 YMCA 5층 518호", orderAddress.getDesti(), orderAddress.getDesti_dtl(),
                 orderPaymentAddressData.getDeliveryPlace(), orderPaymentAddressData.getDeliveryDetail() + orderPaymentAddressData.getDeliveryInput(),
-                "dr", "ma", orderPaymentAddressData.getDeliveryMsg(), "중"); // TODO dr: delivery Ready, ma: message a
+                "dr", "ma", orderPaymentAddressData.getDeliveryMsg(), "중");
         orderPaymentAddressService.registerDeliveryMaster(deliveryMasterDto); // 객체 넣어야함
         System.out.println("delivery master finish ");
         return "success";
@@ -199,8 +199,11 @@ public class OrderController {
 
     @PatchMapping
     @ResponseBody
-    public String setPayment(@SessionAttribute Long memberId, @RequestBody List<List<Long>> productEventDataList) {
-        System.out.println("productEventDataList = " + productEventDataList); //[[6, 7], [0, 0]] == [[장바구니상품seq, eventseq]]
+    public String updatePayment(@SessionAttribute Long memberId, @RequestBody OrderPaymentAddressData orderPaymentAddressData) {
+        System.out.println("orderPaymentAddressData = " + orderPaymentAddressData); //[0, 0] == [ 적립금, 쿠폰 pk ]
+        List<Long> eventDataList = orderPaymentAddressData.getEventList();
+        Long paymentPk = orderPaymentAddressData.getPaymentPk();
+
         Long cartSeq = cartService.getCartSeq(memberId);
         List<CartJoinProductDto> orderProductList = cartProductService.getOrderProduct(cartSeq); // 주문 상품 list
 
@@ -214,8 +217,36 @@ public class OrderController {
             inventoryDataList.add(data);
         }
         System.out.println("inventoryDataList = " + inventoryDataList);
-        Integer integer = inventoryEventService.decreaseInventoryAfterPayment(inventoryDataList); // 상품재고 update
 
+        System.out.println("start inventory quantity update");
+        Integer integer = inventoryEventService.decreaseInventoryAfterPayment(inventoryDataList); // 상품재고 update
+        System.out.println("finish inventory quantity update");
+
+        // point 사용하는 경우 해당 로직 수행
+        if (eventDataList.get(0) != 0L){
+            System.out.println("start select point info");
+            PointTransactionCodeDto usePointInfo = inventoryEventService.getUsePointInfo("USEPOINT"); // 포인트 코드
+            // 포인트 코드 : trjs_cd, name, pnt=0
+            // 필요 data(순서대로) :  mbr_id, trjs_cd, name, trjs_pnt(- 붙이기), stus,
+            System.out.println("finish select point info");
+
+            System.out.println("start insert point history");
+            int usePoint = -eventDataList.get(0).intValue();
+
+            PointTransactionHistoryDto pointTransactionHistoryDto = new PointTransactionHistoryDto(memberId, usePointInfo.getPnt_trjs_cd(), usePointInfo.getName(), usePoint, "사용", paymentPk);
+            int insert = inventoryEventService.setPointHistory(pointTransactionHistoryDto);
+
+            System.out.println("finish insert point history");
+        }
+        if (eventDataList.get(1) != 0L) {
+            System.out.println("start update coupon");
+            Map<String, Long> updateCouponDataList = new HashMap<>();
+            updateCouponDataList.put("payId", paymentPk);
+            updateCouponDataList.put("mbrCoupnId", eventDataList.get(1));
+            int updateCoupon = inventoryEventService.setUsedCoupon(updateCouponDataList);
+            System.out.println("finish update coupon");
+
+        }
 
 
         return "success";
