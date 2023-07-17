@@ -248,6 +248,9 @@ public class OrderController {
 
         }
 
+        System.out.println("start update cartProd");
+        inventoryEventService.setCartProductAfterOrder(cartSeq);
+        System.out.println("finish update cartProd");
 
         return "success";
     }

@@ -16,7 +16,7 @@
             JOIN tb_product p ON cp.prod_cd = p.prod_cd
             join tb_product_inventory pi on cp.prod_cd = pi.prod_cd
             LEFT JOIN tb_product_option po ON cp.opt_seq = po.opt_seq
-            SET cp.soldout_yn = if(if(po.qty is null, 1, po.qty) > pi.curr_inv, 'y', 'n')
+        SET cp.soldout_yn = if(if(po.qty is null, 1, po.qty) > pi.curr_inv, 'y', 'n')
         WHERE cp.cart_seq = #{cartSeq}
     </update>
 
@@ -108,6 +108,7 @@
                  LEFT JOIN tb_product_option po ON cp.opt_seq = po.opt_seq
         WHERE cp.cart_seq = #{cartSeq}
           and cp.sel_prod = 'y'
+          and cp.del_yn = 'n'
     </select>
 
     <!-- 주문할 상품 품절현황 확인 -->
@@ -134,12 +135,12 @@
             #{item}
         </foreach>
         and cp.del_yn &lt;&gt; 'y'
-          group by cp.prod_cd, pi.curr_inv
+        group by cp.prod_cd, pi.curr_inv
         having (pi.curr_inv - sum(cp.qty * IF(po.qty IS NULL, 1, po.qty))) &lt; 0
     </select>
 
     <!-- 주문한 상품 수량 받아오기-->
-    <select id="count_orderProduct" resultType="int" >
+    <select id="count_orderProduct" resultType="int">
         select count(*)
         from tb_cart_product
         where cart_seq = #{cartSeq}
@@ -158,22 +159,19 @@
           and cp.del_yn &lt;&gt; 'y'
     </select>
 
-
-
-
     <!-- HHJ (+)-->
     <!--상품 추가 mapper (+)-->
     <!--mbr_id, prod_cd로 해당상품이 장바구니에 이미 담겨있는지 확인하기-->  <!-- (변경부분) opt_seq도 비교하도록 추가함 -->
-    <select id="select_product_in_cart" parameterType="Map"  resultType="CartProductDto">
+    <select id="select_product_in_cart" parameterType="Map" resultType="CartProductDto">
         SELECT *
         FROM tb_cart_product
         WHERE mbr_id = #{mbr_id} AND prod_cd = #{prod_cd}
-        <if test="opt_seq == null"> AND opt_seq IS NULL </if>
-        <if test="opt_seq != null"> AND opt_seq = #{opt_seq} </if>
+        <if test="opt_seq == null">AND opt_seq IS NULL</if>
+        <if test="opt_seq != null">AND opt_seq = #{opt_seq}</if>
     </select>
 
     <!--이미 담겨있는지 상품 수량 변경-->
-    <update id="update_product_qty_in_cart" parameterType="CartProductDto" >
+    <update id="update_product_qty_in_cart" parameterType="CartProductDto">
         UPDATE tb_cart_product
         SET qty = qty + #{qty},
         del_yn = #{del_yn},
@@ -181,8 +179,8 @@
         up_dtm = now(),
         up_id = 'ateam'
         WHERE mbr_id = #{mbr_id} AND prod_cd = #{prod_cd}
-        <if test="opt_seq == null"> AND opt_seq IS NULL </if>
-        <if test="opt_seq != null"> AND opt_seq = #{opt_seq} </if>
+        <if test="opt_seq == null">AND opt_seq IS NULL</if>
+        <if test="opt_seq != null">AND opt_seq = #{opt_seq}</if>
     </update>
 
 
@@ -191,11 +189,21 @@
         insert into tb_cart_product (prod_cd, cart_seq, mbr_id,
                                      sel_prod, typ, opt_seq, soldout_yn, qty,
                                      add_dt, del_yn, in_dtm, in_id, up_dtm, up_id)
-        values ( #{prod_cd}, #{cart_seq}, #{mbr_id},
-                 #{sel_prod}, #{typ}, #{opt_seq}, #{soldout_yn}, #{qty},
-                 #{add_dt}, #{del_yn}, now(), 'ateam', now(), 'ateam')
+        values (#{prod_cd}, #{cart_seq}, #{mbr_id},
+                #{sel_prod}, #{typ}, #{opt_seq}, #{soldout_yn}, #{qty},
+                #{add_dt}, #{del_yn}, now(), 'ateam', now(), 'ateam')
     </insert>
 
+    <!-- taewan (+)-->
+
+    <update id="update_after_order">
+        UPDATE tb_cart_product
+        SET sel_prod = IF(del_yn = 'y', 'n', sel_prod),
+            del_yn   = IF(del_yn = 'n' AND sel_prod = 'y', 'y', del_yn),
+            up_id    = IF(sel_prod = 'y' and del_yn = 'y', 'ezmeal', up_id),
+            up_dtm   = IF(sel_prod = 'y' and del_yn = 'y', now(), up_dtm)
+        WHERE cart_seq = #{cartSeq};
+    </update>
 
 
 </mapper>

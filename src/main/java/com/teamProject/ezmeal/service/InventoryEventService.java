@@ -1,9 +1,6 @@
 package com.teamProject.ezmeal.service;
 
-import com.teamProject.ezmeal.dao.MemberCouponDao;
-import com.teamProject.ezmeal.dao.PointTransactionCodeDao;
-import com.teamProject.ezmeal.dao.PointTransactionHistoryDao;
-import com.teamProject.ezmeal.dao.ProductInventoryDao;
+import com.teamProject.ezmeal.dao.*;
 import com.teamProject.ezmeal.domain.PointTransactionCodeDto;
 import com.teamProject.ezmeal.domain.PointTransactionHistoryDto;
 import com.teamProject.ezmeal.domain.restAPIDomain.InventoryData;
@@ -22,6 +19,7 @@ public class InventoryEventService {
     private final PointTransactionCodeDao pointTransactionCodeDao; // 포인트 사용
     private final PointTransactionHistoryDao pointTransactionHistoryDao; // 포인트 변경 이력남기기
     private final MemberCouponDao memberCouponDao; // 사용 쿠폰 정보 업데이트
+    private final CartProductDao cartProductDao; // 장바구님 주문한 상품 delete 해버리기, select는 유지
 
     public Integer decreaseInventoryAfterPayment(List<InventoryData> inventoryDataList){
         return productInventoryDao.updateInventoryAfterPayment(inventoryDataList); // 상품 재고 update
@@ -37,6 +35,10 @@ public class InventoryEventService {
 
     public int setUsedCoupon(Map<String, Long> updateCouponDataList) {
         return memberCouponDao.updateUsedCoupon(updateCouponDataList);     // 사용한 coupon update 하기
+    }
+
+    public int setCartProductAfterOrder(Long cartSeq) {
+        return cartProductDao.updateCartProductAfterOrder(cartSeq); // 장바구님 주문한 상품 delete 해버리기, select는 유지
     }
 
 }
