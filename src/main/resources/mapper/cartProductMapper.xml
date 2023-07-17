@@ -54,7 +54,8 @@
     <!-- 상품 삭제 -->
     <update id="delete">
         UPDATE tb_cart_product
-        SET del_yn = 'y'
+        SET del_yn = 'y',
+            qty = 0
         WHERE cart_prod_seq in
         <foreach collection="list" item="item" open="(" close=")" separator=",">
             #{item}
