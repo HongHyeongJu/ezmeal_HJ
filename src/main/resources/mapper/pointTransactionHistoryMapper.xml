@@ -2,10 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="tb_pointTransactionHistory">
+<mapper namespace="pointTransactionHistory">
+    <!-- 사용 가능 point 받아오는 mapper -->
     <select id="point_can_use" resultType="int">
-        select usfl_acmlt_pnt
+        select MIN(usfl_acmlt_pnt)
         from tb_point_transaction_history
         where mbr_id = #{mbrId};
     </select>
+
+    <!-- 적립금 사용으로 인한 이력 남기는 mapper -->
+    <insert id="update_point_history">
+        INSERT INTO tb_point_transaction_history (mbr_id, trjs_cd, name, trjs_pnt, stus, pay_id, trjs_dtm,
+                                                  usfl_acmlt_pnt)
+        SELECT #{mbr_id},
+               #{trjs_cd},
+               #{name},
+               #{trjs_pnt},
+               #{stus},
+               #{pay_id},
+               now(),
+               (SELECT MIN(usfl_acmlt_pnt) + #{trjs_pnt}
+                FROM tb_point_transaction_history
+                WHERE mbr_id = #{mbr_id});
+    </insert>
 </mapper>

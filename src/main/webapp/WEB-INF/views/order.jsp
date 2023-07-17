@@ -32,13 +32,14 @@
                         <i class="fas fa-chevron-down" style="color: #0c0c0c"></i>
                     </button>
                 </h4>
-                <p class="order__prod_summary" product__cnt="${cartProductList.size()}"> ${cartProductList.get(0).name} 외 ${cartProductList.size()} 건 </p>
                 <!-- 주문상품 title 끝-->
                 <ul class="order__items__ul">
+                    <%--TODO 이거 절대로 li 다음줄로 넘기면 안됨. 개행문자 적용이 되어서 kakao pay시 문제를 발생시킨다.--%>
+                    <li class="order__prod_summary" product_cnt="${cartProductList.size()}">${cartProductList.get(0).name}외 ${cartProductList.size() -1}건 </li>
                     <c:forEach var="item" items="${cartProductList}">
                         <!--반복 시작 -->
                         <!--장바구니 식품 반복 시작 -->
-                        <li class="order__item_list">
+                        <li class="order__item_list order_li_hidden" cart_prod_seq="${item.cart_prod_seq}">
                             <a href="/productlist/${item.prod_cd}" class="order__item_list__a">
                                 <img src="/img/${item.prod_cd}.png"/>
                             </a>
@@ -97,7 +98,7 @@
                 </h4>
                 <!-- 배송정보 title 끝-->
                 <div class="order_info_template">
-                    <div class="order_info_template__title">
+                    <div class="order_info_template__title order_info_delivery">
                         <span>배송지</span>
                         <div class="delivery_address_id" delivery_address_id="${selectedAddress.addr_id}">
                             <div> 수령지 별명 : ${selectedAddress.rcpr}</div>
@@ -143,14 +144,10 @@
                                 </label>
                             </div>
                             <!-- TODO 숨김 JS 수행 필요 -->
-                            <div class="order_info_delivery_place_detail__input">
-                                <span>👉 공동현관 비밀번호</span> <!--기타 누르면 변경되도록 JS-->
+                            <div class="order_info_option" style="display: none">
+                                <span></span>
                                 <label>
-                                    <input
-                                            type="text"
-                                            name="come_method"
-                                            placeholder="공동현관 비밀번호"
-                                    />  <!--기타 누르면 변경되도록 JS-->
+                                    <input type="text" name="come_method" placeholder=""/>
                                 </label>
                             </div>
 
@@ -201,20 +198,10 @@
                         </h4>
                         <!--적립금 title 끝-->
                         <div class="order_info_template_small">
-                            <div
-                                    class="order_info_template__title order_info_template__title_point1"
-                            >
+                            <div class="order_info_template__title order_info_template__title_point1">
                                 <span>적립금 적용</span>
-                                <input class="order__btn order__point" value="0"/>
-                                <button class="order__btn order__point_alluse">
-                                    모두사용
-                                </button>
-                            </div>
-                            <div
-                                    class="order_info_template__title order_info_template__title_point2"
-                            >
-                                <span></span> <!-- 들여쓰기 용도 -->
-                                사용가능 적립금 ${pointMap.get("userPoint")}원
+                                <input class="order__btn order__point" placeholder="사용가능 적립금 ${pointMap.userPoint}"/>
+                                <button class="order__btn order__point_alluse"> 모두사용</button>
                             </div>
                         </div>
                         <!--order_info_template 적립금 끝 -->
@@ -261,7 +248,7 @@
                         <!--order_info_template 개인정보 수집 제공 끝 -->
                         <!-- subject : 개인정보 수집 제공 끝 -->
                         <div class="order__price_div">
-                            <button class="order__btn order__price">${priceMap.get("orderPrice")} 원 결제하기</button>
+                            <button class="order__btn order__price">${priceMap.orderPrice} 원 결제하기</button>
                         </div>
                     </div>
                     <!-- subject_small 끝-->
@@ -275,34 +262,34 @@
                         <div class="order_benu">
                             <div class="order_benu__title">
                                 <span>주문금액</span>
-                                <span class="order_benu__number">${priceMap.get("orderPrice")}원</span>
+                                <span class="order_benu__order_price change_payment_price">${priceMap.orderPrice}원</span>
                             </div>
 
                             <div class="order_benu__title">
                                 <span> - 상품금액</span>
-                                <span class="order_benu__number">${priceMap.get("productPrice")}원</span>
+                                <span class="order_benu__number">${priceMap.productPrice}원</span>
                             </div>
                             <div class="order_benu__title">
                                 <span> - 할인금액</span>
-                                <span class="order_benu__number">-${priceMap.get("productsDiscount")}원</span>
+                                <span class="order_benu__number ">-${priceMap.productsDiscount}원</span>
                             </div>
 
                             <div class="order_benu__title">
                                 <span>쿠폰할인</span>
-                                <span class="order_benu__number">0 원</span>
+                                <span class="order_benu__coupon change_payment_price">0 원</span>
                             </div>
                             <div class="order_benu__title">
                                 <span>적립금사용</span>
-                                <span class="order_benu__number">0</span>
+                                <span class="order_benu__point change_payment_price">0 point</span>
                             </div>
                             <div class="order_benu__title">
                                 <div>
                                     <span>최종결제 금액</span>
-                                    <span class="order_benu__number">${priceMap.get("orderPrice")}원</span>
+                                    <span class="order_benu__total">${priceMap.orderPrice}원</span>
                                 </div>
                                 <div>
                                     <span>적립 예정 포인트</span>
-                                    <span> ${pointMap.get("pointRate")} point</span>
+                                    <span> ${pointMap.pointRate} point</span>
                                 </div>
                             </div>
                         </div>
@@ -338,7 +325,7 @@
                         <td><input type="radio" name="coupon"/></td>
                         <td class="order__coupon_name">${item.name}</td>
                         <c:if test="${item.val <= 100}">
-                            <td class="order__coupon_dc">${item.val}% 할인 (최대 ${item.max_prc})</td>
+                            <td class="order__coupon_dc">${item.val}% 할인 - (최대 ${item.max_prc}원)</td>
                         </c:if>
                         <c:if test="${item.val > 100}">
                             <td class="order__coupon_dc">${item.val}원 할인</td>
@@ -349,7 +336,10 @@
                 </c:forEach>
             </table>
             <!-- Modal  table 끝 -->
-            <button class="order__modal_ok">확인</button>
+            <div class="order__modal_btn">
+                <button class="order__modal_ok">확인</button>
+                <button class="order__modal_cancel">선택 취소</button>
+            </div>
         </div>
         <!-- modal main contents-->
     </div>

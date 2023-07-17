@@ -1,6 +1,7 @@
 package com.teamProject.ezmeal.dao;
 
 import com.teamProject.ezmeal.domain.ProductInventoryDto;
+import com.teamProject.ezmeal.domain.restAPIDomain.InventoryData;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -91,7 +93,18 @@ public class ProductInventoryDaoTest {
 
     }
 
-
+    // taewan
+    // 내가 만든 mapper 잘 작동하는지 test | [ productInventoryMapper - update_qty_after_payment ]
+    @Test
+    public void updateInventoryAfterPayment() {
+        List<InventoryData> list = new ArrayList<>();
+        InventoryData data1 = new InventoryData(1L, 1);
+        InventoryData data2 = new InventoryData(2L, 1);
+        list.add(data1);
+        list.add(data2);
+        Integer integer = productInventoryDao.updateInventoryAfterPayment(list);
+        assertEquals(2, (int)integer);
+    }
 
 
 
