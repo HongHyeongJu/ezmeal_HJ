@@ -156,8 +156,8 @@ public class CartProductService {
 
 
 
-
-    //장바구니에 상품 추가하기
+    /*----- HHJ -----*/
+    //장바구니에 상품 추가하기       /*<!-- (변경부분) boolean existProduct에서 opt_seq도 비교하도록 추가함 -->*/
     public boolean addProductToCart(Long mbrId, CartProductDto cartProductDto) {
         System.out.println("------------서비스 진입-----------");
         /*카트에 상품이 있는지 확인한다.

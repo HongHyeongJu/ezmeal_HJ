@@ -39,8 +39,8 @@ public class ProductDiscountDaoTest {
 
         ProductDiscountDto dto =
                 new ProductDiscountDto("TEST_DC", "0", "pt", "50%할인",
-                                        LocalDate.now(), LocalDate.now().plusMonths(3),
-                                        null, 50, null, "y", "n", null, null, "test", null, "test");
+                        LocalDate.now(), LocalDate.now().plusMonths(3),
+                        null, 50, null, "y", "n", null, "test", "test");
         System.out.println(dto.toString());
 
         /*등록*/
@@ -70,7 +70,7 @@ public class ProductDiscountDaoTest {
         ProductDiscountDto dto =
                 new ProductDiscountDto("TEST_DC", "0", "pt", "50%할인",
                         LocalDate.now(), LocalDate.now().plusMonths(3),
-                        null, 50, null, "y", "n", null, null, "test", null, "test");
+                        null, 50, null, "y", "n", null,"test","test");
         System.out.println(dto.toString());
         /*할인코드 입력*/
         Integer insertResult = productDiscountDao.insertDiscount(dto);
@@ -115,7 +115,7 @@ public class ProductDiscountDaoTest {
 
 
     /*다른테이블 판매가 변경(*2)*/
-        @Test
+    @Test
     public void dueTo_dueTo() throws SQLException {
         /*가장 흔한 DC10pt 꺼내와서 rate(할인퍼센트)값을 10 -> 50으로 수정하기*/
         ProductDiscountDto dc_dto = productDiscountDao.selectDiscount("DC10pt");

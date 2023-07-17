@@ -7,7 +7,7 @@ import java.util.Objects;
 public class ProductReviewDto {
 
     private Long revw_id, ord_id, prod_cd, mbr_id;
-    private String title, stmt;
+    private String writer, title, stmt;
     private LocalDate dlvry_cmpl_dt, revw_posbl_dt, wrt_dt;
     private Integer thumb, star;
     private String revw_opub_yn, del_yn;
@@ -18,14 +18,15 @@ public class ProductReviewDto {
     /*-----------------------------------------------------------------------------*/
     public ProductReviewDto(){}
 
-    public ProductReviewDto(Long ord_id, Long prod_cd, Long mbr_id, String title,
+    public ProductReviewDto(Long ord_id, Long prod_cd, Long mbr_id, String writer, String title,
                             String stmt, LocalDate dlvry_cmpl_dt,
                             LocalDate revw_posbl_dt, LocalDate wrt_dt, Integer thumb, Integer star,
-                            String revw_opub_yn, String del_yn, LocalDateTime in_dtm,
-                            String in_id, LocalDateTime up_dtm, String up_id) {
+                            String revw_opub_yn, String del_yn,
+                            String in_id, String up_id) {
         this.ord_id = ord_id;
         this.prod_cd = prod_cd;
         this.mbr_id = mbr_id;
+        this.writer = writer;
         this.title = title;
         this.stmt = stmt;
         this.dlvry_cmpl_dt = dlvry_cmpl_dt;
@@ -35,9 +36,7 @@ public class ProductReviewDto {
         this.star = star;
         this.revw_opub_yn = revw_opub_yn;
         this.del_yn = del_yn;
-        this.in_dtm = in_dtm;
         this.in_id = in_id;
-        this.up_dtm = up_dtm;
         this.up_id = up_id;
     }
     /*-----------------------------------------------------------------------------*/
@@ -62,6 +61,7 @@ public class ProductReviewDto {
                 "revw_id=" + revw_id +
                 ", ord_id=" + ord_id +
                 ", mbr_id=" + mbr_id +
+                ", writer=" + writer +
                 ", prod_cd='" + prod_cd + '\'' +
                 ", title='" + title + '\'' +
                 ", stmt='" + stmt + '\'' +
@@ -104,13 +104,17 @@ public class ProductReviewDto {
         this.prod_cd = prod_cd;
     }
 
-    public String getTitle() {
-        return title;
+    public String getWriter() {
+        return writer;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setWriter(String writer) {
+        this.writer = writer;
     }
+
+    public String getTitle() { return title;  }
+
+    public void setTitle(String title) { this.title = title;  }
 
     public String getStmt() {
         return stmt;

@@ -43,9 +43,9 @@
 
     <!--리뷰 생성-->
     <insert id="insertProductReview" parameterType="ProductReviewDto">
-        INSERT INTO tb_product_review (ord_id, mbr_id, prod_cd, title, stmt, dlvry_cmpl_dt, revw_posbl_dt, wrt_dt,
+        INSERT INTO tb_product_review (ord_id, mbr_id, prod_cd, writer, title, stmt, dlvry_cmpl_dt, revw_posbl_dt, wrt_dt,
                                        thumb, star, revw_opub_yn, del_yn, in_dtm, in_id, up_dtm, up_id)
-        VALUES (#{ord_id}, #{mbr_id}, #{prod_cd}, #{title}, #{stmt}, #{dlvry_cmpl_dt}, #{revw_posbl_dt}, #{wrt_dt},
+        VALUES (#{ord_id}, #{mbr_id}, #{prod_cd}, #{writer}, #{title}, #{stmt}, #{dlvry_cmpl_dt}, #{revw_posbl_dt}, #{wrt_dt},
                 #{thumb}, #{star}, #{revw_opub_yn}, #{del_yn}, now(), 'ateam', now(), 'ateam')
     </insert>
 

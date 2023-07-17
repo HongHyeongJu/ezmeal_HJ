@@ -15,12 +15,16 @@ function imgFunction() {
 
 /*상품 이미지 수정 함수*/
 function changeMainImage(img) {
-    /*클릭한 이미지의 소스 저장*/
-    var newSrc = img.src;
-    /*현재 메인 이미지 소스 가져오기*/
-    var mainImage = document.querySelector('.main_img');
-    /*둘이 바꾸기*/
+    /* 현재 메인 이미지 소스 가져오기 */
+    let mainImage = document.querySelector('.main_img');
+    let mainSrc = mainImage.src;
+
+    /* 클릭한 이미지의 소스 저장 */
+    let newSrc = img.src;
+
+    /* 둘이 바꾸기 */
     mainImage.src = newSrc;
+    img.src = mainSrc;
 }
 
 
