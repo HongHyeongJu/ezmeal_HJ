@@ -43,6 +43,8 @@ public class OrderController {
 
     private final InventoryEventService inventoryEventService;
 
+    private final OrderMasterService orderMasterService;
+
 
     //    private static Long orderNumber = 0L;
     private static Long orderNumber = Math.round(Math.random() * 10000);
@@ -278,6 +280,15 @@ public class OrderController {
 
         MemberDto memberInfo = memberDao.selectMemberInfo(memberId);
         return new PaymentAPIData(paymentPk, finalPrice, memberInfo.getName(), memberInfo.getPhone(), memberInfo.getEmail());
+    }
+
+
+    @GetMapping("/complete")
+    public String orderComplete(@SessionAttribute Long memberId, Model model){
+        // 주문번호정도만 있으면 됨
+        Long orderId = orderMasterService.getOrderId(memberId);
+        model.addAttribute("orderId", orderId);
+        return "orderComplete";
     }
 
     /* 메서드 추출 */

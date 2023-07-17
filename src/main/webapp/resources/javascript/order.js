@@ -311,6 +311,7 @@ async function order() {
         const update = await updateDataAfterPayment(orderPaymentAddressData);
         console.log(update);
 
+        window.location.href ="/order/complete"; // 마지막 redirection 이동
     } catch (e) {
         console.log(e);
     } finally {
