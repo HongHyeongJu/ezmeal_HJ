@@ -172,43 +172,48 @@
                             <td colspan="6">&nbsp;</td>
                         </tr>
                         <div class="make_option_trtd">
-                            <!--- 옵션 A 시작 -->
-                            <tr class="opt_tr">
-                                <td><input type="text" id="opt_name" name="options[0].name" value="" ></td>
-                                <td><input type="number" id="opt_qty" name="options[0].qty" value="" min="0" ></td>
-                                <td><input type="number" id="opt_cnsmr_prc" name="options[0].cnsmr_prc" value="" min="0" ></td>
-                                <td>
-                                    <select id="opt_dc_cd" name="options[0].dc_cd" value="" >
-                                        <option value="null">할인없음</option>
-                                        <option value="DC1000">1천원 할인</option>
-                                        <option value="DC10pt">10% 할인</option>
-                                        <option value="DC15pt">15% 할인</option>
-                                        <option value="DC20pt">20% 할인</option>
-                                        <option value="DC5pt">5% 할인</option>
-                                        <option value="TEST_DC">50%할인</option>
-                                    </select>
-                                </td>
-                                <td><input type="number" id="opt_sale_prc" name="options[0].sale_prc" value="" min="0" ></td>
-                                <td><input type="number" id="opt_dc_per" name="opt_dc_per" value="" min="0" ></td>
-                            </tr >
-                            <tr class="opt_tr_rmk">
-                                <th >비고</th>
-                                <td colspan="4">
-                                    <input type="text" id="opt_rmk" name="options[0].rmk" value="옵션 관련 메모 작성하는 곳." >
-                                </td>
-                                <td class="del_opt_btn_td">
-                                    <button class="del_opt_btn">X</button>
-                                    <input type="hidden" name="options[0].opt_seq " value="n">
-                                    <input type="hidden" name="options[0].prod_cd " value="n">
-                                    <input type="hidden" name="options[0].typ" value="qty">
-                                    <input type="hidden" name="options[0].use_yn " value="y">
-                                    <input type="hidden" name="options[0].del_yn " value="n">
-                                </td>
-                            </tr>
-                            <tr class="br_tr">
-                                <td colspan="6">&nbsp;</td>
-                            </tr>
-                            <!--- 옵션 A 끝 -->
+                            <c:forEach items="${optList}" var="option" varStatus="status">
+
+                                <!--- 옵션 시작 -->
+                                <tr class="opt_tr">
+                                    <td><input type="text" id="opt_name" name="options[${status.index}].name" value="${option.name}"></td>
+                                    <td><input type="number" id="opt_qty" name="options[${status.index}].qty" value="${option.qty}" min="0"></td>
+                                    <td><input type="number" id="opt_cnsmr_prc" name="options[${status.index}].cnsmr_prc" value="${option.cnsmr_prc}" min="0"></td>
+                                    <td>
+                                        <select id="opt_dc_cd" name="options[${status.index}].dc_cd" value="${option.dc_cd}">
+                                            <!--- 할인 옵션들  나중에 모델에서 받은거 출력할께 일단 하드코딩 -->
+                                            <option value="no_dc">할인없음</option>
+                                            <option value="DC1000">1천원 할인</option>
+                                            <option value="DC10pt">10% 할인</option>
+                                            <option value="DC15pt">15% 할인</option>
+                                            <option value="DC20pt">20% 할인</option>
+                                            <option value="DC5pt">5% 할인</option>
+                                            <option value="TEST_DC">50%할인</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" id="opt_sale_prc" name="options[${status.index}].sale_prc" value="${option.sale_prc}" min="0"></td>
+                                    <td><input type="number" id="opt_dc_per" name="options[${status.index}].dc_per" value="${option.dc_per}" min="0"></td>
+                                </tr>
+                                <tr class="opt_tr_rmk">
+                                    <th>비고</th>
+                                    <td colspan="4">
+                                        <input type="text" id="opt_rmk" name="options[${status.index}].rmk" value="${option.rmk}">
+                                    </td>
+                                    <td class="del_opt_btn_td">
+                                        <button class="del_opt_btn">X</button>
+                                        <input type="hidden" name="options[${status.index}].opt_seq" value="${option.opt_seq}">
+                                        <input type="hidden" name="options[${status.index}].prod_cd" value="${option.prod_cd}">
+                                        <input type="hidden" name="options[${status.index}].typ" value="${option.typ}">
+                                        <input type="hidden" name="options[${status.index}].use_yn" value="${option.use_yn}">
+                                        <input type="hidden" name="options[${status.index}].del_yn" value="${option.del_yn}">
+                                    </td>
+                                </tr>
+                                <tr class="br_tr">
+                                    <td colspan="6">&nbsp;</td>
+                                </tr>
+                                <!--- 옵션 끝 -->
+                            </c:forEach>
+
                         </div>
                     </table>
                 </div>

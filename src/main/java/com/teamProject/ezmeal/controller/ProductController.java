@@ -99,6 +99,8 @@ public class ProductController {
         model.addAttribute("product", map.get("product"));
         model.addAttribute("optList", map.get("optList"));
         model.addAttribute("imgList", map.get("imgList"));
+        model.addAttribute("imgList", map.get("imgList"));
+        model.addAttribute("imgList", map.get("imgList"));
         model.addAttribute("mode","READ");
 
         return "productRegistration";

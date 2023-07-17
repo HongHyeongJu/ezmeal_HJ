@@ -156,6 +156,8 @@ public class ProductService {
         registProductMap.put("optList",optList);
         registProductMap.put("imgList",imgList);
         registProductMap.put("dcList",dcList);
+        registProductMap.put("cateList",dcList);
+        registProductMap.put("custList",dcList);
 
         return registProductMap;
     }
