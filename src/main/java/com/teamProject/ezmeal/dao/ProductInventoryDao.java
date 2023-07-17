@@ -2,6 +2,7 @@ package com.teamProject.ezmeal.dao;
 
 import com.teamProject.ezmeal.domain.ProductDiscountDto;
 import com.teamProject.ezmeal.domain.ProductInventoryDto;
+import com.teamProject.ezmeal.domain.restAPIDomain.InventoryData;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -69,6 +70,10 @@ public class ProductInventoryDao {
         return session.update(namespace+"update_product_inventory_del_y", prod_cd);
     }
 
+    // taewan : 상품주문 후 재고 update
+    public Integer updateInventoryAfterPayment(List<InventoryData> inventoryDataList){
+        return session.update(namespace + "update_qty_after_payment", inventoryDataList);
+    }
 
 
 

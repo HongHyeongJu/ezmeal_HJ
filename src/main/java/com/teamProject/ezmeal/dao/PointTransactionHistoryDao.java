@@ -1,5 +1,6 @@
 package com.teamProject.ezmeal.dao;
 
+import com.teamProject.ezmeal.domain.PointTransactionHistoryDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -8,10 +9,13 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class PointTransactionHistoryDao {
     private final SqlSession session;
-    private static final String namespace = "tb_pointTransactionHistory.";
+    private static final String namespace = "pointTransactionHistory.";
 
     public int pointCanUse(Long mbrId){
         return session.selectOne(namespace + "point_can_use", mbrId);
+    } // 사용 가능한 point
+    public int insertPointHistory(PointTransactionHistoryDto pointTransactionHistoryDto) {
+        return session.insert(namespace + "update_point_history", pointTransactionHistoryDto); // 사용한 point 이력 남기기
     }
 
 }
