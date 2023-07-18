@@ -1,0 +1,264 @@
+/*.container {*/
+/*    position: relative;*/
+/*    min-height: 700px;*/
+/*    padding-bottom: 100px;*/
+/*}*/
+/*.content-wrap {*/
+/*    min-height: 700px;*/
+/*}*/
+/*.head {*/
+/*    background: #F7F7F7;*/
+/*    position: relative;*/
+/*    width: 100%;*/
+/*}*/
+/*.user-info-box {*/
+/*    width: 1100px;*/
+/*    margin: 0 auto;*/
+/*    background: #F8F8F8;*/
+/*    text-align: center;*/
+/*    padding: 30px 0;*/
+/*}*/
+/*.user-info-box .inner {*/
+/*    display: table;*/
+/*    table-layout: auto;*/
+/*    width: 100%;*/
+/*}*/
+/*.user-info-box .inner .column.user-info {*/
+/*    position: relative;*/
+/*    padding: 30px;*/
+/*}*/
+/*.user-info-box .inner > .column {*/
+/*    display: table-cell;*/
+/*    vertical-align: middle;*/
+/*    background: #fff;*/
+/*    padding: 0 25px;*/
+/*    text-align: left;*/
+/*}*/
+/*.user-info-box .user-info .img {*/
+/*    display: inline-block;*/
+/*    vertical-align: middle;*/
+/*    margin-right: 25px;*/
+/*    padding: 8px 0 7px;*/
+/*}*/
+/*.ico-cou-level01 {*/
+/*    background-position: 0 -108px;*/
+/*}*/
+/*[class*="ico-cou-level"] {*/
+/*    display: inline-block;*/
+/*    width: 60px;*/
+/*    height: 34px;*/
+/*    background: url(../images/icon/ico_cou_level.png) 0 0;*/
+/*}*/
+/*.user-info-box .user-info .txt {*/
+/*    display: inline-block;*/
+/*    vertical-align: middle;*/
+/*    max-width: 330px;*/
+/*}*/
+/*.user-info-box .user-info .txt .p-name {*/
+/*    isplay: inline-block;*/
+/*    max-width: 250px;*/
+/*    font-size: 20px;*/
+/*    font-weight: 400;*/
+/*    line-height: 24px;*/
+/*}*/
+/*.user-info-box .user-info .txt .p-name .name {*/
+/*    font-weight: 700;*/
+/*    font-style: normal;*/
+/*}*/
+/*.user-info-box .user-info .txt .p-name ~ .list.grade {*/
+/*    margin-top: 10px;*/
+/*}*/
+/*.list {*/
+/*    overflow: inherit;*/
+/*    padding-left: 0px;*/
+/*}*/
+/*ol, ul {*/
+/*    list-style: none;*/
+
+/*}*/
+/*.user-info-box .user-info .list.grade li {*/
+/*    font-size: 14px;*/
+/*}*/
+/*.list.grade li {*/
+/*    padding: 0 10px 0 0;*/
+/*    font-size: 13px;*/
+/*    color: #666;*/
+/*}*/
+/*.list li {*/
+/*    float: left;*/
+/*    position: relative;*/
+/*    padding: 0 13px 0 0;*/
+/*    color: #555;*/
+/*    font-size: 13px;*/
+/*}*/
+/*.list li:last-child {*/
+/*    padding-right: 0;*/
+/*}*/
+/*.user-info-box .user-info .txt .list.grade ~ .level {*/
+/*    margin-top: 5px;*/
+/*}*/
+/*.user-info-box .user-info .level {*/
+/*    color: rgb(0, 199, 40);*/
+/*    font-size: 13px;*/
+/*}*/
+/*.user-info-box .user-info .button {*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    right: 35px;*/
+/*    padding: 5px 21px;*/
+/*    transform: translateY(-50%);*/
+/*    border: 1px solid #ddd;*/
+/*}*/
+/*.button {*/
+/*    background: #fff;*/
+/*    color: #333;*/
+/*    border: 1px solid #666;*/
+/*}*/
+/*.benefit {*/
+/*    height: 36px;*/
+/*    padding: 5px 15px;*/
+/*}*/
+/*[class*="benefit"] {*/
+/*    border-radius: 20px;*/
+/*    display: inline-block;*/
+/*    text-align: center;*/
+/*    border: 1px solid transparent;*/
+/*    box-sizing: border-box;*/
+/*    vertical-align: top;*/
+/*}*/
+/*a {*/
+/*    background: transparent;*/
+/*    text-decoration: none;*/
+/*    color: inherit;*/
+/*}*/
+/*.user-info-box .user-info .button > span {*/
+/*    line-height: 1.7;*/
+/*}*/
+/*.button > span {*/
+/*    font-size: 13px;*/
+/*    line-height: 1.8;*/
+/*}*/
+/*.user-info-box .inner > .column + .column {*/
+/*    border-left: 4px solid #F8F8F8;*/
+/*}*/
+/*.user-info-box .inner > .column.order, .user-info-box .inner > .column.coupon, .user-info-box .inner > .column.point {*/
+/*    width: 15.45%;*/
+/*}*/
+/*.user-info-box .inner > .column {*/
+/*    display: table-cell;*/
+/*    vertical-align: middle;*/
+/*    background: #fff;*/
+/*    padding: 0 25px;*/
+/*    text-align: left;*/
+/*}*/
+/*.user-info-box .column > dt {*/
+/*    color: #666;*/
+/*    font-size: 13px;*/
+/*    margin-bottom: 10px;*/
+/*}*/
+/*.user-info-box .column > dd {*/
+/*    color: #333;*/
+/*    font-size: 22px;*/
+/*    font-weight: 700;*/
+/*    word-break: keep-all;*/
+/*    max-width: 200px;*/
+/*    display: block;*/
+/*    margin-left: 0px;*/
+/*}*/
+/*.user-info-box .column > dd .num {*/
+/*    font-size: 28px;*/
+/*}*/
+/*.text-primary {*/
+/*    color: rgb(0, 199, 40) !important;*/
+/*}*/
+
+
+/* main 내용 부분 */
+.main-section {
+    display: flex;
+    width: 1050px;
+    padding: 50px 0px 80px;
+    margin: 0px auto;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+/* 왼쪽 사이드바 */
+.left-section {
+    width: 200px;
+}
+.left-head {
+    height: 75px;
+    padding: 5px 0px 35px 1px;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 35px;
+    color: rgb(51, 51, 51);
+    letter-spacing: -1px;
+}
+*, :after, :before {
+    box-sizing: border-box;
+    margin: 0;
+}
+.left-ul {
+    border: 1px solid rgb(242, 242, 242);
+    padding-left: 0px;
+}
+.row {
+    cursor: pointer;
+    border-bottom: 1px solid rgb(242, 242, 242);
+    padding: 15px 13px 15px 20px;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    line-height: 19px;
+    letter-spacing: -0.3px;
+    font-size: 14px;
+    color: rgb(102, 102, 102);
+}
+.row.active, .row:hover {
+    background-color: rgb(250, 250, 250);
+    color: rgb(0, 199, 40);
+    font-weight: 500;
+}
+.row.active use, .row:hover use {
+    stroke : rgb(0, 199, 40);
+}
+.row > a {
+
+    background-color: transparent;
+    text-decoration: none;
+    color: inherit;
+
+}
+svg:not(:root) {
+    overflow: hidden;
+}
+
+.inquiryList {
+    width: 100%;
+    height: 60px;
+    padding: 0px 14px 0px 20px;
+    margin-top: 36px;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: rgb(250, 250, 250);
+    line-height: 20px;
+}
+.inquiryText {
+    display: flex;
+    flex-direction: column;
+    color: rgb(51, 51, 51);
+}
+.text1 {
+    font-size: 14px;
+    font-weight: 500;
+}
+.text2 {
+    font-size: 12px;
+}

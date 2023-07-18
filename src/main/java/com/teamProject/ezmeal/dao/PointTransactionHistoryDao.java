@@ -18,4 +18,11 @@ public class PointTransactionHistoryDao {
         return session.insert(namespace + "update_point_history", pointTransactionHistoryDto); // 사용한 point 이력 남기기
     }
 
+
+    // Baek
+    // 현재 남아있는 포인트 조회
+    public int selectPoint(Long memberId) {
+        return session.selectOne(namespace + "selectPoint", memberId);
+    }
+
 }

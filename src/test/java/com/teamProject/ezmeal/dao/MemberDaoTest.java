@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -18,15 +21,41 @@ public class MemberDaoTest {
     private MemberDao memberDao;
     @Autowired
     private LoginService loginService;
+
+    @Test
+    public void getLoginId() throws Exception {
+        String getLoginTest = memberDao.selectLoginId("modify");
+        System.out.println("getLoginTest = " + getLoginTest);
+    }
+
     @Test
     public void getPassword() throws Exception {
         String kimjava100 = memberDao.selectPassword("kimjava100");
         System.out.println("kimjava100 = " + kimjava100);
     }
+
+    @Test
+    public void findId() throws Exception {
+        String name = "백현욱";
+        String email = "zjfl3122@naver.com";
+        Map map = new HashMap<>();
+        map.put("name",name);
+        map.put("email",email);
+        String getFindId = memberDao.selectFindId(name,email);
+        System.out.println("getFindId = " + getFindId);
+        assertEquals(getFindId,"zjfl3122");
+    }
+
     @Test
     public void checkNull() throws Exception {
         Long login = loginService.loginInfo("kimjava100");
         System.out.println("login = " + login);
+    }
+
+    @Test
+    public void getMemberId() throws Exception {
+        Long getMemberIdTest = memberDao.selectMemberId("modify");
+        System.out.println("getMemberIdTest = " + getMemberIdTest);
     }
 
     @Test
@@ -60,7 +89,6 @@ public class MemberDaoTest {
         System.out.println("mbr_id = " + mbr_id);
         withdrawal = memberDao.deleteMember(mbr_id);
         assertTrue(withdrawal==1);
-
     }
 
     @Test
