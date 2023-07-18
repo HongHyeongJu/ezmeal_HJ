@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/css/screens/withdrawal.css">
 </head>
 <body>
+<jsp:include page="header.jsp"/>
 <section id="contents" class="container">
     <div class="title">
         회원탈퇴안내
