@@ -13,6 +13,7 @@ change this template use File | Settings | File Templates. --%>
     <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
+<jsp:include page="header.jsp"/>
 <main class="cart">
     <div class="cart__name">
         <h1>장바구니</h1>

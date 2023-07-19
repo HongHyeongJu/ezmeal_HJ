@@ -65,6 +65,7 @@
     </style>
 </head>
 <body>
+<jsp:include page="header.jsp"/>
 <div class="container">
     <h1>주문이 완료되었습니다!</h1>
 <%--    <i class="fas fa-cart-arrow-down" style="color: #00c728"></i>--%>
