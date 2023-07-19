@@ -1,5 +1,5 @@
 // 회원가입이 정상적으로 이루어지지 않았을 때 경고문
-
+// msg는 controller에서 보낸 값을 저장하기위해 singup.jsp에서 var 전역변수를 선언해서 signup.js에서 처리함
 if (msg !== "") {
     alert(msg);
 }

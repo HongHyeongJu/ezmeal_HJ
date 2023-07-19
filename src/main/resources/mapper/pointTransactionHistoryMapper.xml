@@ -26,4 +26,15 @@
                 FROM tb_point_transaction_history
                 WHERE mbr_id = #{mbr_id});
     </insert>
+
+
+    <!--  Baek  -->
+    <!--  현재 남아있는 포인트 조회 쿼리문  -->
+    <select id="selectPoint" parameterType="Long" resultType="int">
+        SELECT usfl_acmlt_pnt
+        FROM ezmeallocal.TB_POINT_TRANSACTION_HISTORY
+        WHERE mbr_id = #{memberId}
+        ORDER BY pnt_trjs_hist_seq desc
+            limit 1
+    </select>
 </mapper>

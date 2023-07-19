@@ -7,12 +7,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -61,16 +65,20 @@ public class MemberController {
     // PostMapping(/signup)
     // View success.jsp
     @PostMapping("/signup")
-    public String postMemberAdd(MemberDto memberDto, String lgin_id, String lgin_pw ,Model model,
-                                RedirectAttributes rattr, HttpServletRequest req) {
+    public String postMemberAdd(@Valid MemberDto memberDto, BindingResult bindingResult, String lgin_id, String lgin_pw ,
+                                Model model, RedirectAttributes rattr, HttpServletRequest req) {
         // 1. 유효성 검사
-//        if (!isValid(memberDto)) {
-//            String msg = URLEncoder.encode("id를 잘못 입력하셨습니다.","utf-8");
-//
-//            m.addAttribute("msg",msg);
-//            return "redirect:/member/signup";
-////            return "redirect:/member/signup?msg="+msg;
-//        }
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> errors = bindingResult.getAllErrors();
+            for (ObjectError error : errors) {
+                System.out.println(error.getDefaultMessage());
+                model.addAttribute("errors", bindingResult);
+                model.addAttribute("errorMsg", error.getDefaultMessage());
+            }
+            // 에러 메시지를 처리한 후에 다시 회원가입 페이지로 이동하거나, 필요한 로직을 수행합니다.
+            return "signup";
+        }
+
         // 2. DB에 신규회원 정보를 저장
         try {
             int rowCnt = memberService.registerMember(memberDto);    // insert
@@ -86,8 +94,9 @@ public class MemberController {
             System.out.println("memberId = " + memberId);
             HttpSession session = req.getSession();
             session.setAttribute("memberId",memberId);
+            MemberDto loginMbrInfo = memberService.getMemberInfo(memberId);
+            session.setAttribute("loginMbrInfo",loginMbrInfo);
             model.addAttribute("checkSignupSuccess", "signup success!!");
-
             return "signupSuccess"; // insert 성공시에 signupSuccess 페이지로 감
         } catch (Exception e) {
             e.printStackTrace();
@@ -97,10 +106,38 @@ public class MemberController {
         }
     }
 
-//    private boolean isValid(MemberDto memberDto) {
-//        return false;
-//    }
+    // 아이디찾기
+    @GetMapping("/find/id")
+    public String getMemberFindId() {
+        return "findId";
+    }
 
+    @PostMapping("/find/id")
+    public String postMemberFindID(String name, String email, Model model) {
+        // 아이디 찾기에서 입력한 이름과 이메일을 받아서 아이디를 찾는다.
+        String findId = memberService.getFindId(name, email);
+        System.out.println("findID = " + findId);
+        // 찾은 아이디를 조회 화면에 알려준다.
+        model.addAttribute("findId",findId);
+        model.addAttribute("name",name);   // 입력받은 회원명도 같이 담아준다.
+        return "findIdSuccess";
+    }
+
+    // 비밀번호찾기
+    @GetMapping("/find/password")
+    public String getMemberFindPw() {
+        return "findPw";
+    }
+
+    @PostMapping("/find/password")
+    public String postMemberFindPw(String lgin_id, String email, Model model){
+        System.out.println("lgin_id = " + lgin_id);
+        System.out.println("email = " + email);
+        String findPw = memberService.getFindPw(lgin_id, email);
+        System.out.println("findPw = " + findPw);
+        model.addAttribute("findPw", findPw);   // id, email이 일치하는 회원의 패스워드를 모델에 담아준다.
+        return "findPwSuccess";
+    }
 
 
 }

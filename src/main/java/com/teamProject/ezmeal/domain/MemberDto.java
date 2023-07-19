@@ -46,6 +46,8 @@ public class MemberDto {
     private String in_id;
     private LocalDateTime up_dtm;
     private String up_id;
+    private String mbr_grd_name;
+    private String grd_img;
 
     // 생성자 생성
     public MemberDto(){}
@@ -350,4 +352,19 @@ public class MemberDto {
         this.up_id = up_id;
     }
 
+    public String getMbr_grd_name() {
+        return mbr_grd_name;
+    }
+
+    public void setMbr_grd_name(String mbr_grd_name) {
+        this.mbr_grd_name = mbr_grd_name;
+    }
+
+    public String getGrd_img() {
+        return grd_img;
+    }
+
+    public void setGrd_img(String grd_img) {
+        this.grd_img = grd_img;
+    }
 }
