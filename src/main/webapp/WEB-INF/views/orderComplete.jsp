@@ -10,9 +10,9 @@
 <head>
     <title>주문 완료</title>
     <style>
-        /* CSS 스타일을 여기에 작성합니다. */
+        @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'NanumSquare', sans-serif;
         }
 
         .container {
@@ -32,7 +32,7 @@
         }
 
         img {
-            width: 180px;
+            width: 250px;
             height: 205px;
             margin-bottom: 45px;
         }
@@ -68,13 +68,13 @@
 <div class="container">
     <h1>주문이 완료되었습니다!</h1>
 <%--    <i class="fas fa-cart-arrow-down" style="color: #00c728"></i>--%>
-    <img src="/img/penguin.png" alt="penguin" />
+    <img src="/img/main/order_logo.png" alt="penguin" />
     <p>주문해 주셔서 감사합니다.</p>
     <p>주문 번호: ${orderId}</p>
     <p>주문 내역 및 상세 정보는 아래의 링크를 통해 확인할 수 있습니다.</p>
     <a href="/">홈으로 돌아가기</a>
-    <a href="/">주문 내역 확인하기</a>
-    <a href="/">주문 상세 확인하기</a>
+    <a href="/orderPayment">주문 내역 확인하기</a>
+    <a href="/orderDetail">주문 상세 확인하기</a>
 </div>
 </body>
 <%--<script--%>
