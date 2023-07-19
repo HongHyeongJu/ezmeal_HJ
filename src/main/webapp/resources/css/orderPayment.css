@@ -1,0 +1,115 @@
+.main-section-right__order-history {
+    width: 820px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.order-history__period {
+    width: 820px;
+    box-sizing: border-box;
+}
+.order-history__period_title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgb(246, 250, 246);
+    margin-bottom: 10px;
+    padding: 0 10px;
+}
+
+.order-history__period_detail {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 0 10px 10px 0;
+    margin-bottom: 50px;
+    border-bottom: 2px solid black;
+}
+
+.order-history__period_detail__title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.order-history__period_btn {
+    border: 1px solid rgb(0, 199, 40);
+    background-color: rgb(246, 250, 246);
+    border: 1px solid rgb(219, 231, 219);
+
+    border-radius: 6px;
+    background: inherit;
+    padding: 3px;
+    margin-left: 10px;
+    cursor: pointer;
+    width: 60px;
+}
+
+.order-history__period_btn:hover,
+.order-history__period_btn:focus {
+    background-color: rgb(0, 199, 40);
+    color: aliceblue;
+}
+
+.order-history__AJAX-load {
+    width: 750px;
+}
+
+.order-history__products-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid lightgrey;
+}
+
+.order-history__products-header__detail-link {
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 기본 색상 상속 */
+}
+
+.order-history__products-main {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.order-history__products-main__products {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.order-history__products-img {
+    width: 80px;
+    height: 100px;
+}
+
+.order-history__products-definition__list {
+    display: flex;
+    margin: 4px 0 0 10px;
+}
+.order-history__products-definition__title {
+    width: 100px;
+}
+.order-history__products-definition__detail {
+    margin: 0;
+}
+
+.order-history__products-main__status {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.order-history__products__status-function {
+    border: 1px solid rgb(246, 250, 246);
+    background-color: rgb(246, 250, 246);
+    border-radius: 20px;
+    padding: 3px 8px;
+    cursor: pointer;
+    margin-top: 10px;
+}
