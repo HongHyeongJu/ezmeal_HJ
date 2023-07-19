@@ -5,6 +5,7 @@
 <mapper namespace="pointTransactionHistory">
     <!-- 사용 가능 point 받아오는 mapper -->
     <select id="point_can_use" resultType="int">
+        # todo 적립금이 적립되는 경우 Min으로 하게 되면 안되니깐 update 날짜가 제일 최신인걸로 받아오기
         select MIN(usfl_acmlt_pnt)
         from tb_point_transaction_history
         where mbr_id = #{mbrId};
