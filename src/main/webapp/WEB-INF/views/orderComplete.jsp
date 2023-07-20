@@ -15,37 +15,34 @@
             font-family: 'NanumSquare', sans-serif;
         }
 
-        .container {
+        .order-complete__container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            margin-top: 150px;
         }
 
-        h1 {
+        .order-complete__title {
             margin-bottom: 30px;
         }
 
-        .fa-cart-arrow-down {
-            font-size: 80px;
-            margin-bottom: 45px;
-        }
 
-        img {
+        .order-complete__img {
             width: 250px;
             height: 205px;
             margin-bottom: 45px;
         }
 
-        p {
+        .order-complete__p {
             margin-bottom: 20px;
         }
 
-        p:nth-child(5) {
+        .order-complete__p:nth-child(5) {
             margin-bottom: 40px;
         }
 
-        a {
+        .order-complete__a {
             width: 350px;
             margin-bottom: 10px;
             padding: 14px;
@@ -57,7 +54,7 @@
             font-size: large;
         }
 
-        a:hover {
+        .order-complete__a:hover {
             background-color: #00c728;
             color: #fff;
             font-weight: bold;
@@ -66,20 +63,15 @@
 </head>
 <body>
 <jsp:include page="header.jsp"/>
-<div class="container">
-    <h1>주문이 완료되었습니다!</h1>
-<%--    <i class="fas fa-cart-arrow-down" style="color: #00c728"></i>--%>
-    <img src="/img/main/order_logo.png" alt="penguin" />
-    <p>주문해 주셔서 감사합니다.</p>
-    <p>주문 번호: ${orderId}</p>
-    <p>주문 내역 및 상세 정보는 아래의 링크를 통해 확인할 수 있습니다.</p>
-    <a href="/">홈으로 돌아가기</a>
-    <a href="/orderPayment">주문 내역 확인하기</a>
-    <a href="/orderDetail">주문 상세 확인하기</a>
+<div class="order-complete__container">
+    <h1 class="order-complete__title">주문이 완료되었습니다!</h1>
+    <img src="/img/main/order_logo.png" alt="penguin" class="order-complete__img"/>
+    <p class="order-complete__p order-complete__contents">주문해 주셔서 감사합니다.</p>
+    <p class="order-complete__p order-complete__order-number">주문 번호: ${orderId}</p>
+    <p class="order-complete__p">주문 내역 및 상세 정보는 아래의 링크를 통해 확인할 수 있습니다.</p>
+    <a class="order-complete__a" href="/">홈으로 돌아가기</a>
+    <a class="order-complete__a" href="/orderPayment">주문 내역 확인하기</a>
+    <a class="order-complete__a" href="/orderDetail">주문 상세 확인하기</a>
 </div>
 </body>
-<%--<script--%>
-<%--        src="https://kit.fontawesome.com/6478f529f2.js"--%>
-<%--        crossorigin="anonymous"--%>
-<%--></script>--%>
 </html>

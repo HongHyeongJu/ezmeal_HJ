@@ -1,5 +1,6 @@
 package com.teamProject.ezmeal.dao;
 
+import com.teamProject.ezmeal.domain.joinDomain.OrderPaymentJoinDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -23,5 +25,11 @@ public class OrderPaymentDaoTest {
         orderPaymentMap.put("payId", 212L);
         int i = orderPaymentDao.insertOrderPayment(orderPaymentMap);
         assertEquals(1, i);
+    }
+
+    @Test
+    public void selectOrderPaymentList(){
+        List<OrderPaymentJoinDto> orderPaymentJoinDtos = orderPaymentDao.selectOrderPaymentList(1001L);
+        System.out.println("orderPaymentJoinDtos = " + orderPaymentJoinDtos);
     }
 }

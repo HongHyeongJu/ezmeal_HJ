@@ -3,8 +3,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="orderPaymentDao">
-    <insert id="insertOrderPayment"  parameterType="Map">
+    <insert id="insertOrderPayment" parameterType="Map">
         INSERT INTO tb_order_payment (ord_id, pay_id)
         values (#{orderId}, #{payId});
     </insert>
+
+    <!-- 처음 주문 내역에 들어 갈 경우 모든 주문 내역을 보여준다. -->
+    <select id="select_all_order_payment_list" resultType="OrderPaymentJoinDto">
+        select om.ord_id,
+               om.prod_smry,
+               om.stus,
+               DATE_FORMAT(om.in_dtm, '%Y-%m-%d %H:%i') as date_time,
+               pm.pay_mtd,
+               pm.pay_prc
+        from tb_order_payment op,
+             tb_order_master om,
+             tb_payment_master pm
+        where op.ord_id = om.ord_id
+          and op.pay_id = pm.pay_id
+          and om.mbr_id = #{mbrId}
+    </select>
 </mapper>
