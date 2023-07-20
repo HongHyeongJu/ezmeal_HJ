@@ -68,7 +68,6 @@ public class MypageController {
         } catch (Exception e) {
             return "mypage";
         }
-
     }
 
     @PostMapping("/modify") // 회원정보수정이 완료되면 마이페이지로 돌아감
