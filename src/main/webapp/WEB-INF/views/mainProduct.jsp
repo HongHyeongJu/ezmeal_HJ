@@ -1,37 +1,19 @@
 <%--
   Created by IntelliJ IDEA.
   User: hhju2
-  Date: 2023-06-26
-  Time: PM 11:35
+  Date: 2023-07-20
+  Time: PM 7:44
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>카테고리 별 상품 목록</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
-  <link rel="stylesheet" href="/css/screens/productcatelist.css?ver=2"/>
+    <title></title>
 </head>
 <body>
 
-<!--헤더 내려오는 공백-->
-<div class="empty"></div>
-<ul class="지붕묶음" id="section1">
-  <input type="hidden" data-cate_cd="${cate_cd}">
-  <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=default" class="sort-link active" data-sort="default">추천순</a></li>
-  <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=new" class="sort-link" data-sort="new">신상품순</a></li>
-  <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=lowprc" class="sort-link" data-sort="lowprc">낮은가격순</a></li>
-  <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=highprc" class="sort-link" data-sort="higprc">높은가격순</a></li>
 
-</ul>
-
-<!--전달 받은 상품 리스트 하나만 꺼내기-->
+<!--메인 페이지에 보여줄 상품만 list에 담기-->
 <c:forEach var="prod" items="${prodList}" varStatus="status">
   <!-- 4개씩 ul 태그로 감싸기 -->
   <c:if test="${status.index % 4 == 0}">
@@ -46,35 +28,35 @@
           <c:set var="productImg" value="${prodImgList[status.index].url}"/>
           <img id="prod_top top_img"
                src="/img/${productImg}.png"/>
-<%--               src="/img/${empty productImg ? 'ezmeal_logo' : productImg}.png"/>--%>
+            <%--               src="/img/${empty productImg ? 'ezmeal_logo' : productImg}.png"/>--%>
         </a>
 
         <!--냉동/냉장/상온 아이콘-->
-          <c:if test="${prod.getSfkp_stus() == '냉동'}">
+        <c:if test="${prod.getSfkp_stus() == '냉동'}">
                 <span class="iceTyp sfkp-stus" data-index="${status.index}" value="${prod.getSfkp_stus()}">
                     <i class="fas fa-igloo"></i>
                 </span>
-          </c:if>
-          <c:if test="${prod.getSfkp_stus() == '냉장'}">
+        </c:if>
+        <c:if test="${prod.getSfkp_stus() == '냉장'}">
                 <span class="iceTyp sfkp-stus" data-index="${status.index}" value="${prod.getSfkp_stus()}">
                     <i class="fas fa-tint"></i>
                 </span>
-          </c:if>
-          <c:if test="${prod.getSfkp_stus() == '상온'}">
+        </c:if>
+        <c:if test="${prod.getSfkp_stus() == '상온'}">
                 <span class="iceTyp sfkp-stus" data-index="${status.index}" value="${prod.getSfkp_stus()}">
                     <i class="fas fa-seedling"></i>
                 </span>
-          </c:if>
+        </c:if>
 
 
       </figure>
       <!--------------------------------------------------------------------------------------------->
       <div class="prod_bottom">
-          <!--상품 관련 평균평점 및 리뷰 (리뷰테이블이 오면 값넣음)-->
-          <div class="review_set">
-              <a href="/product/detail?cate_cd=05&prod_cd=${prod.getProd_cd()}#section3">
+        <!--상품 관련 평균평점 및 리뷰 (리뷰테이블이 오면 값넣음)-->
+        <div class="review_set">
+          <a href="/product/detail?cate_cd=05&prod_cd=${prod.getProd_cd()}#section3">
 
-  <!--별 이미지(고정)-->
+            <!--별 이미지(고정)-->
             <span class="star_img"></span>
             <c:set var="starAvg" value="${reviewAngMap[prod.prod_cd].avg}" />
             <!--평균 점수-->
@@ -82,19 +64,19 @@
             <c:set var="reviewCnt" value="${reviewCntMap[prod.prod_cd].count}" />
             <!--리뷰 수-->
             <span class="total_num">(${empty reviewCnt ? 0 : reviewCnt})</span>
-              </a>
-          </div>
+          </a>
+        </div>
 
         <div class="in_middle">
           <a href="/product/detail?cate_cd=05&prod_cd=${prod.getProd_cd()}">
 
-          <p class="prod_title"> <!--상품 이름-->
+            <p class="prod_title"> <!--상품 이름-->
               <span class="prod_title prod_name" >${prod.getName()}</span>
-          </p>
+            </p>
 
-          <div class="dc_cd_prod_dscpt_wrapper"> <!-- 할인정보, 판매가격, 소비자가격 세트 -->
+            <div class="dc_cd_prod_dscpt_wrapper"> <!-- 할인정보, 판매가격, 소비자가격 세트 -->
 
-            <c:choose>
+              <c:choose>
                 <c:when test="${not empty prodOptMap[prod.prod_cd]}"> <!--옵션 있을 때--------------->
 
 
@@ -146,7 +128,7 @@
                   </c:if>
 
                 </c:otherwise>
-            </c:choose>
+              </c:choose>
 
             </div>
           </a>
@@ -154,40 +136,40 @@
 
         <!--------------------------------------------------------------------------------------------->
         <!--상품 목록 페이지에서 바로 장바구니에 넣는 버튼-->
-<%--        <div class="add_cart">--%>
-<%--          <form id="cart_form_${status.index}" class="cart_form">--%>
-            <div class="button_wrapper">
-              <!--수량 빼는 버튼-->
-              <button type="button" class="min_btn" id="min_btn_${status.index}" onclick="decreaseQuantity(this)">-</button>
-                  <!--선택한 수량. 담기 버튼 누르면 보내줘야 하는 값-->
-                  <span id="qty_${status.index}" class="qty">1</span>
-              <!--수량 추가 버튼-->
-              <button type="button" class="pls_btn" id="pls_btn_${status.index}" onclick="increaseQuantity(this)">+</button>
-              &nbsp;&nbsp;
-              <!--(히든)장바구니 담기버튼 눌렀을 때 상품 코드도 함께 전송-->
-              <input type="hidden" id="prod_cd_${status.index}" value="${prod.getProd_cd()}">
-              <!--상품찜하기 버튼-->
-              <button type="button" class="wishlist_btn" id="wishlist_btn_${status.index}" >
-                <i class="far fa fa-heart"></i>
-              </button>
-              <!--제출 버튼-->
-              <button type="button" class="submit_btn" id="submit_btn_${status.index}" >
-                <i class="fas fa fa-shopping-cart"></i>
-              </button>
-            </div>
-<%--          </form>--%>
-<%--        </div>--%>
+          <%--        <div class="add_cart">--%>
+          <%--          <form id="cart_form_${status.index}" class="cart_form">--%>
+        <div class="button_wrapper">
+          <!--수량 빼는 버튼-->
+          <button type="button" class="min_btn" id="min_btn_${status.index}" onclick="decreaseQuantity(this)">-</button>
+          <!--선택한 수량. 담기 버튼 누르면 보내줘야 하는 값-->
+          <span id="qty_${status.index}" class="qty">1</span>
+          <!--수량 추가 버튼-->
+          <button type="button" class="pls_btn" id="pls_btn_${status.index}" onclick="increaseQuantity(this)">+</button>
+          &nbsp;&nbsp;
+          <!--(히든)장바구니 담기버튼 눌렀을 때 상품 코드도 함께 전송-->
+          <input type="hidden" id="prod_cd_${status.index}" value="${prod.getProd_cd()}">
+          <!--상품찜하기 버튼-->
+          <button type="button" class="wishlist_btn" id="wishlist_btn_${status.index}" >
+            <i class="far fa fa-heart"></i>
+          </button>
+          <!--제출 버튼-->
+          <button type="button" class="submit_btn" id="submit_btn_${status.index}" >
+            <i class="fas fa fa-shopping-cart"></i>
+          </button>
+        </div>
+          <%--          </form>--%>
+          <%--        </div>--%>
 
-            <c:if test="${not empty prodOptMap[prod.prod_cd]}">
-              <div class="hidden_option" id="opt_div_${status.index}">
-                <select class="select_box" id="opt_select_${status.index}">
-                  <!-- prodOptMap에서 해당 prod_cd의 ProductOptionDto List를 가져와 각 항목에 대해 옵션 태그를 생성 -->
-                  <c:forEach var="optList" items="${prodOptMap[prod.prod_cd]}"  varStatus="opt_status">
-                    <option value="${optList.opt_seq}">${optList.name}</option>
-                  </c:forEach>
-                </select>
-              </div>
-            </c:if>
+        <c:if test="${not empty prodOptMap[prod.prod_cd]}">
+          <div class="hidden_option" id="opt_div_${status.index}">
+            <select class="select_box" id="opt_select_${status.index}">
+              <!-- prodOptMap에서 해당 prod_cd의 ProductOptionDto List를 가져와 각 항목에 대해 옵션 태그를 생성 -->
+              <c:forEach var="optList" items="${prodOptMap[prod.prod_cd]}"  varStatus="opt_status">
+                <option value="${optList.opt_seq}">${optList.name}</option>
+              </c:forEach>
+            </select>
+          </div>
+        </c:if>
 
       </div>
       <!--------------------------------------------------------------------------------------------->
@@ -200,22 +182,6 @@
   </c:if>
 </c:forEach>
 
-
-  <script src="/javascript/productlistaddcart.js"></script>
-  <script>
-    // msg 값을 확인하고 alert 창 띄우기 없는 상품코드 일 때
-      var msg = "${msg}";
-      if (msg !== "") {
-        alert(msg);
-      }
-  </script>
-
-  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-
-  <script>
-    src="https://kit.fontawesome.com/6478f529f2.js"
-    crossOrigin="awesome"
-  </script>
 
 </body>
 </html>

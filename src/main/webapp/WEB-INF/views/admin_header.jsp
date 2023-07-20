@@ -20,8 +20,8 @@
                 <span>&nbsp;ezmeal  관리자  페이지</span>
             </div>
             <div class="admin_name">
-                <p >상품관리팀&nbsp;&nbsp;&nbsp;ateam04&nbsp;님&nbsp;&nbsp;로그인 중&nbsp;&nbsp;</p>
-                <a href="로그아웃버튼주소"><p>/&nbsp;&nbsp;로그아웃</p></a>
+                <p >상품관리팀&nbsp;&nbsp;&nbsp;ateam4&nbsp;님&nbsp;&nbsp;로그인 중&nbsp;&nbsp;</p>
+                <a href="로그아웃버튼주소"><p id="logout_btn">/&nbsp;&nbsp;로그아웃</p></a>
             </div>
         </div>
     </div>

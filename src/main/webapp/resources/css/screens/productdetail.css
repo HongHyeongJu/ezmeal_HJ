@@ -379,12 +379,11 @@ button.order_btn, button.addcart_btn {
 }
 
 .addcart_btn.hover .fa-shopping-cart {
-    color: #0d88ca /* 호버 상태 색상 */
+    color: #29ae77 /* 호버 상태 색상 */
 }
 
-
 .order_btn.hover .fa-credit-card {
-    color: #1152be /* 호버 상태 색상 */
+    color: #015633 /* 호버 상태 색상 */
 }
 
 /*----------------------네비게이션 시작-------------------------------*/

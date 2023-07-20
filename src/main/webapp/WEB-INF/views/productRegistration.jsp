@@ -63,15 +63,15 @@
                                 </c:forEach>
                             </select>
                         </td>
-                        <td><input type="radio" name="product.sale_yn" value="y" <c:if test="${product.getSale_yn() == 'y'}">checked</c:if> >판매</td>
-                        <td><input type="radio" name="product.dp_yn" value="y" <c:if test="${product.getDp_yn() == 'y'}">checked</c:if> >진열</td>
-                        <td><input type="radio" name="product.inv_yn" value="y" <c:if test="${product.getInv_yn() == 'y'}">checked</c:if> >재고관리</td>
+                        <td><label><input type="radio" name="product.sale_yn" value="y" <c:if test="${product.getSale_yn() == 'y'}">checked</c:if> >판매</label></td>
+                        <td><label><input type="radio" name="product.dp_yn" value="y" <c:if test="${product.getDp_yn() == 'y'}">checked</c:if> >진열</label></td>
+                        <td><label><input type="radio" name="product.inv_yn" value="y" <c:if test="${product.getInv_yn() == 'y'}">checked</c:if> >재고관리</label></td>
                     </tr>
                     <tr>
                         <td ></td>
-                        <td><input type="radio" name="product.sale_yn" value="n" <c:if test="${product.getSale_yn() == 'n'}">checked</c:if> >미판매</td>
-                        <td><input type="radio" name="product.dp_yn" value="n" <c:if test="${product.getDp_yn() == 'n'}">checked</c:if> >미진열</td>
-                        <td><input type="radio" name="product.inv_yn" value="n" <c:if test="${product.getInv_yn() == 'n'}">checked</c:if> >재고미관리</td>
+                        <td><label><input type="radio" name="product.sale_yn" value="n" <c:if test="${product.getSale_yn() == 'n'}">checked</c:if> >미판매</label></td>
+                        <td><label><input type="radio" name="product.dp_yn" value="n" <c:if test="${product.getDp_yn() == 'n'}">checked</c:if> >미진열</label></td>
+                        <td><label><input type="radio" name="product.inv_yn" value="n" <c:if test="${product.getInv_yn() == 'n'}">checked</c:if> >재고미관리</label></td>
                     </tr>
 
                 </table>
@@ -225,9 +225,9 @@
                     <tr>
                         <th class="storage_header">보관상태</th>
                         <td>
-                            <input type="radio" name="product.sfkp_stus" value="상온" ${product.getSfkp_stus().equals("상온") ? 'checked' : ''}>상온
-                            <input type="radio" name="product.sfkp_stus" value="냉동" ${product.getSfkp_stus().equals("냉동") ? 'checked' : ''}>냉동
-                            <input type="radio" name="product.sfkp_stus" value="냉장" ${product.getSfkp_stus().equals("냉장") ? 'checked' : ''}>냉장
+                            <label><input type="radio" name="product.sfkp_stus" value="상온" ${product.getSfkp_stus().equals("상온") ? 'checked' : ''}>상온</label>
+                            <label><input type="radio" name="product.sfkp_stus" value="냉동" ${product.getSfkp_stus().equals("냉동") ? 'checked' : ''}>냉동</label>
+                            <label><input type="radio" name="product.sfkp_stus" value="냉장" ${product.getSfkp_stus().equals("냉장") ? 'checked' : ''}>냉장</label>
                         </td>
                     </tr>
                     <tr>
@@ -236,6 +236,7 @@
                             <input type="radio" name="product.sfkp_mtd" value="실온보관" ${product.getSfkp_mtd().equals("실온보관") ? 'checked' : ''}>실온보관
                             <input type="radio" name="product.sfkp_mtd" value="냉장보관(0~10도)" ${product.getSfkp_mtd().equals("냉장보관(0~10도)") ? 'checked' : ''}>냉장보관(0~10도)
                             <input type="radio" name="product.sfkp_mtd" value="-18도 이하 냉동보관" ${product.getSfkp_mtd().equals("-18도 이하 냉동보관") ? 'checked' : ''}>-18도 이하 냉동보관
+                            <br>
                             <br>
                             <input type="radio" name="product.sfkp_mtd" value="직접입력">직접입력
                             <input type="text" id="custom_sfkp_mtd" name="custom_sfkp_mtd" placeholder="직접 입력" disabled>
@@ -248,17 +249,17 @@
 
             <div class="right dscpt_set_div">
                 <table class="storage_div_table">
-                    <tr>
+                    <tr class="storage_div_tr">
                         <th class="storage_header">상품 요약설명</th>
-                        <td><textarea id="dscpt" name="product.dscpt" rows="3" cols="80">${product.getDscpt()}</textarea></td>
+                        <td><textarea id="dscpt" name="product.dscpt" rows="3" cols="60">${product.getDscpt()}</textarea></td>
                     </tr>
-                    <tr>
+                    <tr class="storage_div_tr">
                         <th class="storage_header">상품 상세설명</th>
-                        <td><textarea id="detail" name="product.detail" rows="3" cols="80">${product.getDetail()}</textarea></td>
+                        <td><textarea id="detail" name="product.detail" rows="3" cols="60">${product.getDetail()}</textarea></td>
                     </tr>
-                    <tr>
+                    <tr class="storage_div_tr">
                         <th class="storage_header">비고</th>
-                        <td><textarea id="rmk" name="product.rmk" rows="3" cols="80">${product.getRmk()}</textarea></td>
+                        <td><textarea id="rmk" name="product.rmk" rows="3" cols="60">${product.getRmk()}</textarea></td>
                     </tr>
                 </table>
             </div>
@@ -271,7 +272,7 @@
                         <th>상품 중량</th>
                         <th>상품 규격</th>
                     </tr>
-                    <tr>
+                    <tr class="dscpt_set_tr_1">
                         <td><input type="number" id="min_qty" name="product.min_qty" value="${product.getMin_qty()}" min="1" value="1" ></td>
                         <td><input type="number" id="weight" name="product.weight" value="${product.getWeight()}" ></td>
                         <td><input type="text" id="stnd" name="product.stnd" value="${product.getStnd()}" placeholder="가로*세로*너비" ></td>
@@ -280,19 +281,19 @@
                 <table class="dscpt_set_div_table_2">
                     <tr>
                         <th class="dscpt_header">조리법</th>
-                        <td colspan="3" rows="3" cols="60" ><textarea id="recipe" name="product.recipe" rows="3" cols="80" >${product.getRecipe()}</textarea></td>
+                        <td colspan="3" rows="3" cols="60" ><textarea id="recipe" name="product.recipe" rows="3" cols="60" >${product.getRecipe()}</textarea></td>
                     </tr>
                     <tr>
                         <th class="dscpt_header">활용법</th>
-                        <td colspan="3" rows="3" cols="60" ><textarea id="mtd" name="product.mtd" rows="3" cols="80" >${product.getMtd()}</textarea></td>
+                        <td colspan="3" rows="3" cols="60" ><textarea id="mtd" name="product.mtd" rows="3" cols="60" >${product.getMtd()}</textarea></td>
                     </tr>
-                    <tr>
+                    <tr class="dscpt_set_tr_2">
                         <th class="dscpt_header">소비기한</th>
                         <td><input type="text" id="distb_tlmt" name="product.distb_tlmt" value="${product.getDistb_tlmt()}" ></td>
                         <th class="dscpt_header">원산지</th>
                         <td><input type="text" id="orplc" name="product.orplc" value="${product.getOrplc()}" ></td>
                     </tr>
-                    <tr>
+                    <tr class="dscpt_set_tr_3">
                         <th class="dscpt_header">유효 시작일</th>
                         <td><input type="date" id="vld_start_dt" name="product.vld_start_dt" value="${product.getVld_start_dt()}" ></td>
                         <th class="dscpt_header">유효 종료일</th>

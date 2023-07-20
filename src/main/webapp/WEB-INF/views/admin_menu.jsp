@@ -31,6 +31,21 @@
                 <li class="hidden order_li sub_li">전체 주문 조회</li>
             </a>
             <a href="홈페이지 주소">
+                <li class="hidden order_li sub_li">배송 중비중 관리</li>
+            </a>
+            <a href="홈페이지 주소">
+                <li class="hidden order_li sub_li">배송 대기 관리</li>
+            </a>
+            <a href="홈페이지 주소">
+                <li class="hidden order_li sub_li">배송 중 관리</li>
+            </a>
+            <a href="홈페이지 주소">
+                <li class="hidden order_li sub_li">배송 완료 조회</li>
+            </a>
+            <a href="홈페이지 주소">
+                <li class="hidden order_li sub_li">취소</li>
+            </a>
+            <a href="홈페이지 주소">
                 <li class="hidden order_li sub_li">반품</li>
             </a>
             <a href="홈페이지 주소">
@@ -52,12 +67,17 @@
                 <li class="hidden prod_li sub_li">상품 진열</li>
             </a>
             <a href="홈페이지 주소">
+                <li class="hidden prod_li sub_li">상품 옵션 관리</li>
+            </a>
+            <a href="홈페이지 주소">
                 <li class="hidden prod_li sub_li">재고 관리</li>
             </a>
             <a href="홈페이지 주소">
-                <li class="hidden prod_li sub_li">상품 옵션 관리</li>
+                <li class="hidden prod_li sub_li">상품 할인코드 관리</li>
             </a>
-
+            <a href="홈페이지 주소">
+                <li class="hidden prod_li sub_li">거래처 관리</li>
+            </a>
 
             <li class="member main_li" id="member"><i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;고객</li>
             <a href="홈페이지 주소">
@@ -83,7 +103,7 @@
             </a>
 
 
-            <li class="board main_li" id="board"><i class="fas fa-clipboard"></i>&nbsp;&nbsp;&nbsp;게시판</li>
+            <li class="board main_li" id="board"><i class="fas fa-clipboard"></i>&nbsp;&nbsp;&nbsp;&nbsp;게시판</li>
             <a href="홈페이지 주소">
                 <li class="hidden board_li sub_li">게시판 대시보드</li>
             </a>
@@ -99,7 +119,15 @@
 
             <li class="main_li"><i class="fas fa-chart-bar"></i>&nbsp;&nbsp;&nbsp;통계</li>
             <li class="main_li"><i class="fas fa-comments-dollar"></i>&nbsp;&nbsp;프로모션</li>
-            <li class="main_li"><i class="fas fa-user-cog"></i>&nbsp;&nbsp;관리자정보</li>
+            <li class="main_li"><i class="fas fa-calendar-check"></i>&nbsp;&nbsp;&nbsp;운영일정</li>
+            <li class="main_li"><i class="fas fa-shipping-fast"></i>&nbsp;&nbsp;EZ배송</li>
+            <li class="main_li"><i class="fas fa-warehouse"></i>&nbsp;&nbsp;상품창고</li>
+            <li class="main_li"><i class="fas fa-database"></i>&nbsp;&nbsp;&nbsp;데이터분석</li>
+            <li class="main_li"><i class="fas fa-file-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;통합엑셀</li>
+            <li class="main_li"><i class="fas fa-id-card-alt"></i>&nbsp;&nbsp;관리자정보</li>
+            <li class="main_li"><i class="fas fa-journal-whills"></i>&nbsp;&nbsp;&nbsp;쇼핑몰 정책</li>
+            <li class="main_li">&nbsp;</li>
+
         </ul>
     </div>
 

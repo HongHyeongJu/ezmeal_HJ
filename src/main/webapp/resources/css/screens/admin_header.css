@@ -10,19 +10,18 @@ body {
 .admin_header_div {
     background-color: rgb(25, 38, 66);
     height: 80px;
-    width: 1690px;
-    display: flex;
+    width: auto;
     justify-content: center;
 }
 
 .header {
     display: flex;
-    align-items: center;
+
 }
 
 .admin_title, .admin_name {
-        display: flex;
-        align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .logo_img {
@@ -31,9 +30,12 @@ body {
 }
 
 .admin_title{
+    margin-top: 5px;
     margin-left: 600px;
 }
 .admin_title > span {
+    width : 400px;
+    height: auto;
     font-size: 30px;
     font-weight: 600;
     color: rgb(255, 255, 255);
@@ -41,7 +43,9 @@ body {
 
 
 .admin_name > p {
-    margin-left: 200px;
+    width : 330px;
+    margin-top: 25px;
+    margin-left: 100px;
     font-size: 20px;
     font-weight: 300;
     color: rgb(255, 255, 255);
@@ -56,10 +60,15 @@ a {
     color: rgb(255, 255, 255);
 }
 
+#logout_btn  {
+    margin-top: 25px;
+    width : 100px;
+}
+
 
 /*-------------------------------  헤더 묶는 디브 ------------------------------------*/
 /*헤더 아래쪽 왼쪽 '메뉴'와 오른쪽 '개인페이지' 묶는 디브*/
-.all_container_div {   
+.all_container_div {
     display: flex;
     height: auto;
     min-height: 860px;
