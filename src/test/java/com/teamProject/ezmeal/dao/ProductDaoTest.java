@@ -24,7 +24,7 @@ public class ProductDaoTest {
     @Test
     public void testInsertSelectDeleteProduct() throws Exception  {
         ProductDto productDto = new ProductDto("0201","1","CUST001","DC10%","불닭가슴살콘치즈볶음밥","[잇메이트] 불닭볶음밥 콘치즈맛","냉동","-18도 이하 냉동보관",2900,3900,3900,null,"신상 불닭시리즈 볶음밥",null,1,null,null,"상품설명/상세정보 참조","냉동상태인 제품포장을 살짝 뜯어 전자레인지에 넣어주세요.   냉동상태(700W) : 전자레인지에 약 1분 30초 조리 후 뒤집어서 30초 조리해주세요 / 해동상태(700W) : 해동된 제품은 전자레인지에 약 40~54초 조리해주세요",
-                "활용법 : 식단 조절시 활용, 샐러드와 같이 드세요","별도표기일까지","2023/01/01","2024/10/24","ateam02","2023/06/21","y","y","n","y","n",null, LocalDateTime.now(),"ateam02",LocalDateTime.now(),"ateam02");
+                "활용법 : 식단 조절시 활용, 샐러드와 같이 드세요","별도표기일까지","2023/01/01","2024/10/24","ateam02","2023/06/21","y","y","n","y","n",null,"ateam02","ateam02");
 
         /*상품 생성*/
         int insert_num = productDao.insertProduct(productDto);
@@ -45,6 +45,35 @@ public class ProductDaoTest {
 
     }
 
+    /*상품 왜 안꺼내지지?*/
+    @Test
+    public void selectTest() throws SQLException {
+        ProductDto selectProd = productDao.selectProductByProdCd(2L);
+        System.out.println(selectProd.toString());
+    }
+
+
+    /*재고수량에 따른 새벽 상품 상태코드 업데이트*/
+    @Test
+    public void updateAllProdStatus() throws SQLException {
+        Integer update_num = productDao.updateAllProdStatus();
+        System.out.println("update_num:"+update_num);
+    }
+
+
+    /*주문으로 인한 재고0으로 해당 상품코드 상태만 3으로 변경*/
+    @Test
+    public void updateInvTempSoldOutDueToProdStatus() throws SQLException {
+        Integer update_num = productDao.updateProdStatusDueToInvTempSoldOut(30L);
+        assertTrue(update_num==1);
+        System.out.println("update_num: "+update_num);
+        ProductDto selectProd = productDao.selectProductByProdCdForTdd(30L);
+        if (selectProd != null) {
+            System.out.println(selectProd.toString());
+        } else {
+            System.out.println("Product not found");
+        }
+    }
 
 
     /* 가장 큰 prod_cd 찾기 */

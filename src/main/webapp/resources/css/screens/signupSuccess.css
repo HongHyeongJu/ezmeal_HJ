@@ -21,7 +21,7 @@ section {
     margin: 0px auto;
     padding: 50px 0px;
     text-align: center;
-    background-color: rgb(251, 248, 252);
+    background-color: rgb(251 255 253);
     border-top: 2px solid rgb(76, 76, 76);
     border-bottom: 1px solid rgb(76, 76, 76);
 }
@@ -39,7 +39,7 @@ section {
 .signupSuccess-area {
     width: 600px;
     margin: 0px auto;
-    border-top: 2px solid rgb(106, 54, 100);
+    border-top: 2px solid rgb(0, 199, 40);
     color: rgb(76, 76, 76);
 }
 
@@ -47,7 +47,7 @@ section {
     width: 100%;
     display: flex;
     text-align: left;
-    border-bottom: 1px solid rgb(106, 54, 100);
+    border-bottom: 1px solid rgb(0, 199, 40);
 }
 .areamenu {
     width: 130px;
@@ -73,9 +73,9 @@ section {
     width: 100%;
     height: 46px;
     border-radius: 3px;
-    color: rgb(95, 0, 128);
+    color: rgb(0, 199, 40);
     background-color: rgb(255, 255, 255);
-    border: 1px solid rgb(95, 0, 128);
+    border: 1px solid rgb(0, 199, 40);
     cursor: pointer;
 }
 .button-1 {
@@ -87,7 +87,7 @@ section {
     height: 46px;
     border-radius: 3px;
     color: rgb(255, 255, 255);
-    background-color: rgb(95, 0, 128);
+    background-color: rgb(0, 199, 40);
     border: 0px none;
     cursor: pointer;
 }

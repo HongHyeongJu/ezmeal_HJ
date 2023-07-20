@@ -1,5 +1,6 @@
 package com.teamProject.ezmeal.dao;
 
+import com.teamProject.ezmeal.domain.PointTransactionHistoryDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,22 @@ public class PointTransactionHistoryDaoTest {
 
     @Test
     public void checkPointCanUse(){
-        pointTransactionHistoryDao.pointCanUse(1001L);
+        int i = pointTransactionHistoryDao.pointCanUse(1001L);
+        System.out.println("i = " + i);
+    }
+
+    @Test
+    public void updatePointHistory(){
+        PointTransactionHistoryDto pointTransactionHistoryDto = new PointTransactionHistoryDto(1001L, "USEPOINT", "상품 결제 사용 포인트", -200, "사용", 123213L);
+        int i = pointTransactionHistoryDao.insertPointHistory(pointTransactionHistoryDto);
+        assertEquals(1, i);
+    }
+
+
+    // Baek
+    @Test
+    public void getUsablePoint(){
+        int point = pointTransactionHistoryDao.selectPoint(1001L);
+        System.out.println("point = " + point);
     }
 }

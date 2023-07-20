@@ -15,4 +15,14 @@ public class DeliveryAddressService {
         return deliveryAddressDao.selectDefaultAddress(mbrId);
     }
 
+    // 선택된 배송지 - 주문서용, 장바구니용
+    public DeliveryAddressDto getOrderAddress(Long mbrId) {
+        return deliveryAddressDao.selectOrderAddress(mbrId);
+    }
+
+    // 선택된 배송지 - 마이페이지 수정, 삭제용, 일반 선택용
+    public DeliveryAddressDto getAddress(Long addressId){
+        return deliveryAddressDao.selectedAddress(addressId);
+    }
+
 }

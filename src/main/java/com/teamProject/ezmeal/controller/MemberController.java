@@ -3,25 +3,29 @@ package com.teamProject.ezmeal.controller;
 import com.teamProject.ezmeal.domain.MemberDto;
 import com.teamProject.ezmeal.service.LoginService;
 import com.teamProject.ezmeal.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/member")
 public class MemberController {
-    @Autowired
-    MemberService memberService;
 
-    @Autowired
-    LoginService loginService;
+    private final MemberService memberService;
+    private final LoginService loginService;
 
 
     @PostMapping("/checkIdDuplicate")
@@ -39,61 +43,101 @@ public class MemberController {
         }
     }
 
+    @PostMapping("/checkEmailDuplicate")
+    @ResponseBody
+    public Map<String, Boolean> checkEmailDuplicate(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        try {
+            boolean emailCheck = memberService.checkEmailDuplicate(email);
+            Map<String, Boolean> response = new HashMap<>();
+            response.put("emailCheck", emailCheck);
+            return response;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     @GetMapping("/signup")
-    public String signUp() {    // 회원가입 버튼 클릭시 signup.jsp 화면 보여준다
+    public String getMemberAdd() {    // 회원가입 버튼 클릭시 signup.jsp 화면 보여준다
         return "signup";
     }
     // PostMapping(/signup)
     // View success.jsp
-    @PostMapping("/signup/success")
-    public String signupSuccess(MemberDto memberDto, String lgin_id, String lgin_pw ,Model model, RedirectAttributes rattr, HttpServletRequest req) {
+    @PostMapping("/signup")
+    public String postMemberAdd(@Valid MemberDto memberDto, BindingResult bindingResult, String lgin_id, String lgin_pw ,
+                                Model model, RedirectAttributes rattr, HttpServletRequest req) {
         // 1. 유효성 검사
-//        if (!isValid(memberDto)) {
-//            String msg = URLEncoder.encode("id를 잘못 입력하셨습니다.","utf-8");
-//
-//            m.addAttribute("msg",msg);
-//            return "redirect:/member/signup";
-////            return "redirect:/member/signup?msg="+msg;
-//        }
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> errors = bindingResult.getAllErrors();
+            for (ObjectError error : errors) {
+                System.out.println(error.getDefaultMessage());
+                model.addAttribute("errors", bindingResult);
+                model.addAttribute("errorMsg", error.getDefaultMessage());
+            }
+            // 에러 메시지를 처리한 후에 다시 회원가입 페이지로 이동하거나, 필요한 로직을 수행합니다.
+            return "signup";
+        }
+
         // 2. DB에 신규회원 정보를 저장
         try {
-            // 회원가입 눌렀을때도 아이디가 존재하는지 점검
-//            if (lgin_id == )
-            int rowCnt = memberService.signup(memberDto);    // insert
+            int rowCnt = memberService.registerMember(memberDto);    // insert
 
             if (rowCnt!=1) {  // insert가 되지않았을 때 signup페이지로 가도록 함
-                model.addAttribute(memberDto);
-                model.addAttribute("msg","회원가입이 되지 않았습니다. 다시 시도해주세요");
-                return "forward:/member/signup";
+                rattr.addFlashAttribute("msg","회원가입이 되지 않았습니다. 다시 시도해주세요");
+                return "redirect:/member/signup";
             }
             rattr.addFlashAttribute("msg","Signup_OK");
             // DB에 회원정보가 저장이 되고 동시에 로그인까지 되게 하려면,
             // memberId를 세션에 담는다.
-            Long memberId = loginService.getLogin(lgin_id,lgin_pw);
+            Long memberId = loginService.loginInfo(lgin_id);
             System.out.println("memberId = " + memberId);
             HttpSession session = req.getSession();
             session.setAttribute("memberId",memberId);
+            MemberDto loginMbrInfo = memberService.getMemberInfo(memberId);
+            session.setAttribute("loginMbrInfo",loginMbrInfo);
             model.addAttribute("checkSignupSuccess", "signup success!!");
-
             return "signupSuccess"; // insert 성공시에 signupSuccess 페이지로 감
         } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute(memberDto);
-            model.addAttribute("msg","아이디가 이미 존재합니다. 회원가입을 다시 해주세요");
-
-            return "forward:/member/signup";    // 예외처리 발생시 signup(회원가입)페이지로 돌아감
+//            rattr.addAttribute(memberDto);
+            rattr.addFlashAttribute("msg","아이디가 이미 존재합니다. 회원가입을 다시 해주세요");
+            return "redirect:/member/signup";    // 예외처리 발생시 signup(회원가입)페이지로 돌아감
         }
     }
 
-    @PostMapping("/signup") // 회원가입 예외처리 발생후 다시 회원가입페이지를 보여줌
-    public String reSignUp() { // model에 담은 내용을 jsp에서 보여주기 위해 forward함.
-        return "signup";
+    // 아이디찾기
+    @GetMapping("/find/id")
+    public String getMemberFindId() {
+        return "findId";
     }
 
-//    private boolean isValid(MemberDto memberDto) {
-//        return false;
-//    }
+    @PostMapping("/find/id")
+    public String postMemberFindID(String name, String email, Model model) {
+        // 아이디 찾기에서 입력한 이름과 이메일을 받아서 아이디를 찾는다.
+        String findId = memberService.getFindId(name, email);
+        System.out.println("findID = " + findId);
+        // 찾은 아이디를 조회 화면에 알려준다.
+        model.addAttribute("findId",findId);
+        model.addAttribute("name",name);   // 입력받은 회원명도 같이 담아준다.
+        return "findIdSuccess";
+    }
 
+    // 비밀번호찾기
+    @GetMapping("/find/password")
+    public String getMemberFindPw() {
+        return "findPw";
+    }
+
+    @PostMapping("/find/password")
+    public String postMemberFindPw(String lgin_id, String email, Model model){
+        System.out.println("lgin_id = " + lgin_id);
+        System.out.println("email = " + email);
+        String findPw = memberService.getFindPw(lgin_id, email);
+        System.out.println("findPw = " + findPw);
+        model.addAttribute("findPw", findPw);   // id, email이 일치하는 회원의 패스워드를 모델에 담아준다.
+        return "findPwSuccess";
+    }
 
 
 }

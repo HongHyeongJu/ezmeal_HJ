@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pointTransactionCode">
+    <select id="selectUsePoint" resultType="PointTransactionCodeDto">
+        select pnt_trjs_cd, name, pnt
+        from tb_point_transaction_code
+        where pnt_trjs_cd = #{pntTrjsCd}
+    </select>
+</mapper>

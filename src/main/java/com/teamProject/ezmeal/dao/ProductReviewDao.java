@@ -81,6 +81,13 @@ public class ProductReviewDao {
     }
 
 
+    /*   개별 상품에 대한 리뷰 묶음(공개-y,삭제-n) */
+    public List<ProductReviewDto> getAllReviewByProdCd(Long prod_cd) throws SQLException {
+        return session.selectList(namespace+"get_all_review_by_prod_cd", prod_cd);
+    }
+
+
+
     /*해당 카테고리 상품들의 개별 리뷰 평점 */
     public Map<Long,Double> selectReviewAvgForProdList(String cate_cd) throws SQLException {
         return session.selectMap(namespace+"get_review_average_for_cate_list",cate_cd,"prod_cd");

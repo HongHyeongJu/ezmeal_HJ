@@ -43,9 +43,9 @@
 
     <!--리뷰 생성-->
     <insert id="insertProductReview" parameterType="ProductReviewDto">
-        INSERT INTO tb_product_review (ord_id, mbr_id, prod_cd, title, stmt, dlvry_cmpl_dt, revw_posbl_dt, wrt_dt,
+        INSERT INTO tb_product_review (ord_id, mbr_id, prod_cd, writer, title, stmt, dlvry_cmpl_dt, revw_posbl_dt, wrt_dt,
                                        thumb, star, revw_opub_yn, del_yn, in_dtm, in_id, up_dtm, up_id)
-        VALUES (#{ord_id}, #{mbr_id}, #{prod_cd}, #{title}, #{stmt}, #{dlvry_cmpl_dt}, #{revw_posbl_dt}, #{wrt_dt},
+        VALUES (#{ord_id}, #{mbr_id}, #{prod_cd}, #{writer}, #{title}, #{stmt}, #{dlvry_cmpl_dt}, #{revw_posbl_dt}, #{wrt_dt},
                 #{thumb}, #{star}, #{revw_opub_yn}, #{del_yn}, now(), 'ateam', now(), 'ateam')
     </insert>
 
@@ -84,7 +84,12 @@
         GROUP BY prod_cd
     </select>
 
-    <!--[고민] 해당 카테고리에 있는 별점 평균, 리뷰수를 받아올 때   (1)쿼리문을 2번 돌릴 것인가?    (2)카테고리용 미니리뷰DTO를 하나 더 만들 것인가? 일단은 쿼리문 2개로 -->
+    <!--1개의 상품에 대한 리뷰 전체 가져오기 (공개-y,삭제-n)-->
+    <select id="get_all_review_by_prod_cd"  parameterType="Long"   resultType="ProductReviewDto">
+        SELECT *
+        FROM tb_product_review
+        WHERE prod_cd = #{prod_cd} AND revw_opub_yn='y' AND del_yn='n'
+    </select>
 
     <!--해당 카테고리에 있는 별점 평균 받아오기 Map(prod_cd , round(avg(star),1))-->
     <select id="get_review_average_for_cate_list"  parameterType="String"   resultType="Map">

@@ -14,13 +14,14 @@
     <link rel="stylesheet" href="/css/screens/modify.css">
 </head>
 <body>
+<jsp:include page="header.jsp"/>
+<jsp:include page="mypageHeader.jsp"/>
 
-<section class="section">
+<div class="main-section">
 
-    <div class="side">
-    </div>
-    <!-- 마이페이지 왼쪽 사이드 끝 -->
+    <jsp:include page="mypageLeft.jsp"/>
 
+    <%--  개인정보수정 시작  --%>
     <div class="main-container">
         <div class="title-section">
             <div class="title">
@@ -79,7 +80,7 @@
                         <input class="input-field" type="text" id="email" name="email" value="<c:out value="${loginMbrInfo.email}"/>" placeholder="이메일을 입력해 주세요">
                     </div>
                     <div class="button-section">
-                        <button class="button" type="button">
+                        <button class="buttons" type="button">
                             <span class="button-value">중복확인</span>
                             <!-- 기존 로그인된 이메일이면 disable, 수정하면 중복확인버튼 on -->
                         </button>
@@ -94,7 +95,7 @@
                         <input class="input-field" type="text" id="phone" name="phone" value="<c:out value="${loginMbrInfo.phone}"/>" placeholder="휴대폰 번호를 입력해 주세요">
                     </div>
                     <div class="button-section">
-                        <button class="button" type="button">
+                        <button class="buttons" type="button">
                             <span class="button-value">다른번호 인증</span>
                             <!-- 기본값 readonly 다른번호인증 클릭하면 휴대폰 번호 입력란 초기화 - 인증받기 버튼으로 변경   -->
                         </button>
@@ -108,14 +109,14 @@
                     <div class="value">
                         <div class="gender-section">
                             <label class="gender-label" for="gender-man">
-                                <input data-testid="radio-MALE" id="gender-man" name="sex" type="radio" class="gender-input" value="m">
-<%--                                <span class="gender-span"><div class="span-mini"></div></span>--%>
+                                <input data-testid="radio-MALE" id="gender-man" name="gender" type="radio" class="gender-input" value="m">
+                                <%--                                <span class="gender-span"><div class="span-mini"></div></span>--%>
                                 <span aria-labelledby="gender-man" class="gender-value">남자</span>
                             </label>
 
                             <label class="gender-label" for="gender-woman">
-                                <input data-testid="radio-FEMALE" id="gender-woman" name="sex" type="radio" class="gender-input" value="f">
-<%--                                <span class="gender-span"><div class="span-mini"></div></span>--%>
+                                <input data-testid="radio-FEMALE" id="gender-woman" name="gender" type="radio" class="gender-input" value="f">
+                                <%--                                <span class="gender-span"><div class="span-mini"></div></span>--%>
                                 <span aria-labelledby="gender-woman" class="gender-value">여자</span>
                             </label>
                             <label class="gender-label" for="gender-none"></label>
@@ -135,7 +136,7 @@
                 </div>
 
                 <div class="button-container">
-                    <button class="button" type="button" onclick="window.location.href = '/mypage/withdrawal';">
+                    <button class="buttons" type="button" onclick="window.location.href = '/mypage/withdrawal';">
                         <span class="button-value">탈퇴하기</span>
                     </button>
                     <button class="button2" type="submit">
@@ -146,7 +147,9 @@
         </div>
         <!-- form태그 끝 -->
     </div>
-</section>
+    <%--개인정보수정 끝--%>
+</div>
+
 </body>
 <script>
     function confirmSubmit() {

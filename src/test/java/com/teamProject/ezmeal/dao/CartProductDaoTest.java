@@ -1,6 +1,6 @@
 package com.teamProject.ezmeal.dao;
 
-import com.teamProject.ezmeal.domain.CartJoinProductDto;
+import com.teamProject.ezmeal.domain.joinDomain.CartJoinProductDto;
 import com.teamProject.ezmeal.domain.CartProductDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -138,6 +138,13 @@ public class CartProductDaoTest {
 
         List<CartJoinProductDto> longs = cartProductDao.selectOrderListInventory(cartProdSeqList);
         System.out.println("longs = " + longs);
+    }
+
+    //  주문한 상품 수량 받아오기
+    @Test
+    public void selectOrderProductNum(){
+        int i = cartProductDao.selectOrderProductNum(1L);
+        assertEquals(i, 7);
     }
 
     /* 관리자 */
