@@ -24,4 +24,13 @@ public class OrderPaymentDao {
         return session.selectList(namespace + "select_all_order_payment_list", mbrId);
     }
 
+    // 조회 시작, 조회 마감일 나타내기
+    public Map<String , String> selectStartEndDate(Long mbrId) {
+        return session.selectOne(namespace + "select_order_payment_start_end_date", mbrId);
+    }
+
+    // 조회 기간에 따른 주문 내역 가지고 오기
+    public List<OrderPaymentJoinDto> selectPeriodOrderPaymentList(Map<String, Object> periodData) {
+        return session.selectList(namespace + "select_order_payment_period", periodData);
+    }
 }

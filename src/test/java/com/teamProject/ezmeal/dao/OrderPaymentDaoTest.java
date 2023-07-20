@@ -32,4 +32,22 @@ public class OrderPaymentDaoTest {
         List<OrderPaymentJoinDto> orderPaymentJoinDtos = orderPaymentDao.selectOrderPaymentList(1001L);
         System.out.println("orderPaymentJoinDtos = " + orderPaymentJoinDtos);
     }
+
+    @Test
+    public void selectStartEndDate(){
+        Map<String, String> stringStringMap = orderPaymentDao.selectStartEndDate(1001L);
+        System.out.println("stringStringMap = " + stringStringMap);
+    }
+
+    @Test
+    public void selectPeriodOrderPaymentList() {
+        Map<String, Object> periodData = new HashMap<>();
+        periodData.put("mbrId", 1001L);
+        periodData.put("startTime", "2023-07-13");
+        periodData.put("endTime", "2023-07-13");
+        List<OrderPaymentJoinDto> orderPaymentJoinDtos = orderPaymentDao.selectPeriodOrderPaymentList(periodData);
+        System.out.println("periodData = " + orderPaymentJoinDtos);
+        int size = orderPaymentJoinDtos.size();
+        System.out.println("size = " + size);
+    }
 }
