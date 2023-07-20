@@ -56,19 +56,36 @@
     <!--옵션 테이블에서도 할인코드 확인 할인코드 종류에 따라 소비자 * 할인효과 = 판매가 해서 판매가컬럼  수정-->
     <!--할인코드 수정 후 상품테이블 판매가 변경시키는 쿼리-->
 
-    <!--트랜잭션의 둘째--> <!--할인코드 변경 했으니 상품TB 판매가 수정하기-->
+    <!--트랜잭션의 둘째--> <!--할인코드 변경 했으니 상품TB 판매가 , 마진율 수정하기-->
     <update id="update_product_sale_price_due_to_discount_update" >
-        UPDATE tb_product
-        SET sale_prc = (SELECT IF(tb_product_discount.typ = 'pt',
-                                  tb_product.cnsmr_prc * (100 - tb_product_discount.rate) / 100,
-                                  tb_product.cnsmr_prc - tb_product_discount.prc)
-                        FROM tb_product_discount
-                        WHERE tb_product.dc_cd = tb_product_discount.dc_cd),
-            up_dtm = now(),
-            up_id = 'ateam'
-        WHERE tb_product.dc_cd IN (SELECT dc_cd
-                                   FROM tb_product_discount)
+        UPDATE tb_product INNER JOIN tb_product_discount
+                            ON tb_product.dc_cd = tb_product_discount.dc_cd
+        SET tb_product.sale_prc = IF(tb_product_discount.typ = 'pt',
+                                    tb_product.cnsmr_prc * (100 - tb_product_discount.rate) / 100,
+                                    tb_product.cnsmr_prc - tb_product_discount.prc),
+            tb_product.mgn_rate = CASE WHEN tb_product.opt_yn = 'y' THEN NULL
+                                    ELSE ((IFNULL(tb_product.sale_prc, 0) - tb_product.sp_prc) / tb_product.sp_prc * 100) END,
+            tb_product.up_dtm = now(),
+            tb_product.up_id = 'ateam'
+        WHERE tb_product.opt_yn='n'
     </update>
+
+<!--    <update id="update_product_sale_price_due_to_discount_update" >-->
+<!--        UPDATE tb_product-->
+<!--        SET sale_prc = (SELECT IF(tb_product_discount.typ = 'pt',-->
+<!--                                  tb_product.cnsmr_prc * (100 - tb_product_discount.rate) / 100,-->
+<!--                                  tb_product.cnsmr_prc - tb_product_discount.prc)-->
+<!--                        FROM tb_product_discount-->
+<!--                        WHERE tb_product.dc_cd = tb_product_discount.dc_cd),-->
+<!--            mgn_rate = (CASE WHEN opt_yn = 'n' THEN NULL ELSE ((IFNULL(sale_prc, 0) - sp_prc) / sp_prc * 100))-->
+<!--            up_dtm = now(),-->
+<!--            up_id = 'ateam'-->
+<!--        WHERE tb_product.opt_yn='n' AND  tb_product.dc_cd IN (SELECT dc_cd-->
+<!--            FROM tb_product_discount)-->
+<!--    </update>   -->
+
+
+
 
     <!--트랜잭션의 셋째--> <!--할인코드 변경 했으니 옵션상품TB 판매가 수정하기-->
     <update id="update_option_product_sale_price_due_to_discount_update" >

@@ -1,15 +1,14 @@
 package com.teamProject.ezmeal.service;
 
+import com.teamProject.ezmeal.dao.CartDao;
 import com.teamProject.ezmeal.dao.CartProductDao;
-import com.teamProject.ezmeal.dao.ProductDao;
-import com.teamProject.ezmeal.domain.CartJoinProductDto;
+import com.teamProject.ezmeal.domain.joinDomain.CartJoinProductDto;
 import com.teamProject.ezmeal.domain.CartProductDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.PrinterException;
-import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.*;
 
 // TODO transaction이 핵심 -> 이거의 예외, service 단의 목적
@@ -17,6 +16,8 @@ import java.util.*;
 @RequiredArgsConstructor
 public class CartProductService {
     private final CartProductDao cartProductDao;
+    private final CartDao cartDao;
+
     public static final String[] TYPE_NAME = {"냉동", "냉장", "상온"};
 
 
@@ -105,7 +106,7 @@ public class CartProductService {
         }
     }
 
-    // 주문하기에 선택된 장바구니 상품 컬럼 업데이트
+    // 주문하기에 선택된 장바구니 상품 컬럼 업데이트 (sel_prod n -> y)
     public int updateOrderProduct(Long cartSeq, List<Long> cartProdSeqList) {
         Map<String, Object> selectProductMap = new HashMap<>();
         selectProductMap.put("cartSeq", cartSeq);
@@ -139,6 +140,10 @@ public class CartProductService {
         return productInfoList; //[cartProdSeq, inventory]
     }
 
+    public Integer countOrderProduct(Long cartSeq){
+        return cartProductDao.selectOrderProductNum(cartSeq);
+    }
+
     // 관리자
 
     // 장바구니에 존재하는 모든 상품
@@ -147,5 +152,63 @@ public class CartProductService {
         String type = cartProducts.get(0).getTyp();
         return cartProducts;
     }
+
+
+
+
+    /*----- HHJ -----*/
+    //장바구니에 상품 추가하기       /*<!-- (변경부분) boolean existProduct에서 opt_seq도 비교하도록 추가함 -->*/
+    public boolean addProductToCart(Long mbrId, CartProductDto cartProductDto) {
+        System.out.println("------------서비스 진입-----------");
+        /*카트에 상품이 있는지 확인한다.
+        * 있으면 -> 수량 update
+        * 없으면 -> Insert  */
+        try {
+            /*아직 자동증가 아니라 seq 지정해줘야함 지금은 수동으로! */
+//            cartProductDto.setCart_prod_seq(13L);
+            /*카트 시퀀스도 넣어줘야함 ㅎㅎ*/
+            Long cart_seq = cartDao.selectCartSeq(mbrId);
+            System.out.println("cart_seq: "+cart_seq);
+
+            cartProductDto.setCart_seq(cart_seq);
+            /*mbr-id*/
+            cartProductDto.setMbr_id(mbrId);
+            /*기본값 지정*/
+            cartProductDto.setSel_prod("n");
+            cartProductDto.setSoldout_yn("n");
+            cartProductDto.setDel_yn("n");
+            String today = LocalDate.now()+"";
+            String add_dt = today.replace("-","/");
+            cartProductDto.setAdd_dt(add_dt);
+            cartProductDto.setDel_yn("n");
+
+            System.out.println("[서비스] cartProductDto 기본값 넣기 완료");
+            System.out.println("cartProductDto: "+cartProductDto.toString());
+
+            boolean existProduct =
+                    cartProductDao.selectProductInCart(mbrId, cartProductDto.getProd_cd(), cartProductDto.getOpt_seq())==null ? false : true;
+
+            /* 이미 그 상품이 있으면 수량 변경, del_yn 'n'으로 */
+            if(existProduct){
+                System.out.println("[서비스] 이미 있는 상품 => update");
+                cartProductDao.updateCartOfProductQty(cartProductDto);
+                return true;
+            } else {
+                System.out.println("[서비스] 장바구니에 없는 상품 => insert");
+                /* 장바구니에 담은 적 없으면 insert */
+                cartProductDao.insertAddCart(cartProductDto);
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("[서비스] 예외발생");
+            e.getMessage();
+            e.printStackTrace();
+            return false;
+        }
+
+
+    }
+
+
 
 }

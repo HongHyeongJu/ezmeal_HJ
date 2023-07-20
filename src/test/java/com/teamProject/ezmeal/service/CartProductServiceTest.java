@@ -1,7 +1,6 @@
 package com.teamProject.ezmeal.service;
 
-import com.teamProject.ezmeal.domain.CartJoinProductDto;
-import com.teamProject.ezmeal.domain.CartProductDto;
+import com.teamProject.ezmeal.domain.joinDomain.CartJoinProductDto;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -107,5 +106,12 @@ public class CartProductServiceTest {
         cartProdSeqList.add(4L);
         List<List<Number>> lists = cartProductService.checkOrderListOverInventory(cartProdSeqList);
         System.out.println("lists = " + lists);
+    }
+
+    //  주문한 상품 수량 받아오기
+    @Test
+    public void selectOrderProductNum(){
+        int i = cartProductService.countOrderProduct(1L);
+        assertEquals(i, 7);
     }
 }

@@ -14,7 +14,7 @@ public class MemberService {
     public boolean checkIdDuplicate(String id)  {
         // 중복 체크 로직 구현
         try {
-            String checkId = memberDao.getLoginId(id);  // 회원가입폼-id칸에 입력한 id값이 존재하는지
+            String checkId = memberDao.selectLoginId(id);  // 회원가입폼-id칸에 입력한 id값이 존재하는지
             return checkId != null;
         } catch (Exception e) {
             e.printStackTrace();
@@ -22,18 +22,30 @@ public class MemberService {
         }
     }
 
-    public int signup(MemberDto memberDto)  {
+    // 이메일 중복 체크
+    public boolean checkEmailDuplicate(String email) {
+        try {
+            String checkEmail = memberDao.selectEmail(email);
+            return checkEmail != null ; // email이 있으면 true 반환
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int registerMember(MemberDto memberDto)  {
         try {
             // 회원가입 눌렀을때도 아이디가 존재하는지 점검
             String inputId =memberDto.getLgin_id(); // 회원가입란에 적은 id
-            String id = memberDao.getLoginId(inputId);
+            String id = memberDao.selectLoginId(inputId);
 //validation 처리 - Controller에서
-            if (inputId.equals(id)){  // 요청한 ID가 DB에 없으면 회원가입한다.
+            if (inputId.equals(id)){
                 System.out.println("id가 이미 존재합니다.");
-                throw new Exception();
+                return 0;
             } else {
-                System.out.println("아이디 중복 체크");
-                return memberDao.registerMember(memberDto);
+                System.out.println("아이디 중복 체크 완료"); // 요청한 ID가 DB에 없으면 회원가입한다.
+                return memberDao.insertMember(memberDto);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,12 +53,12 @@ public class MemberService {
         }
     }
 
-    public int withdrawal(Long mbr_id) {   // MypageController 회원탈퇴하는 메서드
+    public int removeMember(Long mbr_id) {   // MypageController 회원탈퇴하는 메서드
         // 로그인 중인 회원이 회원탈퇴를 한다.
         // 회원탈퇴할때 어떤 예외가 생길 수가 있을까..?
         // del_yn = Y 인 회원(탈퇴한)은 로그인 할때 막아야함(검증해야함)
         try {
-            int mbrWithdrawalCnt = memberDao.mbrWithdrawal(mbr_id);
+            int mbrWithdrawalCnt = memberDao.deleteMember(mbr_id);
             if (mbrWithdrawalCnt != 1) {
                 throw new RuntimeException();
             }
@@ -60,18 +72,34 @@ public class MemberService {
         }
     }
 
-    public MemberDto mbrInfo(Long memberId) throws Exception {    // 회원정보수정페이지에 띄워줄 회원정보를 조회한다.
-        return memberDao.getMemberInfo(memberId);
+    // 로그인한 회원정보를 가져오는 로직
+    public MemberDto getMemberInfo(Long memberId) throws Exception {    // 회원정보수정페이지에 띄워줄 회원정보를 조회한다.
+        return memberDao.selectMemberInfo(memberId);
     }
 
-    public int modify(MemberDto memberDto) {
+    // 회원정보 변경
+    public int modifyMember(MemberDto memberDto) {
         try {
-            return memberDao.mbrModify(memberDto);
+            return memberDao.updateMemeber(memberDto);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
 
+    // 아이디 찾기
+    public String getFindId(String name, String email) {
+        try {
+            return memberDao.selectFindId(name,email);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    // 비밀번호 찾기
+    public String getFindPw(String id, String email) {
+        return memberDao.selectFindPw(id,email);
+    }
 
 }

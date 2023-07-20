@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="memberCouponDao"></mapper>
+<mapper namespace="memberCouponDao">
+    <!--  사용한 쿠폰의 pk 가져올려고 생성 -->
+    <select id="selectMemberCoupon" resultType="MemberCouponDto">
+        select *
+        from tb_member_coupon
+        where mbr_coupn_id = #{mbrCoupnId}
+    </select>
+
+    <!-- 사용한 coupon update 하기  -->
+    <update id="update_used_coupon">
+        UPDATE tb_member_coupon
+        SET use_dtm = now(), use_yn = 'y', pay_id = #{payId}
+        WHERE mbr_coupn_id = #{mbrCoupnId};
+    </update>
+
+</mapper>

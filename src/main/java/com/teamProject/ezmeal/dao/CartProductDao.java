@@ -1,12 +1,11 @@
 package com.teamProject.ezmeal.dao;
 
-import com.teamProject.ezmeal.domain.CartJoinProductDto;
+import com.teamProject.ezmeal.domain.joinDomain.CartJoinProductDto;
 import com.teamProject.ezmeal.domain.CartProductDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +63,6 @@ public class CartProductDao {
     }
 
     // 주문하기에 선택된 장바구니 상품 가져오기
-    // TODO 필요시 배열로 받아오는 방향으로 변경
     public List<CartJoinProductDto> selectOrderProducts(Long cartSeq)  {
         return session.selectList(namespace + "order_products", cartSeq);
     }
@@ -77,6 +75,11 @@ public class CartProductDao {
     // 재고가 부족한 상품 cartProdPk, 실 재고량 정보 가지고 옴
     public List<CartJoinProductDto> selectOrderListInventory(List<Long> cartProdSeq) {
         return session.selectList(namespace + "orderList_inventory", cartProdSeq);
+    }
+
+    // 주문한 상품 수량 받아오기
+    public int selectOrderProductNum(Long cartSeq){
+        return session.selectOne(namespace + "count_orderProduct", cartSeq);
     }
 
     // TODO 담을수 있는 최대 수량
@@ -96,4 +99,32 @@ public class CartProductDao {
 
     // TEST
     // TODO - test용 insert, update, delete 생성
+
+
+
+    /*회원 장바구니에 해당 상품이 있는지 확인.  */   /* (변경부분) opt_seq도 비교하도록 추가함 */
+    public CartProductDto selectProductInCart(Long mbr_id, Long prod_cd, Long opt_seq) {
+        System.out.println("[다오] select");
+        HashMap map = new HashMap();
+        map.put("mbr_id",mbr_id);
+        map.put("prod_cd",prod_cd);
+        map.put("opt_seq",opt_seq);
+        return session.selectOne(namespace + "select_product_in_cart", map);
+    }
+
+
+    /*장바구니에 이미 담긴 상품 수량 업데이트 하기 */
+    public int updateCartOfProductQty(CartProductDto cartProductDto) {
+        System.out.println("[다오] update");
+        return session.update(namespace + "update_product_qty_in_cart", cartProductDto);
+    }
+
+    /*상품 목록, 상품 상세에서 장바구니에 상품 담기  (seq 자동증가 버전) */
+    public int insertAddCart(CartProductDto cartProductDto) {
+        System.out.println("[다오] insert");
+        return session.insert(namespace + "add_product_to_cart_seq", cartProductDto);
+    }
+
+
+
 }

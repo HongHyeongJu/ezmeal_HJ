@@ -4,30 +4,51 @@
 
 <mapper namespace="tb_member">
 
-    <select id="lgin_pw" parameterType="String" resultType="String">
+    <select id="selectLoginPw" parameterType="String" resultType="String">
         SELECT lgin_pw
         FROM tb_member
         WHERE lgin_id = #{loginId}
     </select>
 
-    <select id="mbr_id" parameterType="String" resultType="long">
+    <select id="selectMemberId" parameterType="String" resultType="long">
         SELECT mbr_id
         FROM tb_member
         WHERE lgin_id = #{loginId}
     </select>
 
     <!--    id 중복체크누르면, 입력한 lgin_id이 존재하는지 조회한다. -->
-    <select id="lgin_id" parameterType="String" resultType="String">
+    <select id="selectLoginId" parameterType="String" resultType="String">
         SELECT lgin_id
         FROM tb_member
-        WHERE lgin_id = #{lgin_id}
+        WHERE lgin_id = #{loginId}
+    </select>
+
+    <!--이메일 중복체크때 입력받은 이메일이 존재하는지 조회한다.-->
+    <select id="selectEmail" parameterType="String" resultType="String">
+        SELECT email
+        FROM tb_member
+        WHERE email = #{email}
+    </select>
+
+    <!--  아이디찾기 쿼리문, 입력받은 이름,이메일에 해당하는 로그인 아이디를 조회한다  -->
+    <select id="selectFindId" parameterType="map" resultType="String">
+        SELECT lgin_id
+        FROM tb_member
+        WHERE name = #{name} AND email = #{email}
+    </select>
+
+    <!--  비밀번호찾기 쿼리문, 입력받은 아이디, 이메일에 해당하는 비밀번호를 조회한다.  -->
+    <select id="selectFindPw" parameterType="map" resultType="String">
+        SELECT lgin_pw
+        FROM tb_member
+        WHERE lgin_id = #{lgin_id} AND email = #{email}
     </select>
 
     <!--  회원가입 쿼리문  -->
-    <insert id="mbr_signup" parameterType="MemberDto">
+    <insert id="insertMember" parameterType="MemberDto">
         INSERT INTO tb_member (
                                name
-                              ,sex
+                              ,gender
                               ,birth
                               ,phone
                               ,email
@@ -35,7 +56,7 @@
                               ,lgin_pw
         ) values (
                      #{name}
-                 ,#{sex}
+                 ,#{gender}
                  ,#{birth}
                  ,#{phone}
                  ,#{email}
@@ -45,27 +66,28 @@
     </insert>
 
     <!--  회원정보를 조회하는 쿼리문  -->
-    <select id="mbr_Info" parameterType="Long" resultType="MemberDto">
-        select *
-        from tb_member
-        where mbr_id = #{memberId}
+    <select id="selectMemberInfo" parameterType="Long" resultType="MemberDto">
+        SELECT m.*, g.name as mbr_grd_name, g.img as grd_img
+        FROM tb_member m , tb_member_grade g
+        WHERE mbr_id = #{memberId}
+          AND m.mbr_grd = g.mbr_grd_cd
     </select>
 
     <!--회원탈퇴 쿼리문 delete가 아닌 del_yn(삭제여부)를 N에서 Y로 변경을 삭제로 간주-->
-    <update id="mbr_withdrawal" parameterType="long">
+    <update id="deleteMember" parameterType="long">
         UPDATE tb_member
         SET del_yn = 'y'
         WHERE mbr_id = #{mbr_id}
     </update>
 
     <!--  회원정보 수정 쿼리문  -->
-    <update id="mbr_modify" parameterType="MemberDto">
+    <update id="updateMember" parameterType="MemberDto">
         UPDATE tb_member
         SET lgin_pw =  #{lgin_pw}
           ,name =      #{name}
           ,email =     #{email}
           ,phone =     #{phone}
-          ,sex =       #{sex}
+          ,gender =       #{gender}
           ,birth =     #{birth}
         WHERE lgin_id = #{lgin_id}
     </update>

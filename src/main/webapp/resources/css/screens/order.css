@@ -5,7 +5,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    margin-top: 156px 0 50px 0; /*상단 nav 공간 제공*/
+    margin-top: 156px; /*상단 nav 공간 제공*/
 }
 
 /* 장바구니 title */
@@ -90,11 +90,18 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
     /* button 기본 css 설정 제거 */
     border: none;
 }
+
 .order__items_list__btn > i {
     font-size: small;
 }
 
 /* 1.2.2. border 적용 */
+
+/* 상품 요약 */
+.order__prod_summary {
+    margin-top: 15px;
+    font-weight: bold;
+}
 
 /* ul 내부 li border 반복 생성 */
 .order__item_list {
@@ -157,38 +164,55 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
 .order_info_template {
     width: 1050px;
 }
+
 /* 공통 속성 */
 .order_info_template__title {
     display: flex;
     box-sizing: border-box;
-    align-items: center;
+    align-items: start;
     padding: 10px 5px;
     margin: 20px 0;
+
 }
 
 .order_info_template__title span {
     width: 200px;
 }
+
+.order_info_template__title label {
+    width: 135px;
+}
+
 /* 공통 속성 끝 */
 
 /* 주문자 정보 끝 */
+
+/* 배송지 정보 */
+.delivery_address_id div {
+    margin-bottom: 10px;
+}
+
+.order_info_delivery {
+    border-bottom: 0.1px solid lightgrey;
+
+}
 
 /* 배송 요청사항 */
 .order_info_template__radiobox {
     align-items: center;
 }
+
 .order_info_template__radiobox > div {
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
+
 .order_info_template__radiobox > div > span {
     display: block;
     box-sizing: border-box; /*이게 있어야지 width가 고정이 된다.*/
     width: 200px;
 }
-.door_password > span {
-    padding-left: 40px;
-}
+
 /* 배송 요청사항 끝 */
 
 .order__subjects_list_and_benu {
@@ -225,6 +249,7 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
     /* color: rgb(204, 204, 204); */
     color: var(--ezmealGreen);
 }
+
 .order__point {
     color: black;
     width: 300px;
@@ -236,10 +261,12 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
     text-align: center;
     color: var(--ezmealGreen);
 }
+
 /* 임시방편 */
 .order_info_template__title_point1 {
     margin-bottom: 0;
 }
+
 .order_info_template__title_point2 {
     margin-top: 0;
 }
@@ -249,14 +276,17 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
     width: 80px;
     text-align: center;
 }
+
 .order__btn_creditCard {
     background-color: var(--ezmealGreen);
     color: white;
 }
+
 .order__btn_kakao {
     background-color: var(--kakaoYellow);
     color: black;
 }
+
 .order__btn_toss {
     background-color: var(--tossBlue);
     color: white;
@@ -302,6 +332,7 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
     box-sizing: border-box;
     padding: 0 17px 0 13px;
 }
+
 /* benu_icon */
 .fa-wallet {
     margin-right: 10px;
@@ -322,11 +353,13 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
     margin: 0;
     padding: 0;
 }
+
 .order_benu__title:nth-child(2),
 .order_benu__title:nth-child(3) {
     font-size: small;
     color: grey;
 }
+
 /* 밑줄 긋기 위함 */
 .order_benu__title:nth-child(3),
 .order_benu__title:nth-child(5) {
@@ -334,13 +367,45 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
     border-bottom: 0.1px solid rgb(188, 181, 181);
 }
 
+.order_benu__title:nth-child(6) {
+    display: block;
+}
+
+.order_benu__title:nth-child(6) div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3px;
+}
+
+/* 나중에 충분히 공통으로 사용할 것 같음 */
+.order_li_hidden {
+    display: none;
+    /* height를 0으로 잡아서 숨기는 방법도 있었는데 나중에 확인하기  */
+}
+
+
 /* order-modal detail */
 .modal_body {
     display: flex;
     flex-direction: column;
-    width: 50%;
 }
 
 .order__modal_table {
-    width: 100%; /*부모 기준으로 100%*/
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse; /*셀 사이의 겹치는 테두리가 사리지고, 각 셀 사이의 간격이 없어져서 테이블을 깔끔하게 함*/
+    /*  table-layout: fixed; 추가: 테이블 레이아웃 고정 */
+}
+
+.order__modal_table th,
+.order__modal_table td {
+    padding: 8px;
+    border: 1px solid #ccc;
+    white-space: nowrap; /* text가 cell 내에서 줄바꿈되지 않고 한줄로 표시*/
+    overflow: hidden; /*셀 내부에서 넘치는 내용을 숨기고, 셀 영역을 벗어나는 부분은 표시하지 않도록 함*/
+    /* text-overflow: ellipsis;  셀 내용이 셀의 크기를 초과하는 경우, 줄임표로 표시 */
+}
+
+.order__modal_btn button {
+    margin-right: 10px;
 }

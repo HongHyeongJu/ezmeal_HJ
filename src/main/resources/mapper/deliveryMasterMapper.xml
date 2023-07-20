@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="deliveryMasterDao">
+    <insert id="insertDelivery">
+        insert into tb_delivery_master (dlvar_id, ord_id,
+                                        rcpr, rcpr_phone,
+                                        typ, start_pnt, desti, desti_dtl, req_mtr, in_mtd,
+                                        stus, msg,
+                                        rcv_sns_yn, box_size)
+        VALUES (#{dlvar_id}, #{ord_id},
+                #{rcpr}, #{rcpr_phone},
+                #{typ}, #{start_pnt}, #{desti}, #{desti_dtl}, #{req_mtr}, #{in_mtd},
+                #{stus}, #{msg},
+                #{rcv_sns_yn}, #{box_size})
+    </insert>
+</mapper>

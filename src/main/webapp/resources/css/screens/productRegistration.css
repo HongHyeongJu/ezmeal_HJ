@@ -1,149 +1,243 @@
-.all_div {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 1300px;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
-    border: 1px solid darkorchid;
-    background-color: #f2f5f9;
-}
-
-.half_div {
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 95%;
-    height: auto;
-    /*     background-color: rgb(177, 177, 242); */
-    /*     border: 1px solid royalblue; */
-}
-
-#left_div {
-    margin-left: 30px;
-    /*     background-color: rgb(188, 245, 222); */
-    /*     border: 1px solid royalblue; */
-
-}
-
-#right_div {
-    margin-right: 10px;
-    /*     background-color: rgb(237, 196, 224); */
-    /*     border: 1px solid royalblue; */
-
-}
-
-
-.form-row {
+/*------------------- 전체 조절div --------------------*/
+.container {
     display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+    margin-left: 180px;
+    width: 1500px;
+    /* 수평 정렬을 위해 Flexbox 사용 */
+    border: 1px solid #a2a2ae ;
 }
 
-.form-row label {
-    /* border: 1px solid gray; */
-    /* background-color: white; */
-    /* margin-top: 10px; */
-    width: 120px;
+/*------------------- 좌우 큰 div --------------------*/
+.left_bigdiv {
+    display: flex;
+    width: 750px;
+    flex-direction: column;
+    border: 1px solid #e3e3f5 ;
+    align-items: center;
+    /* 수직 정렬을 위해 Flexbox 사용 */
+
+}
+.right_bigdiv {
+    display: flex;
+    width: 750px;
+    flex-direction: column;
+    border: 1px solid #e3e3f5 ;
+    align-items: center;
+    /* 수직 정렬을 위해 Flexbox 사용 */
+
+}
+
+/*------------------ (좌우 큰 div안의) 각 div들---------------------*/
+.left, .right {
+    width: 700px;
+    height: auto;
+    min-height: 70px;
+    background-color: #dde9fb;
+    margin: 10px;
+}
+
+.page_info_div h3, p{
+    margin-left: 15px;
+}
+
+/*--------------------product_info_div 테이블-----------------------*/
+.product_info_table td {
+    border-right:  1px solid black; /* 셀의 테두리 스타일과 두께 설정 */
+    padding: 8px; /* 셀의 여백 설정 */
+}
+.product_info_table td:last-child {
+    border-right: none; /* 마지막 칸에 오른쪽 테두리 제거 */
+}
+
+.product_info_table input[type="text"],
+.product_info_table input[type="date"] {
+    width: 100px; /* 원하는 너비로 설정 */
+}
+
+.product_info_table td:nth-child(odd) {
+    width: 90px; /* 홀수 열의 너비 */
+    word-break: keep-all;
+    text-align: center; /* 내용을 가운데로 정렬 */
+}
+.product_info_table td:nth-child(even) {
+    width: 140px; /* 짝수 열의 너비 */
+}
+/*-------------------- yn_columns_div ---------------------*/
+.yn_columns_div_table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.yn_columns_div_table td {
+    border-right:  1px solid black; /* 셀의 테두리 스타일과 두께 설정 */
+    padding: 8px; /* 셀의 여백 설정 */
+}
+.yn_columns_div_table td:last-child {
+    border-right: none; /* 마지막 칸에 오른쪽 테두리 제거 */
+}
+.yn_columns_first_tr {
+    text-align: center; /* 내용을 가운데로 정렬 */
+}
+
+.yn_columns_first_tr td {
     text-align: center;
-    margin-right: 10px;
+}
+/*-------------------- 상품명 -------------------------*/
+.name_label {
+    display: inline-block;
+    width: 140px; /* 원하는 너비로 설정 */
+    margin-top: 10px;
+    margin-bottom: 15px;
     margin-left: 10px;
 }
 
-.form-row input,
-.form-row textarea {
-    flex: 0.9;
-}
 
-.form-row input,
-.form-row select {
-    height: 35px;
-}
-
-.read_only input{
-    height: 35px;
-}
-
-.long-div {
-    width: 100%;
-    margin-left : 20px;
-    margin-bottom: 20px;
-}
-
-.yn_table {
-    margin-left : 20px;
-    border-collapse: collapse;
-}
-
-.read_only {
-    margin-left : 20px;
-    border-collapse: collapse;
-}
-
-td {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 12px;
-    padding-right: 12px;
-}
-
-.tr_title {
-    text-align: center;
-    padding : 0;
-
-}
-
-td, th {
-    border: 1px solid black;
-}
-
-.price_calculation_table {
-    margin : 20px;
-}
-
-.price_calculation_table input[type="number"] {
-    width: 100px; /* 가로 길이 조절 */
-    height : 30px;
-}
-
-
-.storage_table tr:nth-child(n+2) td:nth-child(n+2) {
-    width: 100px; /* 원하는 가로 길이 조절 */
-}
-
-/*------------ 조리법 활용법 input 조절--------*/
-
-.detail_set_table input[type="text"] {
-    width: 150px; /* 가로 길이 조절 */
-    height : 30px;
-}
-
-.detail_set_table input[type="text"] {
-    width: 150px; /* 가로 길이 조절 */
-    height : 30px;
-}
-
-
-.tr_title input[type="text"]{
-    width: 450px;
-
-}
-
-
-/*------------마지막 버튼 세트---------*/
-
-.btn_set {
-    display: flex;
-    justify-content: center;
-}
-
-.btn_set button {
-    margin: 5px 10px; /* 버튼 간격 조정 */
-}
-
-#opt_detail > input[type="text"] {
-    width: 80px;
+.name_label2 {
     display: inline-block;
-    margin-right: 10px;
+    width: 140px; /* 원하는 너비로 설정 */
+    margin-top: 10px;
+    margin-bottom: 15px;
+    margin-left: 80px;
 }
+
+
+.product_names_div input[type="text"]{
+    width: 400px; /* 원하는 너비로 설정 */
+}
+/*--------------------- 가격 -----------------------*/
+.price_set_div_table th {
+    height: 30px;
+    vertical-align: bottom;
+}
+
+.price_set_div_table td {
+    text-align: center;
+    border-right:  1px solid black; /* 셀의 테두리 스타일과 두께 설정 */
+    padding: 10px; /* 셀의 여백 설정 */
+    padding-bottom: 0;
+    padding-top: 0;
+    width:1500px;
+
+}
+.price_set_div_table td:last-child {
+    border-right: none; /* 마지막 칸에 오른쪽 테두리 제거 */
+}
+
+
+.price_set_div input[type="number"]{
+    width: 120px; /* 원하는 너비로 설정 */
+}
+.price_set_div input[type="text"]{
+    width: 250px; /* 원하는 너비로 설정 */
+}
+
+.price_set_div p{
+    margin-left: 10px; /* 원하는 너비로 설정 */
+    display: inline-block;
+}
+
+.dc_label td{
+    height: 40px; /* 높이 조정 */
+    vertical-align: bottom;
+}
+
+.dc_input td {
+    height: 50px; /* 높이 조정 */
+}
+
+
+/*------------------- 옵션 생성 ------------------------*/
+.make_opt_btn_div{
+    margin: 10px;
+    margin-left: 20px;
+    height: 50px;
+}
+
+.make_opt_btn {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.make_options_div_table{
+    margin-left: 10px;
+}
+
+.opt_title td, .opt_tr  td{
+    margin-bottom: 10px;
+}
+
+.make_options_div input[type="number"]{
+    width: 110px; /* 원하는 너비로 설정 */
+}
+
+.make_options_div input[type="text"]{
+    width: 120px; /* 원하는 너비로 설정 */
+}
+
+.opt_tr_rmk input[type="text"]{
+    width: 440px; /* 원하는 너비로 설정 */
+}
+
+.del_opt_btn_td {
+    text-align: center;
+}
+
+/*-------------------  오른쪽 디브 시작 --------------------*/
+/*---------------------------------------------------------*/
+/*----------------------- 보관 ------------------------*/
+.storage_header {
+    width: 120px; /* 원하는 너비로 설정 */
+}
+
+.storage_div_table tr{
+    height: 50px;
+}
+/*----------------------- 상품 상세 정보 ------------------------*/
+.dscpt_set_div_table_1 th {
+    height: 30px;
+    vertical-align: bottom;
+}
+
+.dscpt_set_div_table_1 td {
+    text-align: center;
+    border-right:  1px solid black; /* 셀의 테두리 스타일과 두께 설정 */
+    padding: 10px; /* 셀의 여백 설정 */
+    margin-bottom: 10px;
+    width:1500px;
+}
+
+.dscpt_header {
+    width: 120px; /* 원하는 너비로 설정 */
+}
+/*-------------------이미지 업로드------------------------*/
+.img_upload_div input {
+    margin: 20px; /* 셀의 여백 설정 */
+}
+/*---------------------- 썸네일 보여주기 -------------------------*/
+.img_set_div ul {
+    display: inline-block;
+    padding-left: 20px;
+    padding-right: 20px;
+    height:auto;
+    min-height: 100px;
+}
+.upload_img_thumnail > li {
+    display: inline-block;
+}
+
+.img_ul_1 {
+    width: 150px;
+}
+
+.img_ul_2 {
+    width: 250px;
+}
+.img_ul_3 {
+    width: 150px;
+}
+
+/*--------------------버튼들---------------------*/
+.button_set_div {
+    text-align: center;
+}
+/*-----------------------------------------------*/

@@ -36,6 +36,7 @@ public class ProductOptionDao {
         return session.selectList(namespace+"select_option_product_by_prod_cd", prod_cd);
     }
 
+
 //    /*특정 카테고리 상품에 대한 옵션상품 전체 받기 (낱개, 10세트, 20세트, 30세트)*/
 //    public List<ProductOptionDto> selectOptionProductsByCateCd(String cate_cd) throws SQLException {
 //        return session.selectList(namespace+"select_option_product_by_prod_cd", cate_cd);
