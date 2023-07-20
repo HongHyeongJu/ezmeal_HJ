@@ -1,3 +1,9 @@
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+
+* {
+    font-family: 'NanumSquare', sans-serif;
+}
+
 /*------------------- 전체 조절div --------------------*/
 .container {
     display: flex;
@@ -158,29 +164,45 @@
     margin-bottom: 10px;
 }
 
-.make_options_div_table{
-    margin-left: 10px;
+/*---옵션 1개 세트----*/
+.opt_list_ul {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.opt_title td, .opt_tr  td{
-    margin-bottom: 10px;
+.opt_list_ul li {
+    width: 33.33%;
+    display: flex;
+    align-items: center;
 }
 
-.make_options_div input[type="number"]{
-    width: 110px; /* 원하는 너비로 설정 */
+.opt_list_ul li input[type="number"],
+.opt_list_ul li input[type="text"],
+.opt_list_ul li select {
+    margin-right: 20px;
+    margin-left: auto;
+    width: 130px;
 }
 
-.make_options_div input[type="text"]{
-    width: 120px; /* 원하는 너비로 설정 */
+.opt_list_ul li:not(:last-child) {
+    width: 33.33%;
+}
+.opt_list_ul li:last-child {
+    width: 800px;
 }
 
-.opt_tr_rmk input[type="text"]{
-    width: 440px; /* 원하는 너비로 설정 */
+.span_rmk {
+    width: 70px;
+}
+.opt_rmk {
+    width: 350px;
+    height: 40px; /* 원하는 높이로 설정 */
 }
 
-.del_opt_btn_td {
-    text-align: center;
+.del_opt_btn {
+    margin-left:30px;
 }
+/*---옵션 1개 세트----*/
 
 /*-------------------  오른쪽 디브 시작 --------------------*/
 /*---------------------------------------------------------*/

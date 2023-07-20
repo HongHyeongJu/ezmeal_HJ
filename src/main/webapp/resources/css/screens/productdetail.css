@@ -1,5 +1,7 @@
-body {
-    font-family: 'FontName', sans-serif;
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+
+* {
+    font-family: 'NanumSquare', sans-serif;
 }
 
 html {
@@ -12,7 +14,7 @@ html {
     width: 1100px;
     height: auto;
     background-color: white;
-    border: 6px solid rgb(197, 230, 197);
+    border: 6px solid rgb(255 255 255);
     display: flex;
     flex-direction: row;
     align-items: start;
@@ -39,10 +41,13 @@ html {
 .main_img {
     padding: 30px;
     width: 400px;
-    height: 400px;
+    height: 500px;
+    object-fit: cover;
     /*color: aqua;*/
-    padding-bottom : 10px;
+    padding-bottom: 10px;
 }
+
+
 .mini_img_set{
     display: flex;
     justify-content: space-between;
@@ -103,6 +108,11 @@ p.prod_name {
     margin-top: 50px;
     margin-bottom: 0px;
     margin-left: 10px;
+
+}
+
+p.prod_name> strong {
+    font-weight: 900;
 }
 
 
@@ -123,11 +133,18 @@ div.prod_price_set {
 
 .dc_pt, .sale_prc{
     margin-left: 10px;
+    font-weight: 900;
+}
+
+.dc_pt {
+    color: rgb(0, 199, 40);
+    font-weight: 900;
 }
 
 .cnsmr_prc {
     font-size: 70%;
     margin-left: 5px;
+    color: #c3c1c1;
 }
 
 /*-------- 리뷰 관련 ----------*/
@@ -211,6 +228,7 @@ div.prod_price_set {
 #amount_by_qty_x_price {
     margin-left: 20px;
     margin-right: 10px;
+    font-weight: 600;
 }
 
 
@@ -244,10 +262,9 @@ div.prod_price_set {
     align-items: center;
     justify-content: space-between;
     padding: 10px;
-    border: 1px solid #bee1cc;
     border: none;
     margin-bottom: 10px;
-    background-color: #e2f9eb;
+    background-color: rgb(246, 250, 246);
 }
 
 
@@ -277,14 +294,16 @@ div.prod_price_set {
     text-align: right;
     margin-top : 50px;
     margin-right : 50px;
-    font-size: 23px;
-    font-weight: bold;
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: -2px; /* 음수 값으로 글자 간격을 좁게 조절 */
 }
 
 .last_text {
-    font-size: 18px;
+    font-size: 20px;
+    letter-spacing: 0px; /* 음수 값으로 글자 간격을 좁게 조절 */
+    margin-right: 10px;
 }
-
 
 /*--------------- 제출 버튼 -----------------*/
 
@@ -314,42 +333,49 @@ div.prod_price_set {
 }
 
 .wishlist_btn {
-    border: 1px solid #f9cece;
-    background-color: white;
+    border: 1px solid #ffdcd8;
+    background-color: #faf6f6;
 }
 
 .addcart_btn {
     border: none;
-    background-color: #ddf1ff ;
+    background-color: rgb(246, 250, 246);
 }
 
 .order_btn {
     border: none;
-    background-color: #cde5ff ;
+    background-color: rgb(246, 250, 246);
 }
+
+
+button.order_btn, button.addcart_btn {
+    border: 1px solid rgb(220 233 220);
+}
+
+
 
 .wishlist_btn i,
 .addcart_btn i,
 .order_btn i {
-    font-size: 25px;
+    font-size: 20px;
 }
 
 .fas {
-    color: #60b3ed ;
+    color: rgb(0, 199, 40);
 }
 
 .far {
-    color: #2c94de ;
+    color: rgb(32 131 90);
 }
 
 .fa-heart {
-    color: #ffdddd; /* 기본 색상 */
+    color: #ffdcd8; /* 기본 색상 */
 }
 
 /*------------호버-----------*/
 
 .wishlist_btn.hover .fa-heart {
-    color: #ffbcd1 /* 호버 상태 색상 */
+    color: #ff9284; /* 호버 상태 색상 */
 }
 
 .addcart_btn.hover .fa-shopping-cart {
@@ -367,7 +393,7 @@ div.prod_price_set {
     margin-top: 50px;
     width: 1100px;
     height: 55px;
-    background-color:rgb(218, 247, 210);
+    background-color:rgb(246, 250, 246);
     display: flex;
     flex-direction: row;
     align-items: start;
@@ -386,6 +412,7 @@ div.prod_price_set {
     display: flex;
     text-align: center;
     position: relative;
+    font-weight: 600;
 }
 
 
@@ -402,6 +429,7 @@ div.prod_price_set {
     padding-top: 6%;
     text-decoration: none; /* 밑줄 없애기 */
     color: inherit; /* 부모 요소의 글자색 상속 */
+    font-size: 18px;
 }
 
 .detail_navi_set li:not(:last-child)::after {
@@ -409,9 +437,9 @@ div.prod_price_set {
     position: absolute;
     top: 50%;
     right: 0;
-    height: 100%;
+    height: 220%;
     width: 2px;
-    background-color:rgb(243, 255, 243); /* 구분선 색상 설정 */
+    background-color:rgb(255 255 255); /* 구분선 색상 설정 */
     transform: translateY(-50%);
 }
 
@@ -472,12 +500,14 @@ div.prod_price_set {
 .dscpt_table th {
     width: 150px;
     padding-right: 10px;
+    font-size: 18px;
 }
 
 .dscpt_table td {
     width: 950px;
     padding-left: 20px;
     padding-right: 10px;
+    font-size: 18px;
 }
 
 
@@ -506,6 +536,8 @@ div.prod_price_set {
     max-width: 1100px; /* 최대 너비를 1100px로 제한 */
     margin-right: auto;
     margin-bottom: 50px;
+    font-weight: bold;
+
 }
 
 .make_review_btn {
@@ -567,7 +599,9 @@ div.prod_price_set {
     display: block;
     padding-top: 15px;
     padding-left: 10px;
-    font-size: 120%;
+    font-size: 20px;
+    font-weight: bold;
+
 }
 
 .rv_stmt {
@@ -660,6 +694,9 @@ div.prod_price_set {
 
 .inquiry_title {
     width:61%;
+    font-size: 18px;
+    font-weight: bold;
+
 }
 
 .inquiry_wrt {

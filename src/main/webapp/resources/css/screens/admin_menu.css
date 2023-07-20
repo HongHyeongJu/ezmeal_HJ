@@ -1,0 +1,66 @@
+.menu_container_div {
+    display: flex;
+    height: 865px;
+    width: 250px;
+}
+
+#menu_list {
+    margin-top: 0;
+    padding-left: 0;
+    width: 250px;
+    height:auto;
+    background-color: rgb(25, 38, 66);
+}
+
+#menu_list a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 상위 요소의 색상 상속 */
+    display: block; /* 블록 레벨 요소로 변경 */
+}
+
+#menu_list a li {
+    width: 229px;
+    height: 40px;
+    border: 1px solid rgb(191, 191, 191);
+    list-style: none;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 20px;
+    padding-top: 17px;
+    font-size: 23px;
+    font-weight: 500;
+    color: white;
+}
+
+/*주문, 상품, 고객, 게시판*/
+.main_li {
+    width: 229px;
+    height: 40px;
+    border: 1px solid rgb(191, 191, 191);
+    list-style: none;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 20px;
+    padding-top: 15px;
+    font-size: 23px;
+    font-weight: 500;
+    color: white;
+
+}
+
+/*서브 메뉴들 (클릭하면 나옴)*/
+.sub_li {
+    padding-top: 15px;
+    font-size: 18px !important;
+    height: 30px;
+    background-color: rgb(72, 85, 116);
+}
+
+.hidden {
+    display: none;
+}
+
+/*커서 깜빡임 없애기*/
+li {
+    caret-color: transparent;
+}
