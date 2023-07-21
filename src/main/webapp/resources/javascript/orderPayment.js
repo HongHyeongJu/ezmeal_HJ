@@ -89,9 +89,6 @@ function fetchDynamicData(periodList) {
             if (response.ok) return response.json();
             else throw new Error('Error: ' + response.status);
         })
-        // .then(data => {
-        //     renderHTMLFrom(data);
-        // })
         .catch(error => {
             console.error('Error fetching dymanic data: ', error);
         })

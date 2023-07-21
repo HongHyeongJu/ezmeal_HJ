@@ -1,3 +1,14 @@
+.order-detail__title {
+    width: 820px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid black;
+    margin-bottom: 50px;
+    padding: 0 10px 20px 0;
+}
+
 .main-section-right__order-detail {
     width: 820px;
     box-sizing: border-box;
@@ -24,6 +35,15 @@
     padding: 10px;
 }
 
+.order-detail__products-main:last-child, /* last-child는 부모요소 내부의 요소들에 한해서만 적용 */
+.order-detail__delivery-main,
+.order-detail__payment-main,
+.order-detail__order-info-main {
+    margin-bottom: 40px;
+}
+
+/* 개별 부분 */
+
 .order-detail__products-main__products {
     display: flex;
     justify-content: center;
@@ -45,6 +65,17 @@
     text-decoration: none; /* 밑줄 제거 */
     color: inherit; /* 기본 색상 상속 */
     margin-bottom: 10px;
+}
+
+.order-detail_seler_prc {
+    font-weight: bold;
+}
+
+.order-detail_cnsmr_prc {
+    text-decoration: line-through;
+    color: gray;
+    font-weight: 100;
+    font-size: small;
 }
 
 .order-detail__products-main__status {
@@ -83,6 +114,10 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+}
+
+.order-detail__payment-main > ul > li:last-child {
+    font-weight: bold;
 }
 
 .order-detail__order-info-main > ul > li,
