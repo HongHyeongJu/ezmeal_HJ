@@ -57,4 +57,17 @@ public class OrderDetailDaoTest {
         assertEquals(i, 3);
 
     }
+
+    @Test
+    public void selectOrderDetailProductList () {
+        List<OrderDetailDto> orderDetailDtos = orderDetailDao.selectOrderDetailProductList(202307144199L);
+        System.out.println("orderDetailDtos = " + orderDetailDtos);
+        System.out.println("orderDetailDtos.size() = " + orderDetailDtos.size());
+    }
+
+    @Test
+    public void selectOutsideOrderDetailInfo () {
+        Map<String, Object> stringObjectMap = orderDetailDao.selectOutsideOrderDetailInfo(202307144199L);
+        System.out.println("stringObjectMap = " + stringObjectMap);
+    }
 }

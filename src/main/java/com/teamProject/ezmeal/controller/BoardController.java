@@ -39,7 +39,7 @@ public class BoardController {
             e.printStackTrace();
             m.addAttribute("boardDto", boardDto);
             m.addAttribute("msg", "MOD_ERR");
-            return "board";
+            return "afterTestJSP/board";
         }
 
         return "redirect:/board/list";
@@ -62,7 +62,7 @@ public class BoardController {
             e.printStackTrace();
             m.addAttribute("boardDto", boardDto);
             m.addAttribute("msg", "WRT_ERR");
-            return "board";
+            return "afterTestJSP/board";
         }
 
         return "redirect:/board/list";
@@ -71,7 +71,7 @@ public class BoardController {
     @GetMapping("/write")
     public String write(Model m) {
         m.addAttribute("mode", "new"); // 읽기과 쓰기에 사용. 쓰게에 사용할 때는 mode = new
-        return "board";
+        return "afterTestJSP/board";
     }
 
     @PostMapping("/remove")
@@ -109,7 +109,7 @@ public class BoardController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "board";
+        return "afterTestJSP/board";
     }
 
     @GetMapping("/list")
@@ -131,7 +131,7 @@ public class BoardController {
             e.printStackTrace();
         }
 
-        return "boardList"; // 로그인을 한 상태이면, 게시판 화면으로 이동
+        return "afterTestJSP/boardList"; // 로그인을 한 상태이면, 게시판 화면으로 이동
     }
 
     private boolean loginCheck(HttpServletRequest request) {

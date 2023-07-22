@@ -158,4 +158,11 @@ public class CartProductDaoTest {
         // 장바구니 상품은 품절 상품을 포함하기 때문에 품절상품을 제외하는 count보다 크거나 같을 수 밖에 없다.
         assertTrue(ProductListSize >= countNum);
     }
+
+    // 주문 후 장바구니 상품 select 와 delete 수정
+    @Test
+    public void updateCartProductAfterOrder(){
+        int i = cartProductDao.updateCartProductAfterOrder(1L);
+        System.out.println("i = " + i);
+    }
 }

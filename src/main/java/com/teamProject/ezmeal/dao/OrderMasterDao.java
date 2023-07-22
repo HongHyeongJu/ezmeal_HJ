@@ -16,7 +16,12 @@ public class OrderMasterDao {
         return session.insert(namespace + "insertOrder", orderMasterDto);
     }
 
-    public OrderMasterDto selectOrderMaster() {
-        return session.selectOne(namespace + "selectOrderMaster");
+    // 일반 select
+    public OrderMasterDto selectOrderMaster(Long mbrId) {
+        return session.selectOne(namespace + "selectOrderMaster", mbrId);
+    }
+    // 제일 최신 주문번호
+    public Long selectOrderId(Long mbrId){
+        return session.selectOne(namespace + "select_order_id", mbrId);
     }
 }
