@@ -2,10 +2,13 @@
     display: flex;
     height: 865px;
     width: 250px;
+    height: auto;
 }
+
 
 #menu_list {
     margin-top: 0;
+    margin-bottom: 0;
     padding-left: 0;
     width: 250px;
     height:auto;
@@ -56,17 +59,25 @@
     background-color: rgb(45, 58, 88);
 }
 
+
+
 .hidden {
     display: none;
 }
 
 /*커서 깜빡임 없애기*/
-li {
+.main_li {
+    background-color: rgb(25, 38, 66);
     caret-color: transparent;
 }
 
-li:hover {
-    /* 호버 효과에 적용할 스타일 속성들 */
+/* 호버 효과에 적용할 스타일 속성들 */
+.main_li:hover {
+    background-color: rgb(72, 85, 116);
+
+}
+
+.sub_li:hover {
     background-color: rgb(72, 85, 116);
 
 }

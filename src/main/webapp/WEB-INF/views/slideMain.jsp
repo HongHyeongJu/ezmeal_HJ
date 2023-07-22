@@ -279,7 +279,7 @@
             <li><a href="#"  class="main_category">신상품</a></li>
             <li><a href="#" class="main_category">베스트</a></li>
             <li><a href="#" class="ezdeliveryimg">
-                <img src="/img/ezdelideli.png" class="ezdeliveryimg">
+                <img src="/img/delideli.png" class="ezdeliveryimg">
             </a></li>
             <li><a href="#" class="main_category">알뜰쇼핑</a></li>
             <li><a href="#" class="main_category">특가 | 혜택</a></li>

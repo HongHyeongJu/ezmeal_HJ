@@ -1,5 +1,10 @@
 
+// 할인코드 outerHTML 받아오기
+const selectElement = document.getElementById('dc_cd');
+const selectInnerHTML = selectElement.innerHTML;
 
+// 메인제품 소비자가 받아오기
+let mainProductCnsmrPrc = document.querySelector('#cnsmr_prc');
 
 // 옵션 리스트를 추가할 DOM 요소를 가져옵니다. 옵션 div
 let optionContainer = document.querySelector('.make_option_ulli');
@@ -7,126 +12,159 @@ let optionContainer = document.querySelector('.make_option_ulli');
 // '옵션 생성하기' 버튼을 가져옵니다.  + 옵션 생성하기 버튼
 let addButton = document.querySelector('.make_opt_btn');
 
-// '옵션 생성하기' 버튼을 클릭했을 때의 이벤트 리스너를 추가합니다.
-addButton.addEventListener('click', function() {
+// input 요소 가져오기
+const optListSizeInput = document.getElementById('optList_size_count');
 
-    //기본 제출기능 막기
+// input 요소의 value 가져오기
+const optListSizeValue = optListSizeInput.value;
+
+/*옵션 인덱스 시작 번호*/
+let optionCounter = optListSizeValue==0 ? 0 : optListSizeValue+1 // 옵션의 고유 번호를 저장하는 카운터
+
+
+addButton.addEventListener('click', function(event) {
     event.preventDefault();
 
-    // 새로운 옵션 리스트 ul
-    let newOption = document.createElement('ul');
-    newOption.className = 'opt_list_ul';
+    let optionNumber = optionCounter++; // 현재 옵션의 고유 번호를 가져오고, 카운터를 증가시킵니다.
 
-    /* [1] 옵션명  */
-    let nameLi = document.createElement('li');
-    let nameSpan = document.createElement('span');
-    nameSpan.textContent = '옵션명';
-    let nameInput = document.createElement('input');
-    nameInput.type = 'text';
-    nameInput.name = `options[${optionContainer.children.length}].name`;
-    nameLi.appendChild(nameSpan);
-    nameLi.appendChild(nameInput);
-    newOption.appendChild(nameLi);
+    // 백틱을 이용하여 HTML 문자열을 만듭니다.
+    let newOption = `
+    <ul class="opt_list_ul" data-id="${optionNumber}">
+        <li>
+            <span>옵션명</span>
+            <input type="text" name="options[${optionNumber}].name">
+        </li>
+        <li>
+            <span>옵션수량</span>
+            <input type="number" name="options[${optionNumber}].qty" min="0" value="0">
+        </li>
+        <li>
+            <span>할인코드</span>
+            <select name="options[${optionNumber}].dc_cd">
+               ${selectInnerHTML}
+            </select>         
+        </li>
+        <li>
+            <span>소비자가</span>
+            <input type="number" name="options[${optionNumber}].cnsmr_prc" min="0" disabled>
+        </li>
+        <li>
+            <span>판매가</span>
+            <input type="number" name="options[${optionNumber}].sale_prc" min="0" disabled value="0">
+        </li>
+        <li>
+            <span>할인율</span>
+            <input type="number" name="options[${optionNumber}].opt_dc_per" min="0" disabled value="0">
+        </li>
+        <li class="last_li">
+            <span class="span_rmk">비고</span>
+            <textarea class="opt_rmk" name="options[${optionNumber}].rmk"></textarea>
+            <button class="del_opt_btn">X</button>
+        </li>
+    </ul>
+    `;
 
-    /* [2] 옵션수량  */
-    let qtyLi = document.createElement('li');
-    let qtySpan = document.createElement('span');
-    qtySpan.textContent = '옵션수량';
-    let qtyInput = document.createElement('input');
-    qtyInput.type = 'number';
-    qtyInput.name = `options[${optionContainer.children.length}].qty`;
-    qtyInput.min = '0';
-    qtyLi.appendChild(qtySpan);
-    qtyLi.appendChild(qtyInput);
-    newOption.appendChild(qtyLi);
+    // 만들어진 HTML 문자열을 컨테이너에 추가합니다.
+    optionContainer.insertAdjacentHTML('beforeend', newOption);
 
-    /* [3] 할인코드  */
-    let dcCdLi = document.createElement('li');
-    let dcCdSpan = document.createElement('span');
-    dcCdSpan.textContent = '할인코드';
-    let dcCdSelect = document.createElement('select');
-    dcCdSelect.name = `options[${optionContainer.children.length}].dc_cd`;
-
-    // JSP의 select 태그에서 옵션들을 가져옵니다.
-    let select = document.querySelector('#dc_cd');
-    let options = select.options;
-
-    for(let i=0; i<options.length; i++) {
-        let option = options[i].cloneNode(true); // cloneNode를 사용하여 각 옵션을 복사합니다.
-        dcCdSelect.appendChild(option);
-    }
-    dcCdLi.appendChild(dcCdSpan);
-    dcCdLi.appendChild(dcCdSelect);
-    newOption.appendChild(dcCdLi);
-
-    /* [4] 소비자가  */
-    let cnsmrPrcLi = document.createElement('li');
-    let cnsmrPrcSpan = document.createElement('span');
-    cnsmrPrcSpan.textContent = '소비자가';
-    let cnsmrPrcInput = document.createElement('input');
-    cnsmrPrcInput.type = 'number';
-    cnsmrPrcInput.name = `options[${optionContainer.children.length}].cnsmr_prc`;
-    cnsmrPrcInput.value = '';
-    cnsmrPrcInput.min = '0';
-    cnsmrPrcLi.appendChild(cnsmrPrcSpan);
-    cnsmrPrcLi.appendChild(cnsmrPrcInput);
-    newOption.appendChild(cnsmrPrcLi);
-
-    /* [5] 판매가  */
-    let salePrcLi = document.createElement('li');
-    let salePrcSpan = document.createElement('span');
-    salePrcSpan.textContent = '판매가';
-    let salePrcInput = document.createElement('input');
-    salePrcInput.type = 'number';
-    salePrcInput.name = `options[${optionContainer.children.length}].sale_prc`;
-    salePrcInput.value = '';
-    salePrcInput.min = '0';
-    salePrcLi.appendChild(salePrcSpan);
-    salePrcLi.appendChild(salePrcInput);
-    newOption.appendChild(salePrcLi);
-
-    /* [6] 할인율  */
-    let optDcPerLi = document.createElement('li');
-    let optDcPerSpan = document.createElement('span');
-    optDcPerSpan.textContent = '할인율';
-    let optDcPerInput = document.createElement('input');
-    optDcPerInput.type = 'number';
-    optDcPerInput.name = 'opt_dc_per';
-    optDcPerInput.value = '';
-    optDcPerInput.min = '0';
-    optDcPerLi.appendChild(optDcPerSpan);
-    optDcPerLi.appendChild(optDcPerInput);
-    newOption.appendChild(optDcPerLi);
-
-    /* [7] 비고, x버튼  */
-    let rmkLi = document.createElement('li');
-    rmkLi.className = 'last_li';
-    let rmkSpan = document.createElement('span');
-    rmkSpan.className = 'span_rmk';
-    rmkSpan.textContent = '비고';
-    let rmkTextarea = document.createElement('textarea');
-    rmkTextarea.className = 'opt_rmk';
-    rmkTextarea.name = `options[${optionContainer.children.length}].rmk`;
-    let delButton = document.createElement('button');
-    delButton.className = 'del_opt_btn';
-    delButton.textContent = 'X';
-
-    delButton.addEventListener('click', function() {
-        // '삭제' 버튼을 누르면 해당 옵션 리스트 항목을 삭제합니다.
-        this.parentNode.parentNode.removeChild(this.parentNode);
+    // '삭제' 버튼에 이벤트 리스너를 추가합니다.
+    document.querySelector(`.opt_list_ul[data-id="${optionNumber}"] .del_opt_btn`).addEventListener('click', function(event) {
+        event.preventDefault();
+        this.closest('ul').remove();
     });
 
-    rmkLi.appendChild(rmkSpan);
-    rmkLi.appendChild(rmkTextarea);
-    rmkLi.appendChild(delButton);
-    newOption.appendChild(rmkLi);
+    // '옵션수량' 필드에 이벤트 리스너를 추가합니다.
+    document.querySelector(`.opt_list_ul[data-id="${optionNumber}"] input[name="options[${optionNumber}].qty"]`).addEventListener('change', function(event) {
+        let qty = parseInt(this.value);
+        let cnsmrPrc = parseFloat(mainProductCnsmrPrc.value);
 
-    // 만들어진 옵션 리스트 항목을 컨테이너에 추가합니다.
-    optionContainer.appendChild(newOption);
+        if (!isNaN(qty) && !isNaN(cnsmrPrc)) {
+            let optionCnsmrPrc = qty * cnsmrPrc;
+
+            // 계산된 값을 해당 옵션의 '소비자가' 필드에 설정합니다.
+            document.querySelector(`.opt_list_ul[data-id="${optionNumber}"] input[name="options[${optionNumber}].cnsmr_prc"]`).value = optionCnsmrPrc;
+        }
+    });
+
+
+// 할인코드 필드에 이벤트 리스너를 추가합니다.
+    document.querySelector(`.opt_list_ul[data-id="${optionNumber}"] select[name="options[${optionNumber}].dc_cd"]`).addEventListener('change', function(event) {
+        let selectedOption = this.options[this.selectedIndex];
+        let discountType = selectedOption.getAttribute('data-discount-type');
+        let discountRate = parseFloat(selectedOption.getAttribute('data-discount-rate')) || 0;
+        let discountPrc = parseFloat(selectedOption.getAttribute('data-discount-prc')) || 0;
+
+        // 필요한 값을 가져오기
+        let cnsmr_prc = parseFloat(document.querySelector(`.opt_list_ul[data-id="${optionNumber}"] input[name="options[${optionNumber}].cnsmr_prc"]`).value) || 0;
+
+        // 할인된 판매가를 계산합니다.
+        let sale_prc = 0;
+        if (discountType === 'prc') {
+            sale_prc = cnsmr_prc - discountPrc;
+        } else if (discountType === 'pt') {
+            sale_prc = cnsmr_prc - (cnsmr_prc * (discountRate / 100));
+        }
+
+        // 계산된 값을 해당 옵션의 '판매가' 필드에 설정합니다.
+        document.querySelector(`.opt_list_ul[data-id="${optionNumber}"] input[name="options[${optionNumber}].sale_prc"]`).value = Math.round(sale_prc);
+
+        // 여기에서 할인율을 계산합니다.
+        const optDcPerInput = document.querySelector(`.opt_list_ul[data-id="${optionNumber}"] input[name="options[${optionNumber}].opt_dc_per"]`);
+
+        let opt_Sc_Per = cnsmr_prc !== 0 ? ((cnsmr_prc - sale_prc) / cnsmr_prc) * 100 : 0;
+
+        optDcPerInput.value = Math.floor(opt_Sc_Per);
+    });
+
+
+
+
+});
+
+/*-------- 옵션에서 소비자가, 판매가로 할인율 계산 --------*/
+// optionContainer에 이벤트 리스너를 추가합니다.
+optionContainer.addEventListener('change', function(event) {
+    // '소비자가'나 '판매가' input 필드에서 이벤트가 발생했는지 확인합니다.
+    if (event.target.name.endsWith('.cnsmr_prc') || event.target.name.endsWith('.sale_prc')) {
+        // 옵션 번호를 가져옵니다.
+        const optionNumber = event.target.name.match(/options\[(\d+)\]/)[1];
+
+        // '소비자가', '판매가', '할인율' input 필드를 가져옵니다.
+        const cnsmrPrcInput = document.querySelector(`.opt_list_ul[data-id="${optionNumber}"] input[name="options[${optionNumber}].cnsmr_prc"]`);
+        const salePrcInput = document.querySelector(`.opt_list_ul[data-id="${optionNumber}"] input[name="options[${optionNumber}].sale_prc"]`);
+        const optDcPerInput = document.querySelector(`.opt_list_ul[data-id="${optionNumber}"] input[name="options[${optionNumber}].opt_dc_per"]`);
+
+        // 할인율을 계산합니다.
+        const opt_Cnsmr_Prc = parseFloat(cnsmrPrcInput.value);
+        const opt_Sale_Prc = parseFloat(salePrcInput.value);
+
+        let opt_Sc_Per = opt_Cnsmr_Prc !== 0 ? ((opt_Cnsmr_Prc - opt_Sale_Prc) / opt_Cnsmr_Prc) * 100 : 0;
+
+        optDcPerInput.value = Math.floor(opt_Sc_Per);
+
+    }
 });
 
 
-/*-------- 가격 계산 --------*/
+
+
+
+
+
+
+
+/*-------- 메인 가격 자동 계산 --------*/
+
+const qtyInput = document.querySelector('#qtyInput');
+const dcCdSelect = document.querySelector('#dcCdSelect');
+const cnsmrPrcInput = document.querySelector('#cnsmrPrcInput');
+const salePrcInput = document.querySelector('#salePrcInput');
+const optDcPerInput = document.querySelector('#optDcPerInput');
+
+const productCnsmrPrcInput = document.querySelector('#cnsmr_prc');
+
+
+
 qtyInput.addEventListener('change', function() {
     let cnsmrPrc = document.querySelector('#cnsmr_prc').value;
     cnsmrPrcInput.value = this.value * cnsmrPrc; // 소비자가 = 옵션수량 * 상품의 소비자가
@@ -148,6 +186,7 @@ dcCdSelect.addEventListener('change', function() {
         salePrc = cnsmrPrc - discountPrc;
     }
 
-    salePrcInput.value = salePrc;
-    optDcPerInput.value = (1 - salePrc / cnsmrPrc) * 100; // 할인율 = (1 - 판매가 / 소비자가) * 100
+    salePrcInput.value = Math.round(salePrc);
+    optDcPerInput.value = Math.round((1 - salePrc / cnsmrPrc) * 100);
+
 });

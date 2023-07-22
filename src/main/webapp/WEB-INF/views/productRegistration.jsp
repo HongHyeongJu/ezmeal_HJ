@@ -39,6 +39,7 @@
                         <td>
                             <input type="date" id="fst_reg_dt" name="product.fst_reg_dt" value="${product.getFst_reg_dt()}" readonly>
                             <input type="hidden" name="product.del_yn" value="${product.getDel_yn()}" >
+                            <input type="hidden" id="optList_size_count" value="${optList.size()}" >
                         </td>
                     </tr>
                 </table>
@@ -116,7 +117,7 @@
                     <tr class="dc_input">
                         <td><input type="number" id="sp_prc" name="product.sp_prc" value="${product.getSp_prc()}" min="0" ><p>원</p></td>
                         <td>
-                            <input type="number" id="cnsmr_prc" name="product.cnsmr_prc" value="${product.getCnsmr_prc()}" min="0" ${product.getOpt_yn() == 'n' ? '' : 'disabled'}>
+                            <input type="number" id="cnsmr_prc" name="product.cnsmr_prc" value="${product.getCnsmr_prc()}" min="0" ${mode=='READ' || (product.getOpt_yn()=='y') ? 'disabled' :'' }>
                             <p>원</p>
                         </td>
                         <td>
@@ -140,7 +141,7 @@
                     <tr class="dc_input">
                         <td><input type="number" id="sale_prc" name="product.sale_prc" value="${product.getSale_prc()}" min="0" disabled><p>원</p></td>
                         <td><input type="number" id="mgn_rate" name="product.mgn_rate" value="${product.getMgn_rate()}" disabled><p>%</p></td>
-                        <td><input type="number" id="dc_per"  value="" ><p>%</p></td>
+                        <td><input type="number" id="dc_per"  value=""  disabled ><p>%</p></td>
                     </tr>
                 </table>
             </div>
@@ -206,7 +207,7 @@
                             <li class="last_li">
                                 <span class="span_rmk">비고</span>
                                 <textarea class="opt_rmk" name="options[${status.index}].rmk">${option.rmk}</textarea>
-                                <button class="del_opt_btn">X</button>
+                                <button type="button"  class="del_opt_btn">X</button>
                             </li>
                         </ul>
                     </c:forEach>
@@ -305,7 +306,7 @@
 
             <div class="right img_upload_div">
                 <input type='file'  name='uploadFile' multiple>
-                <button id="uploadBtn">Upload</button>
+                <button type="button"  id="uploadBtn">Upload</button>
             </div>
             <!--------------- img_upload_div ---------------->
 
@@ -329,12 +330,12 @@
             <!--------------- img_set_div ---------------->
 
             <div class="right button_set_div">
-                <button class="prod_btn" id="regi_btn">상품 등록</button>
-                <button class="prod_btn" id="modi_btn">상품 수정</button>
-                <button class="prod_btn" id="modi_post_btn">상품 수정</button>
-                <button class="prod_btn" id="del_btn">상품 삭제</button>
-                <button class="prod_btn" id="list_btn">상품 목록</button>
-                <button class="prod_btn" id="prev_btn">미리보기</button>
+                <button type="button"  class="prod_btn" id="regi_btn">상품 등록</button>
+                <button type="button"  class="prod_btn" id="modi_btn">상품 수정</button>
+                <button type="button"  class="prod_btn" id="modi_post_btn">상품 수정</button>
+                <button type="button"  class="prod_btn" id="del_btn">상품 삭제</button>
+                <button type="button"  class="prod_btn" id="list_btn">상품 목록</button>
+                <button type="button"  class="prod_btn" id="prev_btn">미리보기</button>
             </div>
             <!--------------- button_set_div ---------------->
         </div>
@@ -350,14 +351,18 @@
     };
 </script>
 <!-- JavaScript 코드 -->
-<script src="/javascript/product_regist_make_option.js"></script>
-<script src="/javascript/product_regist_mode_read.js"></script>
-<script src="/javascript/product_regist_mode_modify.js"></script>
+<!-- 공급가, 소비자가, 할인코드에 이벤트 등록하기 -->
+<!---- 보관상태 직접입력 선택시에만 텍스트칸 활성화----->
 <script src="/javascript/product_regist_mode_write.js"></script>
 
 
+<script src="/javascript/product_regist_make_option.js"></script>
 
 
+
+
+<script src="/javascript/product_regist_mode_read.js"></script>
+<script src="/javascript/product_regist_mode_modify.js"></script>
 
 </body>
 </html>
