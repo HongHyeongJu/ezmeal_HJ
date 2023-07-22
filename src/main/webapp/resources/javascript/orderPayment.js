@@ -2,9 +2,10 @@
 const dynamicDiv = document.querySelector(".order-history__AJAX-load"); //jsp 파일에 미리준비한 div
 const periodBtnAll = document.querySelectorAll(".order-history__period_btn"); // 조회 기간 버튼
 const initPeriod = document.querySelector(".order-history__period__start_end"); // 초기 조회 시작 기간
+const resetPeriod = document.querySelector(".reset-period"); // 조회 초기화 버튼
 
 /* static 변수 */
-const initPeriodList = initPeriod.textContent.split(" ~ "); // 시작 날짜와 종료 날짜 배열로 변경 - 초기 설정값
+const initPeriodList = initPeriod.textContent.split(" ~ "); // 시작 날짜와 종료 날짜 배열로 변경 - 초기 설정값 "고정"
 const personalPeriodList = [initPeriodList[1]]; // 기간 설정 때 사용하는 날짜 list
 
 /* Rendering 함수 */
@@ -42,14 +43,14 @@ const renderHTMLFrom = function (allOrderPaymentList) {
                         </dl>
                         <dl class="order-history__products-definition__list">
                             <dt class="order-history__products-definition__title">결제금액</dt>
-                            <dd class="order-history__products-definition__detail">${allOrderPayment.pay_prc} 원</dd>
+                            <dd class="order-history__products-definition__detail">${allOrderPayment.pay_prc_format}원</dd>
                         </dl>
                     </div>
                     <!-- order-history__products-definition 끝 -->
                 </div>
                 <!-- order-history__products-main__products 끝 -->
                 <div class="order-history__products-main__status">
-                    <span class="order-history__products__status-span">결제완료</span>
+                    <span class="order-history__products__status-span">${allOrderPayment.stus}</span>
                     <div class="order-history__products__status-function">전체취소(기능div)</div>
                 </div>
                 <!-- order-history__products-main__status 끝 -->
@@ -60,6 +61,20 @@ const renderHTMLFrom = function (allOrderPaymentList) {
 }
 
 /* 사용 함수 */
+// 처음 html loading 후, 바로 수행되는 함수
+function getOrderPaymentData() {
+    fetch('/orderPayment/initData', {
+        method: 'GET',
+    })
+        .then(response => response.json())
+        .then(data => {
+            renderHTMLFrom(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
 
 // 조회 버튼 관련 기능
 async function handleOrderHistoryPeriod(event) {
@@ -74,6 +89,11 @@ async function handleOrderHistoryPeriod(event) {
     changePeriodList.unshift(changePeriodDate);
     const dynamicData = await fetchDynamicData(changePeriodList); // renderHTMLFrom() 사용, await으로 비동기 끝내기
     renderHTMLFrom(dynamicData); // innerHTML은 기존 내용을 제거 후, 새로 작성
+}
+
+function handleResetPeriod() {
+    initPeriod.innerHTML = `${initPeriodList[0]} ~ ${initPeriodList[1]}`; // innerHtml 초기값으로 다시 형성
+    getOrderPaymentData();
 }
 
 /* FETCH 함수 */
@@ -95,20 +115,6 @@ function fetchDynamicData(periodList) {
 }
 
 /* METHOD 추출 */
-
-// 처음 html loading 후, 바로 수행되는 함수
-function getOrderPaymentData() {
-    fetch('/orderPayment/initData', {
-        method: 'GET',
-    })
-        .then(response => response.json())
-        .then(data => {
-            renderHTMLFrom(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
 
 // 날짜 추출 함수
 function changePeriod(dateStr, period) {
@@ -133,3 +139,5 @@ document.addEventListener('DOMContentLoaded', getOrderPaymentData); // html 문�
 periodBtnAll.forEach((periodBtn) => {
     periodBtn.addEventListener("click", handleOrderHistoryPeriod);
 });
+
+resetPeriod.addEventListener("click", handleResetPeriod);

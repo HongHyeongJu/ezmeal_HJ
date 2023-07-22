@@ -20,30 +20,39 @@
 
     <!-- 반복되는 주문 상세 가지고 오기 -->
     <select id="select_order_detail" resultType="OrderDetailDto">
-        select *
-        # todo -> 상태 코드 table과 연결해서 실제 한글로 된 상태를 받아온다. 그리고 상품 img url도 받아와야한다. - 장바구니도 그렇게 했는지 확인 필요, 주문서도
-        from tb_order_detail
-        where ord_id = #{ordId};
+        select od.ord_prod_dtl_id,
+               od.ord_id,
+               od.prod_cd,
+               od.name,
+               format(od.seler_prc, 0) as seler_prc_format,
+               format(od.cnsmr_prc, 0) as cnsmr_prc_format,
+               od.qty,
+               osc.name as stus
+               # todo -> 상태 코드 table과 연결해서 실제 한글로 된 상태를 받아온다. 그리고 상품 img url도 받아와야한다. - 장바구니도 그렇게 했는지 확인 필요, 주문서도
+        from tb_order_detail as od,
+             tb_order_status_code as osc
+        where ord_id = #{ordId}
+          and od.stus = osc.ord_prod_stus_cd
     </select>
 
     <!-- 주문 상세에 사용할 복합 정보 가지고 오기 : 결제 master, member master, delivery master-->
     <select id="select_outside_order_detail_info" resultType="map">
-        select format(pm.ord_tot_prc, 0) as ord_tot_prc,                     # 상품주문총금액
-               format(pm.tot_dc_prc, 0) as tot_dc_prc,                       # 상품 총 할인 금액
-               pm.use_pnt,                                                   # 사용적립금
-               pm.coupn_use_prc,                                             # 쿠폰사용금액
-               pm.dexp,                                                      # 배송비
-               pm.pay_mtd,                                                   # 결제수단
-               format(pm.pay_prc, 0) AS pay_prc,                             # 실결제 금액
-               date_format(pm.in_dtm, '%Y-%m-%d %H:%i:%s')    as pay_dtm,    # 결제 시간
-               m.name,                                                       # 주문자 이름
-               dm.rcpr,                                                      # 수령자
-               concat(substring(dm.rcpr_phone, 1, 9), '****') as rcpr_phone, # 수령인전화번호
-               concat(dm.desti, ' ', dm.desti_dtl)            as sum_desti,  # 배송도착지 + 배송상세도착지
-               dm.req_mtr,                                                   # 배송요청사항: 문앞, 경비실
-               dm.in_mtd,                                                    # 출입방법: 공동현관 - 비밀번호, 자유 출입, 기타
-               dm.box_size                                                   # 배송 박스 사이즈
-        # todo : 배송 조회 관련 정보를 여기서 받아올 수 있고 아니면 따로 배송 masterMapper 에서 받아올 수 있다.
+        select format(pm.ord_tot_prc, 0)                      as ord_tot_prc, # 상품주문총금액
+               format(pm.tot_dc_prc, 0)                       as tot_dc_prc,  # 상품 총 할인 금액
+               pm.use_pnt,                                                    # 사용적립금
+               pm.coupn_use_prc,                                              # 쿠폰사용금액
+               pm.dexp,                                                       # 배송비
+               pm.pay_mtd,                                                    # 결제수단
+               format(pm.pay_prc, 0)                          AS pay_prc,     # 실결제 금액
+               date_format(pm.in_dtm, '%Y-%m-%d %H:%i:%s')    as pay_dtm,     # 결제 시간
+               m.name,                                                        # 주문자 이름
+               dm.rcpr,                                                       # 수령자
+               concat(substring(dm.rcpr_phone, 1, 9), '****') as rcpr_phone,  # 수령인전화번호
+               concat(dm.desti, ' ', dm.desti_dtl)            as sum_desti,   # 배송도착지 + 배송상세도착지
+               dm.req_mtr,                                                    # 배송요청사항: 문앞, 경비실
+               dm.in_mtd,                                                     # 출입방법: 공동현관 - 비밀번호, 자유 출입, 기타
+               dm.box_size                                                    # 배송 박스 사이즈
+               # todo : 배송 조회 관련 정보를 여기서 받아올 수 있고 아니면 따로 배송 masterMapper 에서 받아올 수 있다.
         from tb_payment_master pm,
              tb_delivery_master dm,
              tb_member m

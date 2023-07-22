@@ -44,8 +44,8 @@
                                 [${orderDetailProduct.prod_cd}] ${orderDetailProduct.name}
                             </a>
                             <div class="가격 수량">
-                                <span class="order-detail_seler_prc">${orderDetailProduct.seler_prc}원</span>
-                                <span class="order-detail_cnsmr_prc"  ${orderDetailProduct.seler_prc eq orderDetailProduct.cnsmr_prc ? 'hidden' : ''}>${orderDetailProduct.cnsmr_prc}원</span>
+                                <span class="order-detail_seler_prc">${orderDetailProduct.seler_prc_format}원</span>
+                                <span class="order-detail_cnsmr_prc"  ${orderDetailProduct.seler_prc_format eq orderDetailProduct.cnsmr_prc_format ? 'hidden' : ''}>${orderDetailProduct.cnsmr_prc_format}원</span>
                                 <span>| ${orderDetailProduct.qty}개</span>
                             </div>
                         </div>
