@@ -31,7 +31,7 @@
 
 </ul>
 
-<!--전달 받은 상품 리스트 하나한 꺼내기-->
+<!--전달 받은 상품 리스트 하나만 꺼내기-->
 <c:forEach var="prod" items="${prodList}" varStatus="status">
   <!-- 4개씩 ul 태그로 감싸기 -->
   <c:if test="${status.index % 4 == 0}">

@@ -64,11 +64,11 @@
     <p> baek </p>
     <ul>
         <c:if test="${not empty loginMbrInfo}">
-            <li><a href="/mypage/main">회원명 : ${loginMbrInfo.name}</a></li>
+            <li><a href="/mypage/modify">회원명 : ${loginMbrInfo.name}</a></li>
         </c:if>
         <li><a href="<c:url value='${loginOutLink}'/>">${loginOut}</a></li>
         <li><a href="/member/signup">회원가입</a></li>
-        <li><a href="/mypage/main">마이페이지</a></li>
+        <li><a href="/mypage/modify">마이페이지</a></li>
 
 
 

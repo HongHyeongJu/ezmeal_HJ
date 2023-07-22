@@ -1,0 +1,93 @@
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+
+body {
+    font-family: 'NanumSquare', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+.admin_header_div {
+    background-color: rgb(25, 38, 66);
+    height: 80px;
+    width: auto;
+    justify-content: center;
+}
+
+.header {
+    display: flex;
+
+}
+
+.admin_title, .admin_name {
+    display: flex;
+    align-items: center;
+}
+
+.logo_img {
+    width: 70px;
+    height: 70px;
+}
+
+.admin_title{
+    margin-top: 5px;
+    margin-left: 600px;
+}
+.admin_title > span {
+    width : 400px;
+    height: auto;
+    font-size: 30px;
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+}
+
+
+.admin_name > p {
+    width : 330px;
+    margin-top: 25px;
+    margin-left: 100px;
+    font-size: 20px;
+    font-weight: 300;
+    color: rgb(255, 255, 255);
+}
+
+a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 상위 요소의 색상 상속 */
+    display: block; /* 블록 레벨 요소로 변경 */
+    font-size: 20px;
+    font-weight: 300;
+    color: rgb(255, 255, 255);
+}
+
+#logout_btn  {
+    margin-top: 25px;
+    width : 100px;
+}
+
+
+/*-------------------------------  헤더 묶는 디브 ------------------------------------*/
+/*헤더 아래쪽 왼쪽 '메뉴'와 오른쪽 '개인페이지' 묶는 디브*/
+.all_container_div {
+    display: flex;
+    height: auto;
+    min-height: 860px;
+    width: 1650px;
+}
+
+
+/*--------------------------------  왼쪽 관리자메뉴  ------------------------------*/
+
+
+
+/*--------------------------------  오른쪽 개인페이지 ------------------------------*/
+.admin_container_div {
+    margin-top: 30px;
+    display: flex;
+    /*border: 5px solid blue ;*/
+    height: auto;
+    min-height: 870px;
+    width: 1300px;
+    margin-left: 80px;
+}
+

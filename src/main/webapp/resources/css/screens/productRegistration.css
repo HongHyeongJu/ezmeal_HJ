@@ -1,8 +1,13 @@
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+
+* {
+    font-family: 'NanumSquare', sans-serif;
+}
+
 /*------------------- 전체 조절div --------------------*/
 .container {
     display: flex;
-    margin-left: 180px;
-    width: 1500px;
+    width: 1300px;
     /* 수평 정렬을 위해 Flexbox 사용 */
     border: 1px solid #a2a2ae ;
 }
@@ -10,7 +15,7 @@
 /*------------------- 좌우 큰 div --------------------*/
 .left_bigdiv {
     display: flex;
-    width: 750px;
+    width: 650px;
     flex-direction: column;
     border: 1px solid #e3e3f5 ;
     align-items: center;
@@ -19,7 +24,7 @@
 }
 .right_bigdiv {
     display: flex;
-    width: 750px;
+    width: 650px;
     flex-direction: column;
     border: 1px solid #e3e3f5 ;
     align-items: center;
@@ -29,7 +34,7 @@
 
 /*------------------ (좌우 큰 div안의) 각 div들---------------------*/
 .left, .right {
-    width: 700px;
+    width: 640px;
     height: auto;
     min-height: 70px;
     background-color: #dde9fb;
@@ -82,6 +87,17 @@
 .yn_columns_first_tr td {
     text-align: center;
 }
+
+
+td label {
+    display: inline-block;
+    vertical-align: middle;
+}
+td input[type="radio"] {
+    vertical-align: middle;
+}
+
+
 /*-------------------- 상품명 -------------------------*/
 .name_label {
     display: inline-block;
@@ -158,29 +174,47 @@
     margin-bottom: 10px;
 }
 
-.make_options_div_table{
-    margin-left: 10px;
+/*---옵션 1개 세트----*/
+.opt_list_ul {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.opt_title td, .opt_tr  td{
-    margin-bottom: 10px;
+.opt_list_ul li {
+    width: 33.33%;
+    display: flex;
+    align-items: center;
 }
 
-.make_options_div input[type="number"]{
-    width: 110px; /* 원하는 너비로 설정 */
+.opt_list_ul li input[type="number"],
+.opt_list_ul li input[type="text"],
+.opt_list_ul li select {
+    margin-right: 30px;
+    margin-left: auto;
+    width: 100px;
 }
 
-.make_options_div input[type="text"]{
-    width: 120px; /* 원하는 너비로 설정 */
+.opt_list_ul li:not(:last-child) {
+    width: 33.33%;
 }
 
-.opt_tr_rmk input[type="text"]{
-    width: 440px; /* 원하는 너비로 설정 */
+.opt_list_ul li:last-child {
+    width: 800px;
 }
 
-.del_opt_btn_td {
-    text-align: center;
+.span_rmk {
+    width: 70px;
 }
+
+.opt_rmk {
+    width: 350px;
+    height: 40px; /* 원하는 높이로 설정 */
+}
+
+.del_opt_btn {
+    margin-left:30px;
+}
+/*---옵션 1개 세트----*/
 
 /*-------------------  오른쪽 디브 시작 --------------------*/
 /*---------------------------------------------------------*/
@@ -192,7 +226,25 @@
 .storage_div_table tr{
     height: 50px;
 }
+
+
+
 /*----------------------- 상품 상세 정보 ------------------------*/
+
+.storage_header {
+    width: 120px;
+}
+
+.right_bigdiv .storage_div label {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 30px; /* 원하는 간격으로 조정하세요 */
+}
+
+.right_bigdiv .storage_div input[type="radio"] {
+    vertical-align: middle;
+}
+
 .dscpt_set_div_table_1 th {
     height: 30px;
     vertical-align: bottom;
@@ -209,6 +261,20 @@
 .dscpt_header {
     width: 120px; /* 원하는 너비로 설정 */
 }
+
+textarea {
+    height: 40px;
+}
+
+th {
+    height: 40px;
+}
+
+input {
+    height: 30px;
+
+}
+
 /*-------------------이미지 업로드------------------------*/
 .img_upload_div input {
     margin: 20px; /* 셀의 여백 설정 */
@@ -226,14 +292,14 @@
 }
 
 .img_ul_1 {
-    width: 150px;
+    width: 100px;
 }
 
 .img_ul_2 {
     width: 250px;
 }
 .img_ul_3 {
-    width: 150px;
+    width: 100px;
 }
 
 /*--------------------버튼들---------------------*/

@@ -93,30 +93,45 @@ public class ProductController {
     @GetMapping("/regist/read")
     public String productRegistPage(Model model, Long prod_cd) throws SQLException, JsonProcessingException {
         /*관리자용 상품 페이지(읽기)에 필요한 것 모두 받아오기*/
-        HashMap map = productService.getOneProductByProdCd(prod_cd);
+        HashMap map = productService.getOneProductByProdCdForMng(prod_cd);
 
         /*모델에 담기*/
         model.addAttribute("product", map.get("product"));
         model.addAttribute("optList", map.get("optList"));
         model.addAttribute("imgList", map.get("imgList"));
-        model.addAttribute("imgList", map.get("imgList"));
-        model.addAttribute("imgList", map.get("imgList"));
+        model.addAttribute("dcList", map.get("dcList"));
+        model.addAttribute("cateList", map.get("cateList"));
+        model.addAttribute("custList", map.get("custList"));
+        model.addAttribute("stusList", map.get("stusList"));
         model.addAttribute("mode","READ");
 
         return "productRegistration";
+
     }
+
+
 
 
 
     /*관리자 상품 CRUD page - WRITE 새상품 등록 페이지 */
     @GetMapping("/regist/write")
-    public String productMngRegistWritePage(Model model) {
+    public String productMngRegistWritePage(Model model) throws SQLException {
 
+        /*관리자용 상품 페이지(읽기)에 필요한 것 모두 받아오기*/
+        HashMap map = productService.getListForProductRegist();
+
+        /*모델에 담기*/
+        model.addAttribute("dcList", map.get("dcList"));
+        model.addAttribute("cateList", map.get("cateList"));
+        model.addAttribute("custList", map.get("custList"));
+        model.addAttribute("stusList", map.get("stusList"));
         model.addAttribute("mode","WRITE");
 
         return "productRegistration";
     }
     /*------------------------------*/
+
+
 
     /*관리자 상품 CRUD page - WRITE */
     @PostMapping("/regist/write")

@@ -72,10 +72,12 @@ public class MemberService {
         }
     }
 
+    // 로그인한 회원정보를 가져오는 로직
     public MemberDto getMemberInfo(Long memberId) throws Exception {    // 회원정보수정페이지에 띄워줄 회원정보를 조회한다.
         return memberDao.selectMemberInfo(memberId);
     }
 
+    // 회원정보 변경
     public int modifyMember(MemberDto memberDto) {
         try {
             return memberDao.updateMemeber(memberDto);
@@ -85,5 +87,19 @@ public class MemberService {
         }
     }
 
+    // 아이디 찾기
+    public String getFindId(String name, String email) {
+        try {
+            return memberDao.selectFindId(name,email);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    // 비밀번호 찾기
+    public String getFindPw(String id, String email) {
+        return memberDao.selectFindPw(id,email);
+    }
 
 }

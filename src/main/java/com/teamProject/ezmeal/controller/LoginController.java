@@ -47,7 +47,6 @@ public class LoginController {
     ) throws Exception {
 //        // checkbox가 click시 on 아닐 시, null 반환해서 nullPointException 막기 위해 검증
 
-//        // clicked on이면 if문 돌고 아니면 그전에 있던 cookie 제거
         /* 개인 정보를 jsp로 보낼 경우, 특히 redirect를 하는 경우는 조심!!!!!
          * redirect인 경우는 model로 담은 값들이 url에 그대로 나타나게 된다.
          * 따라서 session에 값을 넣어서 보내는 방법을 택해야한다.
@@ -55,17 +54,7 @@ public class LoginController {
         boolean loginCheck = loginService.loginCheck(loginId,loginPw);
         Long memberId = loginService.loginInfo(loginId);
 
-        System.out.println("remember = " + remember);
-        if (remember) {
-            // ID기억하기 - 쿠키생성
-            Cookie cookie = new Cookie("id", loginId);
-            response.addCookie(cookie);
-        } else {
-            // ID기억하기 체크해제 - 쿠키삭제
-            Cookie removeCookie = new Cookie("id",loginId);
-            removeCookie.setMaxAge(0);
-            response.addCookie(removeCookie);
-        }
+
         // login 검증
         // session도 없고 session 있는데 login 정보 없을 때 들어옴
 
@@ -78,6 +67,18 @@ public class LoginController {
         }
         // login성공시 filter에서 구분할 session 넣어주기
         // id와 pwd가 일치하면
+        System.out.println("remember = " + remember);
+        if (remember) {
+            // ID기억하기 - 쿠키생성
+            Cookie cookie = new Cookie("id", loginId);
+            response.addCookie(cookie);
+        } else {
+            // ID기억하기 체크해제 - 쿠키삭제
+            Cookie removeCookie = new Cookie("id",loginId);
+            removeCookie.setMaxAge(0);
+            response.addCookie(removeCookie);
+        }
+
         HttpSession session = request.getSession();
         session.setAttribute("memberId", memberId);
         MemberDto loginMbrInfo = memberService.getMemberInfo(memberId);

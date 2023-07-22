@@ -25,6 +25,11 @@ public class ProductDao {
         return session.selectOne(namespace+"select_product_by_prod_cd_for_TDD", prod_cd);
     }
 
+    /* 상품코드로 상품 1개 찾기(TDD용) */
+    public ProductDto selectProductByProdCdForMng(Long prod_cd) throws SQLException {
+        return session.selectOne(namespace+"select_product_by_prod_cd_for_mng", prod_cd);
+    }
+
 
     /* 분류코드로 상품 리스트 받기 */
     public List<ProductDto> selectProductListByCateCd(String cate_cd) throws SQLException {
