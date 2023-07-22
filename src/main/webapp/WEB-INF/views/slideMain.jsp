@@ -292,21 +292,21 @@
 <div class="image-slideshow">
     <div class="image fade">
         <img
-                src="/img/slideimg_1(수정).jpg"
+                src="/img/slideimg_1.jpg"
                 style="width: 100%; height: 500px"
                 alt="7월신메뉴"
         />
     </div>
     <div class="image fade">
         <img
-                src="/img/slideimg_2(수정).jpg"
+                src="/img/slideimg_2.jpg"
                 style="width: 100%; height: 500px"
                 alt="구독신청"
         />
     </div>
     <div class="image fade">
         <img
-                src="/img/slideimg_3(수정).jpg"
+                src="/img/slideimg_3.jpg"
                 style="width: 100%; height: 500px"
                 alt="콘텐츠"
         />
