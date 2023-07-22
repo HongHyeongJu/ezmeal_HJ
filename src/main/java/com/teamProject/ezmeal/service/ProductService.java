@@ -3,11 +3,13 @@ package com.teamProject.ezmeal.service;
 import com.teamProject.ezmeal.dao.*;
 import com.teamProject.ezmeal.domain.*;
 
+import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -33,6 +35,12 @@ public class ProductService {
     ProductOptionDao productOptionDao;
     @Autowired
     ProductReviewDao productReviewDao;
+    @Autowired
+    ProductCategoryDao productCategoryDao;
+    @Autowired
+    CustDao custDao;
+    @Autowired
+    ProductStatusDao productStatusDao;
 
     private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
     /*여러 다오의 메서드 호출할 때, 왼쪽창 열고 다오랑, 맵퍼 주석 확인해서 상황에 적절한 메서드 호출하기*/
@@ -139,28 +147,53 @@ public class ProductService {
     /*관리자 상품 관리 페이지(읽기, 수정용)*/
     public HashMap getOneProductByProdCdForMng (Long prod_cd) throws SQLException {
         /*상품 객체*/
-        ProductDto product = productDao.selectProductByProdCd(prod_cd);
+        ProductDto product = productDao.selectProductByProdCdForMng(prod_cd);
         /*옵션 List*/
         List<ProductOptionDto> optList = productOptionDao.selectOptionProductsByProdCd(prod_cd);
         /*이미지 List*/
         List<ProductImgDto> imgList = productImgDao.selectProdCdImgAll(prod_cd);
-        /*할인코드 List*/
-        List<ProductDiscountDto> dcList = productDiscountDao.selectDiscountListByCateCd();
-        /*카테고리 List*/
 
-        /*거래처 List*/
+        /*할인,카테고리,거래처,상태  리스트 받아오기*/
+        HashMap listMap = getListForProductRegist();
 
 
         HashMap registProductMap = new HashMap();
         registProductMap.put("product",product);
         registProductMap.put("optList",optList);
         registProductMap.put("imgList",imgList);
-        registProductMap.put("dcList",dcList);
-        registProductMap.put("cateList",dcList);
-        registProductMap.put("custList",dcList);
+        registProductMap.put("dcList",listMap.get("dcList"));
+        registProductMap.put("cateList",listMap.get("cateList"));
+        registProductMap.put("custList",listMap.get("custList"));
+        registProductMap.put("stusList",listMap.get("stusList"));
 
         return registProductMap;
     }
+
+    /* 관리자 페이지 읽기, 수정 시 -> 할인,카테고리,거래처,상태 리스트 받아오기 */
+    public HashMap getListForProductRegist () throws SQLException {
+
+        /*할인코드 List*/
+        List<ProductDiscountDto> dcList = productDiscountDao.selectDiscountListByCateCd();
+        /*카테고리 List*/
+        List<ProductCategoryDto> cateList =  productCategoryDao.selectCategoryList();
+        /*거래처 List*/
+        List<CustDto> custList = custDao.selectCustList();
+        /*상품 상태코드 List*/
+        List<ProductStatusDto> stusList = productStatusDao.selectAllProdStus();
+
+        HashMap registProductMap = new HashMap();
+
+        registProductMap.put("dcList",dcList);
+        registProductMap.put("cateList",cateList);
+        registProductMap.put("custList",custList);
+        registProductMap.put("stusList",stusList);
+
+        return registProductMap;
+
+    }
+
+
+
 
 
     /*-----------관리자용-------------------*/

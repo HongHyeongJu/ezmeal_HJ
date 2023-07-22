@@ -13,7 +13,7 @@
         <typeAlias alias="CartJoinProductDto" type="com.teamProject.ezmeal.domain.joinDomain.CartJoinProductDto"/>
         <typeAlias alias="DeliveryAddressDto" type="com.teamProject.ezmeal.domain.DeliveryAddressDto"/>
         <typeAlias alias="MemberDto" type="com.teamProject.ezmeal.domain.MemberDto"/>
-<!--상품 , 상품이미지 , 상품할인, 상품옵션, 상품후기, 상품재고, 찜한상품-->
+<!--상품 , 상품이미지 , 상품할인, 상품옵션, 상품후기, 상품재고, 찜한상품, + 카테고리, 거래처, 상품상태코드-->
         <typeAlias alias="ProductDto" type="com.teamProject.ezmeal.domain.ProductDto"/>
         <typeAlias alias="ProductImgDto" type="com.teamProject.ezmeal.domain.ProductImgDto"/>
         <typeAlias alias="ProductDiscountDto" type="com.teamProject.ezmeal.domain.ProductDiscountDto"/>
@@ -21,6 +21,9 @@
         <typeAlias alias="ProductReviewDto" type="com.teamProject.ezmeal.domain.ProductReviewDto"/>
         <typeAlias alias="ProductInventoryDto" type="com.teamProject.ezmeal.domain.ProductInventoryDto"/>
         <typeAlias alias="WishListDto" type="com.teamProject.ezmeal.domain.WishListDto"/>
+        <typeAlias alias="ProductCategoryDto" type="com.teamProject.ezmeal.domain.ProductCategoryDto"/>
+        <typeAlias alias="CustDto" type="com.teamProject.ezmeal.domain.CustDto"/>
+        <typeAlias alias="ProductStatusDto" type="com.teamProject.ezmeal.domain.ProductStatusDto"/>
 
 <!--회원 등급, 적립금-->
         <typeAlias alias="MemberGradeDto" type="com.teamProject.ezmeal.domain.MemberGradeDto"/>

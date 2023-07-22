@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tb_product_category">
+
+    <select id="select_all_category" resultType="ProductCategoryDto">
+        SELECT *
+        FROM tb_product_category
+        WHERE use_yn='y' AND  del_yn='n' AND level = 2
+    </select>
+
+
+</mapper>

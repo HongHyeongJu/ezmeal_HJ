@@ -121,6 +121,7 @@ public class CartProductDao {
 
     /*상품 목록, 상품 상세에서 장바구니에 상품 담기  (seq 자동증가 버전) */
     public int insertAddCart(CartProductDto cartProductDto) {
+        System.out.println("?????????"+cartProductDto.getQty());
         System.out.println("[다오] insert");
         return session.insert(namespace + "add_product_to_cart_seq", cartProductDto);
     }

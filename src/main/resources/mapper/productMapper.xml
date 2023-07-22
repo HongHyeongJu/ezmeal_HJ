@@ -23,6 +23,13 @@
         WHERE prod_cd = #{prod_cd}
     </select>
 
+    <!-- 상품코드로 상품찾기 (관리자용)-->
+    <select id="select_product_by_prod_cd_for_mng" parameterType="Long" resultType="ProductDto">
+        SELECT *
+        FROM tb_product
+        WHERE prod_cd = #{prod_cd}  AND del_yn='n'
+    </select>
+
     <!-- 카테고리 분류코드로 상품리스트 받기 (상품 객체 전체값) -->
     <select id="select_product_list_by_cate_cd" parameterType="String" resultType="ProductDto">
         SELECT *
