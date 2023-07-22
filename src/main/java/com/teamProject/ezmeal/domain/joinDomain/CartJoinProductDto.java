@@ -18,6 +18,8 @@ public class CartJoinProductDto {
     private String name;
     private Integer cnsmr_prc;
     private Integer sale_prc;
+    private String cnsmr_prc_format; // 1000 -> 1,000원
+    private String sale_prc_format; // 1000 -> 1,000원
     private Integer curr_inv; // 주문넣을때 검증 재고 수량, 장바구니 상품 띄울 땐 최대 재고수량
 
 }

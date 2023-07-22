@@ -33,7 +33,7 @@ public class CartProductService {
 
     // 일반 상품 : 냉장/냉동/상온 map으로 저장
     // TODO option 확실해지면 다시 작성 필요 - option_cd 존재시, option 값(opt_val)을 상품 명 옆에 두고 | 가격은 옵션 가격으로 지정
-    public List<CartJoinProductDto> getProducts(Long cartSeq) {
+    public List<CartJoinProductDto> getProductList(Long cartSeq) {
 //        String[] typeName = {"냉장", "냉동", "상온"};
 //        List<String> typeNameList = new ArrayList<>(Arrays.asList(typeName));
 //
@@ -65,7 +65,7 @@ public class CartProductService {
 //            }
 //        }
 
-        return cartProductDao.selectProduct(cartSeq);
+        return cartProductDao.selectProductList(cartSeq);
 
     }
 
@@ -147,7 +147,7 @@ public class CartProductService {
     // 관리자
 
     // 장바구니에 존재하는 모든 상품
-    public List<CartProductDto> getProductList(Long mbrId) {
+    public List<CartProductDto> getProductAll(Long mbrId) {
         List<CartProductDto> cartProducts = cartProductDao.selectAllProd(mbrId);
         String type = cartProducts.get(0).getTyp();
         return cartProducts;

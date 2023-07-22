@@ -39,8 +39,8 @@ public class CartProductDao {
     */
 
     // 일반 상품 : 냉동, 냉장, 상온 분리
-    public List<CartJoinProductDto> selectProduct(Long cartSeq) {
-        return session.selectList(namespace + "product", cartSeq);
+    public List<CartJoinProductDto> selectProductList(Long cartSeq) {
+        return session.selectList(namespace + "product_list", cartSeq);
     }
 
     // 개별 상품 삭제 : JS fetch를 이용한 rest API 수행
