@@ -10,4 +10,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OrderMasterService {
     private final OrderMasterDao orderMasterDao;
+
+    public Long getOrderId(Long memberId){
+        return orderMasterDao.selectOrderId(memberId);
+    }
 }

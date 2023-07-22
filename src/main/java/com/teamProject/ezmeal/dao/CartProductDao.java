@@ -126,6 +126,9 @@ public class CartProductDao {
         return session.insert(namespace + "add_product_to_cart_seq", cartProductDto);
     }
 
-
+    // taewan
+    public int updateCartProductAfterOrder(Long cartSeq) {
+        return session.update(namespace + "update_after_order", cartSeq);
+    }
 
 }

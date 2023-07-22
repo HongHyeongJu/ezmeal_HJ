@@ -42,6 +42,9 @@
         <typeAlias alias="OrderPaymentDto" type="com.teamProject.ezmeal.domain.OrderPaymentDto"/>
         <typeAlias alias="OrderDetailDto" type="com.teamProject.ezmeal.domain.OrderDetailDto"/>
         <typeAlias alias="DeliveryMasterDto" type="com.teamProject.ezmeal.domain.DeliveryMasterDto"/>
+<!-- 주문내역 dto-->
+        <typeAlias alias="OrderPaymentJoinDto" type="com.teamProject.ezmeal.domain.joinDomain.OrderPaymentJoinDto"/>
+
 
 
 

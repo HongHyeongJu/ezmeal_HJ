@@ -7,7 +7,7 @@
 /*------------------- 전체 조절div --------------------*/
 .container {
     display: flex;
-    width: 1300px;
+    width: 1180px;
     /* 수평 정렬을 위해 Flexbox 사용 */
     border: 1px solid #a2a2ae ;
 }
@@ -15,7 +15,7 @@
 /*------------------- 좌우 큰 div --------------------*/
 .left_bigdiv {
     display: flex;
-    width: 650px;
+    width: 590px;
     flex-direction: column;
     border: 1px solid #e3e3f5 ;
     align-items: center;
@@ -24,7 +24,7 @@
 }
 .right_bigdiv {
     display: flex;
-    width: 650px;
+    width: 590px;
     flex-direction: column;
     border: 1px solid #e3e3f5 ;
     align-items: center;
@@ -34,7 +34,7 @@
 
 /*------------------ (좌우 큰 div안의) 각 div들---------------------*/
 .left, .right {
-    width: 640px;
+    width: 580px;
     height: auto;
     min-height: 70px;
     background-color: #dde9fb;
@@ -178,20 +178,23 @@ td input[type="radio"] {
 .opt_list_ul {
     display: flex;
     flex-wrap: wrap;
+    padding-left: 10px;
 }
 
 .opt_list_ul li {
     width: 33.33%;
     display: flex;
     align-items: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .opt_list_ul li input[type="number"],
 .opt_list_ul li input[type="text"],
 .opt_list_ul li select {
-    margin-right: 30px;
+    margin-right: 45px;
     margin-left: auto;
-    width: 100px;
+    width: 80px;
 }
 
 .opt_list_ul li:not(:last-child) {
@@ -203,11 +206,11 @@ td input[type="radio"] {
 }
 
 .span_rmk {
-    width: 70px;
+    width: 65px;
 }
 
 .opt_rmk {
-    width: 350px;
+    width: 270px;
     height: 40px; /* 원하는 높이로 설정 */
 }
 

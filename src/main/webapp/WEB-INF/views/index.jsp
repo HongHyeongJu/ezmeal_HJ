@@ -37,6 +37,7 @@
     <li><a href="/cart">장바구니</a></li>
     <li><a href="/address">배송지</a></li>
     <li><a href="/order">주문서</a></li>
+    <li><a href="/orderPayment">주문 내역</a></li>
 
 
 

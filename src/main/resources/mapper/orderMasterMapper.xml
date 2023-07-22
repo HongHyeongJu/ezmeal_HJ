@@ -8,8 +8,17 @@
         INSERT INTO tb_order_master (ord_id, mbr_id, stus, expct_pnt, prod_smry )
         VALUES (#{ord_id}, #{mbr_id}, #{stus}, #{expct_pnt}, #{prod_smry})
     </insert>
-    <select id="selectOrderMaster" >
+
+
+    <select id="selectOrderMaster" resultType="OrderMasterDto">
         select *
         from tb_order_master
+    </select>
+
+    <select id="select_order_id" resultType="long">
+        SELECT ord_id
+        FROM tb_order_master
+        WHERE mbr_id = #{mbrId}
+          AND in_dtm = (SELECT MAX(in_dtm) FROM tb_order_master WHERE mbr_id = #{mbrId});
     </select>
 </mapper>

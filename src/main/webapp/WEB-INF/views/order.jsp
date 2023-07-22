@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="/css/style.css"/>
 
 <body>
+<jsp:include page="header.jsp"/>
 <main class="order">
     <div class="order__name">
         <h1>주문서</h1>

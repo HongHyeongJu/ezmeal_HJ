@@ -18,6 +18,8 @@ public class OrderDetailDto {
     private String name; //// 상품명, 옵션 상품일 경우 옵션명 포함
     private Integer cnsmr_prc; //// 상품소비자가격
     private Integer seler_prc; //// 상품판매자가격
+    private String  seler_prc_format; // 숫자 포맷팅
+    private String  cnsmr_prc_format; // 숫자 포맷팅
     private Integer qty; //// 상품수량
     private Integer tot_prc; //// 총상품금액, 개별상품의 수량*가격
     private Integer dc_prc; //// 상품할인금액, 상품자체할인 * 수량
