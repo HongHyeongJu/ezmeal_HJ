@@ -120,10 +120,9 @@
             <li class="main_li"><i class="fas fa-chart-bar"></i>&nbsp;&nbsp;&nbsp;통계</li>
             <li class="main_li"><i class="fas fa-comments-dollar"></i>&nbsp;&nbsp;프로모션</li>
             <li class="main_li"><i class="fas fa-calendar-check"></i>&nbsp;&nbsp;&nbsp;운영일정</li>
-            <li class="main_li"><i class="fas fa-shipping-fast"></i>&nbsp;&nbsp;EZ배송</li>
+            <li class="main_li"><i class="fas fa-shipping-fast"></i>&nbsp;&nbsp;EZ배송관리</li>
             <li class="main_li"><i class="fas fa-warehouse"></i>&nbsp;&nbsp;상품창고</li>
             <li class="main_li"><i class="fas fa-database"></i>&nbsp;&nbsp;&nbsp;데이터분석</li>
-            <li class="main_li"><i class="fas fa-file-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;통합엑셀</li>
             <li class="main_li"><i class="fas fa-id-card-alt"></i>&nbsp;&nbsp;관리자정보</li>
             <li class="main_li"><i class="fas fa-journal-whills"></i>&nbsp;&nbsp;&nbsp;쇼핑몰 정책</li>
             <li class="main_li">&nbsp;</li>

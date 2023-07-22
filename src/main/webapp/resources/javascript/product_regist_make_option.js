@@ -36,7 +36,7 @@ addButton.addEventListener('click', function(event) {
         </li>
         <li>
             <span>옵션수량</span>
-            <input type="number" name="options[${optionNumber}].qty" min="0" value="0">
+            <input type="number" name="options[${optionNumber}].qty" min="0" value="0">개
         </li>
         <li>
             <span>할인코드</span>
@@ -46,15 +46,15 @@ addButton.addEventListener('click', function(event) {
         </li>
         <li>
             <span>소비자가</span>
-            <input type="number" name="options[${optionNumber}].cnsmr_prc" min="0" disabled>
+            <input type="number" name="options[${optionNumber}].cnsmr_prc" min="0" disabled>원
         </li>
         <li>
             <span>판매가</span>
-            <input type="number" name="options[${optionNumber}].sale_prc" min="0" disabled value="0">
+            <input type="number" name="options[${optionNumber}].sale_prc" min="0" disabled value="0">원
         </li>
         <li>
             <span>할인율</span>
-            <input type="number" name="options[${optionNumber}].opt_dc_per" min="0" disabled value="0">
+            <input type="number" name="options[${optionNumber}].opt_dc_per" min="0" disabled value="0">%
         </li>
         <li class="last_li">
             <span class="span_rmk">비고</span>
