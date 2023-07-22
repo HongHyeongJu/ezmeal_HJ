@@ -60,8 +60,8 @@
                             <!--상품수량 끝-->
 
                             <div class="order__item_price">
-                                <span> ${item.sale_prc}원 </span>
-                                <span class="cart__item_product-price" ${item.cnsmr_prc eq item.sale_prc ? 'hidden' : ''}>${item.cnsmr_prc} 원</span>
+                                <span> ${item.sale_prc_format}원 </span>
+                                <span class="cart__item_product-price" ${item.cnsmr_prc_format eq item.sale_prc_format ? 'hidden' : ''}>${item.cnsmr_prc_format} 원</span>
                             </div>
                             <!--상품 가격 끝-->
                         </li>

@@ -119,7 +119,7 @@
                 </li>
                 <li><span>받으실 장소</span><span>${outsideOrderDetailInfo.req_mtr}</span></li>
                 <li><span>공동현관 출입방법</span><span>${outsideOrderDetailInfo.in_mtd}</span></li>
-                <li><span>박스 크기 </span><span>${outsideOrderDetailInfo.box_size} 사이즈</span></li>
+                <li><span>박스 크기 </span><span>${outsideOrderDetailInfo.box_size} size</span></li>
             </ul>
         </div>
         <!-- 배송정보 header 끝 -->

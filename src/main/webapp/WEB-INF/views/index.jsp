@@ -79,6 +79,12 @@
 
 
     </ul>
+
+    <p> admin </p>
+    <ul>
+        <li><a href="/admin/prod/write"> 관리자 페이지 </a></li>
+    </ul>
+
 </div>
 <jsp:include page="footer.jsp"/>
 </body>
