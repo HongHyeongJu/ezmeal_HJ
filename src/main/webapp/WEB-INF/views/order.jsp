@@ -36,7 +36,8 @@
                 <!-- 주문상품 title 끝-->
                 <ul class="order__items__ul">
                     <%--TODO 이거 절대로 li 다음줄로 넘기면 안됨. 개행문자 적용이 되어서 kakao pay시 문제를 발생시킨다.--%>
-                    <li class="order__prod_summary" product_cnt="${cartProductList.size()}">${cartProductList.get(0).name}외 ${cartProductList.size() -1}건 </li>
+                    <li class="order__prod_summary" product_cnt="${cartProductList.size()}">${cartProductList.get(0).name} <c:if test="${cartProductList.size() -1 != 0}">외 ${cartProductList.size() -1}건</c:if></li>
+
                     <c:forEach var="item" items="${cartProductList}">
                         <!--반복 시작 -->
                         <!--장바구니 식품 반복 시작 -->
