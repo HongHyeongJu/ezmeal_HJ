@@ -5,20 +5,55 @@
 <mapper namespace="orderMaster">
     <!-- 주문 master 추가 -->
     <insert id="insertOrder" parameterType="OrderMasterDto">
-        INSERT INTO tb_order_master (ord_id, mbr_id, stus, expct_pnt, prod_smry )
+        INSERT INTO tb_order_master (ord_id, mbr_id, stus, expct_pnt, prod_smry)
         VALUES (#{ord_id}, #{mbr_id}, #{stus}, #{expct_pnt}, #{prod_smry})
     </insert>
 
-
+    <!-- 모든 주문 정보 받기 -->
     <select id="selectOrderMaster" resultType="OrderMasterDto">
         select *
         from tb_order_master
     </select>
 
+    <!-- 주문 완료시 제일 최근 시간으로 주문 id 선택하기 -->
     <select id="select_order_id" resultType="long">
         SELECT ord_id
         FROM tb_order_master
         WHERE mbr_id = #{mbrId}
           AND in_dtm = (SELECT MAX(in_dtm) FROM tb_order_master WHERE mbr_id = #{mbrId});
+    </select>
+
+    <!--************ 관리자 ************-->
+
+    <!-- admin_발송준비 | 발송 정보는 날짜가 정해져있지 않을 경우 날짜 상관없이, 날짜 있을 경우 날짜에 따라서 발송 정보 넘김 -->
+    <select id="select_admin_before_manage_info" resultType="map">
+        select DATE_FORMAT(om.in_dtm, '%Y-%m-%d') as in_dtm, # 주문일
+        om.ord_id,
+        om.prod_smry,
+        m.name,
+        pm.pay_mtd,
+        pm.bank,
+        pm.card_num,
+        pm.rmk
+        from tb_order_master om,
+        tb_member m,
+        tb_payment_master pm
+        WHERE om.ord_id = pm.ord_id
+        AND om.mbr_id = m.mbr_id
+        AND om.stus = 'a1'
+        <if test="startTime != null">
+            AND om.in_dtm >= STR_TO_DATE(#{startTime}, '%Y-%m-%d') -- 기본값 00:00:00
+        </if>
+        <if test="endTime != null">
+            AND om.in_dtm &lt;= STR_TO_DATE(CONCAT(#{endTime}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+        </if>
+    </select>
+
+    <!--  admin 날짜 중에서 결제 상태인 경우의 주문 건수의 시작과 끝 날짜 -->
+    <select id="select_admin_before_manage_date" resultType="map">
+        select date_format(MIN(in_dtm), '%Y-%m-%d') as start_dtm,
+               date_format(MAX(in_dtm), '%Y-%m-%d') as end_dtm
+        from tb_order_master
+        where stus = 'a1'
     </select>
 </mapper>

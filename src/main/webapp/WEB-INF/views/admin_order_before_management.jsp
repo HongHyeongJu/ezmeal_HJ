@@ -26,7 +26,7 @@
             <h2>발주확인 관리</h2>
             <%@ include file="admin_due.jsp" %> <!-- 관리자 메뉴 인클루드 -->
             <div class="admin-order__contents">
-                <!-- admmin-order__nav 끝 -->
+                <!-- admin-order__nav 끝 -->
                 <ul class="admin-order__nav">
                     <li class="admin-order__nav-li">주문번호별</li>
                 </ul>
@@ -73,28 +73,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td><input type="checkbox"/></td>
-                                <td>2023-07-20</td>
-                                <td>ORD2023072001</td>
-                                <td>아이패드 프로 12.9 - 256GB, 스페이스</td>
-                                <td>홍길동</td>
-                                <td>홍길동</td>
-                                <td>국민은행</td>
-                                <td>신용카드</td>
-                                <td>특별 배송 요청: 현관문 앞에 놓아주세요.</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox"/></td>
-                                <td>2023-07-22</td>
-                                <td>ORD2023072202</td>
-                                <td>갤럭시 버즈 프로 - 블랙</td>
-                                <td>김철수</td>
-                                <td>김철수</td>
-                                <td>우리은행</td>
-                                <td>무통장 입금</td>
-                                <td>입금 확인 후 상품 발송 예정</td>
-                            </tr>
+                                <%-- 동적 data 들어오는 부분--%>
                             </tbody>
                         </table>
                     </div>
@@ -107,5 +86,7 @@
     </div>
     <!-- admin_container_div 끝 -->
 </div>
+<script src="/javascript/admin_due.js"></script>
+<script src="/javascript/admin_order_before_management.js"></script>
 </body>
 </html>

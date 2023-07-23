@@ -23,12 +23,8 @@
                 <button class="admin__period_btn one-month">30일</button>
                 <button class="admin__period_btn three-month">3개월</button>
                 <button class="admin__period_btn six-month">6개월</button>
-                <input type="date"/>
-                <span>~</span>
-                <input type="date"/>
-                <button class="admin__period_btn personal-day">
-                    기간설정 확인
-                </button>
+                <input type="date"/><span>~</span><input type="date"/>
+                <button class="admin__period_btn personal-day">기간설정 확인</button>
             </td>
         </tr>
         <tr>
@@ -36,7 +32,7 @@
             <td>
                 <span>주문번호</span>
                 <input type="text"/>
-                <button class="admin__period_btn">확인</button>
+                <button class="admin__order_num">확인</button>
             </td>
         </tr>
     </table>

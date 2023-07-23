@@ -77,6 +77,11 @@
     border-top: none;
 }
 
+.admin-order__content-table th,
+.admin-order__content-table tr {
+    text-align: center;
+}
+
 .admin-order__content-table th {
     box-sizing: border-box;
     background-color: #f2f2f2;
