@@ -1,0 +1,91 @@
+.admin_container_div-order {
+    width: 1200px;
+    box-sizing: border-box;
+}
+/* main content 공통 부분*/
+.admin-order__content-box {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid black;
+    margin-bottom: 100px;
+    /* display: flex;
+    flex-direction: column; */
+    position: relative;
+}
+
+.admin-order__option,
+.admin-order__check-order,
+.admin-order__select {
+    padding: 10px;
+    border-bottom: 1px solid black;
+}
+
+.admin-order__option > button,
+.admin-order__check-order > button {
+    border: 1px solid rgb(25, 38, 66);
+    border-radius: 6px;
+    background: inherit;
+    padding: 3px;
+    margin-left: 10px;
+    cursor: pointer;
+    width: 100px;
+}
+
+.admin-order__option > button:hover,
+.admin-order__check-order > button:hover {
+    background-color: rgb(25, 38, 66);
+    color: aliceblue;
+}
+
+/* main 부분에서 nav 쪽 css */
+.admin-order__nav {
+    list-style: none; /* 목록 기호 제거 */
+    padding: 10px; /* 목록의 내부 여백 제거 */
+    margin-bottom: 10px; /* 목록의 바깥쪽 여백 제거 */
+    font-size: large;
+    font-weight: bold;
+}
+
+/* 주문 contents table css */
+.admin-order__content-table__div,
+.admin-order__content-table {
+    border-collapse: collapse; /* table border끼리 충돌나는거 방지 */
+    width: 100%;
+    margin-bottom: 30px;
+    /* 가로 스크롤 */
+    overflow: auto;
+    white-space: nowrap;
+}
+
+/* 중첩 테두리 제거 */
+.admin-order__content-table th,
+.admin-order__content-table td {
+    border: 1px solid black;
+    padding: 8px;
+}
+
+.admin-order__content-table th:first-child,
+.admin-order__content-table td:first-child {
+    border-left: none;
+}
+
+.admin-order__content-table th:last-child,
+.admin-order__content-table td:last-child {
+    border-right: none;
+}
+.admin-order__content-table tr:first-child th {
+    border-top: none;
+}
+
+.admin-order__content-table th {
+    box-sizing: border-box;
+    background-color: #f2f2f2;
+    color: rgb(25, 38, 66);
+    font-weight: normal;
+}
+
+/* 엑셀, 인쇄 css */
+.admin-order__option,
+.admin-order__select {
+    text-align: end;
+}

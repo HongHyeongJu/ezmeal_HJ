@@ -1,0 +1,50 @@
+
+/* btn 관련 css */
+.admin__period_btn {
+    border: 1px solid rgb(25, 38, 66);
+    border-radius: 6px;
+    background: inherit;
+    padding: 3px;
+    margin-left: 10px;
+    cursor: pointer;
+    width: 60px;
+}
+
+.admin-order__due-table input,
+.admin-order__due-table span,
+.admin-order__due-table tr:last-child > td {
+    margin-left: 10px;
+}
+
+.admin__period_btn:hover,
+.admin__period_btn:focus {
+    background-color: rgb(25, 38, 66);
+    color: aliceblue;
+}
+
+.personal-day {
+    width: 100px;
+}
+
+/* table 관련 css */
+.admin-order__due-table-div {
+    margin-bottom: 100px;
+}
+.admin-order__due-table {
+    border-collapse: collapse; /* table border끼리 충돌나는거 방지 */
+    width: 100%;
+}
+
+.admin-order__due-table th,
+.admin-order__due-table td {
+    border: 1px solid black;
+    padding: 8px;
+}
+
+.admin-order__due-table th {
+    width: 100px;
+    box-sizing: border-box;
+    background-color: #f2f2f2;
+    color: rgb(25, 38, 66);
+    font-weight: normal;
+}
