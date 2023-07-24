@@ -37,7 +37,6 @@
                 alt="콘텐츠"
         />
     </div>
->>>>>>> dev
 </div>
 <script src="/javascript/main1.js"></script>
 
