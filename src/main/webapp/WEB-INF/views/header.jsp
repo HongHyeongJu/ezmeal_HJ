@@ -93,7 +93,7 @@
         </nav>
       </div>
       <div class="icon_inner_box">
-        <a href="#">
+        <a href="/mypage/wishlist">
           <?xml version="1.0" ?>
           <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -108,7 +108,7 @@
         </a>
       </div>
       <div class="icon_inner_box">
-        <a href="#">
+        <a href="/cart">
           <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="35"
@@ -176,19 +176,19 @@
         <!--start : 정육-->
         <li class="sidebarMenuInner-list">
           <i class="fa-solid fa-drumstick-bite"></i>
-          <a href="#">
+          <a href="/product/detail?cate_cd=01">
           닭가슴살</a>
           <ul class="sidebarMenuInner-Inner">
             <li class="sidebarMenuInner-Innerlist">
-              <a href="#">전체</a>
+              <a href="/product/detail?cate_cd=010">전체</a>
             </li>
             <li class="sidebarMenuInner-Innerlist">
-              <a href="#">닭가슴살</a>
+              <a href="/product/detail?cate_cd=0101">닭가슴살</a>
             </li>
             <li class="sidebarMenuInner-Innerlist">
-              <a href="#">스테이크</a>
+              <a href="/product/detail?cate_cd=0102">스테이크</a>
             <li class="sidebarMenuInner-Innerlist">
-              <a href="#">소시지</a>
+              <a href="/product/detail?cate_cd=0103">소시지</a>
             </li>
           </ul>
         </li>
@@ -196,18 +196,18 @@
 
         <!--도시락, 볶음밥-->
         <li class="sidebarMenuInner-list">
-          <a href="#">
+          <a href="/product/detail?cate_cd=02">
             <i class="fa-solid fa-bowl-rice"></i>
             도시락 | 볶음밥</a>
           <ul class="sidebarMenuInner-Inner">
             <li class="sidebarMenuInner-Innerlist">
-              <a href="#">전체</a>
+              <a href="/product/detail?cate_cd=020">전체</a>
             </li>
             <li class="sidebarMenuInner-Innerlist">
-              <a href="#">도시락</a>
+              <a href="/product/detail?cate_cd=0201">도시락</a>
             </li>
             <li class="sidebarMenuInner-Innerlist">
-              <a href="#">볶음밥</a>
+              <a href="/product/detail?cate_cd=0202">볶음밥</a>
             </li>
           </ul>
         </li>
@@ -215,36 +215,36 @@
         <!--start : 샐러드-->
 
         <li class="sidebarMenuInner-list">
-          <a href="#">
+          <a href="/product/detail?cate_cd=03">
             <i class="fas fa-seedling"></i>
             샐러드</a>
           <ul class="sidebarMenuInner-Inner">
             <li class="sidebarMenuInner-Innerlist">
-              <a href="#">전체</a>
+              <a href="/product/detail?cate_cd=030">전체</a>
             </li>
             <li class="sidebarMenuInner-Innerlist">
-              <a href="#">샐러드</a>
+              <a href="/product/detail?cate_cd=0301">샐러드</a>
             </li>
             <li class="sidebarMenuInner-Innerlist">
-              <a href="#">소스</a>
+              <a href="/product/detail?cate_cd=0302">소스</a>
             </li>
           </ul>
         </li>
 
         <!--start : 신선식품-->
         <li class="sidebarMenuInner-list">
-          <a href="#">
+          <a href="/product/detail?cate_cd=04">
             <i class="fas fa-apple-alt"></i>
             신선식품</a>
           <ul class="sidebarMenuInner-Inner">
             <li class="sidebarMenuInner-Innerlist">
-              <a href="#">전체</a>
+              <a href="/product/detail?cate_cd=040">전체</a>
             </li>
             <li class="sidebarMenuInner-Innerlist">
-              <a href="#">채소 | 과일</a>
+              <a href="/product/detail?cate_cd=0401">채소 | 과일</a>
             </li>
             <li class="sidebarMenuInner-Innerlist">
-              <a href="#">달걀</a>
+              <a href="/product/detail?cate_cd=0402">달걀</a>
             </li>
           </ul>
         </li>
@@ -253,24 +253,24 @@
 
         <!--start : 즉석 간편식-->
         <li class="sidebarMenuInner-list">
-          <a href="#">
+          <a href="/product/detail?cate_cd=05">
             <i class="fas fa-bread-slice"></i>
             즉석 간편식</a>
           <ul class="sidebarMenuInner-Inner">
             <li class="sidebarMenuInner-Innerlist">
-              <a href="#">전체</a>
+              <a href="/product/detail?cate_cd=050">전체</a>
             </li>
             <li class="sidebarMenuInner-Innerlist">
-              <a href="#">분식 </a>
+              <a href="/product/detail?cate_cd=0501">분식 </a>
             </li>
             <li class="sidebarMenuInner-Innerlist">
-              <a href="#">반찬 | 밀키트</a>
+              <a href="/product/detail?cate_cd=0502">반찬 | 밀키트</a>
             </li>
             <li class="sidebarMenuInner-Innerlist">
-              <a href="#">면 </a>
+              <a href="/product/detail?cate_cd=0503">면 </a>
             </li>
             <li class="sidebarMenuInner-Innerlist">
-              <a href="#">소스 </a>
+              <a href="/product/detail?cate_cd=0504">소스 </a>
             </li>
           </ul>
         </li>
