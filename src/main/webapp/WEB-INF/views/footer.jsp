@@ -11,7 +11,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Title</title>
-  <link rel="stylesheet" href="/css/headerFooter_dropdown.css" />
+  <link rel="stylesheet" href="/css/footer.css" />
 </head>
 <body>
 <!--START : FOOTER -->
@@ -109,10 +109,7 @@
                       rel="noreferrer"
                       class="sns_logos"
               >
-                <img
-                        src="/img/main/instagram.png"
-                        alt="인스타바로가기"
-                />
+                <img src="/img/main/instagram.png" alt="인스타바로가기" />
               </a>
               <a
                       href="#"
@@ -120,10 +117,7 @@
                       rel="noreferrer"
                       class="sns_logos"
               >
-                <img
-                        src="/img/main/facebook.png"
-                        alt="페이스북바로가기"
-                />
+                <img src="/img/main/facebook.png" alt="페이스북바로가기" />
               </a>
               <a
                       href="#"
@@ -131,10 +125,7 @@
                       rel="noreferrer"
                       class="sns_logos"
               >
-                <img
-                        src="/img/main/youtube.png"
-                        alt="유튜브바로가기"
-                />
+                <img src="/img/main/youtube.png" alt="유튜브바로가기" />
               </a>
             </ul>
             <!--end : 오른쪽 푸터 세번째(logo)-->
@@ -145,8 +136,6 @@
       </div>
       <!--end  : 푸터 왼, 오 싸고있는 박스 -->
     </div>
-
-
 
     <div class="footer2-wrapper">
       <div class="footer2_box">
@@ -163,14 +152,12 @@
 </div>
 <!--end :푸터 1,2 감싸는 박스( 위로 여유 공간포함)-->
 
-
 <!--start : scroll back to top-->
-<button id="backtotop-btn"><a href="#top" style="color: white">Top</a></button>
+<button id="backtotop-btn">
+  <a href="#top" style="color: white">Top</a>
+</button>
 
 <!--end : back to top button-->
-<script
-        src="https://kit.fontawesome.com/6478f529f2.js"
-        crossorigin="anonymous"
-></script>
+<script src="https://kit.fontawesome.com/3dd102f0de.js" crossorigin="anonymous"></script>
 </body>
 </html>
