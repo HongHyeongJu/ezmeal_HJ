@@ -59,6 +59,18 @@ input, textarea, select {
     margin-left: 15px;
 }
 
+/*-------- 자동 계산부분 --------*/
+input[disabled] {
+    background-color: #f6faff;
+    color: #000;
+    border: 1px solid #bfcee6;
+}
+
+input, textarea {
+    font-size: 14px;
+}
+
+
 /*--------------------product_info_div 테이블-----------------------*/
 .product_info_table th {
     border-right:  0px solid black; /* 셀의 테두리 스타일과 두께 설정 */
