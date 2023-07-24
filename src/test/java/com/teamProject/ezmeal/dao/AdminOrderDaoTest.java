@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,5 +34,14 @@ public class AdminOrderDaoTest {
     public void select_admin_before_manage_date() {
         Map<String, String> stringStringMap = adminOrderDao.selectStartEndDate();
         System.out.println("stringStringMap = " + stringStringMap);
+    }
+
+    @Test
+    public void updateOrderMasterOrderDetailStatusAfterAdminOrderCheckBtn() {
+        List<Long> list = new ArrayList<>();
+        list.add(202307235005L);
+        list.add( 202307235004L);
+        int i = adminOrderDao.updateOrderMasterOrderDetailStatusAfterAdminOrderCheckBtn(list);
+        System.out.println("i = " + i);
     }
 }

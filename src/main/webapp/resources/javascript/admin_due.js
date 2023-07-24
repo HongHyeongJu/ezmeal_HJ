@@ -5,20 +5,17 @@ const periodBtnAll = document.querySelectorAll(".admin__period_btn"); // 조회 
 
 function handlePeriod(event) {
     const targetBtn = event.target
-    console.log(targetBtn);
-console.log(targetBtn.classList[1]);
+    // console.log(targetBtn);
+    // console.log(targetBtn.classList[1]);
     if (targetBtn.classList[1] === 'personal-day') {
-        console.log("classlist if문")
         let periodDateString = "";
         const periodDateAll = document.querySelectorAll('input[type="date"]');
         periodDateAll.forEach((periodDate) => {
             periodDateString += periodDate.value + " "; // 2023-06-29 2023-07-10
         })
-        console.log(periodDateString);
         getOrderPaymentData(periodDateString);
-    }else {
+    } else {
         const periodString = targetBtn.textContent;
-        console.log(periodString);
         getOrderPaymentData(periodString);
     }
 

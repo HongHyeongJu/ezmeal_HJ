@@ -56,4 +56,16 @@
         from tb_order_master
         where stus = 'a1'
     </select>
+
+    <!-- admin 발주 버튼 누른 것, update 하기 - tb_order_detail 같이 update 수행 -->
+    <update id="update_order_master_order_detail_status_after_admin_order_check_btn">
+        update tb_order_master om, tb_order_detail od
+        set om.stus = 'a2',
+            od.stus = 'a2'
+        where om.ord_id = od.ord_id
+          and om.ord_id in
+        <foreach collection="list" item="ord_id" open="(" separator="," close=")">
+            #{ord_id}
+        </foreach>
+    </update>
 </mapper>

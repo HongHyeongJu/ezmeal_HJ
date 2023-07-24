@@ -21,4 +21,9 @@ public class AdminOrderService {
     public Map<String , String> getStartEndDate() {
         return adminOrderDao.selectStartEndDate();
     }
+
+    // admin 발주 버튼 누른 것, update 하기 - tb_order_detail 같이 update 수행
+    public int setOrderStatusAfterCheckAdminOrderBtn (List<Long> orderIdList) {
+        return adminOrderDao.updateOrderMasterOrderDetailStatusAfterAdminOrderCheckBtn(orderIdList);
+    }
 }
