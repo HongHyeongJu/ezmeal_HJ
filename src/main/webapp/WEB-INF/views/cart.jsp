@@ -64,8 +64,8 @@ change this template use File | Settings | File Templates. --%>
                                     <button type="button" class="count_up__btn">+</button>
                                 </div>
                                 <div class="cart__item_price">
-                                    <span class="cart__item_sale_prc">${item.sale_prc}</span>
-                                    <span class="cart__item_product-price" ${item.cnsmr_prc eq item.sale_prc ? 'hidden' : ''}>${item.cnsmr_prc}</span>
+                                    <span class="cart__item_sale_prc">${item.sale_prc_format}원</span>
+                                    <span class="cart__item_product-price" ${item.cnsmr_prc_format eq item.sale_prc_format ? 'hidden' : ''}>${item.cnsmr_prc_format}원</span>
 
                                 </div>
                                 <button class="cart__delete_btn" type="button" data-testid="delete">
@@ -107,8 +107,8 @@ change this template use File | Settings | File Templates. --%>
                                     <button type="button" class="count_up__btn">+</button>
                                 </div>
                                 <div class="cart__item_price">
-                                    <span class="cart__item_sale_prc">${item.sale_prc}</span>
-                                    <span class="cart__item_product-price" ${item.cnsmr_prc eq item.sale_prc ? 'hidden' : ''}>${item.cnsmr_prc}</span>
+                                    <span class="cart__item_sale_prc">${item.sale_prc_format}원</span>
+                                    <span class="cart__item_product-price" ${item.cnsmr_prc_format eq item.sale_prc_format ? 'hidden' : ''}>${item.cnsmr_prc_format}원</span>
                                 </div>
                                 <button class="cart__delete_btn" type="button" data-testid="delete">
                                     x
@@ -150,8 +150,8 @@ change this template use File | Settings | File Templates. --%>
                                     <button type="button" class="count_up__btn">+</button>
                                 </div>
                                 <div class="cart__item_price">
-                                    <span class="cart__item_sale_prc">${item.sale_prc}</span>
-                                        <span class="cart__item_product-price" ${item.cnsmr_prc eq item.sale_prc ? 'hidden' : ''}>${item.cnsmr_prc}</span>
+                                    <span class="cart__item_sale_prc">${item.sale_prc_format}원</span>
+                                    <span class="cart__item_product-price" ${item.cnsmr_prc_format eq item.sale_prc_format ? 'hidden' : ''}>${item.cnsmr_prc_format}원</span>
                                 </div>
                                 <button class="cart__delete_btn" type="button" data-testid="delete">
                                     x

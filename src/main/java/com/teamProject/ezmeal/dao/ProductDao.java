@@ -132,8 +132,10 @@ public class ProductDao {
 
 
 
-
     /* 상품정보 수정하기 */
+    public int updateProductInfo(ProductDto productDto) throws SQLException {
+        return session.update(namespace + "update_product", productDto);
+    }
 
 
 

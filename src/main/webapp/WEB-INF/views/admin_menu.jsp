@@ -31,7 +31,7 @@
                 <li class="hidden order_li sub_li">전체 주문 조회</li>
             </a>
             <a href="홈페이지 주소">
-                <li class="hidden order_li sub_li">배송 중비중 관리</li>
+                <li class="hidden order_li sub_li">배송 준비중 관리</li>
             </a>
             <a href="홈페이지 주소">
                 <li class="hidden order_li sub_li">배송 대기 관리</li>
@@ -120,7 +120,7 @@
             <li class="main_li"><i class="fas fa-chart-bar"></i>&nbsp;&nbsp;&nbsp;통계</li>
             <li class="main_li"><i class="fas fa-comments-dollar"></i>&nbsp;&nbsp;프로모션</li>
             <li class="main_li"><i class="fas fa-calendar-check"></i>&nbsp;&nbsp;&nbsp;운영일정</li>
-            <li class="main_li"><i class="fas fa-shipping-fast"></i>&nbsp;&nbsp;EZ배송관리</li>
+            <li class="main_li"><i class="fas fa-shipping-fast"></i>&nbsp;&nbsp;차량관리</li>
             <li class="main_li"><i class="fas fa-warehouse"></i>&nbsp;&nbsp;상품창고</li>
             <li class="main_li"><i class="fas fa-database"></i>&nbsp;&nbsp;&nbsp;데이터분석</li>
             <li class="main_li"><i class="fas fa-id-card-alt"></i>&nbsp;&nbsp;관리자정보</li>

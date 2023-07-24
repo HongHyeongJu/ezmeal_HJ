@@ -23,7 +23,7 @@ public class ProductOptionDaoTest {
     /*카테고리에 내보낼 옵션 객체*/
     @Test
     public void selectOptionInCategory() throws SQLException {
-        List<ProductOptionDto> list = productOptionDao.selectOptionInProductCategory("05");
+        List<ProductOptionDto> list = productOptionDao.selectOptionInProductCategory("0");
         assertTrue(list!=null);
         System.out.println(list.size());
 //        map.forEach((k,v)-> System.out.println("K: "+k+", v :"+v.toString()));
@@ -54,9 +54,8 @@ public class ProductOptionDaoTest {
     @Test
     public void selectOptionProductByProdCd2() throws SQLException {
         /**/
-        List<ProductOptionDto> list = productOptionDao.selectOptionProductsByProdCd(5L);
+        List<ProductOptionDto> list = productOptionDao.selectOptionProductsByProdCd(3L);
         System.out.println(list);
-        System.out.println(productOptionDao.selectOptionProductsByProdCd(3L));
     }
 
     /*옵션 하나 꺼내서 업데이트 해보는 테스트*/

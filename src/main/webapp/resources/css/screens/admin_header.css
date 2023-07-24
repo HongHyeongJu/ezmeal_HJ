@@ -5,7 +5,10 @@ body {
     margin: 0;
     padding: 0;
 }
-
+/*커서 깜빡임 제거*/
+label, th, li {
+    caret-color: transparent;
+}
 
 .admin_header_div {
     background-color: rgb(25, 38, 66);

@@ -4,7 +4,6 @@ body {
   margin: 0;
   width: 100%;
   box-sizing: border-box;
-
 }
 
 a {
@@ -37,6 +36,12 @@ a {
   height: 70px;
 }
 
+.ezmeal_letter {
+  width: 150px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
 .search_box {
   width: 300px;
   height: 48px;
@@ -54,9 +59,14 @@ a {
   border-style: none;
   align-items: center;
   font-size: 16px;
-  width: 350px;
+  width: 300px;
   height: 30px;
   margin-top: 10px;
+}
+
+.search_inner_box:hover,
+.search_inner_box:focus {
+  outline: none;
 }
 
 .search-btn {
@@ -70,23 +80,27 @@ a {
   border-style: none;
 }
 
+.search-btn svg {
+  fill: rgb(179, 180, 182);
+  display: block;
+  height: 100%;
+  width: 100%;
+}
 
+.search-btn svg:hover {
+  fill: rgb(0, 199, 40);
+}
 
 .fas.fa-search {
-  color: rgb(56, 229, 77); /* 초기 색상 */
+  color: rgb(0, 199, 40); /* 초기 색상 */
   transition: color 0.3s ease; /* 색상 변화에 대한 트랜지션 효과 */
 }
 
-.fas.fa-search:hover {
-  color: rgb(33, 146, 255); /* 호버 시 색상 변화 */
-}
-
-/*start : 헤더top icon, 유저 드롭다운*/
+/*start : 아이콘(user, wishlist,cart)*/
 .icon_box {
   display: flex; /*아이콘과 드롭다운 메뉴 가로정렬*/
   position: relative;
   align-items: center;
-
 }
 
 .icon_inner_box {
@@ -96,16 +110,12 @@ a {
 
 .icon_inner_dropdown {
   cursor: pointer;
-  margin: 0 20px; /* 드롭다운 메뉴 아이콘과 간격 설정 */
+  margin: 0 20px;   /* 드롭다운 메뉴 아이콘과 간격 설정 */
   padding: 0;
 }
 
-#user_menu {  
-  display: none;  /* 체크박스 숨김 */
-}
-
-#user_menu:checked ~ #user_menu_nav {
-  display: block;  /* 체크박스가 선택되면 드롭다운 메뉴 표시 */
+.icon_inner_dropdown:hover #user_menu_nav{
+  display: block;
 }
 
 /*block인 이유는 드롭다윤 메뉴를 다른 요소들과 구분하기 위해서->다른 요소들과 줄바꿈 표시해서 시각적으로 구분되도록함*/
@@ -113,7 +123,7 @@ a {
 #user_menu_nav { /* 유저 메뉴 드롭다운 li*/
   display: none; /*초기에 드롭다운이 안보이도록 숨김*/
   position: absolute; /*아이콘을 기준으로 위치*/
-  top:calc(100% + 5px); /* 아이콘 아래에 5px 간격을 두고 표시 */
+
   left: 0;
   z-index: 999;
 }
@@ -137,51 +147,30 @@ a {
   background-color: #fff;
 }
 
-
-
-.far.fa-user,
-.far.fa-heart,
-.fas.fa-shopping-cart {
-  color: rgb(56, 229, 77); /* 초기 색상 */
+.fal.fa-heart {
+  color: rgb(0, 199, 40); /* 초기 색상 */
   transition: color 0.3s ease; /* 색상 변화에 대한 트랜지션 효과 */
 }
 
-.far.fa-user:hover,
-.far.fa-heart:hover,
-.fas.fa-shopping-cart:hover {
+.fal.fa-heart:hover {
   color: rgb(33, 146, 255); /* 호버 시 색상 변화 */
 }
-/*end :아이콘 누르면 나오는 user 드롭다운메뉴 */
+/*end :아이콘 (user, wishlist,cart) */
 /*end : header - top*/
-
-
 
 /*start : hdeader-bottom(슬라이드바, 가로메뉴바)*/
 .header-bottom {
   display: flex;
   width: 100%;
-  background-color: rgb(56, 229, 77);
+  background-color: rgb(0, 199, 40);
   position: sticky;
   top: 0;
   height: 50px;
-text-align: center;
+  text-align: center;
   z-index: 10;
-  
 }
 /*header-bottom만 스크롤할때 같이 내려가려면 fixed가 아니라 sticky를 써야한다. 이
 때 top을  0으로 지정해줘야 스크롤시 header-top이 안보여!!!! */
-
-.siderbar {
-  /*햄버거 아이콘 있는*/
-  float: left;
-  display: flex;
-  width: 100px;
-  height: 30px;
-  overflow: hidden;
-  align-items: center;
-  /*z-index: 1; 헤더는 다른 요소들과 겹치지않고 더 앞에 나타나야하니까 */
-  position: relative;
-}
 
 .horizonMenu-list {
   list-style-type: none;
@@ -199,47 +188,50 @@ text-align: center;
   text-decoration: none;
   color: white;
   justify-content: space-between;
-  cursor:pointer;
-  position:relative;
-  
-
+  cursor: pointer;
+  position: relative;
 }
 
-.horizonMenu-list a:before, .horizonMenu-list a:after
-{
-    position: absolute;
-    opacity: 0;
-    width: 0%;
-    height: 1px;
-    content: '';
-    background: #FFF;
-    transition: all 0.3s;
+/*글씨 밑줄 효과*/
+.horizonMenu-list a:after {
+  position: absolute;
+  opacity: 0;
+  width: 0%;
+  height: 1px; /*밑줄 굵기*/
+  content: "";
+  background: #fff;
+  transition: all 0.3s;
+  left: 0px;
+  bottom: 0px;
 }
 
-.horizonMenu-list a:before
-{
-    left: 0px;
-    top: 0px;
+.horizonMenu-list a:hover:after {
+  opacity: 1;
+  width: 100%;
 }
+/*end : 글씨 밑줄 효과*/
 
-.horizonMenu-list a:after
-{
-    right: 0px;
-    bottom: 0px;
+.ezdeliveryimg {
+  width: 150px;
+  height: 50px;
 }
-
-.horizonMenu-list a:hover:before,.horizonMenu-list a:hover:after
-{
-    opacity: 1;
-    width: 100%;
+/*start : 사이드바 관련 내용*/
+.siderbar {
+  /*햄버거 아이콘 있는*/
+  float: left;
+  display: flex;
+  width: 100px;
+  height: 30px;
+  overflow: hidden;
+  align-items: center;
+  /*z-index: 1; 헤더는 다른 요소들과 겹치지않고 더 앞에 나타나야하니까 */
+  position: relative;
 }
-
-
 
 #sidebarMenu {
-  height: 300px;
+  height: 80px;
   left: 0;
-  width: 170px;
+  width: 180px;
   position: sticky;
   margin-top: 34px; /*이거 지우면 안되지안되지 이거 지우면 신선식품안보인다*/
   transform: translateX(-250px); /*사이드바 메뉴 왼쪽으로 이동해서 안보이게*/
@@ -255,13 +247,16 @@ text-align: center;
   background-color: #fff;
 }
 
+.sidebarMenuInner {
+  position: relative;
+}
+
 .sidebarMenuInner li {
   list-style: none;
-  padding: 20px;
+  padding: 10px 0 15px 20px;
   cursor: pointer;
-  border: 0.1px solid rgb(195, 196, 195);
-  position: relative; /*자기자신을 기준으로 배치하도록 설정하는것*/
-  text-align: center;
+
+  text-align: left; /*글씨 왼쪽 정렬*/
   background-color: #fff;
 }
 
@@ -276,7 +271,7 @@ text-align: center;
   position: absolute; /*부모요소를 기준으로 배치 */
   left: 76%;
   top: 0;
-  min-width: 170px;
+  min-width: 170px; /*max-width로 고치면 글자가 세로로나온다. 왜지?*/
 }
 
 .sidebarMenuInner li:hover > ul {
@@ -292,9 +287,6 @@ input[type="checkbox"]:checked ~ #sidebarMenu {
 input[type="checkbox"] {
   transition: all 0.3s;
   box-sizing: border-box;
-  /*display: none;*/
-}
-.openSidebarMenu {
   display: none;
 }
 
@@ -366,192 +358,38 @@ input[type="checkbox"]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
   margin-top: -9px;
 }
 
-.empty{
-  width :200px;
-}
 /*아이콘과 스피너의 width와 height가 같은 역할을하는것 같아서 지우려고 했더니  하나라도 없으면  
 토글이 안뜸. 스피너는 로딩상태를 시각적으로 나타내는 요소. 
 스피너대신 다른거로 바꿔야하나...?*/
 
+/*sidevarMenu-inner-list 의 icon 색 지정*/
+.fas.fa-apple-alt {
+  color: rgb(236, 90, 90);
+}
+.fas.fa-egg {
+  color: rgb(247, 215, 129);
+}
+
+.fas.fa-seedling {
+  color: #65d674;
+}
+
+.fas.fa-bread-slice {
+  color: rgb(196, 152, 5);
+}
+
+.fa-solid.fa-bowl-rice {
+  color: rgb(78, 80, 77);
+}
+
+.fa-solid.fa-drumstick-bite {
+  color: darkgoldenrod;
+}
+/*end: icon색 지정*/
+
+/*end: 사이드바 관련 내용*/
+
 /*end : 두번째 헤더 (슬라이드바, 가로메뉴바)*/
-
-/*START : IMG SLIDE*/
-.image-slideshow {
-  position: relative;
-  display: block;
-}
-
-.fade {
-  /*이미지 변경될때마다 페이딩, 애니메이션 지속 시간을 3초*/
-  animation-name: fade;
-  animation-duration: 3s;
-}
-
-/*END : IMG SLIDE*/
-
-/*START : FOOTER*/
-.footer_topbox1 {
-  /*--푸터 1,2 감싸는 박스*/
-  margin-top: 600px;
-}
-
-.footer_topbox2 {
-  padding-top: 30px;
-  border-top: 1px solid rgb(247, 247, 247);
-}
-
-/*//todo  푸터를 1,2로 나눈면 상단= 1, 하단 =2
-//todo start :  푸터 1*/
-
-.footer1 {
-  width: 1200px;
-  margin: 0px auto;
- 
-}
-
-.footer1_box {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  overflow: hidden;
-  padding-bottom: 30px;
-  height: 345px;
-}
-
-/*start : 왼쪽 footer*/
-.footer1_left {
-  display: flex;
-  flex-direction: column;
-  width: 440px;
-  height: 315px;
-  margin-left: 100px;
-}
-
-.happycenter {
-  padding-bottom: 17px;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 29px;
-}
-
-.callnum {
-  display: block;
-  padding-bottom: 20px;
-  font-size: 28px;
-  line-height: 40px;
-}
-
-.week_time {
-  margin-left: 8px;
-  font-weight: normal;
-  font-size: 16px;
-}
-
-.inquery {
-  display: flex;
-  flex-direction: column;
-}
-
-.inquery_box {
-  display: flex;
-  flex-direction: row;
-}
-
-.inquery_button {
-  display: block;
-  width: 140px;
-  height: 40px;
-  margin-bottom: 16px;
-  margin-right: 16px;
-  border: 1px solid rgb(226, 226, 226);
-  border-radius: 3px;
-  line-height: 39px;
-  text-align: center;
-}
-
-.inquery_content {
-  margin-top: 2px;
-  color: rgb(153, 153, 153);
-  letter-spacing: -0.5px;
-  line-height: 16.8px;
-}
-
-.nomember {
-  font-size: 12px;
-  line-height: 18px;
-  color: rgb(153, 153, 153);
-}
-/*end : 왼쪽 footer*/
-
-/*start : 오른쪽 footer*/
-.footer1_right {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 315px;
-}
-
-/*start :오른쪽 푸터 첫번째 (컬리소개, 투자정보~)*/
-.footer1_list {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  width: 520px;
-  padding-bottom: 29px;
-  list-style-type: none;
-  font-size: 14px;
-}
-
-.introduce {
-  font-size: 14px;
-  line-height: 18px;
-  color: black;
-}
-/*end :오른쪽 푸터 첫번째 (컬리소개, 투자정보~)*/
-
-/*start : 오른쪽 푸터 두번째(정보)*/
-.footer1_information {
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 18px;
-  color: rgb(153, 153, 153);
-  align-items: center;
-  margin-left: 40px;
-}
-
-.sns_logos {
-  margin-right: 20px;
-}
-/*end : 오른쪽 푸터 두번째(정보)*/
-
-/*//todo end : 푸터1*/
-
-/*start: footer:2*/
-.footer2-wrapper{
-  display: flex;
-  justify-content: center;
-  background-color: rgb(247, 247, 247);
-  width:100%;
-
-  
-}
-.footer2_box {
-  padding: 20px 0px 30px;
-  font-size: 10px;
-  line-height: 15px;
-  text-align: center;
-  background-color: rgb(247, 247, 247);
-  color: rgb(153, 153, 153);
-  width: 1050px;
- 
-}
-
-.footer2_1 {
-  display: block;
-  padding-top: 7px;
-  font-style: normal;
-}
-
 
 /*start :backtotop-btn*/
 #backtotop-btn {
@@ -566,34 +404,10 @@ input[type="checkbox"]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
   font-size: 15px;
   border-radius: 30px;
   border-style: none;
-  background-color: rgb(56, 229, 77);
-  padding: .5px;
-
+  background-color: rgb(0, 199, 40);
+  padding: 0.5px;
 }
 
 #backtotop-btn:hover {
   background-color: rgb(33, 146, 255);
 }
-
-/*페이지를 스크롤하면 버튼이 항상 하단에서 30픽셀 위에 있다, 
-스크롤을 따라 내려온다 -> position: fixed; 속성에 의해 구현, 
-페이지의 스크롤 위치에 관계없이 버튼을 항상 화면에 고정*/
-/*start :backtotop-btn*/
-
-
-
-
-
-/*
-
- /*문제점 :비율을 축소하면 footer가 오른쪽으로 이동되어있었다
-->.header_box에 position: relative; 속성을 추가하고, .footer1의 width를 100%로 변경해서 해결
-
- 참고 :  position: relative; .header_box에 적용해서 .footer1과의 상대적인 위치를 조절가능
- 상위 요소인 .header_box를 기준으로 .footer1의 위치가 결정되기 때문에, 
- 두 요소가 겹치지 않고 올바른 위치에 표시
-
- width: 100% 는 전체너비에 맞췄기때문에 화면 꽉채워서 다른요소와 안겹치고 독립적이다.
-
-*/
-

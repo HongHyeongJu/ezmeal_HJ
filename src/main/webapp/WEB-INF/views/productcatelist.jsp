@@ -203,11 +203,11 @@
 
   <script src="/javascript/productlistaddcart.js"></script>
   <script>
-    // msg 값을 확인하고 alert 창 띄우기 없는 상품코드 일 때
-      var msg = "${msg}";
-      if (msg !== "") {
-        alert(msg);
-      }
+    <%--// msg 값을 확인하고 alert 창 띄우기 없는 상품코드 일 때--%>
+    <%--  var msg = "${msg}";--%>
+    <%--  if (msg !== "") {--%>
+    <%--    alert(msg);--%>
+    <%--  }--%>
   </script>
 
   <script src="https://code.jquery.com/jquery-3.7.0.js"></script>

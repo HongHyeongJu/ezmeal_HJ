@@ -45,7 +45,8 @@
 <!-- 주문내역 dto-->
         <typeAlias alias="OrderPaymentJoinDto" type="com.teamProject.ezmeal.domain.joinDomain.OrderPaymentJoinDto"/>
 
-
+        <!--  관리자  -->
+        <typeAlias alias="AdminMemberDto" type="com.teamProject.ezmeal.domain.AdminMemberDto"/>
 
 
     </typeAliases>

@@ -34,7 +34,15 @@
         SELECT usfl_acmlt_pnt
         FROM TB_POINT_TRANSACTION_HISTORY
         WHERE mbr_id = #{memberId}
+          AND pnt_trjs_hist_seq = (SELECT MAX(pnt_trjs_hist_seq)
+                                   FROM TB_POINT_TRANSACTION_HISTORY
+        )
+    </select>
+
+    <select id="selectPointList" parameterType="Long" resultType="PointTransactionHistoryDto">
+        SELECT trjs_dtm, dscpt, vld_end_dt, trjs_pnt
+        FROM TB_POINT_TRANSACTION_HISTORY
+        WHERE mbr_id = #{memberId}
         ORDER BY pnt_trjs_hist_seq desc
-            limit 1
     </select>
 </mapper>

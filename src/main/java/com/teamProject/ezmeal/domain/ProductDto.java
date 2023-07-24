@@ -70,7 +70,7 @@ public class ProductDto {
         this.up_id=up_id;
     }
 
-    ProductDto(){}
+    public ProductDto(){}
     /*-------------------------------------------------------------------   [생성자 끝]   -------------------*/
 
     /*-----------------------------------------------------------------   [toString & equals 시작]   -------*/
@@ -195,7 +195,7 @@ public class ProductDto {
         return sale_prc;
     }
 
-    public void setSale_prc(int sale_prc) {
+    public void setSale_prc(Integer sale_prc) {
         this.sale_prc = sale_prc;
     }
 
