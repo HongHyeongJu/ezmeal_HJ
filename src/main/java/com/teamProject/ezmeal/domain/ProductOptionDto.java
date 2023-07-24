@@ -6,7 +6,7 @@ import java.util.Objects;
 public class ProductOptionDto {
     Long opt_seq, prod_cd;
     /* opt_name:10개 세트   full_name:불닭볶음김밥 10개 세트 */
-    String  dc_cd, name, full_name, typ;
+    String  dc_cd, name, typ;
     /*원래 Table에는 name컬럼만 있음 (name가 해당함.)
     full_name은 단일상품의 원래 이름+옵션명(상품 Table에서 Pk로 찾으면 찾을 수 있는 것))*/
     Integer qty, cnsmr_prc, sale_prc;
@@ -17,26 +17,22 @@ public class ProductOptionDto {
     String up_id;
 
     /*---------------------------------------------------------------*/
-    public ProductOptionDto(Long prod_cd, String dc_cd, String name,
-                            String full_name, String typ,
-                            Integer qty, Integer cnsmr_prc, Integer sale_prc,
-                            String use_yn, String del_yn, String rmk,String in_id, String up_id) {
+    public ProductOptionDto(Long prod_cd, String dc_cd, String name, String typ,
+                            Integer qty, Integer cnsmr_prc, Integer sale_prc, String in_id, String up_id) {
         this.prod_cd = prod_cd;
         this.dc_cd = dc_cd;
         this.name = name;
-        this.full_name = full_name;
         this.typ = typ;
         this.qty = qty;
         this.cnsmr_prc = cnsmr_prc;
         this.sale_prc = sale_prc;
-        this.use_yn = use_yn;
-        this.del_yn = del_yn;
-        this.rmk = rmk;
+        this.use_yn = "y";
+        this.del_yn = "n";
         this.in_id = in_id;
         this.up_id = up_id;
     }
 
-    ProductOptionDto(){}
+    public ProductOptionDto(){}
 
     /*---------------------------------------------------------------*/
 
@@ -45,15 +41,32 @@ public class ProductOptionDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductOptionDto that = (ProductOptionDto) o;
-        return Objects.equals(opt_seq, that.opt_seq) && Objects.equals(prod_cd, that.prod_cd) && Objects.equals(dc_cd, that.dc_cd) && Objects.equals(name, that.name) && Objects.equals(full_name, that.full_name) && Objects.equals(typ, that.typ) && Objects.equals(qty, that.qty) && Objects.equals(cnsmr_prc, that.cnsmr_prc) && Objects.equals(sale_prc, that.sale_prc) && Objects.equals(use_yn, that.use_yn) && Objects.equals(del_yn, that.del_yn) && Objects.equals(rmk, that.rmk) && Objects.equals(in_dtm, that.in_dtm) && Objects.equals(in_id, that.in_id);
+        return Objects.equals(prod_cd, that.prod_cd) && Objects.equals(typ, that.typ) && Objects.equals(qty, that.qty);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(opt_seq, prod_cd, dc_cd, name, full_name, typ, qty, cnsmr_prc, sale_prc, use_yn, del_yn, rmk, in_dtm, in_id);
+        return Objects.hash(prod_cd, typ, qty);
     }
+
     /*---------------------------------------------------------------*/
 
+    @Override
+    public String toString() {
+        return "ProductOptionDto{" +
+                "opt_seq=" + opt_seq +
+                ", prod_cd=" + prod_cd +
+                ", dc_cd='" + dc_cd + '\'' +
+                ", name='" + name + '\'' +
+                ", typ='" + typ + '\'' +
+                ", qty=" + qty +
+                ", cnsmr_prc=" + cnsmr_prc +
+                ", sale_prc=" + sale_prc +
+                ", rmk='" + rmk + '\'' +
+                ", in_dtm=" + in_dtm +
+                ", in_id='" + in_id + '\'' +
+                '}';
+    }
 
     /*---------------------------------------------------------------*/
 
@@ -88,11 +101,6 @@ public class ProductOptionDto {
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getFull_name() { return full_name; }
-
-    public void setFull_name(String full_name) { this.full_name = full_name;  }
-
 
     public String getTyp() {
         return typ;

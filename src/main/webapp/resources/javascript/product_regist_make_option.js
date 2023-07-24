@@ -31,33 +31,33 @@ addButton.addEventListener('click', function(event) {
     let newOption = `
     <ul class="opt_list_ul" data-id="${optionNumber}">
         <li>
-            <span>옵션명</span>
+            <span class="opt_list_namespan">옵션명</span>
             <input type="text" name="options[${optionNumber}].name">
         </li>
         <li>
-            <span>옵션수량</span>
-            <input type="number" name="options[${optionNumber}].qty" min="0" value="0">개
+            <span class="opt_list_namespan">옵션수량</span>
+            <input type="number" name="options[${optionNumber}].qty" min="0" value="0"><span>개</span>
         </li>
         <li>
-            <span>할인코드</span>
+            <span class="opt_list_namespan">할인코드</span>
             <select name="options[${optionNumber}].dc_cd">
                ${selectInnerHTML}
             </select>         
         </li>
         <li>
-            <span>소비자가</span>
-            <input type="number" name="options[${optionNumber}].cnsmr_prc" min="0" disabled>원
+            <span class="opt_list_namespan">소비자가</span>
+            <input type="number" name="options[${optionNumber}].cnsmr_prc" min="0" disabled><span>원</span>
         </li>
         <li>
-            <span>판매가</span>
-            <input type="number" name="options[${optionNumber}].sale_prc" min="0" disabled value="0">원
+            <span class="opt_list_namespan">판매가</span>
+            <input type="number" name="options[${optionNumber}].sale_prc" min="0" disabled ><span>원</span>
         </li>
         <li>
-            <span>할인율</span>
-            <input type="number" name="options[${optionNumber}].opt_dc_per" min="0" disabled value="0">%
+            <span class="opt_list_namespan">할인율</span>
+            <input type="number" name="options[${optionNumber}].opt_dc_per" min="0" disabled value="0"><span>%</span>
         </li>
         <li class="last_li">
-            <span class="span_rmk">비고</span>
+            <span  class="opt_list_namespan">비고</span>
             <textarea class="opt_rmk" name="options[${optionNumber}].rmk"></textarea>
             <button class="del_opt_btn">X</button>
         </li>

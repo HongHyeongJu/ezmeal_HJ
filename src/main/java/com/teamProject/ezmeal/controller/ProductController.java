@@ -4,9 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teamProject.ezmeal.domain.ProductDto;
 import com.teamProject.ezmeal.domain.ProductImgDto;
+import com.teamProject.ezmeal.domain.ProductOptionDto;
+import com.teamProject.ezmeal.domain.ProductRegistrationRequest;
 import com.teamProject.ezmeal.service.ProductImgService;
 import com.teamProject.ezmeal.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,10 +63,10 @@ public class ProductController {
         HashMap map = productService.getOneProductByProdCd(prod_cd);
 
         /*품절된 상품인 경우*/
-        if(map.get("product")==null){
-            redirectAttributes.addAttribute("msg","품절된 상품입니다.");
-            return "redirect:/product/catelist?cate_cd="+cate_cd ;
-        }
+//        if(map.get("product")==null){
+//            redirectAttributes.addAttribute("msg","품절된 상품입니다.");
+//            return "redirect:/product/catelist?cate_cd="+cate_cd ;
+//        }
 
         model.addAttribute("product",map.get("product"));
         model.addAttribute("optList",map.get("optList"));
@@ -79,9 +82,6 @@ public class ProductController {
     }
     /*서비스에서 묶어 오기 중간에 에러났을 때 대처는 서비스에서  ->  묶어도 3개로 됨. 고민해보기 값 없을 떄*/
     /*DB가 꺼진다면,,? select도 안됨.  db연결 직접 끊기..ㅋㅋ  */
-
-
-
 
 
 
@@ -110,9 +110,6 @@ public class ProductController {
     }
 
 
-
-
-
     /*관리자 상품 CRUD page - WRITE 새상품 등록 페이지 */
     @GetMapping("/regist/write")
     public String productMngRegistWritePage(Model model) throws SQLException {
@@ -131,18 +128,36 @@ public class ProductController {
     }
     /*------------------------------*/
 
-
-
-    /*관리자 상품 CRUD page - WRITE */
     @PostMapping("/regist/write")
-    public String productMngRegistWritePostPage(@RequestBody ProductDto productDto, Model model) throws SQLException {
-//        int resultNum = productService.registerProduct(productDto);
-//        if(resultNum==1) {
-//            model.addAttribute("mode", "WRITE_OK");
-//        }
-        return "redirect:/product/mng/productlist?cate_cd=02";
+    public ResponseEntity<?> registerProduct(@RequestBody ProductRegistrationRequest request) throws SQLException {
+        // 이제 request 안에는 ProductDto 객체와 ProductOptionDto 객체 리스트 있음
+        ProductDto productDto = request.getProductDto();
+        List<ProductOptionDto> productOptionDtos = request.getProductOptionDto();
+
+        for(ProductOptionDto optDto : productOptionDtos){
+            System.out.println("optDto: "+optDto.toString());
+        }
+
+        Map<String,Integer> registResult = productService.prodAndOptionRegist(productDto, productOptionDtos);
+
+        // 처리가 성공적으로 끝나면, 응답을 클라이언트에 보냅니다.
+        return ResponseEntity.ok(registResult);
     }
-    /*------------------------------*/
+
+
+
+
+//
+//
+//    /*관리자 상품 CRUD page - WRITE */
+//    @PostMapping("/regist/write")
+//    public void productMngRegistWritePostPage(ProductDto productDto, ProductOptionDto[] productOptionDto) throws SQLException {
+//
+//        System.out.println("productDto: "+productDto);
+//        System.out.println();
+//        System.out.println("optDto.length: "+productOptionDto.length);
+//    }
+//    /*------------------------------*/
 
 
 
