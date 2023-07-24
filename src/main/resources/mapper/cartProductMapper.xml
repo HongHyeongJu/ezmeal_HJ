@@ -31,7 +31,7 @@
 
 
     <!-- 일반 상품 : 냉장/냉동/상온 map으로 저장 -->
-    <select id="product" resultMap="CartJoinProductDto" resultType="CartJoinProductDto">
+    <select id="product_list" resultMap="CartJoinProductDto" resultType="CartJoinProductDto">
         SELECT cp.cart_prod_seq,
                cp.prod_cd,
                cp.opt_seq,
@@ -40,8 +40,8 @@
                cp.qty                                  as cpQty,
                IFNULL(po.qty, 1)                       AS poQty,
                IFNULL(CONCAT(p.name, po.name), p.name) AS name,
-               IFNULL(p.cnsmr_prc, po.cnsmr_prc)       AS cnsmr_prc,
-               IFNULL(p.sale_prc, po.sale_prc)         AS sale_prc
+               IFNULL(FORMAT(p.cnsmr_prc, 0), FORMAT(po.cnsmr_prc, 0))       AS cnsmr_prc_format,
+               IFNULL(FORMAT(p.sale_prc, 0), FORMAT(po.sale_prc, 0))          AS sale_prc_format
         FROM tb_cart_product cp
                  JOIN tb_product p ON cp.prod_cd = p.prod_cd
                  LEFT JOIN tb_product_option po ON cp.opt_seq = po.opt_seq

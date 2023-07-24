@@ -38,7 +38,7 @@ public class CartController {
         // todo 선택 배송지 존재시, 선택배송지가 되도록 logic 작성 필요 - selectAddress
         DeliveryAddressDto defaultAddress = deliveryAddressService.getDefaultAddress(memberId);
         // 상품 list
-        List<CartJoinProductDto> productsList = cartProductService.getProducts(cartSeq);
+        List<CartJoinProductDto> productsList = cartProductService.getProductList(cartSeq);
         int productCount = productsList.size();
 
         // 상품 목록 type별로 분리하기

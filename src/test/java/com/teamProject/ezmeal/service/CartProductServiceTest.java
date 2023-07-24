@@ -35,7 +35,7 @@ public class CartProductServiceTest {
 
     @Test
     public void getProducts() {
-        List<CartJoinProductDto> products = cartProductService.getProducts(1L);
+        List<CartJoinProductDto> products = cartProductService.getProductList(1L);
 
     }
 

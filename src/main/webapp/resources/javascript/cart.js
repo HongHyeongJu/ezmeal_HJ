@@ -169,20 +169,22 @@ const groupExpectSalePrice = function () { // 다중 선택시 사용하는 가�
         const element = document.querySelector(selector); // 개별상품목록
         if (!element) return; // null인경우 예외 방지 -> !element = !null = true cf) 이렇게 안할거면 동적 html 수행 필요
         const cartItemPriceSpans = element.querySelectorAll(".cart__item_price > span"); // 상품 가격 [0]: 판매가 [1]: 소비자가
+        console.log(cartItemPriceSpans);
 
         const quantity = parseInt(element.querySelector(".count_num").value); // 상품 수량
 
-        const salePrice = parseInt(cartItemPriceSpans[0].textContent.replace("원", ''));
-        const productPrice = parseInt(cartItemPriceSpans[1].textContent.replace("point", ''));
+        const salePrice = parseInt(cartItemPriceSpans[0].textContent.replace(/,/g, '').replace("원", '')); // 1,000원 -> 1000원
+
+        const productPrice = parseInt(cartItemPriceSpans[1].textContent.replace(/,/g, '').replace("point", ''));
         PRODUCT_PRICE += quantity * productPrice;
         SALE_PRICE += quantity * (productPrice - salePrice);
         EXPECTED_PRICE += quantity * salePrice;
         EXPECTED_POINT += quantity * (Math.floor(salePrice / 100));
     })
 
-    bannerPrice[0].innerText = PRODUCT_PRICE + " 원";
-    bannerPrice[1].innerText = SALE_PRICE + " 원";
-    bannerPrice[2].innerText = EXPECTED_PRICE + " 원";
+    bannerPrice[0].innerText = PRODUCT_PRICE.toLocaleString('ko-KR') + " 원";
+    bannerPrice[1].innerText = SALE_PRICE.toLocaleString('ko-KR') + " 원";
+    bannerPrice[2].innerText = EXPECTED_PRICE.toLocaleString('ko-KR') + " 원";
     bannerPrice[3].innerText = EXPECTED_POINT + " point";
 }
 
