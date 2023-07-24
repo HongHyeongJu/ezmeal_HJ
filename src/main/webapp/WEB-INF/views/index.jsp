@@ -40,9 +40,6 @@
 </div>
 <script src="/javascript/main1.js"></script>
 
-<!--end : img slide-->
-
-
 <jsp:include page="footer.jsp"/>
 
 <!--start : scroll back to top-->

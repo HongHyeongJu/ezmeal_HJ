@@ -284,7 +284,7 @@ input[type="checkbox"]:checked ~ #sidebarMenu {
 /*체크된 상태인 input 요소의 형제인 #sidebarMenu 요소에 대해 
  transform 속성을 사용하여 X축으로 0만큼 이동*/
 
-input[type="checkbox"] {
+.openSidebarMenu[type="checkbox"] {
   transition: all 0.3s;
   box-sizing: border-box;
   display: none;
