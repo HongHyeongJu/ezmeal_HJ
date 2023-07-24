@@ -218,6 +218,8 @@ td input[type="radio"] {
 .make_opt_btn {
     margin-top: 20px;
     margin-bottom: 10px;
+    background-color: #f6faff;
+    border: 2px solid #bfcee6;
 }
 
 /*---옵션 1개 세트 시작----*/
