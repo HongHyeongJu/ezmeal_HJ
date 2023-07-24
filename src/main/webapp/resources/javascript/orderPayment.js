@@ -130,8 +130,7 @@ function changePeriod(dateStr, period) {
 // string의 첫단어
 function convertStringToNumber(str) {
     const numberOnly = str.replace(/\D/g, "");
-    const number = parseInt(numberOnly);
-    return number;
+    return  parseInt(numberOnly);
 }
 
 /* EVENT 함수 */

@@ -2,53 +2,80 @@
 
 * {
     font-family: 'NanumSquare', sans-serif;
+    caret-color: transparent;
 }
 
 /*------------------- 전체 조절div --------------------*/
 .container {
     display: flex;
-    width: 1300px;
+    width: 1180px;
     /* 수평 정렬을 위해 Flexbox 사용 */
-    border: 1px solid #a2a2ae ;
+    border: 0px solid #a2a2ae ;
 }
 
 /*------------------- 좌우 큰 div --------------------*/
 .left_bigdiv {
     display: flex;
-    width: 650px;
+    width: 590px;
     flex-direction: column;
-    border: 1px solid #e3e3f5 ;
+    border: 0px solid #e3e3f5 ;
     align-items: center;
     /* 수직 정렬을 위해 Flexbox 사용 */
-
+    margin-right: 20px;
 }
+
 .right_bigdiv {
     display: flex;
-    width: 650px;
+    width: 590px;
     flex-direction: column;
-    border: 1px solid #e3e3f5 ;
+    border: 0px solid #e3e3f5 ;
     align-items: center;
     /* 수직 정렬을 위해 Flexbox 사용 */
-
 }
 
 /*------------------ (좌우 큰 div안의) 각 div들---------------------*/
 .left, .right {
-    width: 640px;
+    width: 550px;
     height: auto;
     min-height: 70px;
-    background-color: #dde9fb;
+    background-color: #ffffff;
     margin: 10px;
+}
+
+div.left , div.right {
+    border: 1px solid #d3d3d3 ;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+input, textarea, select {
+    border: 1px solid #c4c4c4 ;
+    border-radius: 5px;
+    caret-color: auto;
 }
 
 .page_info_div h3, p{
     margin-left: 15px;
 }
 
+/*-------- 자동 계산부분 --------*/
+input[disabled] {
+    background-color: #f6faff;
+    color: #000;
+    border: 1px solid #bfcee6;
+}
+
+input, textarea {
+    font-size: 14px;
+}
+
+
 /*--------------------product_info_div 테이블-----------------------*/
-.product_info_table td {
-    border-right:  1px solid black; /* 셀의 테두리 스타일과 두께 설정 */
+.product_info_table th {
+    border-right:  0px solid black; /* 셀의 테두리 스타일과 두께 설정 */
     padding: 8px; /* 셀의 여백 설정 */
+    margin-bottom: 0;
 }
 .product_info_table td:last-child {
     border-right: none; /* 마지막 칸에 오른쪽 테두리 제거 */
@@ -59,7 +86,7 @@
     width: 100px; /* 원하는 너비로 설정 */
 }
 
-.product_info_table td:nth-child(odd) {
+.product_info_table th:nth-child(odd) {
     width: 90px; /* 홀수 열의 너비 */
     word-break: keep-all;
     text-align: center; /* 내용을 가운데로 정렬 */
@@ -67,6 +94,17 @@
 .product_info_table td:nth-child(even) {
     width: 140px; /* 짝수 열의 너비 */
 }
+
+div.left.page_info_div {
+    background-color: #f2f2f2;
+}
+
+div.left.product_info_div {
+    padding-top: 10px;
+    padding-bottom: 0;
+}
+
+
 /*-------------------- yn_columns_div ---------------------*/
 .yn_columns_div_table {
     table-layout: fixed;
@@ -74,7 +112,7 @@
 }
 
 .yn_columns_div_table td {
-    border-right:  1px solid black; /* 셀의 테두리 스타일과 두께 설정 */
+    border-right:  0px solid black; /* 셀의 테두리 스타일과 두께 설정 */
     padding: 8px; /* 셀의 여백 설정 */
 }
 .yn_columns_div_table td:last-child {
@@ -95,13 +133,17 @@ td label {
 }
 td input[type="radio"] {
     vertical-align: middle;
+    height: 10px;
 }
 
+#prod_stus{
+    margin-left:10px;
+}
 
 /*-------------------- 상품명 -------------------------*/
 .name_label {
     display: inline-block;
-    width: 140px; /* 원하는 너비로 설정 */
+    width: 120px; /* 원하는 너비로 설정 */
     margin-top: 10px;
     margin-bottom: 15px;
     margin-left: 10px;
@@ -113,12 +155,13 @@ td input[type="radio"] {
     width: 140px; /* 원하는 너비로 설정 */
     margin-top: 10px;
     margin-bottom: 15px;
-    margin-left: 80px;
+    margin-left: 50px;
 }
 
 
 .product_names_div input[type="text"]{
     width: 400px; /* 원하는 너비로 설정 */
+    font-size: 15px;
 }
 /*--------------------- 가격 -----------------------*/
 .price_set_div_table th {
@@ -128,7 +171,7 @@ td input[type="radio"] {
 
 .price_set_div_table td {
     text-align: center;
-    border-right:  1px solid black; /* 셀의 테두리 스타일과 두께 설정 */
+    border-right:  0px solid black; /* 셀의 테두리 스타일과 두께 설정 */
     padding: 10px; /* 셀의 여백 설정 */
     padding-bottom: 0;
     padding-top: 0;
@@ -142,9 +185,12 @@ td input[type="radio"] {
 
 .price_set_div input[type="number"]{
     width: 120px; /* 원하는 너비로 설정 */
+    text-align:right;
+    font-size: 15px;
 }
 .price_set_div input[type="text"]{
     width: 250px; /* 원하는 너비로 설정 */
+    font-size: 15px;
 }
 
 .price_set_div p{
@@ -174,24 +220,32 @@ td input[type="radio"] {
     margin-bottom: 10px;
 }
 
-/*---옵션 1개 세트----*/
+/*---옵션 1개 세트 시작----*/
 .opt_list_ul {
     display: flex;
     flex-wrap: wrap;
+    padding-left: 10px;
 }
 
 .opt_list_ul li {
     width: 33.33%;
     display: flex;
     align-items: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.opt_list_namespan {
+    width: 65px;
 }
 
 .opt_list_ul li input[type="number"],
 .opt_list_ul li input[type="text"],
 .opt_list_ul li select {
-    margin-right: 30px;
-    margin-left: auto;
-    width: 100px;
+    margin-right: 5px;
+    margin-left: 0;
+    width: 85px;
+    text-align:right;
 }
 
 .opt_list_ul li:not(:last-child) {
@@ -207,14 +261,15 @@ td input[type="radio"] {
 }
 
 .opt_rmk {
-    width: 350px;
+    width: 275px;
     height: 40px; /* 원하는 높이로 설정 */
 }
 
 .del_opt_btn {
     margin-left:30px;
 }
-/*---옵션 1개 세트----*/
+
+/*---옵션 1개 세트 끝----*/
 
 /*-------------------  오른쪽 디브 시작 --------------------*/
 /*---------------------------------------------------------*/
@@ -227,7 +282,15 @@ td input[type="radio"] {
     height: 50px;
 }
 
+.sh_2 {
+    padding-bottom: 45px;
+}
 
+select{
+    height: 25px;
+    width: 100px;
+    font-size: 15px;
+}
 
 /*----------------------- 상품 상세 정보 ------------------------*/
 
@@ -245,14 +308,30 @@ td input[type="radio"] {
     vertical-align: middle;
 }
 
+.dscpt_set_tr_1 input[type="number"] {
+    width: 100px;
+    text-align: right;
+}
+
+
+.dscpt_set_tr_1 p {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.dscpt_set_tr_1 td {
+    padding-top-top: 0px;
+}
+
 .dscpt_set_div_table_1 th {
     height: 30px;
     vertical-align: bottom;
+
 }
 
 .dscpt_set_div_table_1 td {
     text-align: center;
-    border-right:  1px solid black; /* 셀의 테두리 스타일과 두께 설정 */
+    border-right:  0px solid black; /* 셀의 테두리 스타일과 두께 설정 */
     padding: 10px; /* 셀의 여백 설정 */
     margin-bottom: 10px;
     width:1500px;
@@ -260,6 +339,18 @@ td input[type="radio"] {
 
 .dscpt_header {
     width: 120px; /* 원하는 너비로 설정 */
+}
+
+.dscpt_set_tr_2 th {
+    width: 120px;
+}
+
+.dscpt_set_tr_2 td {
+    width: 100px;
+}
+
+.dscpt_set_tr_2 input[type="text"]  {
+    width: 150px; /* 원하는 너비로 설정 */
 }
 
 textarea {
@@ -296,7 +387,7 @@ input {
 }
 
 .img_ul_2 {
-    width: 250px;
+    width: 200px;
 }
 .img_ul_3 {
     width: 100px;

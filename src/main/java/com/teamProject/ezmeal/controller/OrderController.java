@@ -13,13 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -51,15 +49,19 @@ public class OrderController {
     //    private static Long paymentNumber = 0L;
     private static Long paymentNumber = Math.round(Math.random() * 10000);
 
+    private static final String status = "a1"; // 결제 완료 상태 코드
+
     @GetMapping
     public String getOrder(@SessionAttribute Long memberId, Model model) {
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+
         Long cartSeq = cartService.getCartSeq(memberId);
         DeliveryAddressDto selectedAddress = deliveryAddressService.getOrderAddress(memberId); // 선택된 배송지, 없으면 기본배송지
         List<CartJoinProductDto> cartProductList = cartProductService.getOrderProduct(cartSeq); // 주문할 상품 목록
         MemberDto memberInfo = memberDao.selectMemberInfo(memberId); // 회원정보
 
         // 결제 금액 계산
-        Map<String, Integer> priceMap = new HashMap<>();
+        Map<String, String> priceMap = new HashMap<>();
         int productPrice = 0; // 상품금액
         int orderPrice = 0; // 주문금액
         int productsDiscount = 0; // 상품할인금액
@@ -70,9 +72,9 @@ public class OrderController {
             productsDiscount += (cartProduct.getCnsmr_prc() - cartProduct.getSale_prc()) * cartProduct.getCp_qty(); // 할인 금액
         }
 
-        priceMap.put("productPrice", productPrice);
-        priceMap.put("orderPrice", orderPrice);
-        priceMap.put("productsDiscount", productsDiscount);
+        priceMap.put("productPrice", numberFormat.format(productPrice));
+        priceMap.put("orderPrice", numberFormat.format(orderPrice));
+        priceMap.put("productsDiscount", numberFormat.format(productsDiscount));
 
         // 적립금
         // 사용가능 적립금, 등급별 적립 예정금액
@@ -156,7 +158,7 @@ public class OrderController {
         /* INSERT */
         // order master
         System.out.println("orderMaster start ");
-        OrderMasterDto orderMasterDto = new OrderMasterDto(orderPk, memberId, "oc", expectPoint, orderPaymentAddressData.getProdSummaryName()); // 주문 master insert
+        OrderMasterDto orderMasterDto = new OrderMasterDto(orderPk, memberId, status, expectPoint, orderPaymentAddressData.getProdSummaryName()); // 주문 master insert
         orderPaymentAddressService.registerOrderMaster(orderMasterDto); // 주문 master insert
         System.out.println("orderMaster finish ");
 
@@ -319,7 +321,7 @@ public class OrderController {
                 orderProduct.getCnsmr_prc() * orderProduct.getCp_qty(),
                 orderProduct.getCnsmr_prc() * orderProduct.getCp_qty() - orderProduct.getSale_prc() * orderProduct.getCp_qty(),
                 orderProduct.getSale_prc() * orderProduct.getCp_qty(),
-                "oc"
+                status
         );
     }
 }

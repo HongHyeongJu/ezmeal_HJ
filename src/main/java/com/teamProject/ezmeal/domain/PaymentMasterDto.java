@@ -18,6 +18,7 @@ public class PaymentMasterDto {
     private String pay_typ; // 결제유형 | 결제/취소/반품
     private LocalDateTime pay_dtm; // 결제일시 / 환불일시
     private String pay_mtd; // 결제수단 | 신용카드사, 카페, 네이버페이
+    private String bank; // 은행
     private String card_num; // 카드번호 | 15~16자리
     private String cvc; // cvc | 341
     private String card_vld_term; // 카드유효기간 | 23/06

@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class PointTransactionHistoryDao {
@@ -23,6 +25,11 @@ public class PointTransactionHistoryDao {
     // 현재 남아있는 포인트 조회
     public int selectPoint(Long memberId) {
         return session.selectOne(namespace + "selectPoint", memberId);
+    }
+
+    // 포인트 내역 조회
+    public List<PointTransactionHistoryDto> selectPointList(Long memberId) {
+        return session.selectList(namespace + "selectPointList", memberId);
     }
 
 }

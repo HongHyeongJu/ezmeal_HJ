@@ -1,0 +1,217 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+
+}
+
+a {
+  text-decoration: none;
+}
+
+
+/*START : FOOTER*/
+.footer_topbox1 {
+  /*--푸터 1,2 감싸는 박스*/
+  margin-top: 600px;
+}
+
+.footer_topbox2 {
+  padding-top: 30px;
+  border-top: 1px solid rgb(247, 247, 247);
+}
+
+/*//todo  푸터를 1,2로 나눈면 상단= 1, 하단 =2
+//todo start :  푸터 1*/
+
+.footer1 {
+  width: 1200px;
+  margin: 0px auto;
+ 
+}
+
+.footer1_box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  padding-bottom: 30px;
+  height: 345px;
+}
+
+/*start : 왼쪽 footer*/
+.footer1_left {
+  display: flex;
+  flex-direction: column;
+  width: 440px;
+  height: 315px;
+  margin-left: 100px;
+}
+
+.happycenter {
+  padding-bottom: 17px;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 29px;
+}
+
+.callnum {
+  display: block;
+  padding-bottom: 20px;
+  font-size: 28px;
+  line-height: 40px;
+}
+
+.week_time {
+  margin-left: 8px;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+.inquery {
+  display: flex;
+  flex-direction: column;
+}
+
+.inquery_box {
+  display: flex;
+  flex-direction: row;
+}
+
+.inquery_button {
+  display: block;
+  width: 140px;
+  height: 40px;
+  margin-bottom: 16px;
+  margin-right: 16px;
+  border: 1px solid rgb(226, 226, 226);
+  border-radius: 3px;
+  line-height: 39px;
+  text-align: center;
+}
+
+.inquery_content {
+  margin-top: 2px;
+  color: rgb(153, 153, 153);
+  letter-spacing: -0.5px;
+  line-height: 16.8px;
+}
+
+.nomember {
+  font-size: 12px;
+  line-height: 18px;
+  color: rgb(153, 153, 153);
+}
+/*end : 왼쪽 footer*/
+
+/*start : 오른쪽 footer*/
+.footer1_right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 315px;
+}
+
+/*start :오른쪽 푸터 첫번째 (컬리소개, 투자정보~)*/
+.footer1_list {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 520px;
+  padding-bottom: 29px;
+  list-style-type: none;
+  font-size: 14px;
+}
+
+.introduce {
+  font-size: 14px;
+  line-height: 18px;
+  color: black;
+}
+/*end :오른쪽 푸터 첫번째 (컬리소개, 투자정보~)*/
+
+/*start : 오른쪽 푸터 두번째(정보)*/
+.footer1_information {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  color: rgb(153, 153, 153);
+  align-items: center;
+  margin-left: 40px;
+}
+
+.sns_logos {
+  margin-right: 20px;
+}
+/*end : 오른쪽 푸터 두번째(정보)*/
+
+/*//todo end : 푸터1*/
+
+/*start: footer:2*/
+.footer2-wrapper {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(247, 247, 247);
+  width: 100%;
+}
+.footer2_box {
+  padding: 20px 0px 30px;
+  font-size: 10px;
+  line-height: 15px;
+  text-align: center;
+  background-color: rgb(247, 247, 247);
+  color: rgb(153, 153, 153);
+  width: 1050px;
+}
+
+.footer2_1 {
+  display: block;
+  padding-top: 7px;
+  font-style: normal;
+}
+
+/*start :backtotop-btn*/
+#backtotop-btn {
+  position: fixed;
+  bottom: 30px;
+  float: right;
+  right: 10%;
+  left: 90%;
+  max-width: 50px;
+  width: 100%;
+  height: 50px;
+  font-size: 15px;
+  border-radius: 30px;
+  border-style: none;
+  background-color: rgb(0, 199, 40);
+  padding: 0.5px;
+}
+
+#backtotop-btn:hover {
+  background-color: rgb(33, 146, 255);
+}
+
+/*페이지를 스크롤하면 버튼이 항상 하단에서 30픽셀 위에 있다, 
+스크롤을 따라 내려온다 -> position: fixed; 속성에 의해 구현, 
+페이지의 스크롤 위치에 관계없이 버튼을 항상 화면에 고정*/
+/*start :backtotop-btn*/
+
+
+
+
+
+/*
+
+ /*문제점 :비율을 축소하면 footer가 오른쪽으로 이동되어있었다
+->.header_box에 position: relative; 속성을 추가하고, .footer1의 width를 100%로 변경해서 해결
+
+ 참고 :  position: relative; .header_box에 적용해서 .footer1과의 상대적인 위치를 조절가능
+ 상위 요소인 .header_box를 기준으로 .footer1의 위치가 결정되기 때문에, 
+ 두 요소가 겹치지 않고 올바른 위치에 표시
+
+ width: 100% 는 전체너비에 맞췄기때문에 화면 꽉채워서 다른요소와 안겹치고 독립적이다.
+
+*/
+

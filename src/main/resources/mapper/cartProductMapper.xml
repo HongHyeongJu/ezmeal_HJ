@@ -31,7 +31,7 @@
 
 
     <!-- 일반 상품 : 냉장/냉동/상온 map으로 저장 -->
-    <select id="product" resultMap="CartJoinProductDto" resultType="CartJoinProductDto">
+    <select id="product_list" resultMap="CartJoinProductDto" resultType="CartJoinProductDto">
         SELECT cp.cart_prod_seq,
                cp.prod_cd,
                cp.opt_seq,
@@ -39,9 +39,9 @@
                cp.soldout_yn,
                cp.qty                                  as cpQty,
                IFNULL(po.qty, 1)                       AS poQty,
-               IFNULL(CONCAT(p.name, po.name), p.name) AS name,
-               IFNULL(p.cnsmr_prc, po.cnsmr_prc)       AS cnsmr_prc,
-               IFNULL(p.sale_prc, po.sale_prc)         AS sale_prc
+               IFNULL(CONCAT(p.name,' ',po.name), p.name) AS name,
+               IFNULL(FORMAT(p.cnsmr_prc, 0), FORMAT(po.cnsmr_prc, 0))       AS cnsmr_prc_format,
+               IFNULL(FORMAT(p.sale_prc, 0), FORMAT(po.sale_prc, 0))          AS sale_prc_format
         FROM tb_cart_product cp
                  JOIN tb_product p ON cp.prod_cd = p.prod_cd
                  LEFT JOIN tb_product_option po ON cp.opt_seq = po.opt_seq
@@ -101,9 +101,11 @@
                cp.typ,
                cp.qty                                  as cpQty,
                IFNULL(po.qty, 1)                       AS poQty,
-               IFNULL(CONCAT(p.name, po.name), p.name) AS name,
+               IFNULL(CONCAT(p.name,' ',po.name), p.name) AS name,
                IFNULL(p.cnsmr_prc, po.cnsmr_prc)       AS cnsmr_prc,
-               IFNULL(p.sale_prc, po.sale_prc)         AS sale_prc
+               IFNULL(p.sale_prc, po.sale_prc)         AS sale_prc,
+               IFNULL(FORMAT(p.cnsmr_prc, 0), FORMAT(po.cnsmr_prc, 0))       AS cnsmr_prc_format,
+               IFNULL(FORMAT(p.sale_prc, 0), FORMAT(po.sale_prc, 0))          AS sale_prc_format
         FROM tb_cart_product cp
                  JOIN tb_product p ON cp.prod_cd = p.prod_cd
                  LEFT JOIN tb_product_option po ON cp.opt_seq = po.opt_seq
@@ -163,7 +165,7 @@
     <!-- HHJ (+)-->
     <!--상품 추가 mapper (+)-->
     <!--mbr_id, prod_cd로 해당상품이 장바구니에 이미 담겨있는지 확인하기-->  <!-- (변경부분) opt_seq도 비교하도록 추가함 -->
-    <select id="select_product_in_cart" parameterType="Map" resultType="CartProductDto">
+    <select id="select_product_in_cart" parameterType="CartProductDto" resultType="CartProductDto">
         SELECT *
         FROM tb_cart_product
         WHERE mbr_id = #{mbr_id} AND prod_cd = #{prod_cd}
@@ -175,7 +177,7 @@
     <update id="update_product_qty_in_cart" parameterType="CartProductDto">
         UPDATE tb_cart_product
         SET qty = qty + #{qty},
-        del_yn = #{del_yn},
+        del_yn = 'n',
         add_dt = #{add_dt},
         up_dtm = now(),
         up_id = 'ateam'
@@ -192,7 +194,7 @@
                                      add_dt, del_yn, in_dtm, in_id, up_dtm, up_id)
         values (#{prod_cd}, #{cart_seq}, #{mbr_id},
                 #{sel_prod}, #{typ}, #{opt_seq}, #{soldout_yn}, #{qty},
-                #{add_dt}, #{del_yn}, now(), 'ateam', now(), 'ateam')
+                #{add_dt}, 'n', now(), 'ateam', now(), 'ateam')
     </insert>
 
     <!-- taewan (+)-->

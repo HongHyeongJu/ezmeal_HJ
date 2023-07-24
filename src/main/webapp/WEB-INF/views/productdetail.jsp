@@ -131,8 +131,9 @@
         <div class="hidden_option" id="opt_div">
           <select class="select_box" id="opt_select">
             <c:forEach items="${optList}" var="option">
+              <c:set var="discount" value="${(option.cnsmr_prc - option.sale_prc) / option.cnsmr_prc * 100}" />
               <option value="${option.opt_seq}_${option.sale_prc}">
-                  &nbsp;${product.getName()}&nbsp;${option.name}&nbsp;&nbsp;${option.sale_prc}원
+                &nbsp;${product.getName()}&nbsp;${option.name}&nbsp;&nbsp;${option.sale_prc}원&nbsp;&nbsp;(${discount}% 할인)
               </option>
             </c:forEach>
           </select>
