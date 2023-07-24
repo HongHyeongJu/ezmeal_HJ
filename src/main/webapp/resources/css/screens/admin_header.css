@@ -6,6 +6,21 @@ body {
     padding: 0;
 }
 
+label, th, li {
+    caret-color: transparent;
+}
+
+
+input[disabled] {
+    background-color: #f6faff;
+    color: #000;
+    border: 1px solid #8aabde;
+}
+
+input, textarea {
+    font-size: 14px;
+}
+
 
 .admin_header_div {
     background-color: rgb(25, 38, 66);

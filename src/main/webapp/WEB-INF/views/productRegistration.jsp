@@ -20,7 +20,7 @@
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
 <body>
-<form action="" method="POST">
+<form id="productForm" action="/product/regist/write" method="post">
     <div class="container">
         <div class="left_bigdiv">
             <div class="left page_info_div">
@@ -31,11 +31,11 @@
             <div class="left product_info_div">
                 <table class="product_info_table">
                     <tr>
-                        <td>상품코드</td>
+                        <th>상품코드</th>
                         <td><input type="text" id="prod_cd" name="product.prod_cd" value="${product.getProd_cd()}" readonly></td>
-                        <td>최초 등록자</td>
+                        <th>최초 등록자</th>
                         <td><input type="text" id="mng" name="product.mng" value="${product.getMng()}" readonly></td>
-                        <td>최초 등록일시</td>
+                        <th>최초 등록일시</th>
                         <td>
                             <input type="date" id="fst_reg_dt" name="product.fst_reg_dt" value="${product.getFst_reg_dt()}" readonly>
                             <input type="hidden" name="product.del_yn" value="${product.getDel_yn()}" >
@@ -100,7 +100,7 @@
                 </select>
                 <br>
                 <label for="name" class="name_label"><strong>판매용 상품명:</strong></label>
-                <input type="text" id="name" name="product.name"  value="${product.getName()}" maxlength="10">
+                <input type="text" id="name" name="product.name"  value="${product.getName()}" maxlength="12">
                 <br>
                 <label for="name" class="name_label"><strong>관리자용 상품명:</strong></label>
                 <input type="text" id="mng_prod_nm" name="product.mng_prod_nm"  value="${product.getMng_prod_nm()}" maxlength="30">
@@ -135,8 +135,8 @@
                     </tr>
                     <tr class="dc_label">
                         <td><strong>판매가</strong></td>
-                        <td><strong>마진율(자동)</strong></td>
-                        <td><strong>할인율(자동)</strong></td>
+                        <td><strong>마진율</strong></td>
+                        <td><strong>할인율</strong></td>
                     </tr>
                     <tr class="dc_input">
                         <td><input type="number" id="sale_prc" name="product.sale_prc" value="${product.getSale_prc()}" min="0" disabled><p>원</p></td>
@@ -227,12 +227,12 @@
                         <th class="storage_header">보관상태</th>
                         <td>
                             <label><input type="radio" name="product.sfkp_stus" value="상온" ${product.getSfkp_stus().equals("상온") ? 'checked' : ''}>상온</label>
-                            <label><input type="radio" name="product.sfkp_stus" value="냉동" ${product.getSfkp_stus().equals("냉동") ? 'checked' : ''}>냉동</label>
                             <label><input type="radio" name="product.sfkp_stus" value="냉장" ${product.getSfkp_stus().equals("냉장") ? 'checked' : ''}>냉장</label>
+                            <label><input type="radio" name="product.sfkp_stus" value="냉동" ${product.getSfkp_stus().equals("냉동") ? 'checked' : ''}>냉동</label>
                         </td>
                     </tr>
                     <tr>
-                        <th class="storage_header">보관방법</th>
+                        <th class="storage_header sh_2">보관방법</th>
                         <td>
                             <input type="radio" name="product.sfkp_mtd" value="실온보관" ${product.getSfkp_mtd().equals("실온보관") ? 'checked' : ''}>실온보관
                             <input type="radio" name="product.sfkp_mtd" value="냉장보관(0~10도)" ${product.getSfkp_mtd().equals("냉장보관(0~10도)") ? 'checked' : ''}>냉장보관(0~10도)
@@ -252,15 +252,15 @@
                 <table class="storage_div_table">
                     <tr class="storage_div_tr">
                         <th class="storage_header">상품 요약설명</th>
-                        <td><textarea id="dscpt" name="product.dscpt" rows="3" cols="60">${product.getDscpt()}</textarea></td>
+                        <td><textarea id="dscpt" name="product.dscpt" rows="3" cols="50">${product.getDscpt()}</textarea></td>
                     </tr>
-                    <tr class="storage_div_tr">
+                    <tr class="storage_div_tr ">
                         <th class="storage_header">상품 상세설명</th>
-                        <td><textarea id="detail" name="product.detail" rows="3" cols="60">${product.getDetail()}</textarea></td>
+                        <td><textarea id="detail" name="product.detail" rows="3" cols="50">${product.getDetail()}</textarea></td>
                     </tr>
                     <tr class="storage_div_tr">
                         <th class="storage_header">비고</th>
-                        <td><textarea id="rmk" name="product.rmk" rows="3" cols="60">${product.getRmk()}</textarea></td>
+                        <td><textarea id="rmk" name="product.rmk" rows="3" cols="50">${product.getRmk()}</textarea></td>
                     </tr>
                 </table>
             </div>
@@ -274,19 +274,19 @@
                         <th>상품 규격</th>
                     </tr>
                     <tr class="dscpt_set_tr_1">
-                        <td><input type="number" id="min_qty" name="product.min_qty" value="${product.getMin_qty()}" min="1" value="1" ></td>
-                        <td><input type="number" id="weight" name="product.weight" value="${product.getWeight()}" ></td>
+                        <td><input type="number" id="min_qty" name="product.min_qty" value="${product.getMin_qty()}" min="1" value="1" ><p>개</p></td>
+                        <td><input type="number" id="weight" name="product.weight" value="${product.getWeight()}"><p>g</p></td>
                         <td><input type="text" id="stnd" name="product.stnd" value="${product.getStnd()}" placeholder="가로*세로*너비" ></td>
                     </tr>
                 </table>
                 <table class="dscpt_set_div_table_2">
                     <tr>
                         <th class="dscpt_header">조리법</th>
-                        <td colspan="3" rows="3" cols="60" ><textarea id="recipe" name="product.recipe" rows="3" cols="60" >${product.getRecipe()}</textarea></td>
+                        <td colspan="3" rows="3" cols="50" ><textarea id="recipe" name="product.recipe" rows="3" cols="50" >${product.getRecipe()}</textarea></td>
                     </tr>
                     <tr>
                         <th class="dscpt_header">활용법</th>
-                        <td colspan="3" rows="3" cols="60" ><textarea id="mtd" name="product.mtd" rows="3" cols="60" >${product.getMtd()}</textarea></td>
+                        <td colspan="3" rows="3" cols="50" ><textarea id="mtd" name="product.mtd" rows="3" cols="50" >${product.getMtd()}</textarea></td>
                     </tr>
                     <tr class="dscpt_set_tr_2">
                         <th class="dscpt_header">소비기한</th>
@@ -330,7 +330,7 @@
             <!--------------- img_set_div ---------------->
 
             <div class="right button_set_div">
-                <button type="button"  class="prod_btn" id="regi_btn">상품 등록</button>
+                <button type="submit"  class="prod_btn" id="regi_btn">상품 등록</button>
                 <button type="button"  class="prod_btn" id="modi_btn">상품 수정</button>
                 <button type="button"  class="prod_btn" id="modi_post_btn">상품 수정</button>
                 <button type="button"  class="prod_btn" id="del_btn">상품 삭제</button>

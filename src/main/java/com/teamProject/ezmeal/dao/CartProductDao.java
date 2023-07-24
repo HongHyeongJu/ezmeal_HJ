@@ -103,13 +103,8 @@ public class CartProductDao {
 
 
     /*회원 장바구니에 해당 상품이 있는지 확인.  */   /* (변경부분) opt_seq도 비교하도록 추가함 */
-    public CartProductDto selectProductInCart(Long mbr_id, Long prod_cd, Long opt_seq) {
-        System.out.println("[다오] select");
-        HashMap map = new HashMap();
-        map.put("mbr_id",mbr_id);
-        map.put("prod_cd",prod_cd);
-        map.put("opt_seq",opt_seq);
-        return session.selectOne(namespace + "select_product_in_cart", map);
+    public CartProductDto selectProductInCart(CartProductDto cartProductDto) {
+        return session.selectOne(namespace + "select_product_in_cart", cartProductDto);
     }
 
 
