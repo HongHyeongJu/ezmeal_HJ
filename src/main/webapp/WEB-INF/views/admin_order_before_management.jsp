@@ -87,6 +87,7 @@
     <!-- admin_container_div 끝 -->
 </div>
 <script src="/javascript/admin_due.js"></script>
+<script src="/javascript/module/check_box_module.js"></script>
 <script src="/javascript/admin_order_before_management.js"></script>
 </body>
 </html>

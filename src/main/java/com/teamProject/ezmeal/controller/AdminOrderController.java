@@ -33,11 +33,10 @@ public class AdminOrderController {
     @PostMapping("/dynamic-before-management")
     @ResponseBody
     public List<Map<String, Object>> dynamicBeforeManagement(@RequestBody String periodString) {
-        System.out.println("초기 json 값 periodString = " + periodString); // 오늘, 어제, 3일, 7일, 15일, 30일, 3개월, 6개월
-        System.out.println("개행무자 확인 periodString = [" + periodString + "]"); // json 객체여서 ""도 string으로 같이 들어옴
-
+//        System.out.println("초기 json 값 periodString = " + periodString); // 오늘, 어제, 3일, 7일, 15일, 30일, 3개월, 6개월
+//        System.out.println("개행문자 확인 periodString = [" + periodString + "]"); // json 객체여서 ""도 string으로 같이 들어옴
         String periodStringFormat = periodString.replaceAll("\"", "");// 모든 따옴표를 빈 문자열로 대체
-        System.out.println("개행문자 제거 periodStringFormat = " + periodStringFormat);
+//        System.out.println("개행문자 제거 periodStringFormat = " + periodStringFormat);
 
         LocalDate today = LocalDate.now();
         LocalDate yesterday = today.minusDays(1);
