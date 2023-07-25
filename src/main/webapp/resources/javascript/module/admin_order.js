@@ -3,6 +3,7 @@
 // 처음 html loading 후, 바로 수행되는 함수
 const firstRenderData = async function (url, event) {
     const adminDynamicData = await getAdminDynamicData(url, event);
+    console.log('firstRenderData : ' + adminDynamicData);
     renderHTMLFrom(adminDynamicData);
 }
 

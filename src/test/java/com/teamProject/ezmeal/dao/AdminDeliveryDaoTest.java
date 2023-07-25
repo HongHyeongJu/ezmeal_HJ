@@ -26,7 +26,7 @@ public class AdminDeliveryDaoTest {
 //        periodData.put("endTime", null);
         periodData.put("startTime", "2023-07-22");
         periodData.put("endTime", "2023-07-22");
-        List<Map<String, String>> maps = adminDeliveryDao.selectPrepareDeliveryInfo(periodData);
+        List<Map<String, Object>> maps = adminDeliveryDao.selectPrepareDeliveryInfo(periodData);
         System.out.println("maps = " + maps);
     }
 }

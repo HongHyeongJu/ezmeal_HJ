@@ -26,9 +26,12 @@ public class AdminDeliveryController {
     @PostMapping
     @ResponseBody
     // 배송 준비중 관리에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member
-    public List<Map<String , String>> getPrepareDeliveryInfo(@RequestBody String periodString){
+    // mapper에서 반환하는 value가 현재 string, num 등등 다양하기 때문에 Object로 value를 받아야 한다. 아니면 error 발생, type을 읽지 못하기 때문
+    public List<Map<String , Object>> getPrepareDeliveryInfo(@RequestBody String periodString){
+        System.out.println("getPrepareDeliveryInfo @RequestBody = " + periodString);
         Map<String, Object> periodData = AdminDueModule.getPeriodData(periodString); // 기간을 받는 module 함수 {startTime: Object, endTime: Object};
         return adminDeliveryService.getPrepareDeliveryInfo(periodData);
+        // {in_dtm_format=2023-07-14, pay_mtd=kakaopay, ord_id=202307142397, qty=4, 1, 1, 2, 1, 2, 2, tot_prc=8000, 2000, 20000, 10000, 5000, 10000, 4000, name=김자바, count=7, setl_expct_prc=7200, 1800, 19000, 9000, 4500, 9000, 4000},
     }
 
 }

@@ -40,11 +40,17 @@
 
                 <div class="admin-order__content-box">
                     <div class="admin-order__option">
+                        <button>SMS 일괄배송</button>
                         <button>엑셀다운로드</button>
                         <button>인쇄</button>
                     </div>
                     <div class="admin-order__check-order">
-                        <button>발주확인</button>
+                        <button>배송중 처리</button>
+                        <button>송장번호 저장</button>
+                        <button>묶음배송처리</button>
+                        <button>묶음배송일괄처리</button>
+                        <button>묶음배송해제</button>
+                        <button>배송보류 처리</button>
                     </div>
 
                     <div class="admin-order__select">
@@ -90,7 +96,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <%-- 동적 data 들어오는 부분--%>
+                            <%-- TODO 동적 data 들어오는 부분--%>
                             </tbody>
                         </table>
                     </div>
@@ -105,6 +111,8 @@
 </div>
 <script src="/javascript/module/admin_due.js"></script>
 <script src="/javascript/module/check_box_module.js"></script>
-<script src="/javascript/admin_order_before_management.js"></script>
+<script src="/javascript/module/admin_order_ajax.js"></script>
+<script src="/javascript/module/admin_order.js"></script>
+<script src="/javascript/admin_delivery_prepare.js"></script>
 </body>
 </html>

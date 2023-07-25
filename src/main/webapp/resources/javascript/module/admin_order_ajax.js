@@ -9,7 +9,6 @@ const getAdminDynamicData = function (url, periodString) {
     })
         .then(response => response.json())
         .then(data => {
-            // renderHTMLFrom(data);
             return data;
         })
         .catch(error => {
