@@ -28,7 +28,7 @@
     padding: 3px;
     margin-left: 10px;
     cursor: pointer;
-    width: 100px;
+    width: 110px;
 }
 
 .admin-order__option > button:hover,
@@ -40,10 +40,19 @@
 /* main 부분에서 nav 쪽 css */
 .admin-order__nav {
     list-style: none; /* 목록 기호 제거 */
-    padding: 10px; /* 목록의 내부 여백 제거 */
-    margin-bottom: 10px; /* 목록의 바깥쪽 여백 제거 */
-    font-size: large;
-    font-weight: bold;
+    padding: 8px; /* 목록의 내부 여백 제거 */
+    margin: 0;
+    display: flex;
+}
+
+.admin-order__nav li {
+    margin-right: 10px;
+    text-underline-offset: 1px;
+}
+
+.admin-order__nav li:hover {
+    cursor: pointer;
+    color: #3c69dd;
 }
 
 /* 주문 contents table css */

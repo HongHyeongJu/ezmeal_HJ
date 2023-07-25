@@ -48,9 +48,6 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
 
 // checkbox 선택 후, 해당 ord_id를 list에 담음
 // 전체 선택 btn
-function selectAllOrderCheckBox() {
-    selectAllProduct("tr", "ord_id");
-}
 // 개별 선택 btn
 
 // 발주 확인 버튼, update 함수
@@ -71,7 +68,7 @@ periodBtnAll.forEach((periodBtn) => {
 })
 // 전체 선택 버튼 누를 경우
 selectAllBtn.addEventListener("click",
-    (event) => selectAllOrderCheckBox('tr','ord_id')
+    (event) => selectAllProduct('tr','ord_id')
 );
 checkPayment.addEventListener("click",
     () => handleClickCheckPaymentBtn('/admin/order/before-management', SELECT_SEQ_LIST)
