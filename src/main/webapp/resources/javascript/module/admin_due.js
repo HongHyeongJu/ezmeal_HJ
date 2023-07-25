@@ -1,5 +1,3 @@
-/* static 변수 */
-// 변수로 함수를 설정했기때문에 함수를 호출하지 않는 이상 수행되지 않는다.
 const handlePeriod = function (event) {
     const targetBtn = event.target
     // console.log(targetBtn);

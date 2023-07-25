@@ -86,10 +86,11 @@
     </div>
     <!-- admin_container_div 끝 -->
 </div>
+<script src="/javascript/module/admin_due.js"></script>
 <script src="/javascript/module/check_box_module.js"></script>
 <script src="/javascript/module/admin_order_ajax.js"></script>
+<script src="/javascript/module/admin_order.js"></script>
 <script src="/javascript/admin_order_before_management.js"></script>
-<script src="/javascript/module/admin_due.js"></script>
 
 </body>
 </html>
