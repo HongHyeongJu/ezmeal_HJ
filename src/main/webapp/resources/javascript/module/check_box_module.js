@@ -1,7 +1,6 @@
 let SELECT_SEQ_LIST = []; // 선택된 발주 버튼
 let dynamicNum = 0; // 체크박스 선택 수 확인
 
-// checkbox 선택 함수 todo 수정 필요
 // 전체 상품 선택 함수
 const selectAllProduct = function (sequenceTag, sequenceName) {
     const check = selectAllBtn.checked; // true, false(default)

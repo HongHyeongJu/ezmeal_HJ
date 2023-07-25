@@ -1,9 +1,6 @@
-/* DOCUMENT 변수명 */
-const periodBtnAll = document.querySelectorAll(".admin__period_btn"); // 조회 기간 버튼
-
 /* static 변수 */
-
-function handlePeriod(event) {
+// 변수로 함수를 설정했기때문에 함수를 호출하지 않는 이상 수행되지 않는다.
+const handlePeriod = function (event) {
     const targetBtn = event.target
     // console.log(targetBtn);
     // console.log(targetBtn.classList[1]);
@@ -13,14 +10,9 @@ function handlePeriod(event) {
         periodDateAll.forEach((periodDate) => {
             periodDateString += periodDate.value + " "; // 2023-06-29 2023-07-10
         })
-        getOrderPaymentData(periodDateString);
+        return periodDateString;
     } else {
-        const periodString = targetBtn.textContent;
-        getOrderPaymentData(periodString);
+        return targetBtn.textContent;
     }
 
 }
-
-periodBtnAll.forEach((periodBtn) => {
-    periodBtn.addEventListener('click', handlePeriod);
-})

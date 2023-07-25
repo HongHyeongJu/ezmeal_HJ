@@ -3,6 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="deliveryMasterDao">
+    <!-- 주문 완료 후, insert 되는 배송지 기본 정보 TODO 결제 취소시, 사라져야 함-->
     <insert id="insertDelivery">
         insert into tb_delivery_master (dlvar_id, ord_id,
                                         rcpr, rcpr_phone,
@@ -15,4 +16,36 @@
                 #{stus}, #{msg},
                 #{rcv_sns_yn}, #{box_size})
     </insert>
+
+    <!-- 배송 준비중 관리에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member -->
+    <select id="select_prepare_delivery_info_with_od_pm_m" resultType="map">
+        select date_format(od.in_dtm, '%Y-%m-%d')             as in_dtm_format,
+               od.ord_id,
+               m.name,
+               dm.invc_id,
+               pm.dexp,
+               pm.pay_mtd,
+               GROUP_CONCAT(od.name SEPARATOR ', ')           as name,
+               GROUP_CONCAT(od.qty SEPARATOR ', ')            as qty,
+               GROUP_CONCAT(od.setl_expct_prc SEPARATOR ', ') as setl_expct_prc,
+               GROUP_CONCAT(od.tot_prc SEPARATOR ', ')        as tot_prc,
+               COUNT(m.name)                                  as count
+        from tb_order_detail od,
+             tb_payment_master pm,
+             tb_member m,
+             tb_delivery_master dm
+        where od.ord_id = pm.ord_id
+          and od.ord_id = dm.ord_id
+          and pm.mbr_id = m.mbr_id
+        <if test="startTime != null">
+            AND od.in_dtm >= STR_TO_DATE(#{startTime}, '%Y-%m-%d') -- 기본값 00:00:00
+        </if>
+        <if test="endTime != null">
+            AND od.in_dtm &lt;= STR_TO_DATE(CONCAT(#{endTime}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+        </if>
+        group by date_format(od.in_dtm, '%Y-%m-%d'), od.ord_id, m.name,
+                 dm.invc_id,
+                 pm.dexp, pm.pay_mtd
+        order by date_format(od.in_dtm, '%Y-%m-%d')
+    </select>
 </mapper>

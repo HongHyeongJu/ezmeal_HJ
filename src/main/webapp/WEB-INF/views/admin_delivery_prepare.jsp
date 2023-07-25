@@ -1,14 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: taewan
-  Date: 2023/07/23
-  Time: 4:15 PM
+  Date: 2023/07/25
+  Time: 11:31 AM
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>ezmeal_admin | 발주관리</title>
+    <title>ezmeal_admin | 배송중 준비</title>
     <link rel="stylesheet" href="/css/screens/admin_order.css">
 </head>
 <body>
@@ -23,12 +24,18 @@
 
     <div class="admin_container_div">
         <div class="admin_container_div-order">
-            <h2>발주확인 관리</h2>
-            <%@ include file="admin_due.jsp" %> <!-- 관리자 메뉴 인클루드 -->
+            <h2>배송 준비중 관리</h2>
+            <%@ include file="admin_due.jsp" %> <!-- 관리자 기간 검색 인클루드 -->
             <div class="admin-order__contents">
                 <!-- admin-order__nav 끝 -->
                 <ul class="admin-order__nav">
                     <li class="admin-order__nav-li">주문번호별</li>
+                    <li class="admin-order__nav-li">해외배송별</li>
+                    <li class="admin-order__nav-li">상품별</li>
+                    <li class="admin-order__nav-li">배송번호별</li>
+                    <li class="admin-order__nav-li">추가주문</li>
+                    <li class="admin-order__nav-li">배송보류</li>
+                    <li class="admin-order__nav-li">묶음배송</li>
                 </ul>
 
                 <div class="admin-order__content-box">
@@ -56,24 +63,34 @@
                     </div>
                     <!-- admin-order__select 끝 -->
 
+
                     <div class="admin-order__content-table__div">
                         <table class="admin-order__content-table">
                             <thead>
                             <tr>
-                                <th><input type="checkbox"/></th>
+                                <th><input type="checkbox" /></th>
                                 <th>주문일</th>
                                 <th>주문번호</th>
-                                <th>상품명 - 옵션포함</th>
                                 <th>주문자</th>
-                                <th>결제방식</th>
-                                <th>입금은행</th>
-                                <!-- <th>카드명</th> -->
-                                <th>카드번호</th>
+                                <th>묶음선택</th>
+                                <!-- 동일 주문번호 내부에서만 묶음선택 가능-->
+                                <th><input type="checkbox" name="check" id="check" /></th>
+                                <!-- 묶음 선택으로 묶인 것중에서 묶음 배송을 할 것 check -> 묶음 배송 처리 btn 눌러서 update-->
+                                <th>운송장정보</th>
+                                <!-- td에 select로 자체배송, 우체국 배송 , 넣어주기 | input 만들어서 송정번호저장하기 -->
+                                <th>배송비</th>
+                                <th>공급사</th>
+                                <!-- 운송장정보에 따라서 자체공급, 우체국 이란 값이 나오도록 함 -->
+                                <th>상품명/옵션</th>
+                                <th>수량</th>
+                                <th>상품구매금액</th>
+                                <th>총 실결제금액</th>
+                                <th>결제수단</th>
                                 <th>메모</th>
                             </tr>
                             </thead>
                             <tbody>
-                                <%-- 동적 data 들어오는 부분--%>
+                            <%-- 동적 data 들어오는 부분--%>
                             </tbody>
                         </table>
                     </div>
@@ -86,10 +103,8 @@
     </div>
     <!-- admin_container_div 끝 -->
 </div>
-<script src="/javascript/module/check_box_module.js"></script>
-<script src="/javascript/module/admin_order_ajax.js"></script>
-<script src="/javascript/admin_order_before_management.js"></script>
 <script src="/javascript/module/admin_due.js"></script>
-
+<script src="/javascript/module/check_box_module.js"></script>
+<script src="/javascript/admin_order_before_management.js"></script>
 </body>
 </html>
