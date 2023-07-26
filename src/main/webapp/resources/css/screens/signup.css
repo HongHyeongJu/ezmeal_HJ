@@ -1,3 +1,8 @@
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+body {
+    font-family: 'NanumSquare', sans-serif;
+}
+
 *,
 :after,
 :before {
@@ -27,9 +32,10 @@ textarea {
     color: #333;
 }
 
-/* html, button, input, select, textarea {
-    font-family: "Noto Sans", "malgun gothic", AppleGothic, dotum, sans-serif;
-} */
+/** {*/
+/*    !*font-family: -apple-system;*!*/
+/*    font-family: 'Nanum Gothic', sans-serif;*/
+/*}*/
 
 button,
 input[type=button],
@@ -283,13 +289,14 @@ input[type=radio] {
     padding: 0;
 }
 
-.required-input {
+.bottom-main input.required-input {
     /* overflow: hidden; */
     /* position: absolute;
     clip: rect(0px, 0px, 0px, 0px);
     clip-path: inset(50%);
     width: 1px;
     height: 1px; */
+    display: block;
 }
 
 .requiredTerms {
