@@ -18,7 +18,7 @@ section {
 }
 .signupSuccess-container {
     width: 1050px;
-    margin: 0px auto;
+    margin: 100px auto;
     padding: 50px 0px;
     text-align: center;
     background-color: rgb(251 255 253);
@@ -28,7 +28,7 @@ section {
 .signupSuccess {
     margin-bottom: 30px;
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 900;
     display: block;
     margin-block-start: 1em;
     margin-block-end: 1em;
