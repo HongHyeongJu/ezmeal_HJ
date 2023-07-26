@@ -33,4 +33,22 @@ public class AdminDeliveryController {
         System.out.println("123123213" + adminDeliveryService.getPrepareDeliveryInfo(periodData));
         return adminDeliveryService.getPrepareDeliveryInfo(periodData);
     }
+
+    // 배송 대기 관리
+    @GetMapping("/wait")
+    public String waitDelivery(){
+        return "admin_delivery_wait";
+    }
+
+    // 배송 중 관리
+    @GetMapping("/ship")
+    public String shipDelivery(){
+        return "admin_delivery_ship";
+    }
+
+    // 배송 완료 조회
+    @GetMapping("/complete")
+    public String completeDelivery(){
+    return "admin_delivery_complete";
+    }
 }

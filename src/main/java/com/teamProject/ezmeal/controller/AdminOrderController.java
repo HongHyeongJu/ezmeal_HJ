@@ -38,4 +38,9 @@ public class AdminOrderController {
         return "success";
     }
 
+    // 전체 주문 조회
+    @GetMapping("/list")
+    public String getAdminOrderList(){
+        return "admin_order_list";
+    }
 }

@@ -64,7 +64,10 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
                             <td rowspan="${count}">${in_dtm_format}</td> <!-- -->
                             <td rowspan="${count}">${ord_id}</td> <!-- -->
                             <td rowspan="${count}">${name}</td> <!--주문자-->
-                            <td rowspan="${count}"><button>묶음선택</button></td> <!-- 묶음선택 btn : 묶음 선택 된 상품에 한해서 배송 -->
+                            <!-- 묶음선택 btn : 묶음 선택 된 상품에 한해서 배송 : 배송 보류 처리가 가능
+                            TODO. 묶음선택 check 부분 & 배송 보류의 경우 - deliveryMaster 와 deliveryHistory insert 작업이 필요할 듯하다. - 3차 개발때 진행
+                            -->
+                            <td rowspan="${count}"><button>묶음선택</button></td>
                             <td><input type="checkbox"/></td> <!-- 묶음선택할 check box-->
                             <td rowspan="${count}">  <!--운송장번호-->
                                 <select name="admin-order__select-type">
