@@ -12,30 +12,33 @@
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
+
 <jsp:include page="header.jsp"/>
 
+<div class="slide_container">
 <!--start : img slide-->
-<div class="image-slideshow">
-    <div class="image fade">
-        <img
-                src="/img/main/slideimg_1.jpg"
-                style="width: 100%; height: 500px"
-                alt="7월신메뉴"
-        />
-    </div>
-    <div class="image fade">
-        <img
-                src="/img/main/slideimg_2.jpg"
-                style="width: 100%; height: 500px"
-                alt="구독신청"
-        />
-    </div>
-    <div class="image fade">
-        <img
-                src="/img/main/slideimg_3.jpg"
-                style="width: 100%; height: 500px"
-                alt="콘텐츠"
-        />
+    <div class="image-slideshow">
+        <div class="image fade">
+            <img
+                    src="/img/main/slideimg_1.jpg"
+                    style="width: 100%; height: auto"
+                    alt="7월신메뉴"
+            />
+        </div>
+        <div class="image fade">
+            <img
+                    src="/img/main/slideimg_2.jpg"
+                    style="width: 100%; height: auto"
+                    alt="구독신청"
+            />
+        </div>
+        <div class="image fade">
+            <img
+                    src="/img/main/slideimg_3.jpg"
+                    style="width: 100%; height: auto"
+                    alt="콘텐츠"
+            />
+        </div>
     </div>
 </div>
 <script src="/javascript/main1.js"></script>

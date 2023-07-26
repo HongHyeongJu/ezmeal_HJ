@@ -1,9 +1,10 @@
 /*
  1. 모달 버튼(오픈, 클로즈)
  2.*/
-* {
+.overlay-left, .overlay-right {  /*헤더 검색창에 영향 줘서  class로 한정함. 영향범위는 연두div*/
     box-sizing: border-box;
 }
+
 body {
     font-family: "Montserrat", sans-serif;
     margin: 0;

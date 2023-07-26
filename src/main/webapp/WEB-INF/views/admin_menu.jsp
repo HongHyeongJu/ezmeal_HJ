@@ -17,103 +17,106 @@
     <div class="menu_container_div">
         <ul id="menu_list">
 
-            <a href="홈페이지 주소">
+            <a href="/admin">
                 <li class="main_li">
                     <i class="fas fa-home"></i>&nbsp;&nbsp;&nbsp;홈
                 </li>
             </a>
 
             <li class="order main_li" id="order"><i class="fas fa-shopping-cart"></i>&nbsp;&nbsp;주문</li>
-            <a href="홈페이지 주소">
+            <a href="/admin/order/dashboard">
                 <li class="hidden order_li sub_li">주문 대시보드</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="/admin/order/list">
                 <li class="hidden order_li sub_li">전체 주문 조회</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="/admin/order/before-management">
+                <li class="hidden order_li sub_li">주문 발주 관리</li>
+            </a>
+            <a href="/admin/delivery/prepare">
                 <li class="hidden order_li sub_li">배송 준비중 관리</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="/admin/delivery/wait">
                 <li class="hidden order_li sub_li">배송 대기 관리</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="/admin/delivery/ship">
                 <li class="hidden order_li sub_li">배송 중 관리</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="/admin/delivery/complete">
                 <li class="hidden order_li sub_li">배송 완료 조회</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="홈페이지_주소">
                 <li class="hidden order_li sub_li">취소</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="홈페이지_주소">
                 <li class="hidden order_li sub_li">반품</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="홈페이지_주소">
                 <li class="hidden order_li sub_li">환불</li>
             </a>
 
 
             <li class="prod main_li" id="prod"><i class="fas fa-boxes"></i>&nbsp;&nbsp;상품</li>
-            <a href="홈페이지 주소">
+            <a href="/admin/prod">
                 <li class="hidden prod_li sub_li">상품 대시보드</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="/admin/prod/list">
                 <li class="hidden prod_li sub_li">상품 목록</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="/admin/prod/write">
                 <li class="hidden prod_li sub_li">상품 등록</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="/admin/prod/display">
                 <li class="hidden prod_li sub_li">상품 진열</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="/admin/prod/option">
                 <li class="hidden prod_li sub_li">상품 옵션 관리</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="/admin/prod/inven">
                 <li class="hidden prod_li sub_li">재고 관리</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="/admin/prod/dccd">
                 <li class="hidden prod_li sub_li">상품 할인코드 관리</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="홈페이지_주소">
                 <li class="hidden prod_li sub_li">거래처 관리</li>
             </a>
 
             <li class="member main_li" id="member"><i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;고객</li>
-            <a href="홈페이지 주소">
+            <a href="홈페이지_주소">
                 <li class="hidden member_li sub_li">회원정보 조회</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="홈페이지_주소">
                 <li class="hidden member_li sub_li">회원 등급별 관리</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="홈페이지_주소">
                 <li class="hidden member_li sub_li">탈퇴 관리</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="홈페이지_주소">
                 <li class="hidden member_li sub_li">휴면 회원 관리</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="홈페이지_주소">
                 <li class="hidden member_li sub_li">접속 관리</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="홈페이지_주소">
                 <li class="hidden member_li sub_li">적립금 관리</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="홈페이지_주소">
                 <li class="hidden member_li sub_li">쿠폰 관리</li>
             </a>
 
 
             <li class="board main_li" id="board"><i class="fas fa-clipboard"></i>&nbsp;&nbsp;&nbsp;&nbsp;게시판</li>
-            <a href="홈페이지 주소">
+            <a href="홈페이지_주소">
                 <li class="hidden board_li sub_li">게시판 대시보드</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="홈페이지_주소">
                 <li class="hidden board_li sub_li">공지게시판 관리</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="홈페이지_주소">
                 <li class="hidden board_li sub_li">상품후기게시판 관리</li>
             </a>
-            <a href="홈페이지 주소">
+            <a href="홈페이지_주소">
                 <li class="hidden board_li sub_li">1:1문의게시판 관리</li>
             </a>
 

@@ -130,11 +130,22 @@ public class ProductDaoTest {
     }
 
 
+
+    /* 카테고리로  최저가로 검색하기 테스트 */
+    @Test
+    public void testselectCateCd2() throws SQLException {
+        String cateCd = "01";
+        List list = productDao.selectProductListByCateCdMiniLowprc(cateCd);
+        for(int i=0; i <list.size() ; i++ ){
+            System.out.println(list.get(i).toString());
+        }
+    }
+
     /* 카테고리로  일부 컬럼만 받아도 괜찮을까? 검색하기 테스트 */
     @Test
     public void testselectCateCdMini() throws SQLException {
-        String cateCd = "01%";
-        List list = productDao.selectProductListByCateCdMini(cateCd);
+        String cateCd = "02";
+        List list = productDao.selectProductListByCateCdMiniLowprc(cateCd);
         for(int i=0; i <list.size() ; i++ ){
             System.out.println(list.get(i).toString());
         }
