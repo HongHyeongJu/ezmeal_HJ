@@ -12,7 +12,9 @@ import java.time.LocalDateTime;
 public class DeliveryMasterDto {
     private Long dlvar_id; //// 배송번호 (Primary Key)
     private Long ord_id; //// 주문번호
+    private Long ord_prod_dtl_id; // 주문상세 번호
     private String invc_id; // 송장번호 | 일반적으로 15자리
+    private String bndl_yn; // 묶음 y,n
     private String rcpr; //// 수령자, 고객님/회사명 v
     private String rcpr_phone; //// 수령인전화번호 v
     private String typ; //// 배송유형, 반품/ 주문-묶음/예약?개별예약
@@ -35,8 +37,9 @@ public class DeliveryMasterDto {
     private LocalDateTime up_dtm; // 최종수정일시
     private String up_id; // 최종수정(자)식별번호
 
-    public DeliveryMasterDto(Long ord_id, String rcpr, String rcpr_phone, String typ, String start_pnt, String desti, String desti_dtl, String req_mtr, String in_mtd, String stus, String msg, String rcv_sns_yn, String box_size) {
+    public DeliveryMasterDto(Long ord_id,Long ord_prod_dtl_id, String rcpr, String rcpr_phone, String typ, String start_pnt, String desti, String desti_dtl, String req_mtr, String in_mtd, String stus, String msg, String rcv_sns_yn, String box_size) {
         this.ord_id = ord_id; // 주문번호
+        this.ord_prod_dtl_id = ord_prod_dtl_id; // 주문상세번호
         this.rcpr = rcpr; // 수령자
         this.rcpr_phone = rcpr_phone; // 수령자 전화번호
         this.typ = typ; // 배송유형 - 반품, 주문, 묶음, 예약 등등

@@ -32,7 +32,9 @@ public class OrderDetailController {
     @GetMapping("/detail/{orderId}")
     public String getOrderDetail(@PathVariable Long orderId, Model model){
         List<OrderDetailDto> orderDetailProductList = orderDetailService.getOrderDetailProductList(orderId); // 상세상품 list
+        System.out.println("orderDetailProductList = " + orderDetailProductList);
         Map<String, Object> outsideOrderDetailInfo = orderDetailService.getOutsideOrderDetailInfo(orderId); // 상품 외 상세 정보
+        System.out.println("outsideOrderDetailInfo = " + outsideOrderDetailInfo);
         System.out.println("outsideOrderDetailInfo = " + outsideOrderDetailInfo);
         model.addAttribute("orderDetailProductList", orderDetailProductList);
         model.addAttribute("outsideOrderDetailInfo", outsideOrderDetailInfo);

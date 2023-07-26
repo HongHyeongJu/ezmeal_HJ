@@ -43,8 +43,8 @@ public class OrderPaymentAddressService {
         return orderStatusHistoryDao.insertOrderStatusHistory(orderId);
     }
 
-    public int registerDeliveryMaster(DeliveryMasterDto deliveryMasterDto) {
-        return deliveryMasterDao.insertDeliveryMaster(deliveryMasterDto);
+    public int registerDeliveryMaster(List<DeliveryMasterDto> deliveryMasterDtoList) {
+        return deliveryMasterDao.insertDeliveryMaster(deliveryMasterDtoList);
     }
 
 }

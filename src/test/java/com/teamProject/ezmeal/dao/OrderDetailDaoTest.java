@@ -70,4 +70,10 @@ public class OrderDetailDaoTest {
         Map<String, Object> stringObjectMap = orderDetailDao.selectOutsideOrderDetailInfo(202307144199L);
         System.out.println("stringObjectMap = " + stringObjectMap);
     }
+
+    @Test
+    public void selectOrderDetailPk () {
+        List<Long> longs = orderDetailDao.selectOrderDetailPk(202307248158L);
+        System.out.println("longs = " + longs);
+    }
 }

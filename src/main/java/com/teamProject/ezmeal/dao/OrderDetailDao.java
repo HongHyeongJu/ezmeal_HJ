@@ -28,4 +28,9 @@ public class OrderDetailDao {
     public Map<String, Object> selectOutsideOrderDetailInfo(Long ordId) {
         return session.selectOne(namespace + "select_outside_order_detail_info", ordId);
     }
+
+    // 주문 번호에 따른 주문 상세 pk 받아오기
+    public List<Long> selectOrderDetailPk(Long ordId) {
+        return session.selectList(namespace + "select_order_detail_pk", ordId);
+    }
 }
