@@ -63,6 +63,7 @@
         ORDER BY sale_prc
     </select>
 
+
     <!--높은 가격 순-->
     <select id="select_product_list_cate_cd_mini_highprc" parameterType="String" resultType="ProductDto">
         SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus
@@ -189,8 +190,35 @@
     <select id="count_cate_cd" resultType="Map">
         SELECT cate_cd, count(*)
         FROM tb_product
-        WHERE  AND sale_yn='y' AND dp_yn='y' AND del_yn='n'
+        WHERE sale_yn='y' AND dp_yn='y' AND del_yn='n'
         GROUP BY cate_cd
+    </select>
+
+
+    <!-- [신상품 (등록일이 1달 이내인 것 ) ] -->
+    <select id="fst_reg_dt_in_month" resultType="ProductDto">
+        SELECT *
+        FROM tb_product
+        WHERE STR_TO_DATE(fst_reg_dt, '%Y-%m-%d') >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+                AND sale_yn = 'y' AND dp_yn = 'y' AND del_yn = 'n'
+    </select>
+
+    <!-- [베스트 (리뷰수 n개 이상) ] 지금은 3개 이상-->
+    <select id="best_prod_review_count_higher" resultType="ProductDto">
+        SELECT *
+        FROM tb_product as prod
+        WHERE sale_yn='y' AND dp_yn='y' AND del_yn='n'
+          AND prod.prod_cd IN (SELECT revw.prod_cd
+                               FROM tb_product_review as revw
+                               GROUP BY revw.prod_cd
+                               HAVING count(revw.prod_cd) >= 3)
+    </select>
+
+    <!-- [특가혜택 (카테고리가 06으로 시작) ] -->
+    <select id="prodset_big_dc" resultType="ProductDto">
+    SELECT *
+    FROM tb_product
+    WHERE cate_cd LIKE '06%' AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
     </select>
 
 

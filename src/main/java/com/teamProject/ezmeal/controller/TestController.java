@@ -34,36 +34,36 @@ public class TestController {
         return ResponseEntity.ok("위시리스트에 추가되었습니다.");
     }
 
-    @GetMapping("/admin/prod/write")
-    public String adminProdWrite(Model model) throws SQLException {
-
-        /*관리자용 상품 페이지(읽기)에 필요한 것 모두 받아오기*/
-        HashMap map = productService.getListForProductRegist();
-
-        /*모델에 담기*/
-        model.addAttribute("dcList", map.get("dcList"));
-        model.addAttribute("cateList", map.get("cateList"));
-        model.addAttribute("custList", map.get("custList"));
-        model.addAttribute("stusList", map.get("stusList"));
-        model.addAttribute("mode","WRITE");
-        return "admin_basic";
-    }
-    @GetMapping("/admin/prod/read")
-    public String adminProdRead(Model model, Long prod_cd) throws SQLException {
-        /*관리자용 상품 페이지(읽기)에 필요한 것 모두 받아오기*/
-        HashMap map = productService.getOneProductByProdCdForMng(prod_cd);
-
-        /*모델에 담기*/
-        model.addAttribute("product", map.get("product"));
-        model.addAttribute("optList", map.get("optList"));
-        model.addAttribute("imgList", map.get("imgList"));
-        model.addAttribute("dcList", map.get("dcList"));
-        model.addAttribute("cateList", map.get("cateList"));
-        model.addAttribute("custList", map.get("custList"));
-        model.addAttribute("stusList", map.get("stusList"));
-        model.addAttribute("mode","READ");
-        return "admin_basic";
-    }
+//    @GetMapping("/admin/prod/write")
+//    public String adminProdWrite(Model model) throws SQLException {
+//
+//        /*관리자용 상품 페이지(읽기)에 필요한 것 모두 받아오기*/
+//        HashMap map = productService.getListForProductRegist();
+//
+//        /*모델에 담기*/
+//        model.addAttribute("dcList", map.get("dcList"));
+//        model.addAttribute("cateList", map.get("cateList"));
+//        model.addAttribute("custList", map.get("custList"));
+//        model.addAttribute("stusList", map.get("stusList"));
+//        model.addAttribute("mode","WRITE");
+//        return "admin_basic";
+//    }
+//    @GetMapping("/admin/prod/read")
+//    public String adminProdRead(Model model, Long prod_cd) throws SQLException {
+//        /*관리자용 상품 페이지(읽기)에 필요한 것 모두 받아오기*/
+//        HashMap map = productService.getOneProductByProdCdForMng(prod_cd);
+//
+//        /*모델에 담기*/
+//        model.addAttribute("product", map.get("product"));
+//        model.addAttribute("optList", map.get("optList"));
+//        model.addAttribute("imgList", map.get("imgList"));
+//        model.addAttribute("dcList", map.get("dcList"));
+//        model.addAttribute("cateList", map.get("cateList"));
+//        model.addAttribute("custList", map.get("custList"));
+//        model.addAttribute("stusList", map.get("stusList"));
+//        model.addAttribute("mode","READ");
+//        return "admin_basic";
+//    }
 
     @GetMapping("/indextest")
     public String goIndexTest(){
@@ -75,10 +75,10 @@ public class TestController {
         return "slideMain";
     }
 
-    @GetMapping("/admin/regist")
-    public String goRegistAdmin(){
-        return "admin_basic";
-    }
+//    @GetMapping("/admin/regist")
+//    public String goRegistAdmin(){
+//        return "admin_basic";
+//    }
 
 
 

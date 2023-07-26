@@ -22,6 +22,7 @@
         WHERE prod_cd = #{prod_cd} and typ=#{typ} AND use_yn = 'y' AND del_yn = 'n' ;
     </select>
 
+
     <!-- 카테고리로 검색한 상품리스트의 대표이미지 리스트 -->
     <select id="select_cate_cd_img_list" parameterType="String" resultType="ProductImgDto">
         SELECT *
@@ -30,6 +31,16 @@
           AND del_yn = 'n' AND prod_cd IN (SELECT prod_cd
                                            FROM tb_product
                                            WHERE cate_cd LIKE concat(#{cate_cd}, '%')  AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2));
+    </select>
+
+
+
+    <!-- 모든 상품의 대표 img 리스트 -> 나중에 서비스에서 (상품코드, 이미지객체)로 변환하면 어디든 쓸수있어 )-->
+    <select id="select_all_img_list_typ_is_represent"  resultType="ProductImgDto">
+        SELECT *
+        FROM tb_product_img
+        WHERE typ = '대표'  AND use_yn = 'y'
+          AND del_yn = 'n'
     </select>
 
 

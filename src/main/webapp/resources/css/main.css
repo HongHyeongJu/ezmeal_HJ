@@ -1,8 +1,18 @@
 
+/*---- 슬라이드를 감싸는 div -----*/
+.slide_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 /*START : IMG SLIDE*/
 .image-slideshow {
+  width: 1440px;
   position: relative;
   display: block;
+  overflow: hidden;
 }
 
 .fade {

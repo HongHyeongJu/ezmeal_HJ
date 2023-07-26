@@ -55,8 +55,16 @@ input, textarea, select {
     caret-color: auto;
 }
 
+tr, th, td {
+    caret-color: transparent;
+}
+
 .page_info_div h3, p{
     margin-left: 15px;
+}
+
+.readonly_input {
+    background-color: #f2f2f2 ;
 }
 
 /*-------- 자동 계산부분 --------*/

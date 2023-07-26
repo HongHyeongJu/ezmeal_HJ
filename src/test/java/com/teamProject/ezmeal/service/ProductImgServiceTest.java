@@ -23,7 +23,7 @@ public class ProductImgServiceTest {
     /*상품코드 관련 이미지 전부 가져오기*/
     @Test
     public void test() throws SQLException {
-        List<ProductImgDto> imgList = productImgService.selectProdCdImgAll(6L);
+        List<ProductImgDto> imgList = productImgService.getAllImgFromProdCd(6L);
         imgList.stream().forEach(ProductImgDto-> System.out.println(ProductImgDto.getProd_cd()+", "+ProductImgDto.getTyp()));
 //        assertTrue(imgList!=null);
     }
@@ -32,7 +32,7 @@ public class ProductImgServiceTest {
 
     @Test
     public void test4() throws SQLException {
-        List<ProductImgDto> imgList = productImgService.selectProdCdImgAll(6L);
+        List<ProductImgDto> imgList = productImgService.getAllImgFromProdCd(6L);
         imgList.stream().forEach(ProductImgDto-> System.out.println(ProductImgDto.getProd_cd()+", "+ProductImgDto.getTyp()));
         assertTrue(imgList!=null);
         System.out.println(imgList.size());
@@ -41,10 +41,10 @@ public class ProductImgServiceTest {
     /**/
     @Test
     public void test2() throws SQLException {
-        List<ProductImgDto> imgList = productImgService.selectProdCdImgAll(6L);
+        List<ProductImgDto> imgList = productImgService.getAllImgFromProdCd(6L);
         imgList.stream().forEach(ProductImgDto-> System.out.println(ProductImgDto.getProd_cd()+", "+ProductImgDto.getTyp()));
         System.out.println("--------------------");
-        Map<String,String> typeAndUrlMap = productImgService.selectProdCdImgAlltoMap(6L);
+        Map<String,String> typeAndUrlMap = productImgService.getAllImgFromProdCdConvertToMap(6L);
         typeAndUrlMap.forEach((k,v)-> System.out.println("k: "+k+", v: "+v));
 
     }
