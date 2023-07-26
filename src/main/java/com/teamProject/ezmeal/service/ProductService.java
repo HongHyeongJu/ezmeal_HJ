@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -144,6 +145,57 @@ public class ProductService {
 
         return prodDetailMap;
     }
+
+
+    /*메인페이지에 보여줄 상품 5개 들어있는 List * 4개 보내기   직장인, 헬스, 먹잘알, 자취생*/
+    public HashMap getMainDisplayProductList() throws SQLException {
+        List<ProductDto> healthList = new ArrayList<>();
+        List<ProductDto> emplList = new ArrayList<>();
+        List<ProductDto> homeList = new ArrayList<>();
+        List<ProductDto> eatList = new ArrayList<>();
+
+        healthList.add(productDao.selectProductByProdCd(5L));
+        healthList.add(productDao.selectProductByProdCd(6L));
+        healthList.add(productDao.selectProductByProdCd(9L));
+        healthList.add(productDao.selectProductByProdCd(20L));
+        healthList.add(productDao.selectProductByProdCd(27L));
+
+        emplList.add(productDao.selectProductByProdCd(25L));
+        emplList.add(productDao.selectProductByProdCd(5L));
+        emplList.add(productDao.selectProductByProdCd(8L));
+        emplList.add(productDao.selectProductByProdCd(9L));
+        emplList.add(productDao.selectProductByProdCd(20L));
+
+        eatList.add(productDao.selectProductByProdCd(30L));
+        eatList.add(productDao.selectProductByProdCd(20L));
+        eatList.add(productDao.selectProductByProdCd(1L));
+        eatList.add(productDao.selectProductByProdCd(8L));
+        eatList.add(productDao.selectProductByProdCd(9L));
+
+        homeList.add(productDao.selectProductByProdCd(16L));
+        homeList.add(productDao.selectProductByProdCd(17L));
+        homeList.add(productDao.selectProductByProdCd(18L));
+        homeList.add(productDao.selectProductByProdCd(40L));
+        homeList.add(productDao.selectProductByProdCd(41L));
+
+
+        HashMap map = new HashMap();
+        map.put("healthList", healthList);
+        map.put("emplList", emplList);
+        map.put("homeList", homeList);
+        map.put("eatList", eatList);
+
+        return map;
+    }
+
+
+
+
+
+
+
+
+    /*-----------------------------------------------  관리자  -----------------------------------------*/
 
 
     /*관리자 상품 관리 페이지(읽기, 수정용)*/
@@ -330,21 +382,22 @@ public class ProductService {
             System.out.println("서비스 headerTyp: "+headerTyp);
             System.out.println("서비스 prodList.size(): "+ prodList);
 
+
+            HashMap prepareListMap = getAllTypImgOptRivews();
+
             /*모든상품 '대표'이미지 리스트*/
-            Map<Long,ProductImgDto> prodImgMap = productImgService.getAllRecentTypImgListConvertToMap();
+            Map<Long,ProductImgDto> prodImgMap = (Map<Long,ProductImgDto>)prepareListMap.get("prodImgMap");
             /*모든상품의 옵션 리스트*/
-            Map<Long,List<ProductOptionDto>> prodOptMap =  prodCdListChangeToOptionMap("0");
-            /*할인율 강조를 위한 할인코드 리스트 */
-//            List<ProductDiscountDto> discountList = productDiscountDao.selectDiscountListByCateCd();
+            Map<Long,List<ProductOptionDto>> prodOptMap = (Map<Long,List<ProductOptionDto>>)prepareListMap.get("prodOptMap");
             /*모든상품  평점, 리뷰 숫자*/
-            Map<Long,Double> reviewAvgMap = productReviewDao.selectReviewAvgAllProduct();
-            Map<Long,Integer> reviewCntMap = productReviewDao.selectReviewCntAllProduct();
+            Map<Long,Double> reviewAvgMap = (Map<Long,Double>)prepareListMap.get("reviewAvgMap");
+            Map<Long,Integer> reviewCntMap = (Map<Long,Integer>)prepareListMap.get("reviewCntMap");
+
 
             HashMap ProdListMap = new HashMap<>();
             ProdListMap.put("prodList",prodList);
             ProdListMap.put("prodImgMap",prodImgMap);
             ProdListMap.put("prodOptMap",prodOptMap);
-//            ProdListMap.put("discountList",discountList);
             ProdListMap.put("reviewAvgMap",reviewAvgMap);
             ProdListMap.put("reviewCntMap",reviewCntMap);
 
@@ -357,8 +410,23 @@ public class ProductService {
 
     }
 
+    public HashMap getAllTypImgOptRivews() throws SQLException {
+        HashMap prepareListMap = new HashMap<>();
+        /*모든상품 '대표'이미지 리스트*/
+        Map<Long,ProductImgDto> prodImgMap = productImgService.getAllRecentTypImgListConvertToMap();
+        /*모든상품의 옵션 리스트*/
+        Map<Long,List<ProductOptionDto>> prodOptMap =  prodCdListChangeToOptionMap("0");
+        /*모든상품  평점, 리뷰 숫자*/
+        Map<Long,Double> reviewAvgMap = productReviewDao.selectReviewAvgAllProduct();
+        Map<Long,Integer> reviewCntMap = productReviewDao.selectReviewCntAllProduct();
 
+        prepareListMap.put("prodImgMap",prodImgMap);
+        prepareListMap.put("prodOptMap",prodOptMap);
+        prepareListMap.put("reviewAvgMap",reviewAvgMap);
+        prepareListMap.put("reviewCntMap",reviewCntMap);
 
+        return prepareListMap;
+    }
 
 
     /*-----------관리자용-------------------*/

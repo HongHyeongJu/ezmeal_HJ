@@ -33,16 +33,16 @@
             <a href="/admin/order/before-management">
                 <li class="hidden order_li sub_li">주문 발주 관리</li>
             </a>
-            <a href="admin/delivery/prepare">
+            <a href="/admin/delivery/prepare">
                 <li class="hidden order_li sub_li">배송 준비중 관리</li>
             </a>
-            <a href="admin/delivery/wait">
+            <a href="/admin/delivery/wait">
                 <li class="hidden order_li sub_li">배송 대기 관리</li>
             </a>
-            <a href="admin/delivery/ship">
+            <a href="/admin/delivery/ship">
                 <li class="hidden order_li sub_li">배송 중 관리</li>
             </a>
-            <a href="admin/delivery/complete">
+            <a href="/admin/delivery/complete">
                 <li class="hidden order_li sub_li">배송 완료 조회</li>
             </a>
             <a href="홈페이지_주소">
