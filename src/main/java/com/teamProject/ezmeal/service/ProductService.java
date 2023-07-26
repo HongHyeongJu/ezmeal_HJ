@@ -28,6 +28,8 @@ public class ProductService {
     @Autowired
     ProductDiscountDao productDiscountDao;
     @Autowired
+    ProductImgService productImgService;
+    @Autowired
     ProductImgDao productImgDao;
     @Autowired
     ProductInventoryDao productInventoryDao;
@@ -78,21 +80,21 @@ public class ProductService {
             System.out.println("prodList.size(): "+ prodList);
 
             /*카테고리 상품 '대표'이미지 리스트*/
-            List<ProductImgDto> prodImgList = productImgDao.selectCateCdImgTyp(cate_cd);
+            Map<Long,ProductImgDto> prodImgMap = productImgService.cateCdImgListConvertToMap(cate_cd);
             /*카테고리 상품의 옵션 리스트*/
             Map<Long,List<ProductOptionDto>> prodOptMap =  prodCdListChangeToOptionMap(cate_cd);
             /*할인율 강조를 위한 할인코드 리스트 */
 //            List<ProductDiscountDto> discountList = productDiscountDao.selectDiscountListByCateCd();
             /*상품 평점, 리뷰 숫자*/
-            Map<Long,Double> reviewAngMap = productReviewDao.selectReviewAvgForProdList(cate_cd);
+            Map<Long,Double> reviewAvgMap = productReviewDao.selectReviewAvgForProdList(cate_cd);
             Map<Long,Integer> reviewCntMap = productReviewDao.selectReviewCntForProdList(cate_cd);
 
             HashMap ProdListMap = new HashMap<>();
             ProdListMap.put("prodList",prodList);
-            ProdListMap.put("prodImgList",prodImgList);
+            ProdListMap.put("prodImgMap",prodImgMap);
             ProdListMap.put("prodOptMap",prodOptMap);
 //            ProdListMap.put("discountList",discountList);
-            ProdListMap.put("reviewAngMap",reviewAngMap);
+            ProdListMap.put("reviewAvgMap",reviewAvgMap);
             ProdListMap.put("reviewCntMap",reviewCntMap);
 
             return ProdListMap;
@@ -303,8 +305,57 @@ public class ProductService {
         }
     }
 
+    /*헤더 판매 상품화면 (신상품,베스트,특가)을 위한 메서드  (이미지, 옵션, 리뷰 등 조건없이 다 가져옴)*/
+    public HashMap getProductSetForHeader (String headerTyp) throws SQLException {
 
+        try {
 
+            /*headerTyp에 따라 상품 리스트 받아오기*/
+            List<ProductDto> prodList;
+
+            if ("new".equals(headerTyp)) {
+                prodList = productDao.selectByNewProduct();
+                System.out.println("new");
+            } else if ("best".equals(headerTyp)) {
+                prodList = productDao.selectByBestProduct();
+                System.out.println("best");
+            } else if ("bigdc".equals(headerTyp)) {
+                prodList = productDao.selectByBigDcProduct();
+                System.out.println("bigdc");
+            } else {
+                prodList = productDao.selectByNewProduct();
+                System.out.println("else");
+            }
+
+            System.out.println("서비스 headerTyp: "+headerTyp);
+            System.out.println("서비스 prodList.size(): "+ prodList);
+
+            /*모든상품 '대표'이미지 리스트*/
+            Map<Long,ProductImgDto> prodImgMap = productImgService.getAllRecentTypImgListConvertToMap();
+            /*모든상품의 옵션 리스트*/
+            Map<Long,List<ProductOptionDto>> prodOptMap =  prodCdListChangeToOptionMap("0");
+            /*할인율 강조를 위한 할인코드 리스트 */
+//            List<ProductDiscountDto> discountList = productDiscountDao.selectDiscountListByCateCd();
+            /*모든상품  평점, 리뷰 숫자*/
+            Map<Long,Double> reviewAvgMap = productReviewDao.selectReviewAvgAllProduct();
+            Map<Long,Integer> reviewCntMap = productReviewDao.selectReviewCntAllProduct();
+
+            HashMap ProdListMap = new HashMap<>();
+            ProdListMap.put("prodList",prodList);
+            ProdListMap.put("prodImgMap",prodImgMap);
+            ProdListMap.put("prodOptMap",prodOptMap);
+//            ProdListMap.put("discountList",discountList);
+            ProdListMap.put("reviewAvgMap",reviewAvgMap);
+            ProdListMap.put("reviewCntMap",reviewCntMap);
+
+            return ProdListMap;
+
+        } catch (SQLException e) {
+            logger.error("Error occurred in getProductSetForHeader", e);
+            throw new RuntimeException("DB 조회 중 에러가 발생했습니다.", e);
+        }
+
+    }
 
 
 

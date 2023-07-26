@@ -87,7 +87,7 @@ document.querySelector('#productForm').addEventListener('submit', function(event
     const year = currentDate.getFullYear();
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');
     const day = String(currentDate.getDate()).padStart(2, '0');
-    const formattedDate = `${year}/${month}/${day}`;
+    const formattedDate = `${year}-${month}-${day}`;
 
     // HTML 폼 요소에 접근하여 메인 상품 값을 가져오기
     const productDto = {
@@ -129,7 +129,7 @@ document.querySelector('#productForm').addEventListener('submit', function(event
 
     // 서버에 POST 요청을 보냅니다.
     $.ajax({
-        url: '/product/regist/write',  // 실제 서버의 URL로 변경해야 합니다.
+        url: '/admin/prod/write',  // 실제 서버의 URL로 변경해야 합니다.
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({ productDto: productDto, productOptionDto: productOptionDto }),

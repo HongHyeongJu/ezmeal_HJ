@@ -17,22 +17,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
   <link rel="stylesheet" href="/css/screens/productcatelist.css?ver=2"/>
-
     <jsp:include page="header_specific_styles.jsp" />
-
+    <style>
+        .empty {
+            height: 0px !important;
+        }
+    </style>
 </head>
 <body>
 
-<!--헤더 내려오는 공백-->
 <jsp:include page="header.jsp"/>
-<div class="empty"></div>
-<ul class="지붕묶음" id="section1">
-  <input type="hidden" data-cate_cd="${cate_cd}">
-  <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=default" class="sort-link active" data-sort="default">추천순</a></li>
-  <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=new" class="sort-link" data-sort="new">신상품순</a></li>
-  <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=lowprc" class="sort-link" data-sort="lowprc">낮은가격순</a></li>
-  <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=highprc" class="sort-link" data-sort="higprc">높은가격순</a></li>
-</ul>
 
 <!--전달 받은 상품 리스트 하나만 꺼내기-->
 <c:forEach var="prod" items="${prodList}" varStatus="status">

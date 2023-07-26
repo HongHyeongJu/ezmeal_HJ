@@ -32,12 +32,12 @@
                 <table class="product_info_table">
                     <tr>
                         <th>상품코드</th>
-                        <td><input type="text" id="prod_cd" name="product.prod_cd" value="${product.getProd_cd()}" readonly></td>
+                        <td><input type="text" id="prod_cd" name="product.prod_cd" value="${product.getProd_cd()}" class="readonly_input" readonly></td>
                         <th>최초 등록자</th>
-                        <td><input type="text" id="mng" name="product.mng" value="${product.getMng()}" readonly></td>
+                        <td><input type="text" id="mng" name="product.mng" value="${product.getMng()}" class="readonly_input"  readonly></td>
                         <th>최초 등록일시</th>
                         <td>
-                            <input type="date" id="fst_reg_dt" name="product.fst_reg_dt" value="${product.getFst_reg_dt()}" readonly>
+                            <input type="date" id="fst_reg_dt" name="product.fst_reg_dt" value="${product.getFst_reg_dt()}" class="readonly_input"  readonly>
                             <input type="hidden" name="product.del_yn" value="${product.getDel_yn()}" >
                             <input type="hidden" id="optList_size_count" value="${optList.size()}" >
                         </td>

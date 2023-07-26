@@ -7,6 +7,7 @@ body {
 }
 * {
     font-family: 'NanumSquare', sans-serif;
+    caret-color: transparent;
 }
 /** {*/
 /*    font-family: 'Black Han Sans', sans-serif;*/
@@ -14,18 +15,19 @@ body {
 /*}*/
 
 .empty {
-    height: 200px;
+    height: 10px;
 }
 
 
 
 .지붕묶음 {
-    width: 980px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     padding: 0;
-    margin-right: auto;
-    margin-left: auto;
+    margin-left: 77%;
+    margin-right: 27%;
+    height: 20px;
+
 }
 
 
@@ -59,14 +61,14 @@ body {
     margin-bottom: 0;
     margin-top: 0;
     list-style-type: none;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .prod_outer{
     /* background-color:blueviolet; */
-    margin-left: 5px;
-    margin-right: 5px;
-    width: 220px;
-    height: 440px;
+    width: 245px;
+    height: 520px;
     border: 0px #000;
 }
 
@@ -82,8 +84,8 @@ body {
 
 /*상품 이미지*/
 .prod_top img {
-    width: 200px;
-    height: 250px;
+    width: 250px;
+    height: 320px;
     object-fit: contain;
     margin: 2%;
     border-radius: 0;
@@ -113,16 +115,16 @@ body {
 
 /*이미지 아래부분 전체*/
 .prod_bottom{
-    width: 220px;
+    width: 245px;
     height: 190px;   /* 옵션있어서*/
     /* background-color:gainsboro; */
-    border: 0px #000;
+    border: 2px solid #0000;
 }
 
 .review_set {
     text-align: right;
     margin-top : 4px;
-    margin-right: 14px;
+    margin-right: 5px;
     margin-bottom : 5px;
 }
 
@@ -154,7 +156,7 @@ body {
 .prod_title  {
     padding: 0%;
     display: block;
-    margin-top: 20px;
+    margin-top: 18px;
     margin-bottom: 10px;
     margin-left: 0px;
     margin-right: 5px;
@@ -163,7 +165,7 @@ body {
 
 .prod_name {
     font-size: 16px;
-    margin-left: 5px;
+    margin-left: 12px;
     word-break: break-word;
 }
 
@@ -171,7 +173,7 @@ body {
     color: rgb(0, 199, 40);
     display: inline-block;
     font-weight: bold;
-    padding-left:6px;
+    padding-left:12px;
     margin-bottom: 1%;
     margin-right: -8px;
 
@@ -243,7 +245,7 @@ span.sale_prc {
 .button_wrapper {
     display: flex;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 0px;
 }
 
 .qty {
@@ -257,7 +259,7 @@ span.sale_prc {
 }
 
 .min_btn {
-    margin-left: 10px;
+    margin-left: 15px;
 }
 
 .min_btn,
@@ -289,7 +291,7 @@ span.sale_prc {
 .wishlist_btn {
     width : 35px;
     height : 35px;
-    margin-left: 25px;
+    margin-left: 50px;
     margin-right: 5px;
     margin-bottom: 1px;
     border: 1px solid gray;
@@ -348,4 +350,6 @@ a:focus {
 .submit_btn.hover .fa-shopping-cart {
     color: #0f5739 /* 호버 상태 색상 */
 }
+
+
 

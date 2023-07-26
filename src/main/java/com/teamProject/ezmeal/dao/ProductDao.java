@@ -138,7 +138,20 @@ public class ProductDao {
     }
 
 
+    /* 신상품 */
+    public List<ProductDto> selectByNewProduct() throws SQLException {
+        return session.selectList(namespace + "fst_reg_dt_in_month");
+    }
 
+    /* 신상품 */
+    public List<ProductDto> selectByBestProduct() throws SQLException {
+        return session.selectList(namespace + "best_prod_review_count_higher");
+    }
+
+    /* 신상품 */
+    public List<ProductDto> selectByBigDcProduct() throws SQLException {
+        return session.selectList(namespace + "prodset_big_dc");
+    }
 
 
 

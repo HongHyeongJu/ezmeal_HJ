@@ -39,7 +39,10 @@ public class ProductImgDao {
         return session.selectList(namespace+"select_cate_cd_img_list", cate_cd);
     }
 
-
+    public List<ProductImgDto> selectAllImgTypRepresent() throws SQLException {
+        return session.selectList(namespace+"select_all_img_list_typ_is_represent");
+    }
 
 
 }
+
