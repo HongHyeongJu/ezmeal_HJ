@@ -88,6 +88,9 @@
         <nav id="user_menu_nav">
           <ul class="user_menu_drop">
             <li class="user_menu_drop_list"><a href="<c:url value='${loginOutLink}'/>">${loginOut}</a></li>
+            <c:if test="${empty memberId}">
+              <li class="user_menu_drop_list"><a href="/member/signup">회원가입</a></li>
+            </c:if>
             <li class="user_menu_drop_list"><a href="/mypage/modify">마이페이지</a></li>
           </ul>
         </nav>
