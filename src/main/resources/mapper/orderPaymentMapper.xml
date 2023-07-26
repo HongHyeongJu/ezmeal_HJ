@@ -43,10 +43,10 @@
     <select id="select_order_payment_period" resultType="OrderPaymentJoinDto">
         SELECT om.ord_id,
                om.prod_smry,
-               osc.name                                                                   as stus,
-               DATE_FORMAT(STR_TO_DATE(om.in_dtm, '%Y-%m-%d %H:%i:%s'), '%Y-%m-%d %H:%i') AS date_time,
+               osc.name                                 as stus,
+               DATE_FORMAT(om.in_dtm, '%Y-%m-%d %H:%i') as date_time,
                pm.pay_mtd,
-               format(pm.pay_prc, 0)                                                      as pay_prc_format
+               format(pm.pay_prc, 0)                    as pay_prc_format
         FROM tb_order_payment op,
              tb_order_master om,
              tb_payment_master pm,

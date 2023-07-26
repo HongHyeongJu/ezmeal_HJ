@@ -38,7 +38,8 @@
   <li><a href="/address">배송지</a></li>
   <li><a href="/order">주문서</a></li>
   <li><a href="/orderPayment">주문 내역</a></li>
-
+  <li><a href="/admin/order/before-management">관리자 - 발주</a></li>
+  <li><a href="/admin/delivery/prepare">관리자 - 배송준비중</a></li>
 
 
 

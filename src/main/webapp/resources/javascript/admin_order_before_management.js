@@ -2,7 +2,9 @@
 const dynamicTable = document.querySelector('.admin-order__content-table > tbody');
 const selectAllBtn = document.querySelector('.admin-order__content-table thead input[type="checkbox"]'); // check box 전체 선택
 let selectBtns;
-const checkPayment = document.querySelector('.admin-order__check-order > button'); // 발주 확인 btn
+const checkPayment = document.querySelector('.admin-order__check-order > button'); // 발주 확인 btn   # 개별
+const periodBtnAll = document.querySelectorAll(".admin__period_btn"); // 조회 기간 버튼
+// check_box_module의 변수로 SELECT_SEQ_LIST, dynamicNum 가 존재
 
 /* Rendering 함수 */
 const renderHTMLFrom = function (adminBeforeManageInfoList) {
@@ -36,69 +38,38 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
     // 동적 생성 요소에 관한 /* DOCUMENT 변수명 */ 및 /* EVENT 함수 */ TODO 따로 함수로 빼는 것이 조금 더 코드를 보기가 깔끔할 듯 하다.
     selectBtns = document.querySelectorAll('.admin-order__content-table tbody input[type="checkbox"]'); // check box 선택
     selectBtns.forEach((selectBtn) => {
-        selectBtn.addEventListener("click", selectOrderCheckBox);
+        selectBtn.addEventListener("click",
+                event => selectProduct(event, 'tr','ord_id')
+        );
     }); // 상품 선택 이벤트
 }
 
 /* 사용 함수 */
 
-// 처음 html loading 후, 바로 수행되는 함수
-function getOrderPaymentData(periodString) {
-    console.log(periodString);
-    fetch('/admin/order/dynamic-before-management', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(periodString)
-    })
-        .then(response => response.json())
-        .then(data => {
-            renderHTMLFrom(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
-
 // checkbox 선택 후, 해당 ord_id를 list에 담음
-function selectAllOrderCheckBox() {
-    selectAllProduct("tr", "ord_id");
-}
+// 전체 선택 btn
+// 개별 선택 btn
 
-function selectOrderCheckBox(event) {
-    selectProduct(event, "tr", "ord_id");
-}
-
-async function handleClickCheckPaymentBtn() {
-    console.log(SELECT_SEQ_LIST);
-    await updateCheckPayment(SELECT_SEQ_LIST); // then 내부 return 설정 or catch 내용 반환 받는다.
-    getOrderPaymentData({isTrusted:true}); // todo -> 주문 내역때 처림 기간을 보여줘서 해당 기간 값을 string으로 변환후 넘겨주는 것이 정석 / 초기화 btn도 필요할 듯하다.
-}
-
-// fetch 함수
-const updateCheckPayment = function (orderIdList) {
-    return fetch('/admin/order/before-management', {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderIdList) // update list
-    })
-        .then(response => response.text()) // text의 경우: text(), list,map,object 경우 .json()
-        .then(data => {
-            console.log(data);
-            return data;
-            // 가지고 온 data로 reload 수행
-        })
-        .catch(error => {
-            console.error('Error:', error); // 따로 return으로 반환할 필요 없음
-        })
-}
+// 발주 확인 버튼, update 함수
+// 현재 함수표현식으로 이미 정의를 했기 때문에 이전에 하던 방식대로 function을 밖으로 분리를 하면 함수가 2번 호출 된다.
+// handleClickCheckPaymentBtn('/admin/order/before-management', SELECT_SEQ_LIST);
 
 /* EVENT 함수 */
-document.addEventListener('DOMContentLoaded', getOrderPaymentData); // html 문서 load 된 후 실행되는 js 함수
 
-selectAllBtn.addEventListener("click", selectAllOrderCheckBox); // 전체 상품 선택 이벤트
-
-checkPayment.addEventListener("click", handleClickCheckPaymentBtn); // 발주 확인 이벤트
+// 처음 html loading 후, 바로 수행되는 함수, html 문서 load 된 후 실행되는 js 함수
+document.addEventListener('DOMContentLoaded',
+    (event) => firstRenderData('dynamic-before-management', event)
+);
+// 기간 btn 누를 경우 , dynamic 수행
+periodBtnAll.forEach((periodBtn) => {
+    periodBtn.addEventListener('click',
+        (event) => handlePeriodAndRender(event, '/admin/order/dynamic-before-management')
+    );
+})
+// 전체 선택 버튼 누를 경우
+selectAllBtn.addEventListener("click",
+    (event) => selectAllProduct('tr','ord_id')
+);
+checkPayment.addEventListener("click",
+    () => handleClickCheckPaymentBtn('/admin/order/before-management', SELECT_SEQ_LIST)
+); // 발주 확인 이벤트

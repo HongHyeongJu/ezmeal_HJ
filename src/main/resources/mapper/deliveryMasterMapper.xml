@@ -3,6 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="deliveryMasterDao">
+    <!-- 주문 완료 후, insert 되는 배송지 기본 정보 TODO 결제 취소시, 사라져야 함-->
     <insert id="insertDelivery">
         insert into tb_delivery_master (dlvar_id, ord_id,
                                         rcpr, rcpr_phone,
@@ -15,4 +16,45 @@
                 #{stus}, #{msg},
                 #{rcv_sns_yn}, #{box_size})
     </insert>
+
+    <!-- 배송 준비중 관리에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member -->
+    <select id="select_prepare_delivery_info_with_od_pm_m" resultType="map">
+        select
+        date_format(od.in_dtm, '%Y-%m-%d') as in_dtm_format, # 주문일
+        od.ord_id, # 주문번호
+        m.name, # 주문자명
+        dm.invc_id, # 송장번호
+        dm.vend, # 공급사
+        dm.dexp, # 배송비
+        pm.pay_mtd, # 결제 방식
+        GROUP_CONCAT(od.name SEPARATOR ', ') as prod_name, # 주문상품 명
+        GROUP_CONCAT(od.qty SEPARATOR ', ') as qty, # 주문상품 수량
+        GROUP_CONCAT(od.tot_prc SEPARATOR ', ') as tot_prc, # 상품 할인 제외 상품 가격 * 수량
+        GROUP_CONCAT(od.setl_expct_prc SEPARATOR ', ') as setl_expct_prc, # 상품 할인 포함 가격 * 수량
+        GROUP_CONCAT(dm.dlvar_id SEPARATOR ', ') as dlvar_id, # 배송지 pk // todo 배송 상세에 주문상세번호 넣어야함
+        GROUP_CONCAT(dm.bndl_yn SEPARATOR ', ') as bndl_yn, # 배송지 묶음 배송 yn
+        COUNT(m.name) as count # 중복 수량
+        from
+        tb_order_detail od,
+        tb_payment_master pm,
+        tb_member m,
+        tb_delivery_master dm
+        where od.ord_id = pm.ord_id
+        and od.ord_id = dm.ord_id
+        and pm.mbr_id = m.mbr_id
+        <if test="startTime != null">
+            AND od.in_dtm >= STR_TO_DATE(#{startTime}, '%Y-%m-%d') -- 기본값 00:00:00
+        </if>
+        <if test="endTime != null">
+            AND od.in_dtm &lt;= STR_TO_DATE(CONCAT(#{endTime}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+        </if>
+        group by date_format(od.in_dtm, '%Y-%m-%d'),
+        od.ord_id,
+        m.name,
+        dm.invc_id,
+        dm.vend,
+        dm.dexp,
+        pm.pay_mtd
+        order by date_format(od.in_dtm, '%Y-%m-%d')
+    </select>
 </mapper>
