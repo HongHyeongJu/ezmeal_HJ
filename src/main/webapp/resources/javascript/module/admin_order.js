@@ -13,17 +13,7 @@ const handlePeriodAndRender = async function (event, url) { // admin_due.js에 �
     const adminDynamicData = await getAdminDynamicData(url, periodDateString);
     renderHTMLFrom(adminDynamicData);
 }
-//
-// // checkbox 선택 후, 해당 ord_id를 list에 담음
-// // 전체 선택 btn
-// const selectAllOrderCheckBox = function (tag, property) {
-//     selectAllProduct("tr", "ord_id");
-// }
-// // 개별 선택 btn
-// const selectOrderCheckBox = function (event, tag, property) {
-//     selectProduct(event, tag, property);
-// }
-//
+
 // 발주 확인 버튼, update 함수  '/admin/order/before-management'
 const handleClickCheckPaymentBtn = async function (url, SELECT_SEQ_LIST) {
     console.log(SELECT_SEQ_LIST);

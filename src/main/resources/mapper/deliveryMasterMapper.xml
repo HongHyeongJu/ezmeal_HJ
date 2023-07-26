@@ -19,7 +19,8 @@
 
     <!-- 배송 준비중 관리에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member -->
     <select id="select_prepare_delivery_info_with_od_pm_m" resultType="map">
-        select date_format(od.in_dtm, '%Y-%m-%d') as in_dtm_format, # 주문일
+        select
+        date_format(od.in_dtm, '%Y-%m-%d') as in_dtm_format, # 주문일
         od.ord_id, # 주문번호
         m.name, # 주문자명
         dm.invc_id, # 송장번호
@@ -30,8 +31,11 @@
         GROUP_CONCAT(od.qty SEPARATOR ', ') as qty, # 주문상품 수량
         GROUP_CONCAT(od.tot_prc SEPARATOR ', ') as tot_prc, # 상품 할인 제외 상품 가격 * 수량
         GROUP_CONCAT(od.setl_expct_prc SEPARATOR ', ') as setl_expct_prc, # 상품 할인 포함 가격 * 수량
+        GROUP_CONCAT(dm.dlvar_id SEPARATOR ', ') as dlvar_id, # 배송지 pk // todo 배송 상세에 주문상세번호 넣어야함
+        GROUP_CONCAT(dm.bndl_yn SEPARATOR ', ') as bndl_yn, # 배송지 묶음 배송 yn
         COUNT(m.name) as count # 중복 수량
-        from tb_order_detail od,
+        from
+        tb_order_detail od,
         tb_payment_master pm,
         tb_member m,
         tb_delivery_master dm

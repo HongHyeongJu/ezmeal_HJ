@@ -1,9 +1,10 @@
 /* DOCUMENT 변수명 */
+const periodBtnAll = document.querySelectorAll(".admin__period_btn"); // due btn
+
 const dynamicTable = document.querySelector('.admin-order__content-table > tbody');
 const selectAllBtn = document.querySelector('.admin-order__content-table thead input[type="checkbox"]'); // check box 전체 선택
 let selectBtns;
 const checkPayment = document.querySelector('.admin-order__check-order > button'); // 발주 확인 btn   # 개별
-const periodBtnAll = document.querySelectorAll(".admin__period_btn"); // 조회 기간 버튼
 // check_box_module의 변수로 SELECT_SEQ_LIST, dynamicNum 가 존재
 
 /* Rendering 함수 */
@@ -23,6 +24,8 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
         const tot_prc = info.tot_prc ?? ''; // 상품 할인 제외 상품 가격 * 수량
         const setl_expct_prc = info.setl_expct_prc ?? ''; // 상품 할인 포함 가격 * 수량
         const count = info.count ?? ''; // 상품 중복수량
+        const dlvar_id = info.dlvar_id ?? ''; // 배송지 pk
+        const bndl_yn = info.bndl_yn ?? ''; // 묶음 선택
 
         // 1. 개별값 존재하는 colum 배열로 빼기 - prod_name, qty, tot_prc, setl_expct_prc, 비고
         function convertStringToArray(str) {
@@ -34,6 +37,8 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
         const qty_arr = convertStringToArray(qty);
         const tot_prc_arr = convertStringToArray(tot_prc);
         const setl_expct_prc_arr = convertStringToArray(setl_expct_prc);
+        const dlvar_id_arr = convertStringToArray(dlvar_id);
+        const bndl_yn_arr = convertStringToArray(bndl_yn);
 
         // 2. 벡틱 내부에 for문 돌리기
         if (count > 1) {
@@ -42,12 +47,14 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
                 const currentQty = qty_arr[i];
                 const currentTotPrc = tot_prc_arr[i];
                 const currentSetlExpctPrc = setl_expct_prc_arr[i];
+                const dlvar_id = dlvar_id_arr[i];
+                const bndl_yn = bndl_yn_arr[i];
 
                 // 생성된 템플릿 문자열 추가
                 forHTML += `
                             <tr>
                               <!-- 추가적인 필요한 코드 -->
-                              <td><input type="checkbox"/></td>
+                              <td><input type="checkbox" dlvar_id="${dlvar_id}" ${bndl_yn === 'y' ? 'checked' : ''}/></td>
                               <td>${prod_name}</td>
                               <td>${currentQty}</td>
                               <td>${currentTotPrc}</td>
@@ -68,7 +75,7 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
                             TODO. 묶음선택 check 부분 & 배송 보류의 경우 - deliveryMaster 와 deliveryHistory insert 작업이 필요할 듯하다. - 3차 개발때 진행
                             -->
                             <td rowspan="${count}"><button>묶음선택</button></td>
-                            <td><input type="checkbox"/></td> <!-- 묶음선택할 check box-->
+                            <td><input type="checkbox" class="${dlvar_id_arr[0]}" ${bndl_yn_arr[0] === 'y' ? 'checked' : ''}/></td> <!-- 묶음선택할 check box-->
                             <td rowspan="${count}">  <!--운송장번호-->
                                 <select name="admin-order__select-type">
                                     <option value="ezmeal">자체배송</option>
@@ -108,12 +115,13 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
 document.addEventListener('DOMContentLoaded',
     (event) => firstRenderData('/admin/delivery', event)
 );
-// // 기간 btn 누를 경우 , dynamic 수행
-// periodBtnAll.forEach((periodBtn) => {
-//     periodBtn.addEventListener('click',
-//         (event) => handlePeriodAndRender(event, '/admin/order/dynamic-before-management')
-//     );
-// })
+
+// due btn 누를 경우 , dynamic 수행
+periodBtnAll.forEach((periodBtn) => {
+    periodBtn.addEventListener('click',
+        (event) => handlePeriodAndRender(event, '/admin/delivery')
+    );
+})
 // // 전체 선택 버튼 누를 경우
 // selectAllBtn.addEventListener("click",
 //     (event) => selectAllProduct('tr','ord_id')
