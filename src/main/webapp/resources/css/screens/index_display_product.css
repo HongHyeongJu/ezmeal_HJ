@@ -1,0 +1,126 @@
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+
+body {
+    font-family: 'NanumSquare', sans-serif;
+}
+
+/* Flexbox를 사용하여 수직 및 수평 정렬 */
+.recoprod_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    background-color: #f1f1f100;
+}
+
+
+.singletyp_recoprod {
+    width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff00;
+    padding: 20px;
+    border-top: 0px solid #ff0000;
+    border-bottom: 0px solid #00ff00;
+    padding-bottom: 20px;
+}
+
+
+/*-------- 추천 주제 타이틀 ---------*/
+.singletyp_title {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+}
+
+
+/*-------- 타이틀의 아이콘 ---------*/
+.singletyp_title i {
+    margin-right: 5px;
+}
+
+
+/*-------- UL태그 ---------*/
+.recoprod_ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.recoprod_ul li {
+    border: 2px solid #0000ff00;
+    width: 150px;
+    height: 250px;
+    margin: 5px;
+}
+
+/*-------- 추천 일러스트 칸 ---------*/
+.recoprod_img_li img {
+    width: 144px;
+    height: auto;
+    margin-left: 5px;
+    margin-top: 2px;
+}
+
+/*-------- 상품 출력하는 Li 태그 ---------*/
+.health_prod_li {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 가운데 정렬을 위해 필요한 스타일 */
+}
+
+.prod_outer {
+    width: 150px;
+    height: 245px;
+}
+
+
+/* 이미지 스타일 */
+.health_prod_li figure {
+    margin: 0;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 144px; /* figure 요소가 li 요소의 100% 너비를 차지 */
+    height: 192px; /* 이미지 높이 조절 (원하는 값으로 변경) */
+}
+
+.health_prod_li img {
+    width: 100%; /* 이미지가 figure 요소의 100% 너비를 차지하도록 설정 */
+    height: 100%; /* 이미지의 높이를 figure 요소와 같은 높이로 유지 */
+    object-fit: cover; /* 이미지 비율을 유지한 채로 figure에 맞게 조절 */
+}
+
+
+/*----- 상품 정보 -------*/
+
+.prod_text_number {
+    margin-top: 5px;
+}
+
+span.pord_name {
+    font-size: 12px;
+    margin-left: 7px;
+}
+
+span.dc_pt {
+    font-size: 12px;
+    margin-left: 7px;
+    font-weight: 900;
+    color: rgb(0,190,49);
+}
+
+span.sale_prc {
+    font-size: 13px;
+    margin-left: 2px;
+    font-weight: 900;
+}
+
+del.cnsmr_prc {
+    font-size: 10px;
+    margin-left: 2px;
+    color: #cecece;
+}

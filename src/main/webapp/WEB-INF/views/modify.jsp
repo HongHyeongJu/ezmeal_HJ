@@ -47,7 +47,7 @@
                         <label for="origin_pw" class="label-value">현재 비밀번호</label>
                     </div>
                     <div class="value">
-                        <input class="input-field" type="password" id="lgin_pw" name="origin_pw" placeholder="비밀번호를 입력해 주세요" autofocus >
+                        <input class="input-field" type="password" id="lgin_pw" name="originPw" placeholder="비밀번호를 입력해 주세요" autofocus >
                     </div>
                     <div class="button-section"></div>
                 </div>
@@ -57,7 +57,7 @@
                         <label for="lgin_pw" class="label-value">새 비밀번호</label>
                     </div>
                     <div class="value">
-                        <input class="input-field" type="password" id="new_pw" name="lgin_pw"  placeholder="새 비밀번호를 입력해 주세요">
+                        <input class="input-field" type="password" id="new_pw" name="newPw"  placeholder="새 비밀번호를 입력해 주세요">
                     </div>
                     <div class="button-section"></div>
                 </div>
@@ -109,13 +109,13 @@
                     <div class="value">
                         <div class="gender-section">
                             <label class="gender-label" for="gender-man">
-                                <input data-testid="radio-MALE" id="gender-man" name="gender" type="radio" class="gender-input" value="m">
+                                <input data-testid="radio-MALE" id="gender-man" name="gender" type="radio" class="gender-input" value="m" ${loginMbrInfo.gender == 'm' ? 'checked' : ''}>
                                 <%--                                <span class="gender-span"><div class="span-mini"></div></span>--%>
                                 <span aria-labelledby="gender-man" class="gender-value">남자</span>
                             </label>
 
                             <label class="gender-label" for="gender-woman">
-                                <input data-testid="radio-FEMALE" id="gender-woman" name="gender" type="radio" class="gender-input" value="f">
+                                <input data-testid="radio-FEMALE" id="gender-woman" name="gender" type="radio" class="gender-input" value="f" ${loginMbrInfo.gender == 'f' ? 'checked' : ''}>
                                 <%--                                <span class="gender-span"><div class="span-mini"></div></span>--%>
                                 <span aria-labelledby="gender-woman" class="gender-value">여자</span>
                             </label>
@@ -152,13 +152,19 @@
 
 </body>
 <script>
+    // 현재비밀번호가 틀렸을때, 경고창이 뜨는 로직
+    const msg = "${msg}";
+    if (msg !== ""){
+        alert(msg);
+    }
+
     function confirmSubmit() {
         // confirm 대화상자를 띄워 사용자로부터 확인 또는 취소를 받음
         var result = confirm("회원정보를 수정하시겠습니까??");
 
         if (result) {
             // 확인을 선택한 경우
-            alert("수정되었습니다.");
+            console.log("회원정보 요청 진행");
             return true; // 폼 제출 진행
         } else {
             // 취소를 선택한 경우

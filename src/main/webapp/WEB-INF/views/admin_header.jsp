@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: hhju2
@@ -6,6 +7,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<c:set var="loginOutLink" value="${sessionScope.empId==null ? '/admin/login' : '/admin/logout'}"/>
+<c:set var="loginOut" value="${sessionScope.empId==null ? '로그인' : '로그아웃'}"/>
+
 <html>
 <head>
     <title>ezmeal_admin</title>
@@ -20,8 +25,12 @@
                 <span>&nbsp;ezmeal  관리자  페이지</span>
             </div>
             <div class="admin_name">
-                <p >상품관리팀&nbsp;&nbsp;&nbsp;ateam4&nbsp;님&nbsp;&nbsp;로그인 중&nbsp;&nbsp;</p>
-                <a href="로그아웃버튼주소"><p id="logout_btn">/&nbsp;&nbsp;로그아웃</p></a>
+                <c:if test="${not empty empId}">
+                    <p style="width: 200px">${loginAdminInfo.title}&nbsp;&nbsp;${loginAdminInfo.emp_acct_id}님&nbsp;&nbsp;로그인 중</p>
+                </c:if>
+                <c:if test="${not empty empId}">
+                    <a href="<c:url value='${loginOutLink}'/>"><p id="logout_btn" >/&nbsp;&nbsp;&nbsp;&nbsp;${loginOut}</p></a>
+                </c:if>
             </div>
         </div>
     </div>
