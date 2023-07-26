@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>ezmeal home</title>
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
@@ -42,6 +42,10 @@
     </div>
 </div>
 <script src="/javascript/main1.js"></script>
+
+<!-- 메인 추천 상품 -->
+<jsp:include page="index_display_product.jsp"/>
+
 
 <jsp:include page="footer.jsp"/>
 
