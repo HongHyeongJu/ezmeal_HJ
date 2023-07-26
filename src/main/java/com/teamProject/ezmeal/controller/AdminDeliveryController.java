@@ -30,8 +30,7 @@ public class AdminDeliveryController {
     public List<Map<String , Object>> getPrepareDeliveryInfo(@RequestBody String periodString){
         System.out.println("getPrepareDeliveryInfo @RequestBody = " + periodString);
         Map<String, Object> periodData = AdminDueModule.getPeriodData(periodString); // 기간을 받는 module 함수 {startTime: Object, endTime: Object};
+        System.out.println("123123213" + adminDeliveryService.getPrepareDeliveryInfo(periodData));
         return adminDeliveryService.getPrepareDeliveryInfo(periodData);
-        // {in_dtm_format=2023-07-14, pay_mtd=kakaopay, ord_id=202307142397, qty=4, 1, 1, 2, 1, 2, 2, tot_prc=8000, 2000, 20000, 10000, 5000, 10000, 4000, name=김자바, count=7, setl_expct_prc=7200, 1800, 19000, 9000, 4500, 9000, 4000},
     }
-
 }
