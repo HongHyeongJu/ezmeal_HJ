@@ -6,15 +6,16 @@
     <!-- 주문 완료 후, insert 되는 배송지 기본 정보 TODO 결제 취소시, 사라져야 함-->
     <insert id="insertDelivery">
         insert into tb_delivery_master (dlvar_id, ord_id, ord_prod_dtl_id,
-                                        rcpr, rcpr_phone,
-                                        typ, start_pnt, desti, desti_dtl, req_mtr, in_mtd,
-                                        stus, msg,
-                                        rcv_sns_yn, box_size)
+        rcpr, rcpr_phone,
+        typ, start_pnt, desti, desti_dtl, req_mtr, in_mtd,
+        stus, msg,
+        rcv_sns_yn, box_size)
         VALUES
         <foreach collection="list" item="deliveryMasterDto" separator=",">
             (#{deliveryMasterDto.dlvar_id}, #{deliveryMasterDto.ord_id}, #{deliveryMasterDto.ord_prod_dtl_id},
             #{deliveryMasterDto.rcpr}, #{deliveryMasterDto.rcpr_phone},
-            #{deliveryMasterDto.typ}, #{deliveryMasterDto.start_pnt}, #{deliveryMasterDto.desti}, #{deliveryMasterDto.desti_dtl}, #{deliveryMasterDto.req_mtr}, #{deliveryMasterDto.in_mtd},
+            #{deliveryMasterDto.typ}, #{deliveryMasterDto.start_pnt}, #{deliveryMasterDto.desti},
+            #{deliveryMasterDto.desti_dtl}, #{deliveryMasterDto.req_mtr}, #{deliveryMasterDto.in_mtd},
             #{deliveryMasterDto.stus}, #{deliveryMasterDto.msg},
             #{deliveryMasterDto.rcv_sns_yn}, #{deliveryMasterDto.box_size})
         </foreach>
@@ -61,4 +62,19 @@
         pm.pay_mtd
         order by date_format(od.in_dtm, '%Y-%m-%d')
     </select>
+
+    <!-- admin 송장번호 등록시, 송장번호, 공급사, 배송비 등록   -->
+    <update id="update_admin_invoice_num" parameterType="list">
+        <foreach collection="list" item="info" separator=" ">
+            UPDATE tb_delivery_master
+            SET
+            vend = IF(ord_id = #{info.ordId}, #{info.dlvarVend}, vend),
+            invc_id = IF(ord_id = #{info.ordId}, #{info.invoiceNum}, invc_id),
+            dexp = IF(ord_id = #{info.ordId}, #{info.dlvarExpense}, dexp)
+            WHERE ord_id IN
+        </foreach>
+        <foreach collection="list" item="info" open="(" separator="," close=")">
+            #{info.ordId}
+        </foreach>
+    </update>
 </mapper>

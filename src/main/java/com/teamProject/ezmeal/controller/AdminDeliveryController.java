@@ -1,6 +1,6 @@
 package com.teamProject.ezmeal.controller;
 
-
+import com.teamProject.ezmeal.domain.restAPIDomain.InvoiceDeliveryFeeInfo;
 import com.teamProject.ezmeal.module.AdminDueModule;
 import com.teamProject.ezmeal.service.AdminDeliveryService;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +28,23 @@ public class AdminDeliveryController {
     // 배송 준비중 관리에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member
     // mapper에서 반환하는 value가 현재 string, num 등등 다양하기 때문에 Object로 value를 받아야 한다. 아니면 error 발생, type을 읽지 못하기 때문
     public List<Map<String , Object>> getPrepareDeliveryInfo(@RequestBody String periodString){
+        System.out.println("--------------------------------------------------");
+        System.out.println("AdminDeliveryController getPrepareDeliveryInfo 시작");
         System.out.println("getPrepareDeliveryInfo @RequestBody = " + periodString);
         Map<String, Object> periodData = AdminDueModule.getPeriodData(periodString); // 기간을 받는 module 함수 {startTime: Object, endTime: Object};
-        System.out.println("123123213" + adminDeliveryService.getPrepareDeliveryInfo(periodData));
+        System.out.println("periodData = " + periodData);
+        System.out.println(" db 반환 값 : " + adminDeliveryService.getPrepareDeliveryInfo(periodData));
         return adminDeliveryService.getPrepareDeliveryInfo(periodData);
+    }
+
+    @PatchMapping("/invoice")
+    @ResponseBody
+    public String updatePrepare(@RequestBody List<InvoiceDeliveryFeeInfo> invoiceDeliveryFeeInfoList) {
+        System.out.println("--------------------------------------------------");
+        System.out.println("adminDeliveryController-updatePrepare 시작");
+        System.out.println("invoiceDeliveryFeeInfoList = " + invoiceDeliveryFeeInfoList);
+        // todo invoiceDeliveryFeeInfoList이 객체를 이용해서 update
+        return "success";
     }
 
     // 배송 대기 관리

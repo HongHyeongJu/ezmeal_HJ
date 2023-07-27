@@ -7,8 +7,14 @@ let selectBtns;// order-id를 list에 담는 개별 선택 check-box
 const bndlAllBtn = document.querySelector('.dlvar-id__all-checkBox'); // dlvar_id를 list에 담는 전체 선택 check-box
 let bndlBtns; // dlvar_id를 list에 담는 전체 선택 check-box
 
-const checkPayment = document.querySelector('.admin-order__check-order > button'); // 발주 확인 btn   # 개별
-// check_box_module의 변수로 SELECT_SEQ_LIST, dynamicNum 가 존재
+// SELECT_SEQ_LIST : 주문번호 list
+// DLVAR_SEQ_LIST  : 배송번호 list
+
+const checkDeliveryShipping = document.querySelector('.admin-order__check-order button:nth-child(1)'); // 배송중 처리 btn
+const addInvoiceNum = document.querySelector('.admin-order__check-order button:nth-child(2)');  // 송장번호 저장 btn
+// todo 나머지 btn은 3차 개발 때
+
+let checkbndlBtns; // 묶음 선택된 check-box를 정말 묶음 선택 시키는 btn
 
 /* Rendering 함수 */
 const renderHTMLFrom = function (adminBeforeManageInfoList) {
@@ -18,7 +24,7 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
         const in_dtm_format = info.in_dtm_format ?? ''; // 주문일
         const ord_id = info.ord_id ?? ''; // 주문번호
         const name = info.name ?? '';  // 주문자명
-        const vend = info.vend ?? '';  // 주문자명
+        const vend = info.vend ?? '';  // 공급회사
         const invc_id = info.invc_id ?? ''; // 송장번호
         const dexp = info.dexp ?? ''; // 배송비
         const pay_mtd = info.pay_mtd ?? ''; // 결제방식
@@ -82,8 +88,8 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
                             <td rowspan="${count}">  <!--운송장번호-->
                                 <select name="admin-order__select-type">
                                     <option value="ezmeal">자체배송</option>
-                                    <option value="post-office">우체국배송</option>
-                                    <option value="cj">CJ대한통운</option>
+                                    <option value="우체국 택배">우체국배송</option>
+                                    <option value="cj 대한통운">CJ대한통운</option>
                                 </select>
                                 <input type="text" class="invc" value=${invc_id}>
                             </td>
@@ -114,7 +120,7 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
     }); // 상품 선택 이벤트
     bndlBtns.forEach((bndlBtn) => {
         bndlBtn.addEventListener('click',
-                event => selectBNDL(event, 'dlvar_id'))
+            event => selectBNDL(event, 'dlvar_id'))
     }); // 묶음 선택 체크박스 이벤트
 }
 
@@ -134,11 +140,65 @@ periodBtnAll.forEach((periodBtn) => {
 
 // 전체 선택 버튼 누를 경우
 selectAllBtn.addEventListener("click",
-    (event) => selectAllProduct('tr','ord_id')
+    (event) => selectAllProduct('tr', 'ord_id')
 );
 bndlAllBtn.addEventListener('click',
-    ()=> selectAllBNDL('dlvar_id')
+    () => selectAllBNDL('dlvar_id')
 );
-// checkPayment.addEventListener("click",
-//     () => handleClickCheckPaymentBtn('/admin/order/before-management', SELECT_SEQ_LIST)
-// ); // 발주 확인 이벤트
+
+async function handleClickInvoiceBtn() {
+    console.log("--------------- handleClickInvoiceBtn 시작 --------------"); // js에서 값 넘겨받는거는 확인 완료
+    const invoiceDeliveryFeeInfoList = []; // 객체들을 담을 배열
+
+    console.log(invoiceDeliveryFeeInfoList);
+    console.log('select_seq_list = ' + SELECT_SEQ_LIST);
+    let validationNum = 0;
+    console.log('validationNum : ' + validationNum);
+
+    // 1. 먼저 select_seql_list의 내용중에서 select, 송장번호, 배송비를 가지고 온다. -> list로 담는다.
+    // 2. fetch로 값을 보낸다. - 공유 fetch 사용 [[select list] [{객체}{객체}{객체}]]
+    SELECT_SEQ_LIST.forEach(selectSeq => {
+            const dlvarInfo = document.querySelector(`tr[ord_id="${selectSeq}"] td:nth-child(7)`);
+            console.log('dlvarInfo' + dlvarInfo);
+            const dlvarFee = document.querySelector(`tr[ord_id="${selectSeq}"] td:nth-child(8) input`).value;
+            console.log('dlvarFee' + dlvarFee);
+            const dlvarVend = dlvarInfo.querySelector('select').value;
+            console.log('dlvarVend' + dlvarVend);
+            const invoiceNum = dlvarInfo.querySelector('input').value;
+            console.log('dlvarVend' + dlvarVend);
+            console.log('invoiceNum' + invoiceNum);
+            if (invoiceNum === '' || dlvarFee === '') validationNum++; // 임시 검증. 빈 값일 경우 숫자 넣어줌
+            // 객체 생성 및 배열에 추가
+            const invoiceDeliveryFeeInfo = new InvoiceDeliveryFeeInfo(selectSeq, dlvarVend, invoiceNum, dlvarFee);
+            invoiceDeliveryFeeInfoList.push(invoiceDeliveryFeeInfo);
+            console.log('invoiceDeliveryFeeInfoList = ' + invoiceDeliveryFeeInfoList);
+        }
+    );
+    console.log('validationNum' + validationNum); // validationNum의 값 확인
+    console.log(invoiceDeliveryFeeInfoList); // [InvoiceDeliveryFeeInfo, InvoiceDeliveryFeeInfo] {selectSeq: 202307142397, dlvarVend: 'ezmeal', invoiceNum: '', dlvarFee: undefined}
+    if (validationNum > 0) {
+        alert("송장번호 및 배송비를 작성 해야합니다.")
+        return;
+    }
+    console.log("--------------- handleClickInvoiceBtn 끝 --------------");
+
+    // todo . fetch 수행
+    console.log("--------------- handleClickInvoiceBtn fetch 시작 --------------");
+    // const promise = await updateAdminSubmitBtn('/admin/delivery/invoice', invoiceDeliveryFeeInfoList);
+    // console.log(promise); // 정상동작 확인
+    await handleClickAdminDeliveryBtn('/admin/delivery/invoice','/admin/delivery', invoiceDeliveryFeeInfoList, '송장번호 등록 성공');
+    console.log("--------------- handleClickInvoiceBtn fetch 끝 --------------");
+
+}
+
+addInvoiceNum.addEventListener("click", handleClickInvoiceBtn); // 송장번호 등록 btn
+
+// 객체
+class InvoiceDeliveryFeeInfo {
+    constructor(ordId, dlvarVend, invoiceNum, dlvarExpense) {
+        this.ordId = ordId;
+        this.dlvarVend = dlvarVend;
+        this.invoiceNum = invoiceNum;
+        this.dlvarExpense = dlvarExpense;
+    }
+}

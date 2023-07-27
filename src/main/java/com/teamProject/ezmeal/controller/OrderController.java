@@ -201,7 +201,6 @@ public class OrderController {
                     orderDetailPk,
                     orderAddress.getRcpr(),
                     orderAddress.getPhone(),
-                    "주문_묶음",
                     "(주)ezmeal 종로69 YMCA 5층 518호",
                     orderAddress.getDesti(),
                     orderAddress.getDesti_dtl(),

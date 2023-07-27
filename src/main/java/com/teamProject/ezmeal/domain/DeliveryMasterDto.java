@@ -37,12 +37,11 @@ public class DeliveryMasterDto {
     private LocalDateTime up_dtm; // 최종수정일시
     private String up_id; // 최종수정(자)식별번호
 
-    public DeliveryMasterDto(Long ord_id,Long ord_prod_dtl_id, String rcpr, String rcpr_phone, String typ, String start_pnt, String desti, String desti_dtl, String req_mtr, String in_mtd, String stus, String msg, String rcv_sns_yn, String box_size) {
+    public DeliveryMasterDto(Long ord_id,Long ord_prod_dtl_id, String rcpr, String rcpr_phone, String start_pnt, String desti, String desti_dtl, String req_mtr, String in_mtd, String stus, String msg, String rcv_sns_yn, String box_size) {
         this.ord_id = ord_id; // 주문번호
         this.ord_prod_dtl_id = ord_prod_dtl_id; // 주문상세번호
         this.rcpr = rcpr; // 수령자
         this.rcpr_phone = rcpr_phone; // 수령자 전화번호
-        this.typ = typ; // 배송유형 - 반품, 주문, 묶음, 예약 등등
         this.start_pnt = start_pnt; // 배송출발지
         this.desti = desti; // 배송지 기본
         this.desti_dtl = desti_dtl; // 배송지 상세

@@ -15,12 +15,25 @@ const handlePeriodAndRender = async function (event, url) { // admin_due.js에 �
 }
 
 // 발주 확인 버튼, update 함수  '/admin/order/before-management'
-const handleClickCheckPaymentBtn = async function (url, SELECT_SEQ_LIST) {
+const handleClickCheckPaymentBtn = async function (updateUrl, dynamicUrl, SELECT_SEQ_LIST) {
     console.log(SELECT_SEQ_LIST);
-    await updateAdminSubmitBtn(url, SELECT_SEQ_LIST); // then 내부 return 설정 or catch 내용 반환 받는다.
+    await updateAdminSubmitBtn(updateUrl, SELECT_SEQ_LIST); // then 내부 return 설정 or catch 내용 반환 받는다.
     // todo -> 주문 내역때 처림 기간을 보여줘서 해당 기간 값을 string으로 변환 후 넘겨주는 것이 정석 / 초기화 btn도 필요할 듯하다.
-    const adminDynamicData = await getAdminDynamicData(url, {isTrusted: true});
+    const adminDynamicData = await getAdminDynamicData(dynamicUrl, {isTrusted: true});
+    console.log("adminDynamicData");
+    console.log(adminDynamicData);
     renderHTMLFrom(adminDynamicData);
     alert('발주성공')
 }
 
+// admin delivery 준비 중 logic 수행 btn 함수
+const handleClickAdminDeliveryBtn = async function (fetchUrl, reloadUrl, fetchDataList, msg) {
+    console.log('-------- admin_order.js handleClickAdminDeliveryBtn 시작 ------------');
+    console.log(fetchDataList);
+    await updateAdminSubmitBtn(fetchUrl, fetchDataList); // then 내부 return 설정 or catch 내용 반환 받는다.
+    // todo -> 주문 내역때 처림 기간을 보여줘서 해당 기간 값을 string으로 변환 후 넘겨주는 것이 정석 / 초기화 btn도 필요할 듯하다.
+    const adminDynamicData = await getAdminDynamicData(reloadUrl, {isTrusted: true});
+    renderHTMLFrom(adminDynamicData);
+    alert(msg)
+    console.log('-------- admin_order.js handleClickAdminDeliveryBtn 끝 ------------');
+}

@@ -41,7 +41,7 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
     selectBtns = document.querySelectorAll('.admin-order__content-table tbody input[type="checkbox"]'); // check box 선택
     selectBtns.forEach((selectBtn) => {
         selectBtn.addEventListener("click",
-            event => selectProduct(event, selectAllBtn, selectBtns, 'tr', 'ord_id')
+            event => selectProduct(event, 'tr', 'ord_id')
         );
     }); // 상품 선택 이벤트
 }
@@ -70,8 +70,8 @@ periodBtnAll.forEach((periodBtn) => {
 })
 // 전체 선택 버튼 누를 경우
 selectAllBtn.addEventListener("click",
-    () => selectAllProduct(selectAllBtn, selectBtns, 'tr', 'ord_id')
+    () => selectAllProduct('tr', 'ord_id')
 );
 checkPayment.addEventListener("click",
-    () => handleClickCheckPaymentBtn('/admin/order/before-management', SELECT_SEQ_LIST)
+    () => handleClickCheckPaymentBtn('/admin/order/before-management', '/admin/order/dynamic-before-management' ,SELECT_SEQ_LIST)
 ); // 발주 확인 이벤트

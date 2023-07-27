@@ -17,16 +17,18 @@ const getAdminDynamicData = function (url, periodString) {
 }
 
 // 발주, 배송중, 등등  확인 버튼 누를 경우 수행되는 update 함수
-const updateAdminSubmitBtn = function (url, orderIdList) {
+const updateAdminSubmitBtn = function (url, dataList) {
     return fetch(url, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(orderIdList) // update list
+        body: JSON.stringify(dataList) // update list
     })
         .then(response => response.text()) // text의 경우: text(), list,map,object 경우 .json()
         .then(data => {
+            console.log("---------------");
+            console.log("updateAdminSubmitBtn data");
             console.log(data);
             return data;
             // 가지고 온 data로 reload 수행

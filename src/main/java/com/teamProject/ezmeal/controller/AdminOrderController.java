@@ -25,7 +25,11 @@ public class AdminOrderController {
     @PostMapping("/dynamic-before-management")
     @ResponseBody
     public List<Map<String, Object>> dynamicBeforeManagement(@RequestBody String periodString) {
+        System.out.println("----------------------------------");
+        System.out.println("adminOrderController-dynamicBeforeManagement 시작");
+        System.out.println("periodString = " + periodString);
         Map<String, Object> periodData = AdminDueModule.getPeriodData(periodString); // 기간을 받는 module 함수 {startTime: Object, endTime: Object};
+        System.out.println("periodData = " + periodData);
         return adminOrderService.getAdminBeforeManageInfo(periodData);
     }
 
