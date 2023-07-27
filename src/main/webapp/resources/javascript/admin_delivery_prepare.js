@@ -1,9 +1,12 @@
 /* DOCUMENT 변수명 */
 const periodBtnAll = document.querySelectorAll(".admin__period_btn"); // due btn
+const dynamicTable = document.querySelector('.admin-order__content-table > tbody'); // 동적 data 들어가는 table
 
-const dynamicTable = document.querySelector('.admin-order__content-table > tbody');
-const selectAllBtn = document.querySelector('.admin-order__content-table thead input[type="checkbox"]'); // check box 전체 선택
-let selectBtns;
+const selectAllBtn = document.querySelector('.order-id__all-checkBox'); // order-id를 list에 담는 전체 선택 check-box
+let selectBtns;// order-id를 list에 담는 개별 선택 check-box
+const bndlAllBtn = document.querySelector('.dlvar-id__all-checkBox'); // dlvar_id를 list에 담는 전체 선택 check-box
+let bndlBtns; // dlvar_id를 list에 담는 전체 선택 check-box
+
 const checkPayment = document.querySelector('.admin-order__check-order > button'); // 발주 확인 btn   # 개별
 // check_box_module의 변수로 SELECT_SEQ_LIST, dynamicNum 가 존재
 
@@ -24,7 +27,7 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
         const tot_prc = info.tot_prc ?? ''; // 상품 할인 제외 상품 가격 * 수량
         const setl_expct_prc = info.setl_expct_prc ?? ''; // 상품 할인 포함 가격 * 수량
         const count = info.count ?? ''; // 상품 중복수량
-        const dlvar_id = info.dlvar_id ?? ''; // 배송지 pk
+        const dlvar_id = info.dlvar_id ?? ''; // 배송지 pk == 주문상세번호
         const bndl_yn = info.bndl_yn ?? ''; // 묶음 선택
 
         // 1. 개별값 존재하는 colum 배열로 빼기 - prod_name, qty, tot_prc, setl_expct_prc, 비고
@@ -54,7 +57,7 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
                 forHTML += `
                             <tr>
                               <!-- 추가적인 필요한 코드 -->
-                              <td><input type="checkbox" dlvar_id="${dlvar_id}" ${bndl_yn === 'y' ? 'checked' : ''}/></td>
+                              <td><input type="checkbox" class="dlvar-id__checkBox" dlvar_id="${dlvar_id}" ${bndl_yn === 'y' ? 'checked' : ''}/></td>
                               <td>${prod_name}</td>
                               <td>${currentQty}</td>
                               <td>${currentTotPrc}</td>
@@ -67,24 +70,24 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
         }
 
         HTML_STRING += `<tr ord_id="${ord_id}"> <!-- -->
-                            <td rowspan="${count}"><input type="checkbox"/></td> <!-- -->
-                            <td rowspan="${count}">${in_dtm_format}</td> <!-- -->
-                            <td rowspan="${count}">${ord_id}</td> <!-- -->
+                            <td rowspan="${count}"><input type="checkbox" class="order-id__checkBox"/></td> <!--제일 좌측 checkbox-->
+                            <td rowspan="${count}">${in_dtm_format}</td> <!-- 주문일 -->
+                            <td rowspan="${count}">${ord_id}</td> <!-- 주문번호 -->
                             <td rowspan="${count}">${name}</td> <!--주문자-->
                             <!-- 묶음선택 btn : 묶음 선택 된 상품에 한해서 배송 : 배송 보류 처리가 가능
                             TODO. 묶음선택 check 부분 & 배송 보류의 경우 - deliveryMaster 와 deliveryHistory insert 작업이 필요할 듯하다. - 3차 개발때 진행
                             -->
-                            <td rowspan="${count}"><button>묶음선택</button></td>
-                            <td><input type="checkbox" class="${dlvar_id_arr[0]}" ${bndl_yn_arr[0] === 'y' ? 'checked' : ''}/></td> <!-- 묶음선택할 check box-->
+                            <td rowspan="${count}"><button class="bndl__btn">묶음선택</button></td>
+                            <td><input type="checkbox" class="dlvar-id__checkBox" dlvar_id="${dlvar_id_arr[0]}" ${bndl_yn_arr[0] === 'y' ? 'checked' : ''}/></td> <!-- 묶음선택할 check box-->
                             <td rowspan="${count}">  <!--운송장번호-->
                                 <select name="admin-order__select-type">
                                     <option value="ezmeal">자체배송</option>
                                     <option value="post-office">우체국배송</option>
                                     <option value="cj">CJ대한통운</option>
                                 </select>
-                                <input type="text" name="invc" value=${invc_id}>
+                                <input type="text" class="invc" value=${invc_id}>
                             </td>
-                            <td rowspan="${count}"><input type="text" name="delivery_fee" value=${dexp}></td> <!--배송비-->
+                            <td rowspan="${count}"><input type="text" class="delivery_fee" value=${dexp}></td> <!--배송비-->
                             <td rowspan="${count}">${vend}</td>  <!--공급사-->
                             <td>${prod_name_arr[0]}</td>  <!--주문 개별 상품-->
                             <td>${qty_arr[0]}</td>  <!--주문 수량-->
@@ -101,12 +104,18 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
     dynamicTable.innerHTML = HTML_STRING;
 
     // 동적 생성 요소에 관한 /* DOCUMENT 변수명 */ 및 /* EVENT 함수 */ TODO 따로 함수로 빼는 것이 조금 더 코드를 보기가 깔끔할 듯 하다.
-    selectBtns = document.querySelectorAll('.admin-order__content-table tbody input[type="checkbox"]'); // check box 선택
+    selectBtns = document.querySelectorAll('.order-id__checkBox'); // check box 선택
+    bndlBtns = document.querySelectorAll('.dlvar-id__checkBox'); // 묶음선택 check box 선택
+
     selectBtns.forEach((selectBtn) => {
         selectBtn.addEventListener("click",
             event => selectProduct(event, 'tr', 'ord_id')
         );
     }); // 상품 선택 이벤트
+    bndlBtns.forEach((bndlBtn) => {
+        bndlBtn.addEventListener('click',
+                event => selectBNDL(event, 'dlvar_id'))
+    }); // 묶음 선택 체크박스 이벤트
 }
 
 /* EVENT 함수 */
@@ -122,10 +131,14 @@ periodBtnAll.forEach((periodBtn) => {
         (event) => handlePeriodAndRender(event, '/admin/delivery')
     );
 })
-// // 전체 선택 버튼 누를 경우
-// selectAllBtn.addEventListener("click",
-//     (event) => selectAllProduct('tr','ord_id')
-// );
+
+// 전체 선택 버튼 누를 경우
+selectAllBtn.addEventListener("click",
+    (event) => selectAllProduct('tr','ord_id')
+);
+bndlAllBtn.addEventListener('click',
+    ()=> selectAllBNDL('dlvar_id')
+);
 // checkPayment.addEventListener("click",
 //     () => handleClickCheckPaymentBtn('/admin/order/before-management', SELECT_SEQ_LIST)
 // ); // 발주 확인 이벤트

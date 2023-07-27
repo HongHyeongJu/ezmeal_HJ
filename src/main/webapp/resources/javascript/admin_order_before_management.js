@@ -1,10 +1,12 @@
 /* DOCUMENT 변수명 */
-const dynamicTable = document.querySelector('.admin-order__content-table > tbody');
+const periodBtnAll = document.querySelectorAll(".admin__period_btn"); // due - btn
+const dynamicTable = document.querySelector('.admin-order__content-table > tbody'); // 동적 data 들어가는 table
+
 const selectAllBtn = document.querySelector('.admin-order__content-table thead input[type="checkbox"]'); // check box 전체 선택
 let selectBtns;
 const checkPayment = document.querySelector('.admin-order__check-order > button'); // 발주 확인 btn   # 개별
-const periodBtnAll = document.querySelectorAll(".admin__period_btn"); // 조회 기간 버튼
 // check_box_module의 변수로 SELECT_SEQ_LIST, dynamicNum 가 존재
+let ORDER_ID_LIST = []; // 선택된 발주 버튼
 
 /* Rendering 함수 */
 const renderHTMLFrom = function (adminBeforeManageInfoList) {
@@ -39,7 +41,7 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
     selectBtns = document.querySelectorAll('.admin-order__content-table tbody input[type="checkbox"]'); // check box 선택
     selectBtns.forEach((selectBtn) => {
         selectBtn.addEventListener("click",
-                event => selectProduct(event, 'tr','ord_id')
+            event => selectProduct(event, selectAllBtn, selectBtns, 'tr', 'ord_id')
         );
     }); // 상품 선택 이벤트
 }
@@ -68,7 +70,7 @@ periodBtnAll.forEach((periodBtn) => {
 })
 // 전체 선택 버튼 누를 경우
 selectAllBtn.addEventListener("click",
-    (event) => selectAllProduct('tr','ord_id')
+    () => selectAllProduct(selectAllBtn, selectBtns, 'tr', 'ord_id')
 );
 checkPayment.addEventListener("click",
     () => handleClickCheckPaymentBtn('/admin/order/before-management', SELECT_SEQ_LIST)
