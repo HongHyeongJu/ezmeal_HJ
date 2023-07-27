@@ -33,6 +33,8 @@ public class PageHandler {
 
         totalPage = (int) Math.ceil(totalCnt / (double) sc.getPageSize()); // 남는 페이지가 있을 수 있기 때문에 올림처리
         beginPage = (sc.getPage() - 1) / naviSize * naviSize + 1;
+        //imk.네비게이션 첫번째 페이지
+        //->시작페이지는 항상 1로 끝난다. 5일때 1, 15일때 11, 11일때 11, 25일때 21
         endPage = Math.min(beginPage + naviSize - 1, totalPage); // endPage가 totalPage보다 작을 수 있기 때문에
         showPrev = beginPage != 1; // 시작 페이지가 1일 때만 안 나오면 된다.
         showNext = endPage != totalPage; // 다음으로 갈게 없으니까 보여주지않음
