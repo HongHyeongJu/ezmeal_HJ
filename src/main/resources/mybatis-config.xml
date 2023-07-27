@@ -49,5 +49,11 @@
         <typeAlias alias="AdminMemberDto" type="com.teamProject.ezmeal.domain.AdminMemberDto"/>
 
 
+        <!--공지사항-->
+        <typeAlias alias="noticeDto" type="com.teamProject.ezmeal.domain.NoticeDto"></typeAlias>
+        <typeAlias alias="boardDto" type="com.teamProject.ezmeal.domain.BoardDto"></typeAlias>
+        <typeAlias alias="PageHandlerDto" type="com.teamProject.ezmeal.domain.PageHandler"></typeAlias>
+
+
     </typeAliases>
 </configuration>
