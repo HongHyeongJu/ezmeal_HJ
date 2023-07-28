@@ -2,6 +2,7 @@
 let SELECT_SEQ_LIST = []; // 선택된 발주 버튼
 let dynamicNum = 0; // 체크박스 선택 수 확인
 
+// TODO. dlvar_seq_list, dlvar_dynamic_num 같은 경우, 로딩시 이미 체크된 것이 기록되어야한다.
 let DLVAR_SEQ_LIST = []; // 선택된 묶음 checkbox의 dlvr_id list
 let DLVAR_DYNAMIC_NUM = 0; // 묶음 선택 수 확인
 
@@ -39,13 +40,13 @@ const selectProduct = function (event, sequenceTag, sequenceName) {
     console.log(selectSeq);
     if (targetBtn.checked) {
         SELECT_SEQ_LIST.push(selectSeq); // 리스트에 담음
-        console.log('SELECT_SEQ_LIST push= '+ SELECT_SEQ_LIST);
+        console.log('SELECT_SEQ_LIST push= ' + SELECT_SEQ_LIST);
         console.log('dynamicNum = ' + dynamicNum);
         dynamicNum++; // 동적 숫자 - 전체객체 개수 확인용
     } else {
         // filter : 해당 조건이 true인 경우 값을 남긴다
         SELECT_SEQ_LIST = SELECT_SEQ_LIST.filter((item) => item !== selectSeq); // unchecked 경우 제거
-        console.log('SELECT_SEQ_LIST del= '+ SELECT_SEQ_LIST);
+        console.log('SELECT_SEQ_LIST del= ' + SELECT_SEQ_LIST);
         console.log('dynamicNum = ' + dynamicNum);
 
         dynamicNum--; // 동적 숫자
@@ -81,7 +82,7 @@ const selectAllBNDL = function (sequenceName) {
 };
 
 // 상품 선택 함수 - 묶음 선택
-const selectBNDL = function (event,sequenceName) {
+const selectBNDL = function (event, sequenceName) {
     const targetBtn = event.target; // click한 btn 요소
 
     const selectSeq = parseInt(
@@ -90,17 +91,26 @@ const selectBNDL = function (event,sequenceName) {
     console.log(selectSeq);
     if (targetBtn.checked) {
         DLVAR_SEQ_LIST.push(selectSeq); // 리스트에 담음
-        console.log('DLVAR_SEQ_LIST push= '+ DLVAR_SEQ_LIST);
+        console.log('DLVAR_SEQ_LIST push= ' + DLVAR_SEQ_LIST);
         console.log('DLVAR_DYNAMIC_NUM = ' + DLVAR_DYNAMIC_NUM);
         DLVAR_DYNAMIC_NUM++; // 동적 숫자 - 전체객체 개수 확인용
     } else {
         // filter : 해당 조건이 true인 경우 값을 남긴다
         DLVAR_SEQ_LIST = DLVAR_SEQ_LIST.filter((item) => item !== selectSeq); // unchecked 경우 제거
-        console.log('DLVAR_SEQ_LIST del= '+ DLVAR_SEQ_LIST);
+        console.log('DLVAR_SEQ_LIST del= ' + DLVAR_SEQ_LIST);
         console.log('DLVAR_DYNAMIC_NUM = ' + DLVAR_DYNAMIC_NUM);
-
         DLVAR_DYNAMIC_NUM--; // 동적 숫자
     }
     bndlAllBtn.checked = bndlBtns.length === DLVAR_DYNAMIC_NUM;
     console.log("prod : " + DLVAR_SEQ_LIST);
 };
+
+const selectInit = function () {
+    SELECT_SEQ_LIST = []; // 선택된 발주 버튼
+    dynamicNum = 0; // 체크박스 선택 수 확인
+}
+
+const dlvarInit = function () {
+    DLVAR_SEQ_LIST = []; // 선택된 묶음 checkbox의 dlvr_id list
+    DLVAR_DYNAMIC_NUM = 0; // 묶음 선택 수 확인
+}

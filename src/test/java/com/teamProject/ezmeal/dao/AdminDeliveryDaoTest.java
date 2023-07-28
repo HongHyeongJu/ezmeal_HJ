@@ -1,5 +1,6 @@
 package com.teamProject.ezmeal.dao;
 
+import com.teamProject.ezmeal.domain.restAPIDomain.BundleData;
 import com.teamProject.ezmeal.domain.restAPIDomain.InvoiceDeliveryFeeInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,13 +34,25 @@ public class AdminDeliveryDaoTest {
     }
 
     @Test
-    public void updateAdminInvoiceNum(){
-        InvoiceDeliveryFeeInfo info = new InvoiceDeliveryFeeInfo(202307142397L,"ezmeal", "12", 12);
-        InvoiceDeliveryFeeInfo info1 = new InvoiceDeliveryFeeInfo(20230717941L,"cj대한통운", "34", 34);
+    public void updateAdminInvoiceNum() {
+        InvoiceDeliveryFeeInfo info = new InvoiceDeliveryFeeInfo(202307142397L, "ezmeal", "12", 12);
+        InvoiceDeliveryFeeInfo info1 = new InvoiceDeliveryFeeInfo(20230717941L, "cj대한통운", "34", 34);
         List<InvoiceDeliveryFeeInfo> invoiceDeliveryFeeInfoList = new ArrayList<>();
         invoiceDeliveryFeeInfoList.add(info);
         invoiceDeliveryFeeInfoList.add(info1);
         int i = adminDeliveryDao.updateAdminInvoiceNum(invoiceDeliveryFeeInfoList);
         System.out.println("i = " + i);
+    }
+
+    @Test
+    public void updateAdminBundleYN() {
+        List<Long> ordId = new ArrayList<>();
+        List<Long> dlvarId = new ArrayList<>();
+        ordId.add(20230717940L);
+        ordId.add(20230717941L);
+        dlvarId.add(13L);
+
+        BundleData bundleData = new BundleData(ordId, dlvarId);
+        adminDeliveryDao.updateAdminBundleYN(bundleData);
     }
 }

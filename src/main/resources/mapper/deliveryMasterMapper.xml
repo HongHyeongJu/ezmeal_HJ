@@ -87,4 +87,22 @@
             #{info.ordId}
         </foreach>
     </update>
+
+    <!-- 묶음 배송 update 쿼리, 단일일 경우와 다중일 경우 모두 사용 가능 -->
+    <update id="update_bundle_yn" parameterType="com.teamProject.ezmeal.domain.restAPIDomain.BundleData">
+        UPDATE tb_delivery_master
+        SET bndl_yn = IF(ord_id IN
+        <foreach collection="ord_id" item="ordId" open="(" separator="," close=")">
+            #{ordId}
+        </foreach>
+        AND dlvar_id IN
+        <foreach collection="dlvar_id" item="dlvarId" open="(" separator="," close=")">
+            #{dlvarId}
+        </foreach>
+        , 'y', 'n')
+        WHERE ord_id IN
+        <foreach collection="ord_id" item="ordId" open="(" separator="," close=")">
+            #{ordId}
+        </foreach>
+    </update>
 </mapper>

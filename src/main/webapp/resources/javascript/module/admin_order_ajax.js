@@ -17,13 +17,13 @@ const getAdminDynamicData = function (url, periodString) {
 }
 
 // 발주, 배송중, 등등  확인 버튼 누를 경우 수행되는 update 함수
-const updateAdminSubmitBtn = function (url, dataList) {
+const updateAdminSubmitBtn = function (url, dataAnyType) {
     return fetch(url, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(dataList) // update list
+        body: JSON.stringify(dataAnyType) // update list
     })
         .then(response => response.text()) // text의 경우: text(), list,map,object 경우 .json()
         .then(data => {
@@ -35,5 +35,6 @@ const updateAdminSubmitBtn = function (url, dataList) {
         })
         .catch(error => {
             console.error('Error:', error); // 따로 return으로 반환할 필요 없음
+            return 'fail';
         })
 }
