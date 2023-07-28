@@ -33,4 +33,9 @@ public class AdminDeliveryService {
     public int setShippingStatusOnlyBundleY(List<Long> orderIdList) {
         return adminDeliveryDao.updateShippingStatusOnlyBundleY(orderIdList);
     }
+
+    // 배송 중 관리에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member
+    public List<Map<String, Object>> getShippingDeliveryInfo(Map<String, Object> periodData) {
+        return adminDeliveryDao.selectShippingDeliveryInfo(periodData);
+    }
 }

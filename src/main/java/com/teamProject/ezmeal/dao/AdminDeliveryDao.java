@@ -35,4 +35,9 @@ public class AdminDeliveryDao {
     public int updateShippingStatusOnlyBundleY(List<Long> ordIdList){
         return session.update(namespace + "update_shipping_status_only_bundleY", ordIdList);
     }
+
+    // 배송 중 관리에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member
+    public List<Map<String, Object>> selectShippingDeliveryInfo(Map<String, Object> periodData) {
+        return session.selectList(namespace + "select_shipping_delivery_info_with_od_pm_m", periodData);
+    }
 }

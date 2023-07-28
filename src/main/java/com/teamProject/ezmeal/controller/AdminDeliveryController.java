@@ -1,10 +1,10 @@
 /*TODO
-*   1. upid, uptime
-*   2. 송장번호, 묶음배송 선택 등 patch 하는 경우 상황에 맞게 master history 작성 필요 - 사실 지금해야할 지도 모른다.
-*   3. 검증 - 송장, 묶음, 배송중 순서대로 진행되야하는데 이에 맞는 수정
-*   4. table 분리로 조금더 깔끔하게 수행
-*   5. 묶음배송, 배송대기 상황 관련 로직도 - 묶음배송에 넣기
-* */
+ *   1. upid, uptime
+ *   2. 송장번호, 묶음배송 선택 등 patch 하는 경우 상황에 맞게 master history 작성 필요 - 사실 지금해야할 지도 모른다.
+ *   3. 검증 - 송장, 묶음, 배송중 순서대로 진행되야하는데 이에 맞는 수정
+ *   4. table 분리로 조금더 깔끔하게 수행
+ *   5. 묶음배송, 배송대기 상황 관련 로직도 - 묶음배송에 넣기
+ * */
 package com.teamProject.ezmeal.controller;
 
 import com.teamProject.ezmeal.domain.restAPIDomain.BundleData;
@@ -26,7 +26,7 @@ public class AdminDeliveryController {
 
     // 배송 준비중 page
     @GetMapping("/prepare")
-    public String prepareDelivery(){
+    public String prepareDelivery() {
         return "admin_delivery_prepare";
     }
 
@@ -35,7 +35,7 @@ public class AdminDeliveryController {
     @ResponseBody
     // 배송 준비중 관리에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member
     // mapper에서 반환하는 value가 현재 string, num 등등 다양하기 때문에 Object로 value를 받아야 한다. 아니면 error 발생, type을 읽지 못하기 때문
-    public List<Map<String , Object>> getPrepareDeliveryInfo(@RequestBody String periodString){
+    public List<Map<String, Object>> getPrepareDeliveryInfo(@RequestBody String periodString) {
         System.out.println("--------------------------------------------------");
         System.out.println("AdminDeliveryController getPrepareDeliveryInfo 시작");
         System.out.println("getPrepareDeliveryInfo @RequestBody = " + periodString);
@@ -79,21 +79,36 @@ public class AdminDeliveryController {
         return "success";
     }
 
-    // 배송 대기 관리
+    /* 배송 대기 관리 - TODO 3차 개발 때 수행 */
     @GetMapping("/wait")
-    public String waitDelivery(){
+    public String waitDelivery() {
         return "admin_delivery_wait";
     }
 
-    // 배송 중 관리
+    /* 배송 중 관리 */
     @GetMapping("/ship")
-    public String shipDelivery(){
+    public String shipDelivery() {
         return "admin_delivery_ship";
     }
 
-    // 배송 완료 조회
+    // 동적 data 받아오기
+    @PostMapping("/ship")
+    @ResponseBody
+    // 배송 준비중 관리에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member
+    // mapper에서 반환하는 value가 현재 string, num 등등 다양하기 때문에 Object로 value를 받아야 한다. 아니면 error 발생, type을 읽지 못하기 때문
+    public List<Map<String, Object>> getShippingDeliveryInfo(@RequestBody String periodString) {
+        System.out.println("---------------------------------------------------");
+        System.out.println("AdminDeliveryController getShippingDeliveryInfo 시작");
+        System.out.println("getPrepareDeliveryInfo @RequestBody = " + periodString);
+        Map<String, Object> periodData = AdminDueModule.getPeriodData(periodString); // 기간을 받는 module 함수 {startTime: Object, endTime: Object};
+        System.out.println("periodData = " + periodData);
+        System.out.println(" db 반환 값 : " + adminDeliveryService.getShippingDeliveryInfo(periodData));
+        return adminDeliveryService.getShippingDeliveryInfo(periodData);
+    }
+
+    /* 배송 완료 조회 */
     @GetMapping("/complete")
-    public String completeDelivery(){
-    return "admin_delivery_complete";
+    public String completeDelivery() {
+        return "admin_delivery_complete";
     }
 }

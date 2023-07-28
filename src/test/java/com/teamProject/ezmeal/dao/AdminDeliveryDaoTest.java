@@ -63,4 +63,15 @@ public class AdminDeliveryDaoTest {
         ordIdList.add(20230717941L);
         adminDeliveryDao.updateShippingStatusOnlyBundleY(ordIdList);
     }
+
+    @Test
+    public void selectShippingDeliveryInfo() {
+        Map<String, Object> periodData = new HashMap<>();
+        periodData.put("startTime", null);
+        periodData.put("endTime", null);
+//        periodData.put("startTime", "2023-07-12");
+//        periodData.put("endTime", "2023-07-22");
+        List<Map<String, Object>> maps = adminDeliveryDao.selectShippingDeliveryInfo(periodData);
+        System.out.println("maps = " + maps);
+    }
 }
