@@ -2,11 +2,8 @@
 const periodBtnAll = document.querySelectorAll(".admin__period_btn"); // due btn
 const dynamicTable = document.querySelector('.admin-order__content-table > tbody'); // 동적 data 들어가는 table
 
-const selectAllBtn = document.querySelector('.order-id__all-checkBox'); // order-id를 list에 담는 전체 선택 check-box
-let selectBtns;// order-id를 list에 담는 개별 선택 check-box
-const bndlAllBtn = document.querySelector('.dlvar-id__all-checkBox'); // dlvar_id를 list에 담는 전체 선택 check-box
+const bndlAllBtn = document.querySelector('.dlvar-id__all-checkBox'); // order-id를 list에 담는 전체 선택 check-box
 let bndlBtns; // dlvar_id를 list에 담는 전체 선택 check-box
-let checkbndlBtns; // 묶음 선택된 check-box를 정말 묶음 선택 시키는 btn -> update 용
 
 // SELECT_SEQ_LIST : 주문번호 list
 // DLVAR_SEQ_LIST  : 배송번호 list
@@ -87,36 +84,14 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
     dynamicTable.innerHTML = HTML_STRING;
 
     // 동적 생성 요소에 관한 /* DOCUMENT 변수명 */ 및 /* EVENT 함수 */ TODO 따로 함수로 빼는 것이 조금 더 코드를 보기가 깔끔할 듯 하다.
-    selectBtns = document.querySelectorAll('.order-id__checkBox'); // check box 선택
-    bndlBtns = document.querySelectorAll('.dlvar-id__checkBox'); // 묶음선택 check box 선택
-    checkbndlBtns = document.querySelectorAll('.bndl__btn'); // table 내 묶음선택 button
+    bndlBtns = document.querySelectorAll('.dlvar-id__checkBox'); // check box 선택
 
-    selectBtns.forEach((selectBtn) => {
-        selectBtn.addEventListener("click",
-            event => selectProduct(event, 'tr', 'ord_id')
+    bndlBtns.forEach((bndlBtn) => {
+        bndlBtn.addEventListener("click",
+            event => selectBNDL(event, 'dlvar_id') // todo - checkbox.js method명 변경 필요
         );
     }); // 상품 선택 이벤트
-
-    bndlBtns.forEach((bndlBtn) => {
-        bndlBtn.addEventListener('click',
-            event => selectBNDL(event, 'dlvar_id'))
-    }); // 묶음 선택 체크박스 이벤트
-
-    checkbndlBtns.forEach((checkbndlBtn) => {
-        checkbndlBtn.addEventListener('click', handleBundleUpdate);
-    }); // table 내 묶음서택 btn 이벤트
-
-
-    bndlBtns.forEach((bndlBtn) => {
-        if (bndlBtn.checked) {
-            const dlvarId = parseInt(bndlBtn.getAttribute('dlvar_id')); // 배송 master pk. number type으로 바꾸는 것 주의
-            DLVAR_SEQ_LIST.push(dlvarId);
-            DLVAR_DYNAMIC_NUM++; // 수량 추가
-            console.log('DLVAR_SEQ_LIST');
-            console.log(DLVAR_SEQ_LIST);
-            console.log('DLVAR_DYNAMIC_NUM : ' + DLVAR_DYNAMIC_NUM);
-        }
-    }); // 페이지 loading시 이미 checked 된 경우 checkbox bndl 관련 변수, list에 값을 넣어 줄 것
+    dlvarInit();
 }
 
 /* function */
@@ -200,14 +175,15 @@ document.addEventListener('DOMContentLoaded',
 // due btn 누를 경우 , dynamic 수행
 periodBtnAll.forEach((periodBtn) => {
     periodBtn.addEventListener('click',
-        (event) => handlePeriodAndRender(event, '/admin/delivery')
+        (event) => handlePeriodAndRender(event, '/admin/delivery/ship')
     );
 })
-//
-// // 전체 선택 버튼 누를 경우
-// selectAllBtn.addEventListener("click",
-//     (event) => selectAllProduct('tr', 'ord_id')
-// );
+
+// 전체 선택 버튼 누를 경우
+bndlAllBtn.addEventListener("click",
+    (event) => selectAllBNDL('dlvar_id')
+);
+
 // bndlAllBtn.addEventListener('click',
 //     () => selectAllBNDL('dlvar_id')
 // );

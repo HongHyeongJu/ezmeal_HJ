@@ -58,7 +58,11 @@ const selectProduct = function (event, sequenceTag, sequenceName) {
 
 // 전체 상품 선택 함수 - 묶음 선택
 const selectAllBNDL = function (sequenceName) {
+    console.log('-----------------------');
+    console.log('selectAllBNDL');
     const check = bndlAllBtn.checked; // true, false(default)
+    console.log('bndlBtns');
+    console.log(bndlBtns);
 
     bndlBtns.forEach((bndlBtn) => {
         if (bndlBtn === null) {
