@@ -68,6 +68,17 @@ public class AdminDeliveryController {
         return "success";
     }
 
+    // 배송중으로 상태 변경, 동일 ord_id를 갔지만 묶음 배송 처리가 되지 않은 상품에 한해서는 상태가 변경되지 않고 대신 해당 상품은 송장번호,배송비,공급사 정보 초기화
+    @PatchMapping("/shipping")
+    @ResponseBody
+    public String updateAdminShipping(@RequestBody List<Long> orderIdList) {
+        System.out.println("--------------------------------------------------");
+        System.out.println("adminDeliveryController-updateAdminShipping 시작");
+        System.out.println("orderIdList = " + orderIdList); // orderIdList = [202307142397]
+        adminDeliveryService.setShippingStatusOnlyBundleY(orderIdList);
+        return "success";
+    }
+
     // 배송 대기 관리
     @GetMapping("/wait")
     public String waitDelivery(){

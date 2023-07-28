@@ -15,7 +15,7 @@ public class AdminDeliveryService {
     private final AdminDeliveryDao adminDeliveryDao;
 
     // 배송 준비중 관리에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member
-    public List<Map<String ,Object>> getPrepareDeliveryInfo(Map<String, Object> periodData){
+    public List<Map<String, Object>> getPrepareDeliveryInfo(Map<String, Object> periodData) {
         return adminDeliveryDao.selectPrepareDeliveryInfo(periodData);
     }
 
@@ -27,5 +27,10 @@ public class AdminDeliveryService {
     // 묶음 배송 update 쿼리, 단일일 경우와 다중일 경우 모두 사용 가능
     public int setAdminBundleYn(BundleData bundleData) {
         return adminDeliveryDao.updateAdminBundleYN(bundleData);
+    }
+
+    // 배송중으로 상태 변경, 동일 ord_id를 갔지만 묶음 배송 처리가 되지 않은 상품에 한해서는 상태가 변경되지 않고 대신 해당 상품은 송장번호,배송비,공급사 정보 초기화
+    public int setShippingStatusOnlyBundleY(List<Long> orderIdList) {
+        return adminDeliveryDao.updateShippingStatusOnlyBundleY(orderIdList);
     }
 }

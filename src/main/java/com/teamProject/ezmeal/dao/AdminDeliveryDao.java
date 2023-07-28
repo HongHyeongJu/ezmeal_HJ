@@ -30,4 +30,9 @@ public class AdminDeliveryDao {
     public int updateAdminBundleYN(BundleData bundleData) {
         return session.update(namespace + "update_bundle_yn", bundleData);
     }
+
+    // 배송중으로 상태 변경, 동일 ord_id를 갔지만 묶음 배송 처리가 되지 않은 상품에 한해서는 상태가 변경되지 않고 대신 해당 상품은 송장번호,배송비,공급사 정보 초기화
+    public int updateShippingStatusOnlyBundleY(List<Long> ordIdList){
+        return session.update(namespace + "update_shipping_status_only_bundleY", ordIdList);
+    }
 }

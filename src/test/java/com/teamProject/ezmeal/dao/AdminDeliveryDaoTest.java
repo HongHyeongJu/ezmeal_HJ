@@ -55,4 +55,12 @@ public class AdminDeliveryDaoTest {
         BundleData bundleData = new BundleData(ordId, dlvarId);
         adminDeliveryDao.updateAdminBundleYN(bundleData);
     }
+
+    @Test
+    public void update_shipping_status_only_bundleY() {
+        List<Long> ordIdList = new ArrayList<>();
+        ordIdList.add(20230717940L);
+        ordIdList.add(20230717941L);
+        adminDeliveryDao.updateShippingStatusOnlyBundleY(ordIdList);
+    }
 }
