@@ -186,6 +186,7 @@ async function handleClickInvoiceBtn() {
     console.log("--------------- handleClickInvoiceBtn fetch 시작 --------------");
     // const promise = await updateAdminSubmitBtn('/admin/delivery/invoice', invoiceDeliveryFeeInfoList);
     // console.log(promise); // 정상동작 확인
+    // TODO fix: hadnleClickAdminDeliveryBtn을 할 경우에만 중복 문제가 발생 - 동일내용으로 중복됨
     await handleClickAdminDeliveryBtn('/admin/delivery/invoice','/admin/delivery', invoiceDeliveryFeeInfoList, '송장번호 등록 성공');
     console.log("--------------- handleClickInvoiceBtn fetch 끝 --------------");
 

@@ -28,7 +28,7 @@ const updateAdminSubmitBtn = function (url, dataList) {
         .then(response => response.text()) // text의 경우: text(), list,map,object 경우 .json()
         .then(data => {
             console.log("---------------");
-            console.log("updateAdminSubmitBtn data");
+            console.log("updateAdminSubmitBtn data response 값");
             console.log(data);
             return data;
             // 가지고 온 data로 reload 수행

@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("admin/delivery")
+@RequestMapping("/admin/delivery")
 public class AdminDeliveryController {
     private final AdminDeliveryService adminDeliveryService;
 
