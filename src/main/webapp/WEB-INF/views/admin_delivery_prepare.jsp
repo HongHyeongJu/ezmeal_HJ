@@ -11,6 +11,7 @@
 <head>
     <title>ezmeal_admin | 배송중 준비</title>
     <link rel="stylesheet" href="/css/screens/admin_order.css">
+    <link rel="stylesheet" href="/css/screens/admin_order_delivery.css">
 </head>
 <body>
 <!-- 관리자 페이지 헤더 -->

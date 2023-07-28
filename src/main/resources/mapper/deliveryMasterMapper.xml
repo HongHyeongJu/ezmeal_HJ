@@ -65,14 +65,24 @@
 
     <!-- admin 송장번호 등록시, 송장번호, 공급사, 배송비 등록   -->
     <update id="update_admin_invoice_num" parameterType="list">
+        UPDATE tb_delivery_master
+        SET
+        vend = CASE ord_id
         <foreach collection="list" item="info" separator=" ">
-            UPDATE tb_delivery_master
-            SET
-            vend = IF(ord_id = #{info.ordId}, #{info.dlvarVend}, vend),
-            invc_id = IF(ord_id = #{info.ordId}, #{info.invoiceNum}, invc_id),
-            dexp = IF(ord_id = #{info.ordId}, #{info.dlvarExpense}, dexp)
-            WHERE ord_id IN
+            WHEN #{info.ordId} THEN #{info.dlvarVend}
         </foreach>
+        END,
+        invc_id = CASE ord_id
+        <foreach collection="list" item="info" separator=" ">
+            WHEN #{info.ordId} THEN #{info.invoiceNum}
+        </foreach>
+        END,
+        dexp = CASE ord_id
+        <foreach collection="list" item="info" separator=" ">
+            WHEN #{info.ordId} THEN #{info.dlvarExpense}
+        </foreach>
+        END
+        WHERE ord_id IN
         <foreach collection="list" item="info" open="(" separator="," close=")">
             #{info.ordId}
         </foreach>

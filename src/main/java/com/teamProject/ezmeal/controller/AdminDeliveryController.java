@@ -44,6 +44,8 @@ public class AdminDeliveryController {
         System.out.println("adminDeliveryController-updatePrepare 시작");
         System.out.println("invoiceDeliveryFeeInfoList = " + invoiceDeliveryFeeInfoList);
         // todo invoiceDeliveryFeeInfoList이 객체를 이용해서 update
+        // invoiceDeliveryFeeInfoList = [InvoiceDeliveryFeeInfo(ordId=202307142397, dlvarVend=ezmeal, invoiceNum=12, dlvarExpense=12)]
+        adminDeliveryService.setAdminInvoiceNum(invoiceDeliveryFeeInfoList);
         return "success";
     }
 

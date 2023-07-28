@@ -87,13 +87,17 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
                             <td><input type="checkbox" class="dlvar-id__checkBox" dlvar_id="${dlvar_id_arr[0]}" ${bndl_yn_arr[0] === 'y' ? 'checked' : ''}/></td> <!-- 묶음선택할 check box-->
                             <td rowspan="${count}">  <!--운송장번호-->
                                 <select name="admin-order__select-type">
-                                    <option value="ezmeal">자체배송</option>
-                                    <option value="우체국 택배">우체국배송</option>
-                                    <option value="cj 대한통운">CJ대한통운</option>
+                                    <option value="">-- 배송사 선택 --</option>
+                                    <option value="ezmeal" ${vend === 'ezmeal' ? 'selected' : ''}>자체배송</option>
+                                    <option value="우체국 택배" ${vend === '우체국 택배' ? 'selected' : ''}>우체국배송</option>
+                                    <option value="cj 대한통운" ${vend === 'cj 대한통운' ? 'selected' : ''}>CJ대한통운</option>
                                 </select>
-                                <input type="text" class="invc" value=${invc_id}>
+                                <input type="text" class="invc" placeholder="송장번호 기입" value=${invc_id}>
                             </td>
-                            <td rowspan="${count}"><input type="text" class="delivery_fee" value=${dexp}></td> <!--배송비-->
+                            <td rowspan="${count}">
+                            <!-- tag 분리 안할 시, placeholder 센터 적용 안됨 -->
+                                <input type="text" class="delivery_fee" placeholder="배송비 기입" value=${dexp}>
+                            </td> <!--배송비-->
                             <td rowspan="${count}">${vend}</td>  <!--공급사-->
                             <td>${prod_name_arr[0]}</td>  <!--주문 개별 상품-->
                             <td>${qty_arr[0]}</td>  <!--주문 수량-->
@@ -167,7 +171,7 @@ async function handleClickInvoiceBtn() {
             const invoiceNum = dlvarInfo.querySelector('input').value;
             console.log('dlvarVend' + dlvarVend);
             console.log('invoiceNum' + invoiceNum);
-            if (invoiceNum === '' || dlvarFee === '') validationNum++; // 임시 검증. 빈 값일 경우 숫자 넣어줌
+            if (dlvarVend === '' || invoiceNum === '' || dlvarFee === '') validationNum++; // 임시 검증. 빈 값일 경우 숫자 넣어줌
             // 객체 생성 및 배열에 추가
             const invoiceDeliveryFeeInfo = new InvoiceDeliveryFeeInfo(selectSeq, dlvarVend, invoiceNum, dlvarFee);
             invoiceDeliveryFeeInfoList.push(invoiceDeliveryFeeInfo);
