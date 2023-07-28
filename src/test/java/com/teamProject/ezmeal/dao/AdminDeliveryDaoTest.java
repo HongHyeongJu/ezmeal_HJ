@@ -74,4 +74,11 @@ public class AdminDeliveryDaoTest {
         List<Map<String, Object>> maps = adminDeliveryDao.selectShippingDeliveryInfo(periodData);
         System.out.println("maps = " + maps);
     }
+    @Test
+    public void update_ship_complete_stus() {
+        List<Long> list = new ArrayList<>();
+        list.add(13L);
+        list.add(53L);
+        int i = adminDeliveryDao.updateShipCompleteStatus(list);
+    }
 }

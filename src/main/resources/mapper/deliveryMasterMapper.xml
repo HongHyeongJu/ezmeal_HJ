@@ -160,4 +160,15 @@
         dm.vend
         order by date_format(od.in_dtm, '%Y-%m-%d')
     </select>
+
+    <!-- 배송중 page에서 배송완료 일 경우, stus, up-dtm update-->
+    <update id="update_ship_complete_stus_up-dtm">
+        update tb_delivery_master
+        set stus   = 'h5',
+            up_dtm = now()
+        where dlvar_id in
+        <foreach collection="list" item="dlvarId" open="(" close=")" separator=",">
+            #{dlvarId}
+        </foreach>
+    </update>
 </mapper>

@@ -40,4 +40,9 @@ public class AdminDeliveryDao {
     public List<Map<String, Object>> selectShippingDeliveryInfo(Map<String, Object> periodData) {
         return session.selectList(namespace + "select_shipping_delivery_info_with_od_pm_m", periodData);
     }
+
+    // 배송중 page에서 배송완료 일 경우, stus, up-dtm update
+    public int updateShipCompleteStatus(List<Long> dlvarIdList){
+        return session.update(namespace + "update_ship_complete_stus_up-dtm", dlvarIdList);
+    }
 }

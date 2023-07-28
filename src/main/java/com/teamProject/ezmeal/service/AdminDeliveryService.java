@@ -38,4 +38,9 @@ public class AdminDeliveryService {
     public List<Map<String, Object>> getShippingDeliveryInfo(Map<String, Object> periodData) {
         return adminDeliveryDao.selectShippingDeliveryInfo(periodData);
     }
+
+    // 배송중 page에서 배송완료 일 경우, stus, up-dtm update
+    public int setShipCompleteStatus(List<Long> dlvarIdList){
+        return adminDeliveryDao.updateShipCompleteStatus(dlvarIdList);
+    }
 }

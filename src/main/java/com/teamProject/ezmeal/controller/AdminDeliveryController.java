@@ -106,6 +106,30 @@ public class AdminDeliveryController {
         return adminDeliveryService.getShippingDeliveryInfo(periodData);
     }
 
+    @PatchMapping("/ship/complete")
+    @ResponseBody
+    public String updateAdminShipComplete(@RequestBody List<Long> dlvarIdList){
+        System.out.println("------------------------------");
+        System.out.println("AdminDeliveryController updateAdminShipComplete 시작");
+        System.out.println("dlvarId = " + dlvarIdList); // dlvarId = [13]
+        adminDeliveryService.setShipCompleteStatus(dlvarIdList);
+        return "success";
+    }
+
+    @PatchMapping("/ship/wait")
+    @ResponseBody
+    public String updateAdminShipWait(@RequestBody List<Long> dlvarId){
+        // todo. 3차때 개발
+        return "success";
+    }
+
+    @PatchMapping("/ship/prepare")
+    @ResponseBody
+    public String updateAdminShipPrepare(@RequestBody List<Long> dlvarId){
+        // todo. 3차때 개발
+        return "success";
+    }
+
     /* 배송 완료 조회 */
     @GetMapping("/complete")
     public String completeDelivery() {
