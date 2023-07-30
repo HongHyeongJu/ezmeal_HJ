@@ -39,8 +39,7 @@ const handleClickAdminDeliveryBtn = async function (fetchUrl, reloadUrl, fetchDa
     const adminDynamicData = await getAdminDynamicData(reloadUrl, {isTrusted: true});
     renderHTMLFrom(adminDynamicData);
     // rest api 이기 때문에 전역 변수 초기화를 수동으로 처리
-    SELECT_SEQ_LIST = []; // 선택된 발주 버튼
-    dynamicNum = 0; // 체크박스 선택 수 확인
-    alert(msg)
+    selectInit();
+    alert(msg);
     console.log('-------- admin_order.js handleClickAdminDeliveryBtn 끝 ------------');
 }

@@ -5,10 +5,7 @@ const dynamicTable = document.querySelector('.admin-order__content-table > tbody
 const bndlAllBtn = document.querySelector('.dlvar-id__all-checkBox'); // order-id를 list에 담는 전체 선택 check-box
 let bndlBtns; // dlvar_id를 list에 담는 전체 선택 check-box
 
-
-const deliveryCompleteFixed = document.querySelector('.admin-order__check-order button');   // 배송완료 처리 btn
-
-// todo 나머지 btn은 3차 개발 때
+const deliveryCompleteFixed = document.querySelector('.admin-order__check-order button');   // 구매확정 처리 btn
 
 
 /* Rendering 함수 */
@@ -28,12 +25,13 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
         const qty = info.qty ?? '';                         // 주문상품 수량              - 개별
 
         const count = info.count ?? '';                     // 상품 중복수량
-        const stus = info.stus ?? '';                       // 상품 상태                   - 개별
+        const stus = info.stus ?? '';                       // 상품 상태                 - 개별
 
         // 1. 개별값 존재하는 colum 배열로 빼기 - prod_name, qty, tot_prc, setl_expct_prc, 비고
+
         function convertStringToArray(str) {
             return str.split(',').map(item => item.trim());
-        }
+        } // 배열변경 내부 함수
 
         // prod_name, qty, tot_prc, setl_expct_prc 변수들을 배열로 변환
         const up_dtm_format_arr = convertStringToArray(up_dtm_format);
@@ -57,7 +55,7 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
                 forHTML += `
                             <tr>
                               <!-- 추가적인 필요한 코드 -->
-                              <td>${stus === 'a4' ? '<span>구매확정</span>' : `<input type="checkbox" class="dlvar-id__checkBox" dlvar_id="${dlvar_id_arr}" />`}</td> <!-- checkbox -->
+                              <td>${stus === 'a4' ? '<span>구매확정</span>' : `<input type="checkbox" class="dlvar-id__checkBox" dlvar_id="${dlvar_id}" />`}</td> <!-- checkbox -->
                               <td>${up_dtm_format} / ${dlvar_id}</td> <!-- 배송일 / 배송번호-->
                               <td>${prod_name}</td> <!-- 상품명 -->
                               <td>${prod_cd}</td> <!-- 상품코드 -->
@@ -74,7 +72,7 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
                             <!-- 묶음선택 btn : 묶음 선택 된 상품에 한해서 배송 : 배송 보류 처리가 가능
                             TODO. 묶음선택 check 부분 & 배송 보류의 경우 - deliveryMaster 와 deliveryHistory insert 작업이 필요할 듯하다. - 3차 개발때 진행
                             -->
-                            <td> ${stus[0] === 'a4' ? '<span>구매확정</span>' : `<input type="checkbox" class="dlvar-id__checkBox" dlvar_id="${dlvar_id_arr[0]}" />`}</td> <!-- 묶음선택할 check box-->
+                            <td> ${stus_arr[0] === 'a4' ? '<span>구매확정</span>' : `<input type="checkbox" class="dlvar-id__checkBox" dlvar_id="${dlvar_id_arr[0]}" />`}</td> <!-- 묶음선택할 check box-->
                             <td> ${up_dtm_format_arr[0]} / ${dlvar_id_arr[0]}</td> <!-- 배송일 / 배송번호 -->                            
                             <td rowspan="${count}"> ${invc_id} </td> <!-- 운송장번호 -->
                             <td rowspan="${count}">${vend}</td>      <!-- 공급사 -->
@@ -103,14 +101,6 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
 
 /* function */
 
-// 배송완료처리 todo. 배달기사 배송완료 페이지 생성해서 동적으로 배송완료 되도록 하기.
-async function handleClickDeliveryComplete() {
-    console.log('-------------------------------');
-    console.log('--------------handleClickDeliveryComplete 시작-----------------');
-    await handleClickAdminDeliveryBtn('/admin/delivery/shipping', '/admin/delivery', SELECT_SEQ_LIST, '배송중 등록 완료');
-    console.log('--------------handleClickDeliveryComplete 끝-----------------');
-}
-
 
 /* EVENT 함수 */
 
@@ -127,9 +117,7 @@ periodBtnAll.forEach((periodBtn) => {
 })
 
 // 전체 선택 버튼 누를 경우
-bndlAllBtn.addEventListener("click",
-    (event) => selectAllBNDL('dlvar_id')
-);
+bndlAllBtn.addEventListener("click", () => selectAllBNDL('dlvar_id'));
 deliveryCompleteFixed.addEventListener('click',
-    () => handleClickAdminDeliveryBtn('/admin/delivery/ship/complete', '/admin/delivery/ship', DLVAR_SEQ_LIST, '배송완료 등록 완료')
+    () => handleClickAdminDeliveryBtn('/admin/delivery/complete/fixed', '/admin/delivery/complete', DLVAR_SEQ_LIST, '구매확정 완료')
 ); // 배송완료 처리

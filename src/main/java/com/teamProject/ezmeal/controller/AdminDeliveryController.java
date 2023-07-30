@@ -151,4 +151,15 @@ public class AdminDeliveryController {
         System.out.println("배송완료 db 반환 값 : " + adminDeliveryService.getCompleteDeliveryInfo(periodData));
         return adminDeliveryService.getCompleteDeliveryInfo(periodData);
     }
+
+    @PatchMapping("/complete/fixed")
+    @ResponseBody
+    public String updateAdminFixedCompleteDeliver(@RequestBody List<Long> dlvarIdList) {
+        System.out.println("------------------------------");
+        System.out.println("AdminDeliveryController updateAdminFixedCompleteDeliver 시작");
+        System.out.println("dlvarId = " + dlvarIdList); // dlvarId = [13]
+        // todo. 1. 상태 변경 2. 후기 작성란 3. 적립금 받음 4. 관련 이력에 값 등록 5.
+        adminDeliveryService.setFixedCompleteStatus(dlvarIdList);
+        return "success";
+    }
 }

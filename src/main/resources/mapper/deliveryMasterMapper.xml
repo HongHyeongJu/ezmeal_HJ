@@ -161,7 +161,19 @@
         order by date_format(od.in_dtm, '%Y-%m-%d')
     </select>
 
+    <!-- 배송중 page에서 배송완료 일 경우, stus, up-dtm update-->
+    <update id="update_ship_complete_stus_up-dtm">
+        update tb_delivery_master
+        set stus   = 'h5',
+            up_dtm = now()
+        where dlvar_id in
+        <foreach collection="list" item="dlvarId" open="(" close=")" separator=",">
+            #{dlvarId}
+        </foreach>
+    </update>
+
     <!--  배송 완료에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member -->
+    <!--  todo. order_stus, delviery_stus 어떻게 잘 구분할지 고민후 logic 수정 필요  -->
     <select id="select_complete_delivery_info_with_od_pm_m" resultType="map">
         select
         date_format(od.in_dtm, '%Y-%m-%d')                              as in_dtm_format, # 주문일
@@ -198,15 +210,15 @@
         order by date_format(od.in_dtm, '%Y-%m-%d')
     </select>
 
-
     <!-- 배송중 page에서 배송완료 일 경우, stus, up-dtm update-->
-    <update id="update_ship_complete_stus_up-dtm">
+    <update id="update_fixed_complete_stus_up-dtm">
         update tb_delivery_master
-        set stus   = 'h5',
-            up_dtm = now()
+        set stus   = 'a4',
+        up_dtm = now()
         where dlvar_id in
         <foreach collection="list" item="dlvarId" open="(" close=")" separator=",">
             #{dlvarId}
         </foreach>
     </update>
+
 </mapper>

@@ -39,13 +39,17 @@ public class AdminDeliveryService {
         return adminDeliveryDao.selectShippingDeliveryInfo(periodData);
     }
 
+    // 배송중 page에서 배송완료 일 경우, stus, up-dtm update
+    public int setShipCompleteStatus(List<Long> dlvarIdList){
+        return adminDeliveryDao.updateShipCompleteStatus(dlvarIdList);
+    }
+
     // 배송 완료에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member
     public List<Map<String, Object>> getCompleteDeliveryInfo(Map<String, Object> periodData) {
         return adminDeliveryDao.selectCompleteDeliveryInfo(periodData);
     }
 
-    // 배송중 page에서 배송완료 일 경우, stus, up-dtm update
-    public int setShipCompleteStatus(List<Long> dlvarIdList){
-        return adminDeliveryDao.updateShipCompleteStatus(dlvarIdList);
+    public int setFixedCompleteStatus(List<Long> dlvarIdList){
+       return adminDeliveryDao.updateFixedCompleteStatus(dlvarIdList);
     }
 }

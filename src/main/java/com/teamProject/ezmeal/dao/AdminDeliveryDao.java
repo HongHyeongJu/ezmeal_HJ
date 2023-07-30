@@ -41,13 +41,18 @@ public class AdminDeliveryDao {
         return session.selectList(namespace + "select_shipping_delivery_info_with_od_pm_m", periodData);
     }
 
+    // 배송중 page에서 배송완료 일 경우, stus, up-dtm update  todo 조금더 고민 필요
+    public int updateShipCompleteStatus(List<Long> dlvarIdList){
+        return session.update(namespace + "update_ship_complete_stus_up-dtm", dlvarIdList);
+    }
+
     // 배송 완료에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member
     public List<Map<String, Object>> selectCompleteDeliveryInfo(Map<String, Object> periodData) {
         return session.selectList(namespace + "select_complete_delivery_info_with_od_pm_m", periodData);
     }
 
-    // 배송중 page에서 배송완료 일 경우, stus, up-dtm update  todo 조금더 고민 필요
-    public int updateShipCompleteStatus(List<Long> dlvarIdList){
-        return session.update(namespace + "update_ship_complete_stus_up-dtm", dlvarIdList);
+    // 배송완료 page에서 구매확정 일 경우, stus, up-dtm update
+    public int updateFixedCompleteStatus(List<Long> dlvarIdList){
+        return session.update(namespace + "update_fixed_complete_stus_up-dtm", dlvarIdList);
     }
 }

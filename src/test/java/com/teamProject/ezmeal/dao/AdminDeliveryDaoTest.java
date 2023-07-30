@@ -76,6 +76,14 @@ public class AdminDeliveryDaoTest {
     }
 
     @Test
+    public void update_ship_complete_stus() {
+        List<Long> list = new ArrayList<>();
+        list.add(13L);
+        list.add(53L);
+        int i = adminDeliveryDao.updateShipCompleteStatus(list);
+    }
+
+    @Test
     public void selectCompleteDeliveryInfo() {
         Map<String, Object> periodData = new HashMap<>();
         periodData.put("startTime", null);
@@ -87,10 +95,11 @@ public class AdminDeliveryDaoTest {
     }
 
     @Test
-    public void update_ship_complete_stus() {
+    public void update_fixed_complete_stus_up() {
         List<Long> list = new ArrayList<>();
         list.add(13L);
         list.add(53L);
-        int i = adminDeliveryDao.updateShipCompleteStatus(list);
+        list.add(52L);
+        int i = adminDeliveryDao.updateFixedCompleteStatus(list);
     }
 }
