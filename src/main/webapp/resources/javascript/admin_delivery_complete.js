@@ -6,9 +6,7 @@ const bndlAllBtn = document.querySelector('.dlvar-id__all-checkBox'); // order-i
 let bndlBtns; // dlvar_id를 list에 담는 전체 선택 check-box
 
 
-const deliveryComplete = document.querySelector('.admin-order__check-order button:nth-child(1)');   // 배송완료 처리 btn
-const deliveryWait = document.querySelector('.admin-order__check-order button:nth-child(2)');       // 배송대기 처리 btn
-const deliveryPrepare = document.querySelector('.admin-order__check-order button:nth-child(2)');    // 배송준비중 처리 btn
+const deliveryCompleteFixed = document.querySelector('.admin-order__check-order button');   // 배송완료 처리 btn
 
 // todo 나머지 btn은 3차 개발 때
 
@@ -26,8 +24,11 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
         const invc_id = info.invc_id ?? '';                 // 송장번호
         const vend = info.vend ?? '';                       // 공급회사
         const prod_name = info.prod_name ?? '';             // 주문상품 명                - 개별
-        const qty = info.qty ?? '';                         // 주문상품 수량               - 개별
+        const prod_cd = info.prod_cd ?? '';                 // 주문상품 pk               - 개별
+        const qty = info.qty ?? '';                         // 주문상품 수량              - 개별
+
         const count = info.count ?? '';                     // 상품 중복수량
+        const stus = info.stus ?? '';                       // 상품 상태                   - 개별
 
         // 1. 개별값 존재하는 colum 배열로 빼기 - prod_name, qty, tot_prc, setl_expct_prc, 비고
         function convertStringToArray(str) {
@@ -38,7 +39,9 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
         const up_dtm_format_arr = convertStringToArray(up_dtm_format);
         const dlvar_id_arr = convertStringToArray(dlvar_id);
         const prod_name_arr = convertStringToArray(prod_name);
+        const prod_cd_arr = convertStringToArray(prod_cd);
         const qty_arr = convertStringToArray(qty);
+        const stus_arr = convertStringToArray(stus);
 
         // 2. 벡틱 내부에 for문 돌리기
         if (count > 1) {
@@ -46,15 +49,18 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
                 const up_dtm_format = up_dtm_format_arr[i];
                 const dlvar_id = dlvar_id_arr[i];
                 const prod_name = prod_name_arr[i];
+                const prod_cd = prod_cd_arr[i];
                 const currentQty = qty_arr[i];
+                const stus = stus_arr[i];
 
                 // 생성된 템플릿 문자열 추가
                 forHTML += `
                             <tr>
                               <!-- 추가적인 필요한 코드 -->
-                              <td><input type="checkbox" class="dlvar-id__checkBox" dlvar_id="${dlvar_id}" /></td> <!-- checkbox -->
+                              <td>${stus === 'a4' ? '<span>구매확정</span>' : `<input type="checkbox" class="dlvar-id__checkBox" dlvar_id="${dlvar_id_arr}" />`}</td> <!-- checkbox -->
                               <td>${up_dtm_format} / ${dlvar_id}</td> <!-- 배송일 / 배송번호-->
                               <td>${prod_name}</td> <!-- 상품명 -->
+                              <td>${prod_cd}</td> <!-- 상품코드 -->
                               <td>${currentQty}</td> <!-- 수량 -->
                               <td>비고</td>
                             </tr>
@@ -68,11 +74,12 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
                             <!-- 묶음선택 btn : 묶음 선택 된 상품에 한해서 배송 : 배송 보류 처리가 가능
                             TODO. 묶음선택 check 부분 & 배송 보류의 경우 - deliveryMaster 와 deliveryHistory insert 작업이 필요할 듯하다. - 3차 개발때 진행
                             -->
-                            <td><input type="checkbox" class="dlvar-id__checkBox" dlvar_id="${dlvar_id_arr[0]}" /></td> <!-- 묶음선택할 check box-->
+                            <td> ${stus[0] === 'a4' ? '<span>구매확정</span>' : `<input type="checkbox" class="dlvar-id__checkBox" dlvar_id="${dlvar_id_arr[0]}" />`}</td> <!-- 묶음선택할 check box-->
                             <td> ${up_dtm_format_arr[0]} / ${dlvar_id_arr[0]}</td> <!-- 배송일 / 배송번호 -->                            
                             <td rowspan="${count}"> ${invc_id} </td> <!-- 운송장번호 -->
                             <td rowspan="${count}">${vend}</td>      <!-- 공급사 -->
                             <td>${prod_name_arr[0]}</td>             <!-- 주문 개별 상품명 -->
+                            <td>${prod_cd_arr[0]}</td>                  <!--주문 수량-->
                             <td>${qty_arr[0]}</td>                   <!--주문 수량-->
                             <td>비고</td>
                         </tr>
@@ -104,15 +111,12 @@ async function handleClickDeliveryComplete() {
     console.log('--------------handleClickDeliveryComplete 끝-----------------');
 }
 
-// 배송대기처리
-
-// 배송준비중 처리
 
 /* EVENT 함수 */
 
 // 처음 html loading 후, 바로 수행되는 함수, html 문서 load 된 후 실행되는 js 함수
 document.addEventListener('DOMContentLoaded',
-    (event) => firstRenderData('/admin/delivery/ship', event)
+    (event) => firstRenderData('/admin/delivery/complete', event)
 );
 
 // due btn 누를 경우 , dynamic 수행
@@ -126,13 +130,6 @@ periodBtnAll.forEach((periodBtn) => {
 bndlAllBtn.addEventListener("click",
     (event) => selectAllBNDL('dlvar_id')
 );
-
-deliveryComplete.addEventListener('click',
+deliveryCompleteFixed.addEventListener('click',
     () => handleClickAdminDeliveryBtn('/admin/delivery/ship/complete', '/admin/delivery/ship', DLVAR_SEQ_LIST, '배송완료 등록 완료')
 ); // 배송완료 처리
-deliveryWait.addEventListener('click',
-    () => handleClickAdminDeliveryBtn('/admin/delivery/ship/wait', '/admin/delivery/ship', DLVAR_SEQ_LIST, '배송대기 등록 완료')
-); // 배송대기 처리 btn
-deliveryPrepare.addEventListener('click',
-    () => handleClickAdminDeliveryBtn('/admin/delivery/ship/prepare', '/admin/delivery/ship', DLVAR_SEQ_LIST, '배송준비중 등록 완료')
-); // 배송준비중 처리 btn

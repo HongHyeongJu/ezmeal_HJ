@@ -74,6 +74,18 @@ public class AdminDeliveryDaoTest {
         List<Map<String, Object>> maps = adminDeliveryDao.selectShippingDeliveryInfo(periodData);
         System.out.println("maps = " + maps);
     }
+
+    @Test
+    public void selectCompleteDeliveryInfo() {
+        Map<String, Object> periodData = new HashMap<>();
+        periodData.put("startTime", null);
+        periodData.put("endTime", null);
+//        periodData.put("startTime", "2023-07-12");
+//        periodData.put("endTime", "2023-07-22");
+        List<Map<String, Object>> maps = adminDeliveryDao.selectCompleteDeliveryInfo(periodData);
+        System.out.println("maps = " + maps);
+    }
+
     @Test
     public void update_ship_complete_stus() {
         List<Long> list = new ArrayList<>();
