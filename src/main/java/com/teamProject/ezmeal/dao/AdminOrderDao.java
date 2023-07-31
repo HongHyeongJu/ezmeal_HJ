@@ -1,5 +1,6 @@
 package com.teamProject.ezmeal.dao;
 
+import com.teamProject.ezmeal.domain.joinDomain.AdminOrderOrderDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -24,7 +25,7 @@ public class AdminOrderDao {
     }
 
     // admin 발주 버튼 누른 것, update 하기 - tb_order_detail 같이 update 수행
-    public int updateOrderMasterOrderDetailStatusAfterAdminOrderCheckBtn(List<Long> ordIdList) {
-        return session.update(namespace + "update_order_master_order_detail_status_after_admin_order_check_btn", ordIdList);
+    public int updateOrderMasterOrderDetailStatusAfterAdminOrderCheckBtn(AdminOrderOrderDto afterOrderCheckData) {
+        return session.update(namespace + "update_order_master_order_detail_status_after_admin_order_check_btn", afterOrderCheckData);
     }
 }

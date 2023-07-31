@@ -179,8 +179,7 @@ change this template use File | Settings | File Templates. --%>
                                 <a href="/login?redirectURL=/cart">로그인해주세요</a>
                             </c:when>
                             <c:otherwise>
-                                <p>${defaultAddress.desti}</p>
-                                <p>${defaultAddress.desti_dtl}</p>
+                                <p>${defaultAddress.desti} ${defaultAddress.desti_dtl}</p>
                             </c:otherwise>
                         </c:choose>
                     </div>

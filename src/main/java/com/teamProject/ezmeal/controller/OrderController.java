@@ -206,7 +206,7 @@ public class OrderController {
                     orderAddress.getDesti_dtl(),
                     orderPaymentAddressData.getDeliveryPlace(),
                     orderPaymentAddressData.getDeliveryDetail() + orderPaymentAddressData.getDeliveryInput(),
-                    "dr",
+                    "h1",
                     "ma",
                     orderPaymentAddressData.getDeliveryMsg(),
                     "중");

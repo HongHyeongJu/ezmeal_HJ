@@ -301,7 +301,8 @@ button icon 누르면 위 아래로 변경되는 JS 수행 필요
     align-items: baseline;
     width: 245px;
     box-sizing: border-box;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
+    margin-bottom:10px;
     border-bottom: 0.1px solid #28a745;
 }
 
@@ -317,8 +318,12 @@ button icon 누르면 위 아래로 변경되는 JS 수행 필요
     height: 64px;
     box-sizing: border-box;
     padding-bottom: 16px;
+    margin-bottom:20px;
 }
 
+.dlvar_destination p {
+    line-height: 2;
+}
 /* 공통 button
 배송지 변경 & 주문하기
  */

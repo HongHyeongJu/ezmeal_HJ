@@ -7,4 +7,14 @@
         insert into tb_order_status_history (ord_id, stus)
         values (#{ordId}, 'oc');
     </insert>
+
+    <!-- 주문 발주 버튼 클릭시, 이력이 남음. 발주 확인 버튼은 모든 주문 상세를 통합하므로 주문상세에 관한 정보 고려할 필요 없다. -->
+    <insert id="insert_order_after_check_admin_order" parameterType="com.teamProject.ezmeal.domain.joinDomain.AdminOrderOrderDto">
+            insert into tb_order_status_history (ord_id, stus, chg_dtm, chg_rsn, in_id, up_id)
+            values
+        <foreach collection="orderIdList" item="orderId" separator=",">
+            (#{orderId}, #{status}, now(), #{changeReason}, #{id}, #{id})
+        </foreach>
+    </insert>
+
 </mapper>
