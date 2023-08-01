@@ -23,7 +23,7 @@
   <div class="singletyp_recoprod">
     <ul class="recoprod_ul">
       <span class="singletyp_title">
-        <i class="fas fa-bread-slice"></i>직장인을 위한 추천 !
+        <i class="fas fa-suitcase"></i>&nbsp;직장인을 위한 추천 !
       </span>
     </ul>
     <ul class="recoprod_ul">
@@ -32,21 +32,24 @@
       </li>
 
       <c:forEach var="empl" items="${emplList}" varStatus="status">
+      <a href="/product/detail?cate_cd=05&prod_cd=${empl.prod_cd}">
       <li class="health_prod_li">
         <div class="prod_outer">
           <c:set var="emplImg" value="${prodImgMap[empl.prod_cd]}" />
           <figure>
             <img src="/img/${productImage.url}.png">
           </figure>
-          <div class="prod_text_number">
+          <div class="prod_text">
             <span class="pord_name">${empl.name}</span>
-            <br>
+          </div>
+          <div class="prod_number">
             <span class="dc_pt">10%</span>
             <span class="sale_prc">${empl.sale_prc}원</span>
             <del class="cnsmr_prc">${empl.cnsmr_prc}원</del>
           </div>
         </div>
       </li>
+      </a>
       </c:forEach>
       <!-- prod_li 5번 반복 출력 -->
 
@@ -60,7 +63,7 @@
   <div class="singletyp_recoprod">
     <ul class="recoprod_ul">
       <span class="singletyp_title">
-        <i class="fas fa-bread-slice"></i>헬스인을 위한 추천 !
+        <i class="fas fa-dumbbell"></i>&nbsp;헬스인을 위한 추천 !
       </span>
     </ul>
     <ul class="recoprod_ul">
@@ -75,9 +78,10 @@
             <figure>
               <img src="/img/${healthImg.url}.png">
             </figure>
-            <div class="prod_text_number">
+            <div class="prod_text">
               <span class="pord_name">${health.name}</span>
-              <br>
+            </div>
+            <div class="prod_number">
               <span class="dc_pt">10%</span>
               <span class="sale_prc">${health.sale_prc}원</span>
               <del class="cnsmr_prc">${health.cnsmr_prc}원</del>
@@ -98,7 +102,7 @@
   <div class="singletyp_recoprod">
     <ul class="recoprod_ul">
       <span class="singletyp_title">
-        <i class="fas fa-bread-slice"></i>먹잘알을 위한 추천 !
+        <i class="far fa-kiss-wink-heart"></i>&nbsp;먹잘알을 위한 추천 !
       </span>
     </ul>
     <ul class="recoprod_ul">
@@ -113,9 +117,10 @@
             <figure>
               <img src="/img/${eatImg.url}.png">
             </figure>
-            <div class="prod_text_number">
+            <div class="prod_text">
               <span class="pord_name">${eat.name}</span>
-              <br>
+            </div>
+            <div class="prod_number">
               <span class="dc_pt">10%</span>
               <span class="sale_prc">${eat.sale_prc}원</span>
               <del class="cnsmr_prc">${eat.cnsmr_prc}원</del>
@@ -131,12 +136,12 @@
 
 
 
-<!------------------- 자취생을 위한 --------------------->
+<!------------------- 자취러를 위한 --------------------->
 <div class="recoprod_wrapper" id="home">
   <div class="singletyp_recoprod">
     <ul class="recoprod_ul">
       <span class="singletyp_title">
-        <i class="fas fa-bread-slice"></i>자취러를 위한 추천 !
+        <i class="fas fa-house-user"></i>&nbsp;자취러를 위한 추천 !
       </span>
     </ul>
     <ul class="recoprod_ul">
@@ -151,9 +156,10 @@
             <figure>
               <img src="/img/${homeImg.url}.png">
             </figure>
-            <div class="prod_text_number">
+            <div class="prod_text">
               <span class="pord_name">${home.name}</span>
-              <br>
+            </div>
+            <div class="prod_number">
               <span class="dc_pt">10%</span>
               <span class="sale_prc">${home.sale_prc}원</span>
               <del class="cnsmr_prc">${home.cnsmr_prc}원</del>
