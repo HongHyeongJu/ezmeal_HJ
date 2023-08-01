@@ -168,7 +168,6 @@ async function handleClickInvoiceBtn() {
             const dlvarVend = dlvarInfo.querySelector('select').value;
             console.log('dlvarVend' + dlvarVend);
             const invoiceNum = dlvarInfo.querySelector('input').value;
-            console.log('dlvarVend' + dlvarVend);
             console.log('invoiceNum' + invoiceNum);
             if (dlvarVend === '' || invoiceNum === '' || dlvarFee === '') validationNum++; // 임시 검증. 빈 값일 경우 숫자 넣어줌
             // 객체 생성 및 배열에 추가

@@ -68,8 +68,8 @@
             od.up_id = #{id}
         where om.ord_id = od.ord_id
           and om.ord_id in
-        <foreach collection="orderIdList" item="ord_id" open="(" separator="," close=")">
-            #{ord_id}
+        <foreach collection="pkIdList" item="pk_id" open="(" separator="," close=")">
+            #{pk_id}
         </foreach>
     </update>
 </mapper>

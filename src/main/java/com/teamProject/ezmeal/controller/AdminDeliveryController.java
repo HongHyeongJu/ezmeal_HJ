@@ -7,6 +7,9 @@
  * */
 package com.teamProject.ezmeal.controller;
 
+import com.teamProject.ezmeal.domain.AdminMemberDto;
+import com.teamProject.ezmeal.domain.joinDomain.AdminOrderDeliveryDto;
+import com.teamProject.ezmeal.domain.joinDomain.AdminOrderOrderDto;
 import com.teamProject.ezmeal.domain.restAPIDomain.BundleData;
 import com.teamProject.ezmeal.domain.restAPIDomain.InvoiceDeliveryFeeInfo;
 import com.teamProject.ezmeal.module.AdminDueModule;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,6 +29,15 @@ public class AdminDeliveryController {
     private final AdminDeliveryService adminDeliveryService;
 
     /* ------------- 배송 준비중 page ------------- */
+    /* todo - 배송 준비중 logic
+     *   이전 : 송장 번호 등록 -> 묶음 처리 -> 배송중
+     *   변경 : 묶음 처리 -> 송장번호 등록 -> 배송중  -> ( 배송중 시, bundle check 안되는 경우 자동으로 배송 보류처리로 넘김 )
+     *           * 송장번호 넣을 때는 걍 한꺼번에 넣기, history만 등록하지 말고, 너무 복잡해짐 -> 배송 상세 table 만들고 분리할 경우 고민할 것
+     *   현재 수행 할 것 : 현재 로직 유지하되, 보류처리 관련 로직은 가만히 둘 것, 3차 때 대거 수정
+     *       1. 송장 번호 등록 (all) : 현재는 ordId 나중에는 dlvarId로 처리
+     *       2. 묶음 배송 처리
+     *       3. 배송 중 상태 변경 - 묶음 처리 되지 않은 로지 reset 처리 (reset 처리에관한 이력 logic 작성 말것 - 3차때 대거 수정)
+     * */
     @GetMapping("/prepare")
     public String prepareDelivery() {
         return "admin_delivery_prepare";
@@ -45,18 +58,7 @@ public class AdminDeliveryController {
         return adminDeliveryService.getPrepareDeliveryInfo(periodData);
     }
 
-    @PatchMapping("/invoice")
-    @ResponseBody
-    public String updateAdminInvoice(@RequestBody List<InvoiceDeliveryFeeInfo> invoiceDeliveryFeeInfoList) {
-        System.out.println("--------------------------------------------------");
-        System.out.println("adminDeliveryController-updatePrepare 시작");
-        System.out.println("invoiceDeliveryFeeInfoList = " + invoiceDeliveryFeeInfoList);
-        // todo invoiceDeliveryFeeInfoList이 객체를 이용해서 update
-        // invoiceDeliveryFeeInfoList = [InvoiceDeliveryFeeInfo(ordId=202307142397, dlvarVend=ezmeal, invoiceNum=12, dlvarExpense=12)]
-        adminDeliveryService.setAdminInvoiceNum(invoiceDeliveryFeeInfoList);
-        return "success";
-    }
-
+    // 배송 준비중 묶음 배송
     @PatchMapping("/bundle")
     @ResponseBody
     public String updateAdminBundle(@RequestBody BundleData bundleData) {
@@ -68,14 +70,78 @@ public class AdminDeliveryController {
         return "success";
     }
 
+    // 배송 준비중 송장번호 등록 - table 분리가 안된 현 상황에서는 all 송장번호 등록, 이후 배송중으로 변경시 제거
+    /* todo
+     *   1. stus a1 -> a2, h1
+     *       1.1. update | od,dm : h1 -> h2
+     *       1.2. insert | dh : h1 -> h2
+     *                           * 취소, 반품, 묶음 배송 아닌 경우 == 모든 경우가 동일 할 때 주문상세 번호 : 1
+     *       1.3.                * osh : 송장 관련 부분은 얘 역할이 아님
+     *       1.4.                * om  : 송장 관련 stus 변경은 일단 안함. 배송중으로 역할 넘김
+     *  2. 배송보류 : 배송보류 btn or 배송중일 때 묶음버튼 아닐경우
+     * */
+    @PatchMapping("/invoice")
+    @ResponseBody
+    public String updateAdminInvoice(@SessionAttribute AdminMemberDto loginAdminInfo, @RequestBody List<InvoiceDeliveryFeeInfo> invoiceDeliveryFeeInfoList) {
+        System.out.println("--------------------------------------------------");
+        System.out.println("adminDeliveryController-updatePrepare 시작");
+        System.out.println("invoiceDeliveryFeeInfoList = " + invoiceDeliveryFeeInfoList); // invoiceDeliveryFeeInfoList = [InvoiceDeliveryFeeInfo(ordId=202307142397, dlvarVend=ezmeal, invoiceNum=12, dlvarExpense=12)]
+
+        List<Long> orderIdList = invoiceDeliveryFeeInfoList.stream()
+                .map(InvoiceDeliveryFeeInfo::getOrdId)
+                .collect(Collectors.toList()); // ordId로 dlvarId list 받아오기
+        System.out.println("ordIdList = " + orderIdList);
+
+        List<Long> orderProdDetailIdListBndlY = adminDeliveryService.getAdminDlvarIdBndlY(orderIdList); // 묶음처리된 dlvarIdList 받기
+        System.out.println("orderProdDetailIdListBndlY = " + orderProdDetailIdListBndlY);
+
+        int i = adminDeliveryService.setAdminInvoiceNum(invoiceDeliveryFeeInfoList);// 송장번호, 공급사, 배송비 등록
+        System.out.println("adminDeliveryService.setAdminInvoiceNum = " + i);
+
+        AdminOrderOrderDto adminOrderOrderDetailData = new AdminOrderOrderDto("h2", loginAdminInfo.getEmp_acct_id(), orderProdDetailIdListBndlY, "송장번호 등록");
+        int i1 = adminDeliveryService.setInvoiceStatus(adminOrderOrderDetailData);// od, dm에 송장번호 등록 status update 수행
+        System.out.println("adminDeliveryService.setInvoiceStatus = " + i1);
+
+        AdminOrderOrderDto adminOrderOrderData = new AdminOrderOrderDto(orderIdList, "송장번호 등록");
+        int i2 = adminDeliveryService.setInvoiceDeliveryHistory(adminOrderOrderData);// delivery history 작성
+        System.out.println("adminDeliveryService.setInvoiceDeliveryHistory = " + i2);
+
+        return "success";
+    }
+
+
     // 배송중으로 상태 변경, 동일 ord_id를 갔지만 묶음 배송 처리가 되지 않은 상품에 한해서는 상태가 변경되지 않고 대신 해당 상품은 송장번호,배송비,공급사 정보 초기화
+    /* todo
+     *   1. stus a1 -> a2, h1
+     *       1.1. update | od,dm - bndl_y : h2 -> h4  & od,dm - bndl_n : h2 -> h3
+     *       1.2. insert | dh : h3, h4 변경사항 모두 저장
+     *       1.3.                * osh : 송장 관련 부분은 얘 역할이 아님
+     *       1.4. om  | 배송중 or 부분 배송중으로 선택 필요
+     *  2. 배송보류 : 배송보류 btn or 배송중일 때 묶음버튼 아닐경우
+     * */
     @PatchMapping("/shipping")
     @ResponseBody
-    public String updateAdminShipping(@RequestBody List<Long> orderIdList) {
+    public String updateAdminShipping(@SessionAttribute AdminMemberDto loginAdminInfo, @RequestBody List<Long> orderIdList) {
         System.out.println("--------------------------------------------------");
         System.out.println("adminDeliveryController-updateAdminShipping 시작");
         System.out.println("orderIdList = " + orderIdList); // orderIdList = [202307142397]
-        adminDeliveryService.setShippingStatusOnlyBundleY(orderIdList);
+        // 1. od, dm - bndl_y : h2 -> h4 | od, dm - bndl_n : h2 -> h3
+        // 2. od, dm - bndl_n 인것 , 배송비, 송장번호, 공급사 null로 초기화
+        // 2. dh - od or dm에서 수행한 것 넣기
+        // 3. om - 부분 배송중으로 변경
+        // List<Long> orderProdDetailIdListBndlN = adminDeliveryService.getAdminDlvarIdBndlN(orderIdList); // ordId로 묶음처리 안된 dlvarId list 받아오기 |  송장번호 등록 상태, 배송중 처리 상태 때 사용
+        //todo.  선택 안된 <> 이용 해서 orderDetailPk 가져와서 동일 작업 수행 | 선택 안된거랑 선택 된거 개수 비교해서 om status 작업 수행 - 배송중일 때 사용 - List<Integer> dlvarIdCountList = adminDeliveryService.getDlvarIdCountList(orderIdList); // 송장번호 등록하는 ordId의 모든 ordDetailId 개수
+        AdminOrderOrderDto adminOrderOrderBundleY = new AdminOrderOrderDto("h4", loginAdminInfo.getEmp_acct_id(), orderIdList, "배송중");
+        AdminOrderOrderDto adminOrderOrderBundleN = new AdminOrderOrderDto("h3", loginAdminInfo.getEmp_acct_id(), orderIdList, "배송보류");
+
+        adminDeliveryService.setShippingStatusBundleY(adminOrderOrderBundleY); // 배송중 버튼 누를 시, bndl_y인 order Detail, delivery master status 변경
+        adminDeliveryService.setShippingStatusBundleN(adminOrderOrderBundleN); // 배송중 버튼 누를 시, bndl_n인 order Detail, delivery master status 변경 및 배송비, 공급사, 송장번호 초기화
+
+        adminDeliveryService.setShippingDeliveryHistoryBundleY(adminOrderOrderBundleY); // 배송중 버튼 누를 시, 배송 master 정보를 통해서 bndl_y인 delivery history insert
+        adminDeliveryService.setShippingDeliveryHistoryBundleN(adminOrderOrderBundleN); // 배송중 버튼 누를 시, 배송 master 정보를 통해서 bndl_n인 delivery history insert
+
+        adminDeliveryService.setOrderMasterShippingStatus(orderIdList); // 배송중 버튼 누를 시, order master 상태를 update : bndl_n == 'h3' 존재시, 부분배송중인 'h5' 없을 시 'h4' 상태변경
+
         return "success";
     }
 
@@ -109,7 +175,7 @@ public class AdminDeliveryController {
     // 배송완료 버튼 누를 시, 배송완료 상태로 변경
     @PatchMapping("/ship/complete")
     @ResponseBody
-    public String updateAdminShipComplete(@RequestBody List<Long> dlvarIdList){
+    public String updateAdminShipComplete(@RequestBody List<Long> dlvarIdList) {
         System.out.println("------------------------------");
         System.out.println("AdminDeliveryController updateAdminShipComplete 시작");
         System.out.println("dlvarId = " + dlvarIdList); // dlvarId = [13]
@@ -120,7 +186,7 @@ public class AdminDeliveryController {
     // 배송대기 버튼 누를 시, 배송대기 상태로 변경
     @PatchMapping("/ship/wait")
     @ResponseBody
-    public String updateAdminShipWait(@RequestBody List<Long> dlvarId){
+    public String updateAdminShipWait(@RequestBody List<Long> dlvarId) {
         // todo. 3차때 개발
         return "success";
     }
@@ -128,7 +194,7 @@ public class AdminDeliveryController {
     // 배송준비중 버튼 누를 시, 배송준비중 상태로 변경
     @PatchMapping("/ship/prepare")
     @ResponseBody
-    public String updateAdminShipPrepare(@RequestBody List<Long> dlvarId){
+    public String updateAdminShipPrepare(@RequestBody List<Long> dlvarId) {
         // todo. 3차때 개발
         return "success";
     }

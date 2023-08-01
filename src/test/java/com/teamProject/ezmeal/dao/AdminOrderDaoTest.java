@@ -42,7 +42,7 @@ public class AdminOrderDaoTest {
         List<Long> orderIdList = new ArrayList<>();
         orderIdList.add(20230717940L);
         orderIdList.add(20230717941L);
-        AdminOrderOrderDto adminOrderOrderDto = new AdminOrderOrderDto("h1",  "taewan", orderIdList);
+        AdminOrderOrderDto adminOrderOrderDto = new AdminOrderOrderDto("h1",  "taewan", orderIdList, "발주 확인");
         int i = adminOrderDao.updateOrderMasterOrderDetailStatusAfterAdminOrderCheckBtn(adminOrderOrderDto);
         System.out.println("i = " + i);
     }
