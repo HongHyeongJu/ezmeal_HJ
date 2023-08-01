@@ -51,7 +51,7 @@ public class AdminDeliveryService {
     }
 
     // 송장 번호 등록 된 정보를 통해서 delivery history insert
-    public int setInvoiceDeliveryHistory (AdminOrderOrderDto adminOrderOrderDto) {
+    public int setInvoiceDeliveryHistory(AdminOrderOrderDto adminOrderOrderDto) {
         return adminDeliveryDao.insertInvoiceDeliveryHistory(adminOrderOrderDto);
     }
 
@@ -72,12 +72,12 @@ public class AdminDeliveryService {
     }
 
     // 배송중 버튼 누를 시, 배송 master 정보를 통해서 bndl_y인 delivery history insert
-    public int  setShippingDeliveryHistoryBundleY(AdminOrderOrderDto adminOrderOrderDto){
+    public int setShippingDeliveryHistoryBundleY(AdminOrderOrderDto adminOrderOrderDto) {
         return adminDeliveryDao.insertShippingDeliveryHistoryBundleY(adminOrderOrderDto);
     }
 
     // 배송중 버튼 누를 시, 배송 master 정보를 통해서 bndl_n인 delivery history insert
-    public int  setShippingDeliveryHistoryBundleN(AdminOrderOrderDto adminOrderOrderDto){
+    public int setShippingDeliveryHistoryBundleN(AdminOrderOrderDto adminOrderOrderDto) {
         return adminDeliveryDao.insertShippingDeliveryHistoryBundleN(adminOrderOrderDto);
     }
 
@@ -91,17 +91,33 @@ public class AdminDeliveryService {
         return adminDeliveryDao.selectShippingDeliveryInfo(periodData);
     }
 
-    // 배송중 page에서 배송완료 일 경우, stus, up-dtm update
-    public int setShipCompleteStatus(List<Long> dlvarIdList){
-        return adminDeliveryDao.updateShipCompleteStatus(dlvarIdList);
+    // ordId로 dlvarId 받아오기
+    public List<Long> getDeliverIdFromOrderId(List<Long> ordIdList) {
+        return adminDeliveryDao.selectDeliverIdFromOrderId(ordIdList);
     }
+
+    // 배송중 page에서 배송완료 일 경우, stus, up-dtm update
+    public int setShipCompleteStatus(AdminOrderOrderDto adminOrderOrderDto) {
+        return adminDeliveryDao.updateShipCompleteStatus(adminOrderOrderDto);
+    }
+
+    //  배송중 page에서 배송완료 일 경우 delivery history에 insert 하기
+    public int setShipCompleteDeliveryHistory(AdminOrderOrderDto adminOrderOrderDto) {
+        return adminDeliveryDao.insertShipCompleteDeliveryHistory(adminOrderOrderDto);
+    }
+
+    // 배송중 order master 조건에 따라서 배송완료, 부분 배송완료 설정하기 : 배송준비중의 join하는 방식이 아닌 suquery로 성능 높임
+    public int setShipCompleteOrderMasterStatus(AdminOrderOrderDto adminOrderOrderDto) {
+        return adminDeliveryDao.updateShipCompleteOrderMasterStatus(adminOrderOrderDto);
+    }
+
 
     // 배송 완료에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member
     public List<Map<String, Object>> getCompleteDeliveryInfo(Map<String, Object> periodData) {
         return adminDeliveryDao.selectCompleteDeliveryInfo(periodData);
     }
 
-    public int setFixedCompleteStatus(List<Long> dlvarIdList){
-       return adminDeliveryDao.updateFixedCompleteStatus(dlvarIdList);
+    public int setFixedCompleteStatus(List<Long> dlvarIdList) {
+        return adminDeliveryDao.updateFixedCompleteStatus(dlvarIdList);
     }
 }

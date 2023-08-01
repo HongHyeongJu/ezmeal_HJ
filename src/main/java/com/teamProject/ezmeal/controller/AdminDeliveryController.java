@@ -172,21 +172,48 @@ public class AdminDeliveryController {
         return adminDeliveryService.getShippingDeliveryInfo(periodData);
     }
 
+    /* todo
+     *   1. stus h4 -> h6
+     *       1.1. update | od, dm : h4 -> h6 [dlvarId 이용]
+     *       1.2. insert | dh : h6 변경사항 모두 저장 [dlvarId 이용]
+     *       1.3.                * osh : 송장 관련 부분은 얘 역할이 아님
+     *       1.4. om     | 배송완료 or 부분 배송완료로 선택 필요 sql에서 주문번호 관련 dlvarId 개수가 h6으로 된 dlvarId 개수보다 클 경우 부분 배송완료
+     *  2. 로직 : dlvarId 관련 check box 선택하고 주문번호 관련 버튼 선택 -> 배송완료 처리
+     * */
     // 배송완료 버튼 누를 시, 배송완료 상태로 변경
     @PatchMapping("/ship/complete")
     @ResponseBody
-    public String updateAdminShipComplete(@RequestBody List<Long> dlvarIdList) {
+    public String updateAdminShipComplete(@SessionAttribute AdminMemberDto loginAdminInfo, @RequestBody List<List<Long>> ordIdDlvarIdList) {
         System.out.println("------------------------------");
         System.out.println("AdminDeliveryController updateAdminShipComplete 시작");
-        System.out.println("dlvarId = " + dlvarIdList); // dlvarId = [13]
-        adminDeliveryService.setShipCompleteStatus(dlvarIdList);
+        System.out.println("ordIdDlvarIdList = " + ordIdDlvarIdList.get(0));
+        System.out.println("ordIdDlvarIdList = " + ordIdDlvarIdList.get(1));
+        // 1. ordrId로 dlvar list 가지고 옴. 그리고 그 중 js로 가지고 온 dlvarIdList 의 교집합을 dlvarIdList로 처리 -> 해당 원하는 로직에 수행 1.1. 1.2.
+        // 2. orderId로 dm에서 h6이 아닌 것이 존재시, 부분 배송완료, 없을 시 배송완료 수행
+
+        List<Long> ordIdList = ordIdDlvarIdList.get(0);
+        List<Long> dlvarIdList1 = ordIdDlvarIdList.get(1);
+        List<Long> dlvarIdList2 = adminDeliveryService.getDeliverIdFromOrderId(ordIdList);
+
+        List<Long> dlvarIdList = dlvarIdList1.stream()
+                .filter(dlvarIdList2::contains) // dlvarIdList1의 요소가 dlvarIdLIst2의 요소를 가지고 있는지 필터
+                .collect(Collectors.toList());  // 조건에 부합한 요소를 list로 수집
+        System.out.println("dlvarIdList = " + dlvarIdList);
+
+        AdminOrderOrderDto adminOrderOrderDlvarList = new AdminOrderOrderDto("h6",  loginAdminInfo.getEmp_acct_id(), dlvarIdList, "배송 완료");
+        AdminOrderOrderDto adminOrderOrderList = new AdminOrderOrderDto("h6",  loginAdminInfo.getEmp_acct_id(), ordIdList, "배송 완료");
+
+        adminDeliveryService.setShipCompleteStatus(adminOrderOrderDlvarList); // 배송중 page에서 배송완료 일 경우, stus, up-dtm, up-id update : dm, od
+        adminDeliveryService.setShipCompleteDeliveryHistory(adminOrderOrderDlvarList); // 배송중 page에서 배송완료 일 경우 delivery history에 insert 하기
+        adminDeliveryService.setShipCompleteOrderMasterStatus(adminOrderOrderList);  // 배송중 order master 조건에 따라서 배송완료, 부분 배송완료 설정하기 : 배송준비중의 join하는 방식이 아닌 suquery로 성능 높임
+
         return "success";
     }
 
     // 배송대기 버튼 누를 시, 배송대기 상태로 변경
     @PatchMapping("/ship/wait")
     @ResponseBody
-    public String updateAdminShipWait(@RequestBody List<Long> dlvarId) {
+    public String updateAdminShipWait(@RequestBody List<List<Long>> ordIdDlvarIdList) {
         // todo. 3차때 개발
         return "success";
     }
@@ -194,7 +221,7 @@ public class AdminDeliveryController {
     // 배송준비중 버튼 누를 시, 배송준비중 상태로 변경
     @PatchMapping("/ship/prepare")
     @ResponseBody
-    public String updateAdminShipPrepare(@RequestBody List<Long> dlvarId) {
+    public String updateAdminShipPrepare(@RequestBody List<List<Long>> ordIdDlvarIdList) {
         // todo. 3차때 개발
         return "success";
     }
@@ -218,6 +245,7 @@ public class AdminDeliveryController {
         return adminDeliveryService.getCompleteDeliveryInfo(periodData);
     }
 
+    // 구매확정 logic
     @PatchMapping("/complete/fixed")
     @ResponseBody
     public String updateAdminFixedCompleteDeliver(@RequestBody List<Long> dlvarIdList) {

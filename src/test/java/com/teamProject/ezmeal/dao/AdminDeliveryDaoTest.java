@@ -78,10 +78,31 @@ public class AdminDeliveryDaoTest {
 
     @Test
     public void update_ship_complete_stus() {
-        List<Long> list = new ArrayList<>();
-        list.add(13L);
-        list.add(53L);
-        int i = adminDeliveryDao.updateShipCompleteStatus(list);
+        List<Long> dlvarIdlist = new ArrayList<>();
+        dlvarIdlist.add(14L);
+        dlvarIdlist.add(52L);
+        AdminOrderOrderDto adminOrderOrderDto = new AdminOrderOrderDto("h6",  "taewan", dlvarIdlist, "배송 완료");
+        int i = adminDeliveryDao.updateShipCompleteStatus(adminOrderOrderDto);
+    }
+
+    @Test
+    public void insert_ship_complete_delivery_hist() {
+        List<Long> dlvarIdlist = new ArrayList<>();
+        dlvarIdlist.add(14L);
+        dlvarIdlist.add(52L);
+        AdminOrderOrderDto adminOrderOrderDto = new AdminOrderOrderDto( dlvarIdlist, "배송 완료");
+        int i = adminDeliveryDao.insertShipCompleteDeliveryHistory(adminOrderOrderDto);
+        System.out.println("i = " + i);
+    }
+
+    @Test
+    public void update_ship_complete_order_master_status () {
+                List<Long> ordIdList = new ArrayList<>();
+        ordIdList.add(20230717940L);
+        ordIdList.add(20230717941L);
+        AdminOrderOrderDto adminOrderOrderDto = new AdminOrderOrderDto("h6",  "taewan", ordIdList, "배송 완료");
+        int i = adminDeliveryDao.updateShipCompleteOrderMasterStatus(adminOrderOrderDto);
+        System.out.println("i = " + i);
     }
 
     @Test
@@ -192,5 +213,14 @@ public class AdminDeliveryDaoTest {
         orderIdList.add(20230717940L);
         orderIdList.add(20230717941L);
         int i = adminDeliveryDao.updateOrderMasterShippingStatus(orderIdList);
+    }
+
+    @Test
+    public void select_dlvarId_from_ordId() {
+        List<Long> orderIdList = new ArrayList<>();
+        orderIdList.add(20230717940L);
+        orderIdList.add(20230717941L);
+        List<Long> longs = adminDeliveryDao.selectDeliverIdFromOrderId(orderIdList);
+        System.out.println("longs = " + longs);
     }
 }

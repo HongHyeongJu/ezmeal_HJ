@@ -66,6 +66,7 @@
                         <table class="admin-order__content-table">
                             <thead>
                             <tr>
+                                <th><input class="order-id__all-checkBox" type="checkbox" /></th>
                                 <th>주문일/주문번호</th>
                                 <th>주문자</th>
                                 <th><input type="checkbox" class="dlvar-id__all-checkBox"/></th>

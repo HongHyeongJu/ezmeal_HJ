@@ -2,6 +2,10 @@
 const periodBtnAll = document.querySelectorAll(".admin__period_btn"); // due btn
 const dynamicTable = document.querySelector('.admin-order__content-table > tbody'); // 동적 data 들어가는 table
 
+
+const selectAllBtn = document.querySelector('.order-id__all-checkBox'); // order-id를 list에 담는 전체 선택 check-box
+let selectBtns;// order-id를 list에 담는 개별 선택 check-box
+
 const bndlAllBtn = document.querySelector('.dlvar-id__all-checkBox'); // order-id를 list에 담는 전체 선택 check-box
 let bndlBtns; // dlvar_id를 list에 담는 전체 선택 check-box
 
@@ -63,6 +67,7 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
         }
 
         HTML_STRING += `<tr ord_id="${ord_id}"> <!-- -->
+                            <td rowspan="${count}"><input type="checkbox" class="order-id__checkBox"/></td> <!--제일 좌측 checkbox-->
                             <td rowspan="${count}">${in_dtm_format} / ${ord_id}</td> <!-- 주문일 / 주문번호 -->
                             <td rowspan="${count}">${name}</td> <!--주문자-->
                             <!-- 묶음선택 btn : 묶음 선택 된 상품에 한해서 배송 : 배송 보류 처리가 가능
@@ -84,25 +89,34 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
     dynamicTable.innerHTML = HTML_STRING;
 
     // 동적 생성 요소에 관한 /* DOCUMENT 변수명 */ 및 /* EVENT 함수 */ TODO 따로 함수로 빼는 것이 조금 더 코드를 보기가 깔끔할 듯 하다.
+    selectBtns = document.querySelectorAll('.order-id__checkBox'); // check box 선택
     bndlBtns = document.querySelectorAll('.dlvar-id__checkBox'); // check box 선택
+
+    selectBtns.forEach((selectBtn) => {
+        selectBtn.addEventListener("click",
+            event => selectProduct(event, 'tr', 'ord_id')
+        );
+    }); // 상품 선택 이벤트
 
     bndlBtns.forEach((bndlBtn) => {
         bndlBtn.addEventListener("click",
             event => selectBNDL(event, 'dlvar_id') // todo - checkbox.js method명 변경 필요
         );
     }); // 상품 선택 이벤트
-    dlvarInit();
+
+    selectInit(); // 전체 선택 초기화
+    dlvarInit();  // 묶음 선택 초기화
 }
 
 /* function */
 
 // 배송완료처리 todo. 배달기사 배송완료 페이지 생성해서 동적으로 배송완료 되도록 하기.
-async function handleClickDeliveryComplete() {
-    console.log('-------------------------------');
-    console.log('--------------handleClickDeliveryComplete 시작-----------------');
-    await handleClickAdminDeliveryBtn('/admin/delivery/shipping', '/admin/delivery', SELECT_SEQ_LIST, '배송중 등록 완료');
-    console.log('--------------handleClickDeliveryComplete 끝-----------------');
-}
+// async function handleClickDeliveryComplete() {
+//     console.log('-------------------------------');
+//     console.log('--------------handleClickDeliveryComplete 시작-----------------');
+//     await handleClickAdminDeliveryBtn('/admin/delivery/shipping', '/admin/delivery', SELECT_SEQ_LIST, '배송중 등록 완료');
+//     console.log('--------------handleClickDeliveryComplete 끝-----------------');
+// }
 
 // 배송대기처리
 
@@ -123,12 +137,15 @@ periodBtnAll.forEach((periodBtn) => {
 })
 
 // 전체 선택 버튼 누를 경우
+selectAllBtn.addEventListener("click",
+    (event) => selectAllProduct('tr', 'ord_id')
+);
 bndlAllBtn.addEventListener("click",
     (event) => selectAllBNDL('dlvar_id')
 );
 
 deliveryComplete.addEventListener('click',
-    () => handleClickAdminDeliveryBtn('/admin/delivery/ship/complete', '/admin/delivery/ship', DLVAR_SEQ_LIST, '배송완료 등록 완료')
+    () => handleClickAdminDeliveryBtn('/admin/delivery/ship/complete', '/admin/delivery/ship', [SELECT_SEQ_LIST, DLVAR_SEQ_LIST], '배송완료 등록 완료')
 ); // 배송완료 처리
 deliveryWait.addEventListener('click',
     () => handleClickAdminDeliveryBtn('/admin/delivery/ship/wait', '/admin/delivery/ship', DLVAR_SEQ_LIST, '배송대기 등록 완료')
