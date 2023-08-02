@@ -105,7 +105,7 @@ public class ProductReviewDao {
 
 
     /*모든 상품들의 개별 리뷰 평점 */
-    public Map<Long,Double> selectReviewAvgAllProduct() throws SQLException {
+    public Map<Long,Object> selectReviewAvgAllProduct() throws SQLException {
         return session.selectMap(namespace+"get_review_average_all","prod_cd");
     }
 

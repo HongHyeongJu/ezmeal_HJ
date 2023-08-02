@@ -18,12 +18,12 @@
 <body>
 
 
-<!------------------- 직장인을 위한 --------------------->
+<!------------------- 직장인을 위한 [empl]--------------------->
 <div class="recoprod_wrapper" id="empl">
   <div class="singletyp_recoprod">
     <ul class="recoprod_ul">
       <span class="singletyp_title">
-        <i class="fas fa-suitcase"></i>&nbsp;직장인을 위한 추천 !
+        <i class="fas fa-suitcase"></i>&nbsp;직장인을 위한 추천! 베스트 후기 상품만 모았어요-
       </span>
     </ul>
     <ul class="recoprod_ul">
@@ -43,7 +43,7 @@
             <span class="pord_name">${empl.name}</span>
           </div>
           <div class="prod_number">
-            <span class="dc_pt">10%</span>
+            <span class="dc_pt">${empl.dc_rate}%</span>
             <span class="sale_prc">${empl.sale_prc}원</span>
             <del class="cnsmr_prc">${empl.cnsmr_prc}원</del>
           </div>
@@ -58,12 +58,12 @@
 </div>
 
 
-<!------------------- 헬스인을 위한 --------------------->
+<!------------------- 헬스인을 위한  [health] --------------------->
 <div class="recoprod_wrapper" id="health">
   <div class="singletyp_recoprod">
     <ul class="recoprod_ul">
       <span class="singletyp_title">
-        <i class="fas fa-dumbbell"></i>&nbsp;헬스인을 위한 추천 !
+        <i class="fas fa-dumbbell"></i>&nbsp;헬스인을 위한 추천! 식단 정해드립니다-
       </span>
     </ul>
     <ul class="recoprod_ul">
@@ -72,6 +72,7 @@
       </li>
 
       <c:forEach var="health" items="${healthList}" varStatus="status">
+      <a href="/product/detail?cate_cd=05&prod_cd=${health.prod_cd}">
         <li class="health_prod_li">
           <div class="prod_outer">
             <c:set var="healthImg" value="${prodImgMap[health.prod_cd]}" />
@@ -82,12 +83,13 @@
               <span class="pord_name">${health.name}</span>
             </div>
             <div class="prod_number">
-              <span class="dc_pt">10%</span>
+              <span class="dc_pt">${health.dc_rate}%</span>
               <span class="sale_prc">${health.sale_prc}원</span>
               <del class="cnsmr_prc">${health.cnsmr_prc}원</del>
             </div>
           </div>
         </li>
+      </a>
       </c:forEach>
       <!-- prod_li 5번 반복 출력 -->
 
@@ -97,12 +99,12 @@
 
 
 
-<!------------------- 먹잘알을 위한 --------------------->
+<!------------------- 먹잘알을 위한 [eat]--------------------->
 <div class="recoprod_wrapper" id="eat">
   <div class="singletyp_recoprod">
     <ul class="recoprod_ul">
       <span class="singletyp_title">
-        <i class="far fa-kiss-wink-heart"></i>&nbsp;먹잘알을 위한 추천 !
+        <i class="far fa-kiss-wink-heart"></i>&nbsp;먹잘알을 위한 추천! 신제품을 맛보세요-
       </span>
     </ul>
     <ul class="recoprod_ul">
@@ -111,6 +113,7 @@
       </li>
 
       <c:forEach var="eat" items="${eatList}" varStatus="status">
+      <a href="/product/detail?cate_cd=05&prod_cd=${eat.prod_cd}">
         <li class="health_prod_li">
           <div class="prod_outer">
             <c:set var="eatImg" value="${prodImgMap[eat.prod_cd]}" />
@@ -121,12 +124,13 @@
               <span class="pord_name">${eat.name}</span>
             </div>
             <div class="prod_number">
-              <span class="dc_pt">10%</span>
+              <span class="dc_pt">${eat.dc_rate}%</span>
               <span class="sale_prc">${eat.sale_prc}원</span>
               <del class="cnsmr_prc">${eat.cnsmr_prc}원</del>
             </div>
           </div>
         </li>
+      </a>
       </c:forEach>
       <!-- prod_li 5번 반복 출력 -->
 
@@ -136,12 +140,12 @@
 
 
 
-<!------------------- 자취러를 위한 --------------------->
+<!------------------- 자취러를 위한 [home]--------------------->
 <div class="recoprod_wrapper" id="home">
   <div class="singletyp_recoprod">
     <ul class="recoprod_ul">
       <span class="singletyp_title">
-        <i class="fas fa-house-user"></i>&nbsp;자취러를 위한 추천 !
+        <i class="fas fa-house-user"></i>&nbsp;자취러를 위한 추천! 많이 살 수록 큰 할인-
       </span>
     </ul>
     <ul class="recoprod_ul">
@@ -150,6 +154,7 @@
       </li>
 
       <c:forEach var="home" items="${homeList}" varStatus="status">
+      <a href="/product/detail?cate_cd=05&prod_cd=${home.prod_cd}">
         <li class="health_prod_li">
           <div class="prod_outer">
             <c:set var="homeImg" value="${prodImgMap[home.prod_cd]}" />
@@ -159,13 +164,15 @@
             <div class="prod_text">
               <span class="pord_name">${home.name}</span>
             </div>
+            <c:set var="optIndexZero" value="${prodOptMap[home.prod_cd].get(0)}" />
             <div class="prod_number">
-              <span class="dc_pt">10%</span>
-              <span class="sale_prc">${home.sale_prc}원</span>
-              <del class="cnsmr_prc">${home.cnsmr_prc}원</del>
+              <span class="dc_pt">${optIndexZero.dc_rate}%</span>
+              <span class="sale_prc">${optIndexZero.sale_prc}원</span>
+              <del class="cnsmr_prc">${optIndexZero.cnsmr_prc}원</del>
             </div>
           </div>
         </li>
+      </a>
       </c:forEach>
       <!-- prod_li 5번 반복 출력 -->
 

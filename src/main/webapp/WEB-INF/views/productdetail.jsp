@@ -24,6 +24,9 @@
 <body>
 <div class="empty-space" id="section0"></div>
 
+<!-- 헤더 -->
+<jsp:include page="header.jsp"/>
+
 <!-----------------------------------------  메인 왼쪽 사진  ---------------------------------------------------->
 <div class="head_main">
   <div class="head_main_left">
@@ -72,7 +75,7 @@
           <c:set var="sale_prc" value="${optList.get(0).getSale_prc()}" />
 
           <c:if test="${cnsmr_prc != sale_prc}">
-            <strong class="dc_pt">${(cnsmr_prc - sale_prc) / cnsmr_prc * 100}%</strong>
+            <strong class="dc_pt">${optList.get(0).getDc_rate()}}%</strong>
           </c:if>
 
           <strong class="sale_prc">${sale_prc}&nbsp;원</strong>
@@ -87,7 +90,7 @@
           <c:set var="sale_prc" value="${product.getSale_prc()}" />
 
           <c:if test="${cnsmr_prc != sale_prc}">
-            <strong class="dc_pt">${(cnsmr_prc - sale_prc) / cnsmr_prc * 100}%</strong>
+            <strong class="dc_pt">${product.getDc_rate()}%</strong>
           </c:if>
 
           <strong class="sale_prc">${sale_prc}&nbsp;원</strong>
@@ -131,9 +134,8 @@
         <div class="hidden_option" id="opt_div">
           <select class="select_box" id="opt_select">
             <c:forEach items="${optList}" var="option">
-              <c:set var="discount" value="${(option.cnsmr_prc - option.sale_prc) / option.cnsmr_prc * 100}" />
               <option value="${option.opt_seq}_${option.sale_prc}">
-                &nbsp;${product.getName()}&nbsp;${option.name}&nbsp;&nbsp;${option.sale_prc}원&nbsp;&nbsp;(${discount}% 할인)
+                &nbsp;${product.getName()}&nbsp;${option.name}&nbsp;&nbsp;${option.sale_prc}원&nbsp;&nbsp;(${option.dc_rate}% 할인)
               </option>
             </c:forEach>
           </select>
@@ -363,7 +365,7 @@
 <!------------------------------------- 아래 빈 공간 ------------------------------------------->
 
 <div class="empty-space">
-  <button class="go_up"><a href="#section0">맨 위로 올라가기</a></button>
+
 </div>
 
 <!------------------------------------- 자바스크립트 ------------------------------------------->

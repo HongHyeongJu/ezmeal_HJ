@@ -141,7 +141,7 @@
                     <tr class="dc_input">
                         <td><input type="number" id="sale_prc" name="product.sale_prc" value="${product.getSale_prc()}" min="0" disabled><p>원</p></td>
                         <td><input type="number" id="mgn_rate" name="product.mgn_rate" value="${product.getMgn_rate()}" disabled><p>%</p></td>
-                        <td><input type="number" id="dc_per"  value=""  disabled ><p>%</p></td>
+                        <td><input type="number" id="dc_rate" name="product.dc_rate"  value="${product.getDc_rate()}"  disabled ><p>%</p></td>
                     </tr>
                 </table>
             </div>
@@ -199,7 +199,7 @@
                             <!-- [6] 할인율 -->
                             <li>
                                 <span>할인율</span>
-                                <input type="number" name="opt_dc_per" value="" min="0">
+                                <input type="number" name="options[${status.index}].dc_rate" value="${option.dc_rate}" min="0">
                             </li>
                             <br>
 
