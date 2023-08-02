@@ -13,7 +13,7 @@
             parameterType="com.teamProject.ezmeal.domain.joinDomain.AdminOrderOrderDto">
         insert into tb_order_status_history (ord_id, stus, chg_dtm, chg_rsn, in_id, up_id)
         values
-        <foreach collection="orderIdList" item="orderId" separator=",">
+        <foreach collection="pkIdList" item="orderId" separator=",">
             (#{orderId}, #{status}, now(), #{changeReason}, #{id}, #{id})
         </foreach>
     </insert>
