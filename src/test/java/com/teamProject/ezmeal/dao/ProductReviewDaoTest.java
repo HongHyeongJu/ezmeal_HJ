@@ -94,7 +94,18 @@ public class ProductReviewDaoTest {
 
         System.out.println(resultMap.get(6L));
         System.out.println(resultMap.values().toString());
+    }    /*카테고리로 검색한 상품들의 리뷰 숫자만 받아오기*/
+
+    @Test
+    public void test6() throws SQLException {
+        Map<Long, Object> resultMap = productReviewDao.selectReviewAvgAllProduct();
+
+        resultMap.forEach((k, v) -> {
+            System.out.println("k: " + k + ", v: " + v + ", class of v: " + v.getClass().getName());
+        });
     }
+
+
 
 
 

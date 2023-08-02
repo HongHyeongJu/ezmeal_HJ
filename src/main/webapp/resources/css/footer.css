@@ -15,7 +15,7 @@ a {
 /*START : FOOTER*/
 .footer_topbox1 {
   /*--푸터 1,2 감싸는 박스*/
-  margin-top: 600px;
+  margin-top: 200px;  /*상품과의 공백 줄이기 위해 600 -> 200으로 변경함*/
 }
 
 .footer_topbox2 {
