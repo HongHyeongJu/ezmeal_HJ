@@ -18,4 +18,15 @@ public class AdminOrderStatusHistoryDao {
     public int insertOrderAfterCheckAdminOrder(AdminOrderOrderDto afterOrderCheckData) {
         return session.insert(namespace + "insert_order_after_check_admin_order", afterOrderCheckData);
     }
+
+    //  배송완료 admin 에서 구매확정 update 상황이 존재시 order status history 먼저 insert
+    public int insertFixedCompleteAuto(){
+        return session.insert(namespace + "insert_fixed_complete_auto");
+    }
+
+    //  배송완료 admin에서 수동으로 구매 확정시, 이력 남기기
+    public int insertFixedCompleteManual(AdminOrderOrderDto adminOrderOrderDto){
+        return session.insert(namespace + "insert_fixed_complete_manual", adminOrderOrderDto);
+    }
+
 }

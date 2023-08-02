@@ -232,7 +232,7 @@ public class AdminDeliveryController {
         return "admin_delivery_complete";
     }
 
-    // 배송완료 동적 data 받아오기
+    // 배송완료 동적 data 받아오기 + 자동으로 'h6' up_dtm이 now()보다 1주일 이상이면 구매확정 처리
     @PostMapping("/complete")
     @ResponseBody
     public List<Map<String, Object>> getCompleteDeliveryInfo(@RequestBody String periodString) {
@@ -242,18 +242,36 @@ public class AdminDeliveryController {
         Map<String, Object> periodData = AdminDueModule.getPeriodData(periodString); // 기간을 받는 module 함수 {startTime: Object, endTime: Object};
         System.out.println("periodData = " + periodData);
         System.out.println("배송완료 db 반환 값 : " + adminDeliveryService.getCompleteDeliveryInfo(periodData));
+
+        int insertFixedCompleteNum = adminDeliveryService.insertFixedCompleteAuto(); // 배송완료 admin 에서 구매확정 update 상황이 존재시 order status history 먼저 insert
+        if (insertFixedCompleteNum > 0) {
+            adminDeliveryService.updateFixedCompleteAuto(); // osh insert가 1 이상일 경우, 자동으로 배송완료 admin page에서 'h6'이 order_detail 중에서 up_dtm이 now()보다 1주일 이상이면 구매확정 처리
+        }
+
         return adminDeliveryService.getCompleteDeliveryInfo(periodData);
     }
 
-    // 구매확정 logic
+    /* todo
+     *   1. stus h6 -> a3
+     *       1.1. update | od : h6 -> a3 [dlvarId 이용]
+     *       1.2. insert | osh : a3 변경사항 모두 저장 [dlvarId 이용] - admin osh dao & admin osh mapper 이용
+     *       1.3.                * dm, dh : 관련 상황자체가 아니여서 배제
+     *   2. 사용 logic : 1주일 지났을 경우, 그냥 특이한 경우 직접 click
+     * */
+
+    // 수동 구매확정 logic
     @PatchMapping("/complete/fixed")
     @ResponseBody
-    public String updateAdminFixedCompleteDeliver(@RequestBody List<Long> dlvarIdList) {
+    public String updateAdminFixedCompleteDeliver(@SessionAttribute AdminMemberDto loginAdminInfo, @RequestBody List<Long> dlvarIdList) {
         System.out.println("------------------------------");
         System.out.println("AdminDeliveryController updateAdminFixedCompleteDeliver 시작");
         System.out.println("dlvarId = " + dlvarIdList); // dlvarId = [13]
-        // todo. 1. 상태 변경 2. 후기 작성란 3. 적립금 받음 4. 관련 이력에 값 등록 5.
-        adminDeliveryService.setFixedCompleteStatus(dlvarIdList);
+        // 1. 상태 변경 todo. 2. 후기 작성란 3. 적립금 받음 4. 관련 이력에 값 등록 5.
+        AdminOrderOrderDto adminOrderOrderUpdateDto = new AdminOrderOrderDto("a3",  loginAdminInfo.getEmp_acct_id(), dlvarIdList, "구매확정");
+        AdminOrderOrderDto adminOrderOrderInsertDto = new AdminOrderOrderDto( dlvarIdList, "관리자 측 수동 구매확정 처리");
+
+        adminDeliveryService.setFixedCompleteStatusManual(adminOrderOrderUpdateDto); // 수동으로 배송완료 admin page에서 구매확정으로 변경 시, od - stus update
+        adminDeliveryService.insertFixedCompleteManual(adminOrderOrderInsertDto); // 배송완료 admin에서 수동으로 구매 확정시, 이력 남기기
         return "success";
     }
 }

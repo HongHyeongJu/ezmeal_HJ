@@ -117,8 +117,13 @@ public class AdminDeliveryDao {
         return session.selectList(namespace + "select_complete_delivery_info_with_od_pm_m", periodData);
     }
 
-    // 배송완료 page에서 구매확정 일 경우, stus, up-dtm update
-    public int updateFixedCompleteStatus(List<Long> dlvarIdList) {
-        return session.update(namespace + "update_fixed_complete_stus_up-dtm", dlvarIdList);
+    // 수동으로 배송완료 admin page에서 구매확정으로 변경 시, od - stus update
+    public int updateFixedCompleteStatusManual(AdminOrderOrderDto adminOrderOrderDto) {
+        return session.update(namespace + "update_fixed_complete_manual", adminOrderOrderDto);
+    }
+
+    // osh insert가 1 이상일 경우, 자동으로 배송완료 admin page에서 'h6'이 order_detail 중에서 up_dtm이 now()보다 1주일 이상이면 구매확정 처리
+    public int updateFixedCompleteAuto () {
+        return session.insert(namespace + "update_fixed_complete_auto");
     }
 }

@@ -1,6 +1,7 @@
 package com.teamProject.ezmeal.service;
 
 import com.teamProject.ezmeal.dao.AdminDeliveryDao;
+import com.teamProject.ezmeal.dao.AdminOrderStatusHistoryDao;
 import com.teamProject.ezmeal.domain.joinDomain.AdminOrderOrderDto;
 import com.teamProject.ezmeal.domain.restAPIDomain.BundleData;
 import com.teamProject.ezmeal.domain.restAPIDomain.InvoiceDeliveryFeeInfo;
@@ -14,6 +15,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AdminDeliveryService {
     private final AdminDeliveryDao adminDeliveryDao;
+    private final AdminOrderStatusHistoryDao adminOrderStatusHistoryDao;
 
     // 배송 준비중 관리에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member
     public List<Map<String, Object>> getPrepareDeliveryInfo(Map<String, Object> periodData) {
@@ -117,7 +119,23 @@ public class AdminDeliveryService {
         return adminDeliveryDao.selectCompleteDeliveryInfo(periodData);
     }
 
-    public int setFixedCompleteStatus(List<Long> dlvarIdList) {
-        return adminDeliveryDao.updateFixedCompleteStatus(dlvarIdList);
+    // 수동으로 배송완료 admin page에서 구매확정으로 변경 시, od - stus update
+    public int setFixedCompleteStatusManual(AdminOrderOrderDto adminOrderOrderDto) {
+        return adminDeliveryDao.updateFixedCompleteStatusManual(adminOrderOrderDto);
+    }
+
+    // 수동 처리후, order status history insert 수행   배송완료 admin에서 수동으로 구매 확정시, 이력 남기기
+    public int insertFixedCompleteManual(AdminOrderOrderDto adminOrderOrderDto) {
+        return adminOrderStatusHistoryDao.insertFixedCompleteManual(adminOrderOrderDto);
+    }
+
+    // 배송완료 admin 에서 구매확정 update 상황이 존재시 order status history 먼저 insert
+    public int insertFixedCompleteAuto() {
+        return adminOrderStatusHistoryDao.insertFixedCompleteAuto();
+    }
+
+    //osh insert가 1 이상일 경우, 자동으로 배송완료 admin page에서 'h6'이 order_detail 중에서 up_dtm이 now()보다 1주일 이상이면 구매확정 처리
+    public int updateFixedCompleteAuto() {
+        return adminDeliveryDao.updateFixedCompleteAuto();
     }
 }

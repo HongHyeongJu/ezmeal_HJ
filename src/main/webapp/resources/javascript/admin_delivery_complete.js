@@ -55,7 +55,7 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
                 forHTML += `
                             <tr>
                               <!-- 추가적인 필요한 코드 -->
-                              <td>${stus === 'a4' ? '<span>구매확정</span>' : `<input type="checkbox" class="dlvar-id__checkBox" dlvar_id="${dlvar_id}" />`}</td> <!-- checkbox -->
+                              <td>${stus === 'a3' ? '<span>구매확정</span>' : `<input type="checkbox" class="dlvar-id__checkBox" dlvar_id="${dlvar_id}" />`}</td> <!-- checkbox -->
                               <td>${up_dtm_format} / ${dlvar_id}</td> <!-- 배송일 / 배송번호-->
                               <td>${prod_name}</td> <!-- 상품명 -->
                               <td>${prod_cd}</td> <!-- 상품코드 -->
@@ -72,7 +72,7 @@ const renderHTMLFrom = function (adminBeforeManageInfoList) {
                             <!-- 묶음선택 btn : 묶음 선택 된 상품에 한해서 배송 : 배송 보류 처리가 가능
                             TODO. 묶음선택 check 부분 & 배송 보류의 경우 - deliveryMaster 와 deliveryHistory insert 작업이 필요할 듯하다. - 3차 개발때 진행
                             -->
-                            <td> ${stus_arr[0] === 'a4' ? '<span>구매확정</span>' : `<input type="checkbox" class="dlvar-id__checkBox" dlvar_id="${dlvar_id_arr[0]}" />`}</td> <!-- 묶음선택할 check box-->
+                            <td> ${stus_arr[0] === 'a3' ? '<span>구매확정</span>' : `<input type="checkbox" class="dlvar-id__checkBox" dlvar_id="${dlvar_id_arr[0]}" />`}</td> <!-- 묶음선택할 check box-->
                             <td> ${up_dtm_format_arr[0]} / ${dlvar_id_arr[0]}</td> <!-- 배송일 / 배송번호 -->                            
                             <td rowspan="${count}"> ${invc_id} </td> <!-- 운송장번호 -->
                             <td rowspan="${count}">${vend}</td>      <!-- 공급사 -->

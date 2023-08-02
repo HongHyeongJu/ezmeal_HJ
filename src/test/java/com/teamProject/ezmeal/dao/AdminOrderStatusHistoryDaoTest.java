@@ -27,4 +27,21 @@ public class AdminOrderStatusHistoryDaoTest {
         int i = adminOrderStatusHistoryDao.insertOrderAfterCheckAdminOrder(adminOrderOrderDto);
         System.out.println("i = " + i);
     }
+
+    @Test
+    public void insert_fixed_complete_auto() {
+        int i = adminOrderStatusHistoryDao.insertFixedCompleteAuto();
+        System.out.println("i = " + i);
+    }
+
+    @Test
+    public void insert_fixed_complete_manual() {
+        List<Long> dlvarIdList = new ArrayList<>();
+        dlvarIdList.add(14L);
+        dlvarIdList.add(52L);
+        AdminOrderOrderDto adminOrderOrderDto = new AdminOrderOrderDto("a3",  "taewan", dlvarIdList, "관리자 측 수동 구매확정 처리");
+        adminOrderStatusHistoryDao.insertFixedCompleteManual(adminOrderOrderDto);
+    }
+
+
 }

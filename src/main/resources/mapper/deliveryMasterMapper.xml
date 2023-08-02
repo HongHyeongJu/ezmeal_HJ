@@ -365,26 +365,25 @@
     </update>
 
     <!--  배송 완료에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member -->
-    <!--  todo. order_stus, delviery_stus 어떻게 잘 구분할지 고민후 logic 수정 필요  -->
     <select id="select_complete_delivery_info_with_od_pm_m" resultType="map">
         select
         date_format(od.in_dtm, '%Y-%m-%d') as in_dtm_format, # 주문일
         od.ord_id, # 주문번호
         m.name, # 주문자명
         GROUP_CONCAT(date_format(dm.up_dtm, '%Y-%m-%d') SEPARATOR ', ') as up_dtm_format, # 배송일
-        GROUP_CONCAT(dm.dlvar_id SEPARATOR ', ') as dlvar_id, # 배송지 pk // todo 배송 상세에 주문상세번호 넣어야함
+        GROUP_CONCAT(dm.dlvar_id SEPARATOR ', ') as dlvar_id, # 배송지 pk
         dm.invc_id, # 송장번호
         dm.vend, # 공급사
         GROUP_CONCAT(od.name SEPARATOR ', ') as prod_name, # 주문상품 명
         GROUP_CONCAT(od.prod_cd SEPARATOR ', ') as prod_cd, # 주문상품 pk
         GROUP_CONCAT(od.qty SEPARATOR ', ') as qty, # 주문상품 수량
         COUNT(m.name) as count, # 중복 수량
-        GROUP_CONCAT(dm.stus separator ', ') as stus # 상품 상태
+        GROUP_CONCAT(od.stus separator ', ') as stus # 상품 상태
         from tb_order_master om,
         tb_order_detail od,
         tb_member m,
         tb_delivery_master dm
-        where dm.stus in ('h6', 'a3')
+        where od.stus in ('h6', 'a3') # 배송완료, 구매확정
         and om.mbr_id = m.mbr_id
         and om.ord_id = od.ord_id
         and od.ord_prod_dtl_id = dm.ord_prod_dtl_id
@@ -402,16 +401,28 @@
         order by date_format(od.in_dtm, '%Y-%m-%d')
     </select>
 
-    <!-- 배송중 page에서 구매확정 일 경우, stus, up-dtm update -->
-    <update id="update_fixed_complete_stus_up-dtm">
-        update tb_delivery_master
-        set stus = 'a4',
-        up_dtm = now()
+    <!-- 수동으로 배송완료 admin page에서 구매확정으로 변경 시, od - stus update -->
+    <update id="update_fixed_complete_manual">
+        update tb_order_detail od
+        set od.stus = #{status},
+        od.up_id = #{id},
+        od.up_dtm = now()
+        where od.ord_prod_dtl_id in
+        (select ord_prod_dtl_id
+        from tb_delivery_master
         where dlvar_id in
-        <foreach collection="list" item="dlvarId" open="(" close=")" separator=",">
+        <foreach collection="pkIdList" item="dlvarId" open="(" close=")" separator=",">
             #{dlvarId}
         </foreach>
+        )
     </update>
 
 
+    <!-- osh insert가 1 이상일 경우, 자동으로 배송완료 admin page에서 'h6'이 order_detail 중에서 up_dtm이 now()보다 1주일 이상이면 구매확정 처리 -->
+    <update id="update_fixed_complete_auto">
+        update tb_order_detail od
+        set od.stus = 'a3'   # 구매확정 조건으로 변경
+        where od.stus = 'h6' # 배송완료 중 조건
+          AND od.up_dtm &lt; DATE_SUB(NOW(), INTERVAL 7 DAY);
+    </update>
 </mapper>

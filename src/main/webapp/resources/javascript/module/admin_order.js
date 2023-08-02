@@ -38,8 +38,10 @@ const handleClickAdminDeliveryBtn = async function (fetchUrl, reloadUrl, fetchDa
     // todo -> 주문 내역때 처림 기간을 보여줘서 해당 기간 값을 string으로 변환 후 넘겨주는 것이 정석 / 초기화 btn도 필요할 듯하다.
     const adminDynamicData = await getAdminDynamicData(reloadUrl, {isTrusted: true});
     renderHTMLFrom(adminDynamicData);
+
     // rest api 이기 때문에 전역 변수 초기화를 수동으로 처리
-    selectInit();
+    if (typeof selectAllBtn !== 'undefined') selectInit(); // 정의 되지 않은 변수 제외 하는 방법
     alert(msg);
+
     console.log('-------- admin_order.js handleClickAdminDeliveryBtn 끝 ------------');
 }

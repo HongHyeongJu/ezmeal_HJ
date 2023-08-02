@@ -117,14 +117,21 @@ public class AdminDeliveryDaoTest {
     }
 
     @Test
-    public void update_fixed_complete_stus_up() {
-        List<Long> list = new ArrayList<>();
-        list.add(13L);
-        list.add(53L);
-        list.add(52L);
-        int i = adminDeliveryDao.updateFixedCompleteStatus(list);
+    public void update_fixed_complete_manual() {
+        List<Long> dlvarIdlist = new ArrayList<>();
+        dlvarIdlist.add(14L);
+        dlvarIdlist.add(52L);
+        AdminOrderOrderDto adminOrderOrderDto = new AdminOrderOrderDto("a3",  "ateam01", dlvarIdlist, "구매확정");
+
+        int i = adminDeliveryDao.updateFixedCompleteStatusManual(adminOrderOrderDto);
+        System.out.println("i = " + i);
     }
 
+    @Test
+    public void update_fixed_complete_auto(){
+        int i = adminDeliveryDao.updateFixedCompleteAuto();
+        System.out.println("i = " + i);
+    }
     @Test
     public void select_dlvarId_bndl_y() {
         List<Long> ordIdList = new ArrayList<>();
