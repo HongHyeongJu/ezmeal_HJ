@@ -96,8 +96,54 @@
 <!--        ORDER BY fst_reg_dt desc-->
 <!--    </select>-->
 
+    <!--메인상품 [empl]-->
+    <select id="select_5_product_main_empl" resultType="ProductDto">
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate
+        FROM main_product_common_view
+        WHERE cate_cd LIKE '02%'
+        ORDER BY sale_prc DESC
+        LIMIT 5
+    </select>
 
-<!-- ~~~~~ 카테고리 정렬기준 따라 호출하는 쿼리문(끝) ~~~~~ -->
+    <!--메인상품 [health]-->
+    <select id="select_5_product_main_health" resultType="ProductDto">
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate
+        FROM main_product_common_view
+        WHERE cate_cd = '0101'
+        ORDER BY fst_reg_dt DESC
+        LIMIT 5
+    </select>
+
+    <!--메인상품 [eat]-->
+    <select id="select_5_product_main_eat" resultType="ProductDto">
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate
+        FROM main_product_common_view
+        ORDER BY fst_reg_dt DESC
+        LIMIT 5
+    </select>
+
+    <!--empl, health, eat 에서 공통적인 부분으로 뽑아낸 뷰 생성해서 사용함.
+        CREATE VIEW main_product_common_view AS
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate, cate_cd, fst_reg_dt
+        FROM tb_product
+        WHERE sale_yn = 'y' AND dp_yn = 'y' AND del_yn = 'n' AND prod_stus IN (1, 2) AND opt_yn = 'n';
+-->
+
+
+    <!--메인상품 [home]-->
+    <select id="select_5_product_main_home" resultType="ProductDto">
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate
+        FROM tb_product USE INDEX (tb_product_fst_reg_dt_index)
+        WHERE opt_yn = 'y' AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
+        ORDER BY fst_reg_dt desc
+        LIMIT 5
+    </select>
+
+
+
+
+
+    <!-- ~~~~~ 카테고리 정렬기준 따라 호출하는 쿼리문(끝) ~~~~~ -->
 
 <!-- 컨트롤러는 흐름 서비스에서 준 결과로만, 서비스는 비즈니스 -->
 

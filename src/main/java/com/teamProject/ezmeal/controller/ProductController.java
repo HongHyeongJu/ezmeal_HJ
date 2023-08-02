@@ -34,7 +34,7 @@ public class ProductController {
     public String productListByCateCd(Model model, String cate_cd, @RequestParam(required = false) String sortkeyword) throws SQLException {
         System.out.println("/catelist 컨트롤러 지나갑니다");
         /*상품목록 표현에 필요한 것 모두 받아오기*/
-        HashMap map = productService.getProductListByCateCd(cate_cd, sortkeyword);
+        Map map = productService.getProductListByCateCd(cate_cd, sortkeyword);
         model.addAttribute("prodList",map.get("prodList"));
         model.addAttribute("prodImgMap",map.get("prodImgMap"));
         model.addAttribute("prodOptMap",map.get("prodOptMap"));
@@ -60,6 +60,7 @@ public class ProductController {
         model.addAttribute("prodOptMap",map.get("prodOptMap"));
         model.addAttribute("reviewAvgMap",map.get("reviewAvgMap"));
         model.addAttribute("reviewCntMap",map.get("reviewCntMap"));
+        model.addAttribute("headerTitle",map.get("headerTitle"));
         model.addAttribute("headerTyp",headertyp);
         System.out.println("[컨트롤러] headerTyp: "+headertyp);
 
@@ -71,7 +72,7 @@ public class ProductController {
     @PostMapping("/restcatelist")
     public ResponseEntity<Map<String, Object>> productListByCateCd(@RequestBody String cate_cd, @RequestParam(required = false) String sortkeyword) throws SQLException {
         /*상품목록에 필요한 것 모두 받아오기*/
-        HashMap map = productService.getProductListByCateCd(cate_cd, sortkeyword);
+        Map map = productService.getProductListByCateCd(cate_cd, sortkeyword);
         System.out.println("restcatelist 컨트롤러 지나갑니다");
         System.out.println("prodList: "+map.get("prodList").toString());
         System.out.println("[컨트롤러] sortkeyword: "+sortkeyword);

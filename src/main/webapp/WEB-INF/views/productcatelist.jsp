@@ -25,9 +25,11 @@
 
 <!--헤더 내려오는 공백-->
 <jsp:include page="header.jsp"/>
-
+<div class="empty_top">
+</div>
 <ul class="지붕묶음" id="section1">
   <input type="hidden" data-cate_cd="${cate_cd}">
+<%--  <span class="category_name">${category_name}</span>--%>
   <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=default" class="sort-link active" data-sort="default">추천순</a></li>
   <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=new" class="sort-link" data-sort="new">신상품순</a></li>
   <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=lowprc" class="sort-link" data-sort="lowprc">낮은가격순</a></li>
