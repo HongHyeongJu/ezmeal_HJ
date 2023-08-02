@@ -4,12 +4,26 @@
 
 <mapper namespace="pointTransactionHistory">
     <!-- 사용 가능 point 받아오는 mapper -->
+    <!--    <select id="point_can_use" resultType="int">-->
+    <!--        # todo 현재, 주문서에서 사용가능 적립금을 보여주려고 하는데 회원정보에 적립금 column이 현재 존재하지 않기 때문에 이력에서 적립금을 가지고 오는데 나중에 member table column을 생성해서 거기서 받아오기 3차-->
+    <!--        # coalesce는 null인 경우 0 반환-->
+    <!--        SELECT COALESCE(usfl_acmlt_pnt, 0)-->
+    <!--        FROM tb_point_transaction_history-->
+    <!--        WHERE mbr_id = #{mbrId}-->
+    <!--        ORDER BY up_dtm DESC-->
+    <!--        LIMIT 1;-->
+    <!--    </select>-->
+
     <select id="point_can_use" resultType="int">
-        # todo 적립금이 적립되는 경우 Min으로 하게 되면 안되니깐 update 날짜가 제일 최신인걸로 받아오기
-        select MIN(usfl_acmlt_pnt)
-        from tb_point_transaction_history
-        where mbr_id = #{mbrId};
+        # todo 현재, 주문서에서 사용가능 적립금을 보여주려고 하는데 회원정보에 적립금 column이 현재 존재하지 않기 때문에 이력에서 적립금을 가지고 오는데 나중에 member table column을 생성해서 거기서 받아오기 3차
+        # coalesce는 null인 경우 0 반환
+        SELECT COALESCE((SELECT usfl_acmlt_pnt
+                         FROM tb_point_transaction_history
+                         WHERE mbr_id = #{mbrId}
+                         ORDER BY up_dtm DESC
+                         LIMIT 1), 0) AS point;
     </select>
+
 
     <!-- 적립금 사용으로 인한 이력 남기는 mapper -->
     <insert id="update_point_history">
@@ -35,8 +49,7 @@
         FROM TB_POINT_TRANSACTION_HISTORY
         WHERE mbr_id = #{memberId}
           AND pnt_trjs_hist_seq = (SELECT MAX(pnt_trjs_hist_seq)
-                                   FROM TB_POINT_TRANSACTION_HISTORY
-        )
+                                   FROM TB_POINT_TRANSACTION_HISTORY)
     </select>
 
     <select id="selectPointList" parameterType="Long" resultType="PointTransactionHistoryDto">

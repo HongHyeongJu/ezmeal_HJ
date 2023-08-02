@@ -53,12 +53,17 @@ public class OrderController {
 
     @GetMapping
     public String getOrder(@SessionAttribute Long memberId, Model model) {
-        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+        System.out.println("---------- OrderController getMapping getOrder ----------------");
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US); // 가격에 , 표시해주는 것
 
         Long cartSeq = cartService.getCartSeq(memberId);
+        System.out.println("cartSeq = " + cartSeq);
         DeliveryAddressDto selectedAddress = deliveryAddressService.getOrderAddress(memberId); // 선택된 배송지, 없으면 기본배송지
+        System.out.println("selectedAddress = " + selectedAddress);
         List<CartJoinProductDto> cartProductList = cartProductService.getOrderProduct(cartSeq); // 주문할 상품 목록
+        System.out.println("cartProductList = " + cartProductList);
         MemberDto memberInfo = memberDao.selectMemberInfo(memberId); // 회원정보
+        System.out.println("memberInfo = " + memberInfo);
 
         // 결제 금액 계산
         Map<String, String> priceMap = new HashMap<>();
@@ -76,11 +81,15 @@ public class OrderController {
         priceMap.put("orderPrice", numberFormat.format(orderPrice));
         priceMap.put("productsDiscount", numberFormat.format(productsDiscount));
 
+        System.out.println("priceMap = " + priceMap);
+
         // 적립금
         // 사용가능 적립금, 등급별 적립 예정금액
         Map<String, Integer> pointMap = new HashMap<>();
         int pointCanUse = pointTransactionHistoryDao.pointCanUse(memberId); // 사용가능 적립금
+        System.out.println("pointCanUse = " + pointCanUse);
         int pointRate = (orderPrice / 100) * (memberGradeBenefitDao.getPointRate(memberId)); // 적립 예정금액
+        System.out.println("pointRate = " + pointRate);
         pointMap.put("userPoint", pointCanUse);
         pointMap.put("pointRate", pointRate);
 
