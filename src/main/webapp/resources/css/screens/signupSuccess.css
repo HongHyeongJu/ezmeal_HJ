@@ -22,8 +22,7 @@ section {
     padding: 50px 0px;
     text-align: center;
     background-color: rgb(251 255 253);
-    border-top: 2px solid rgb(76, 76, 76);
-    border-bottom: 1px solid rgb(76, 76, 76);
+
 }
 .signupSuccess {
     margin-bottom: 30px;
@@ -34,6 +33,7 @@ section {
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
+    margin-bottom: 30px;
 
 }
 .signupSuccess-area {
@@ -53,14 +53,17 @@ section {
     width: 130px;
     padding: 20px 0px 20px 20px;
     font-weight: 600;
+    font-size: 16px;
 }
 .areavalue {
     padding: 20px 0px;
-    font-size: 13px;
+    /*font-size: 13px;*/
+    font-size: 15px;
 }
 .button-area {
     display: flex;
-    padding: 30px 10px 0px;
+    /*padding: 30px 10px 0px; */
+    padding: 50px 10px 0px;
 }
 .button-area > button {
     margin: 0px 3px;

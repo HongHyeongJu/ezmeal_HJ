@@ -77,10 +77,13 @@
                         <label for="email" class="label-value">이메일</label>
                     </div>
                     <div class="value">
-                        <input class="input-field" type="text" id="email" name="email" value="<c:out value="${loginMbrInfo.email}"/>" placeholder="이메일을 입력해 주세요">
+                        <div class="input">
+                            <input class="input-field" type="text" id="email" name="email" value="<c:out value="${loginMbrInfo.email}"/>" oninput="validateEmail()" placeholder="이메일을 입력해 주세요">
+                        </div>
+                        <div class="msg"> <p id="email-msg" class="valid-msg"></p> </div>
                     </div>
                     <div class="button-section">
-                        <button class="buttons" type="button">
+                        <button id="emailButton" class="buttons" type="button" onclick="checkEmailDuplicate()">
                             <span class="button-value">중복확인</span>
                             <!-- 기존 로그인된 이메일이면 disable, 수정하면 중복확인버튼 on -->
                         </button>
@@ -95,7 +98,7 @@
                         <input class="input-field" type="text" id="phone" name="phone" value="<c:out value="${loginMbrInfo.phone}"/>" placeholder="휴대폰 번호를 입력해 주세요">
                     </div>
                     <div class="button-section">
-                        <button class="buttons" type="button">
+                        <button class="buttons" type="button" style="display: none;">
                             <span class="button-value">다른번호 인증</span>
                             <!-- 기본값 readonly 다른번호인증 클릭하면 휴대폰 번호 입력란 초기화 - 인증받기 버튼으로 변경   -->
                         </button>
@@ -152,24 +155,9 @@
 
 </body>
 <script>
-    // 현재비밀번호가 틀렸을때, 경고창이 뜨는 로직
-    const msg = "${msg}";
-    if (msg !== ""){
-        alert(msg);
-    }
-
-    function confirmSubmit() {
-        // confirm 대화상자를 띄워 사용자로부터 확인 또는 취소를 받음
-        var result = confirm("회원정보를 수정하시겠습니까??");
-
-        if (result) {
-            // 확인을 선택한 경우
-            console.log("회원정보 요청 진행");
-            return true; // 폼 제출 진행
-        } else {
-            // 취소를 선택한 경우
-            return false; // 폼 제출 취소
-        }
-    }
+    const msg = "${msg}"; // 현재 비밀번호 틀렸을때 경고창에 보낼 msg
+    const loginEmail = "${loginMbrInfo.email}"; // 현재 로그인중인 회원의 이메일 값
 </script>
+<script src="/javascript/modify.js"></script>
+
 </html>
