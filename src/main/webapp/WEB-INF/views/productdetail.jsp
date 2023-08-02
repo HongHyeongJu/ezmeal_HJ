@@ -59,7 +59,7 @@
 
       </div>
       <!--별점 평균-->
-      <span class="score" id="reviewAvg" data-avg="${reivewAvg}">${reivewAvg}</span>점
+      <span class="score" id="reviewAvg" data-avg="${reivewAvg}">${empty reivewAvg?0:reivewAvg}</span>점
       <!--리뷰 개수-->
       (
       <span class="total_num">${reviewCount}</span>
@@ -75,7 +75,7 @@
           <c:set var="sale_prc" value="${optList.get(0).getSale_prc()}" />
 
           <c:if test="${cnsmr_prc != sale_prc}">
-            <strong class="dc_pt">${optList.get(0).getDc_rate()}}%</strong>
+            <strong class="dc_pt">${optList.get(0).getDc_rate()}%</strong>
           </c:if>
 
           <strong class="sale_prc">${sale_prc}&nbsp;원</strong>
