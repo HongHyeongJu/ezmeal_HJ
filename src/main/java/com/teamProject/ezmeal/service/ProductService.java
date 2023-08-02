@@ -41,6 +41,8 @@ public class ProductService {
     CustDao custDao;
     @Autowired
     ProductStatusDao productStatusDao;
+    @Autowired
+    ProductCategoryService productCategoryService;
 
     private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
     /*여러 다오의 메서드 호출할 때, 왼쪽창 열고 다오랑, 맵퍼 주석 확인해서 상황에 적절한 메서드 호출하기*/
@@ -74,19 +76,32 @@ public class ProductService {
                 System.out.println("5");
             }
 
+            Map<String, String> cateCdAndNameMap =productCategoryService.getAllProdCateCdAndNameList();
+            String cateName = cateCdAndNameMap.get(cate_cd);
             System.out.println("cate_cd:"+cate_cd);
+            System.out.println("cateName:"+cateName);
             System.out.println("sortkeyword: "+sortkeyword);
             System.out.println("prodList.size(): "+ prodList);
 
-            /*카테고리 상품 '대표'이미지 리스트*/
-            Map<Long,ProductImgDto> prodImgMap = productImgService.cateCdImgListConvertToMap(cate_cd);
-            /*카테고리 상품의 옵션 리스트*/
-            Map<Long,List<ProductOptionDto>> prodOptMap =  prodCdListChangeToOptionMap(cate_cd);
-            /*할인율 강조를 위한 할인코드 리스트 */
-//            List<ProductDiscountDto> discountList = productDiscountDao.selectDiscountListByCateCd();
-            /*상품 평점, 리뷰 숫자*/
-            Map<Long,Double> reviewAvgMap = productReviewDao.selectReviewAvgForProdList(cate_cd);
-            Map<Long,Integer> reviewCntMap = productReviewDao.selectReviewCntForProdList(cate_cd);
+            HashMap fourTypesMap = getAllTypImgOptRivews();
+
+            /*모든상품 '대표'이미지 리스트*/
+            Map<Long,ProductImgDto> prodImgMap = (Map<Long,ProductImgDto>)fourTypesMap.get("prodImgMap");
+            /*모든상품의 옵션 리스트*/
+            Map<Long,List<ProductOptionDto>> prodOptMap = (Map<Long,List<ProductOptionDto>>)fourTypesMap.get("prodOptMap");
+            /*모든상품  평점, 리뷰 숫자*/
+            Map<Long,Double> reviewAvgMap = (Map<Long,Double>)fourTypesMap.get("reviewAvgMap");
+            Map<Long,Integer> reviewCntMap = (Map<Long,Integer>)fourTypesMap.get("reviewCntMap");
+
+//            /*카테고리 상품 '대표'이미지 리스트*/
+//            Map<Long,ProductImgDto> prodImgMap = productImgService.cateCdImgListConvertToMap(cate_cd);
+//            /*카테고리 상품의 옵션 리스트*/
+//            Map<Long,List<ProductOptionDto>> prodOptMap =  prodCdListChangeToOptionMap(cate_cd);
+//            /*할인율 강조를 위한 할인코드 리스트 */
+////            List<ProductDiscountDto> discountList = productDiscountDao.selectDiscountListByCateCd();
+//            /*상품 평점, 리뷰 숫자*/
+//            Map<Long,Double> reviewAvgMap = productReviewDao.selectReviewAvgForProdList(cate_cd);
+//            Map<Long,Integer> reviewCntMap = productReviewDao.selectReviewCntForProdList(cate_cd);
 
             HashMap ProdListMap = new HashMap<>();
             ProdListMap.put("prodList",prodList);
@@ -95,6 +110,7 @@ public class ProductService {
 //            ProdListMap.put("discountList",discountList);
             ProdListMap.put("reviewAvgMap",reviewAvgMap);
             ProdListMap.put("reviewCntMap",reviewCntMap);
+            ProdListMap.put("cateName",cateName);
 
             return ProdListMap;
 

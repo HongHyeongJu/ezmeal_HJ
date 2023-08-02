@@ -41,6 +41,7 @@ public class ProductController {
         model.addAttribute("reviewAvgMap",map.get("reviewAvgMap"));
         model.addAttribute("reviewCntMap",map.get("reviewCntMap"));
         model.addAttribute("cate_cd",cate_cd);
+        model.addAttribute("cateName",map.get("cateName"));
         System.out.println("prodList: "+map.get("prodList").toString());
         System.out.println("[컨트롤러] sortkeyword: "+sortkeyword);
 

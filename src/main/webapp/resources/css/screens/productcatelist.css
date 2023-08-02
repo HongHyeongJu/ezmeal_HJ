@@ -15,10 +15,14 @@ body {
 /*}*/
 
 .empty_top {
-    height: 15px;
+    height: 30px !important;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 600;
 }
-
-
 
 .지붕묶음 {
     display: flex;

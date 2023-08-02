@@ -26,6 +26,7 @@
 <!--헤더 내려오는 공백-->
 <jsp:include page="header.jsp"/>
 <div class="empty_top">
+    <span class="header_title">${cateName}</span>
 </div>
 <ul class="지붕묶음" id="section1">
   <input type="hidden" data-cate_cd="${cate_cd}">

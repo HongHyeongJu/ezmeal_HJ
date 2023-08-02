@@ -18,17 +18,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
   <link rel="stylesheet" href="/css/screens/productcatelist.css?ver=2"/>
     <jsp:include page="header_specific_styles.jsp" />
-    <style>
-        .empty_top {
-            height: 30px !important;
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 22px;
-            font-weight: 600;
-        }
-    </style>
+
 </head>
 <body>
 
@@ -109,7 +99,7 @@
                   <!--할인 퍼센트-->
                   <c:if test="${cnsmr_prc_opt != sale_prc_opt}">
                       <span class="dc_cd">
-                        <strong>${(cnsmr_prc_opt - sale_prc_opt) / cnsmr_prc_opt * 100}</strong>%
+                        <strong>${prodOptMap[prod.prod_cd].get(0).dc_rate}</strong>%
                       </span>&nbsp;
                   </c:if>
 
@@ -126,17 +116,13 @@
                   </c:if>
 
                 </c:when>
-                <c:otherwise> <!--옵션 있을 때----------------------------------------------->
-
-                  <c:set var="cnsmr_prc" value="${prod.getCnsmr_prc()}" />
-                  <c:set var="sale_prc" value="${prod.getSale_prc()}" />
+                <c:otherwise> <!--옵션 없을 때----------------------------------------------->
 
                   <!--할인 퍼센트-->
-                  <c:if test="${cnsmr_prc != sale_prc}">
                       <span class="dc_cd">
-                        <strong>${(cnsmr_prc - sale_prc) / cnsmr_prc * 100}</strong>%
+                        <strong>${prod.getDc_rate()}</strong>%
                       </span>&nbsp;
-                  </c:if>
+
 
                   <!--판매 가격-->
                   <span class="sale_prc">
