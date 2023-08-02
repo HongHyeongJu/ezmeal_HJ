@@ -32,18 +32,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
             sale_prc = cnsmr_prc - (cnsmr_prc * (discountRate / 100));
         }
         document.getElementById('sale_prc').value = Math.round(sale_prc);
-        console.log("sale_prc.toFixed(2)"+sale_prc);
+        console.log("가 sale_prc.toFixed(2)"+sale_prc);
 
         // 할인율을 계산하고 결과를 표시합니다.
-        let dc_per = cnsmr_prc !== 0 ? ((cnsmr_prc - sale_prc) / cnsmr_prc) * 100 : 0;
-        document.getElementById('dc_per').value = Math.round(dc_per);
-        console.log("dc_per.toFixed(2)"+dc_per);
+        let dc_rate = cnsmr_prc !== 0 ? ((cnsmr_prc - sale_prc) / cnsmr_prc) * 100 : 0;
+        document.getElementById('dc_rate').value = Math.round(dc_rate);
+        console.log("나 dc_rate.toFixed(2)"+dc_rate);
 
         // 마진율을 계산하고 결과를 표시합니다.
         let mgn_rate = sale_prc !== 0 ? ((sale_prc - sp_prc) / sp_prc) * 100 : 0;
         document.getElementById('mgn_rate').value = Math.round(mgn_rate);
 
-        console.log("mgn_rate:"+mgn_rate);
+        console.log("다 mgn_rate:"+mgn_rate);
     }
 })
 
@@ -76,6 +76,7 @@ document.querySelector('#productForm').addEventListener('submit', function(event
             dc_cd: ul.querySelector(`select[name="options[${i}].dc_cd"]`).value,
             cnsmr_prc: ul.querySelector(`input[name="options[${i}].cnsmr_prc"]`).value,
             sale_prc: ul.querySelector(`input[name="options[${i}].sale_prc"]`).value,
+            dc_rate: ul.querySelector(`input[name="options[${i}].dc_rate"]`).value,
             rmk: ul.querySelector(`textarea[name="options[${i}].rmk"]`).value,
         };
     });
@@ -103,6 +104,7 @@ document.querySelector('#productForm').addEventListener('submit', function(event
         sp_prc: parseInt(document.querySelector('#sp_prc').value),
         cnsmr_prc: parseInt(document.querySelector('#cnsmr_prc').value),
         sale_prc: parseInt(document.querySelector('#sale_prc').value),
+        dc_rate: parseInt(document.querySelector('#dc_rate').value),
         mgn_rate: parseInt(document.querySelector('#mgn_rate').value),
         dscpt: document.querySelector('#dscpt').value,
         detail: document.querySelector('#detail').value,

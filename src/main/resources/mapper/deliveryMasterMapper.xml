@@ -5,16 +5,19 @@
 <mapper namespace="deliveryMasterDao">
     <!-- 주문 완료 후, insert 되는 배송지 기본 정보 TODO 결제 취소시, 사라져야 함-->
     <insert id="insertDelivery">
-        insert into tb_delivery_master (dlvar_id, ord_id,
+        insert into tb_delivery_master (dlvar_id, ord_id, ord_prod_dtl_id,
                                         rcpr, rcpr_phone,
                                         typ, start_pnt, desti, desti_dtl, req_mtr, in_mtd,
                                         stus, msg,
                                         rcv_sns_yn, box_size)
-        VALUES (#{dlvar_id}, #{ord_id},
-                #{rcpr}, #{rcpr_phone},
-                #{typ}, #{start_pnt}, #{desti}, #{desti_dtl}, #{req_mtr}, #{in_mtd},
-                #{stus}, #{msg},
-                #{rcv_sns_yn}, #{box_size})
+        VALUES
+        <foreach collection="list" item="deliveryMasterDto" separator=",">
+            (#{deliveryMasterDto.dlvar_id}, #{deliveryMasterDto.ord_id}, #{deliveryMasterDto.ord_prod_dtl_id},
+            #{deliveryMasterDto.rcpr}, #{deliveryMasterDto.rcpr_phone},
+            #{deliveryMasterDto.typ}, #{deliveryMasterDto.start_pnt}, #{deliveryMasterDto.desti}, #{deliveryMasterDto.desti_dtl}, #{deliveryMasterDto.req_mtr}, #{deliveryMasterDto.in_mtd},
+            #{deliveryMasterDto.stus}, #{deliveryMasterDto.msg},
+            #{deliveryMasterDto.rcv_sns_yn}, #{deliveryMasterDto.box_size})
+        </foreach>
     </insert>
 
     <!-- 배송 준비중 관리에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member -->
@@ -42,6 +45,7 @@
         where od.ord_id = pm.ord_id
         and od.ord_id = dm.ord_id
         and pm.mbr_id = m.mbr_id
+        and od.ord_prod_dtl_id = dm.ord_prod_dtl_id
         <if test="startTime != null">
             AND od.in_dtm >= STR_TO_DATE(#{startTime}, '%Y-%m-%d') -- 기본값 00:00:00
         </if>

@@ -37,12 +37,12 @@ public class OrderController {
     private final CouponJoinService couponJoinService;
     private final MemberCouponService memberCouponService;
 
-    private final OrderPaymentAddressService orderPaymentAddressService;
+    private final OrderPaymentAddressService orderPaymentAddressService; // transactional 거는 복합 service
 
     private final InventoryEventService inventoryEventService;
 
     private final OrderMasterService orderMasterService;
-
+    private final OrderDetailService orderDetailService;
 
     //    private static Long orderNumber = 0L;
     private static Long orderNumber = Math.round(Math.random() * 10000);
@@ -182,7 +182,7 @@ public class OrderController {
 
         // orderDetail
         System.out.println("orderDetail start ");
-        orderPaymentAddressService.registerOrderDetail(orderDetailList);
+        orderPaymentAddressService.registerOrderDetail(orderDetailList); // 여기서 주문상세 insert
         System.out.println("orderDetail finish ");
 
         // order status history
@@ -192,11 +192,29 @@ public class OrderController {
 
         // delivery master
         System.out.println("delivery master start ");
-        DeliveryMasterDto deliveryMasterDto = new DeliveryMasterDto(orderPk, orderAddress.getRcpr(), orderAddress.getPhone(), "주문_묶음",
-                "(주)ezmeal 종로69 YMCA 5층 518호", orderAddress.getDesti(), orderAddress.getDesti_dtl(),
-                orderPaymentAddressData.getDeliveryPlace(), orderPaymentAddressData.getDeliveryDetail() + orderPaymentAddressData.getDeliveryInput(),
-                "dr", "ma", orderPaymentAddressData.getDeliveryMsg(), "중");
-        orderPaymentAddressService.registerDeliveryMaster(deliveryMasterDto); // 객체 넣어야함
+        List<DeliveryMasterDto> deliveryMasterList = new ArrayList<>(); // 주문상세 정보 담는 통
+        // 주문상세 pk list로 받아와서 배송 master로 넘기
+        List<Long> orderDetailPkList = orderDetailService.getOrderDetailPk(orderPk); // delivery master에 넣는 orderDetailPk list
+        for (Long orderDetailPk : orderDetailPkList) {
+            DeliveryMasterDto deliveryMasterDto = new DeliveryMasterDto(
+                    orderPk,
+                    orderDetailPk,
+                    orderAddress.getRcpr(),
+                    orderAddress.getPhone(),
+                    "주문_묶음",
+                    "(주)ezmeal 종로69 YMCA 5층 518호",
+                    orderAddress.getDesti(),
+                    orderAddress.getDesti_dtl(),
+                    orderPaymentAddressData.getDeliveryPlace(),
+                    orderPaymentAddressData.getDeliveryDetail() + orderPaymentAddressData.getDeliveryInput(),
+                    "dr",
+                    "ma",
+                    orderPaymentAddressData.getDeliveryMsg(),
+                    "중");
+            deliveryMasterList.add(deliveryMasterDto);
+        }
+
+        orderPaymentAddressService.registerDeliveryMaster(deliveryMasterList); // 객체리스트를 넣어야함
         System.out.println("delivery master finish ");
         return "success";
     }
@@ -227,7 +245,7 @@ public class OrderController {
         System.out.println("finish inventory quantity update");
 
         // point 사용하는 경우 해당 로직 수행
-        if (eventDataList.get(0) != 0L){
+        if (eventDataList.get(0) != 0L) {
             System.out.println("start select point info");
             PointTransactionCodeDto usePointInfo = inventoryEventService.getUsePointInfo("USEPOINT"); // 포인트 코드
             // 포인트 코드 : trjs_cd, name, pnt=0
@@ -286,7 +304,7 @@ public class OrderController {
 
 
     @GetMapping("/complete")
-    public String orderComplete(@SessionAttribute Long memberId, Model model){
+    public String orderComplete(@SessionAttribute Long memberId, Model model) {
         // 주문번호정도만 있으면 됨
         Long orderId = orderMasterService.getOrderId(memberId);
         model.addAttribute("orderId", orderId);

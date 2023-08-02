@@ -13,10 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.lang.Integer.parseInt;
@@ -276,7 +273,7 @@ public class ProductService {
             if(optListSize>0) {
                 /*상품정보로 낱개 옵션 만들기*/
                 prodOptOne = new ProductOptionDto(null, productDto.getDc_cd(), "낱개", "qty", 1,
-                                productDto.getCnsmr_prc(), productDto.getSale_prc(), productDto.getIn_id(), productDto.getUp_id());
+                                productDto.getCnsmr_prc(), productDto.getSale_prc(), productDto.getDc_rate(), productDto.getIn_id(), productDto.getUp_id());
                 /*옵션 List 0번째로 낱개 옵션 넣어주기*/
                 productOptionDtos.add(0, prodOptOne);
                 /*옵션 있을 때 일반 상품에서 소비자가, 판매가 없애기로 했음*/
@@ -410,6 +407,7 @@ public class ProductService {
 
     }
 
+    /*모두 가져오기 종합세트 대표이미지, 옵션 리스트, 리뷰 평점, 리뷰 총개수*/
     public HashMap getAllTypImgOptRivews() throws SQLException {
         HashMap prepareListMap = new HashMap<>();
         /*모든상품 '대표'이미지 리스트*/
@@ -417,7 +415,7 @@ public class ProductService {
         /*모든상품의 옵션 리스트*/
         Map<Long,List<ProductOptionDto>> prodOptMap =  prodCdListChangeToOptionMap("0");
         /*모든상품  평점, 리뷰 숫자*/
-        Map<Long,Double> reviewAvgMap = productReviewDao.selectReviewAvgAllProduct();
+        Map<Long,Object> reviewAvgMap = productReviewDao.selectReviewAvgAllProduct();
         Map<Long,Integer> reviewCntMap = productReviewDao.selectReviewCntAllProduct();
 
         prepareListMap.put("prodImgMap",prodImgMap);

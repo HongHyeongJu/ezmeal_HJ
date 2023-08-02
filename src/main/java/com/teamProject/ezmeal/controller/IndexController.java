@@ -42,7 +42,7 @@ public class IndexController {
         model.addAttribute("homeList",prodListMap.get("homeList"));
         model.addAttribute("eatList",prodListMap.get("eatList"));
         model.addAttribute("prodImgMap",prodImgMap);
-        model.addAttribute("prodOptMap",prodOptMap);
+        model.addAttribute("prodOptMap",prodOptMap);   /*K:상품코드 V:옵션리스트 Map*/
         model.addAttribute("reviewAvgMap",reviewAvgMap);
         model.addAttribute("reviewCntMap",reviewCntMap);
         System.out.println("prodImgMap : "+prodImgMap.size());

@@ -34,6 +34,7 @@ body {
     display: flex;
     align-items: center;
     font-size: 22px;
+    font-weight: 600;
 }
 
 
@@ -74,6 +75,7 @@ body {
 }
 
 .prod_outer {
+    padding-top: 3px;
     width: 150px;
     height: 245px;
 }
@@ -97,30 +99,61 @@ body {
 
 /*----- 상품 정보 -------*/
 
-.prod_text_number {
+.prod_text {
     margin-top: 5px;
 }
 
 span.pord_name {
-    font-size: 12px;
+    font-size: 13px;
     margin-left: 7px;
 }
 
+
+.prod_number {
+    margin-top: 3px;
+}
+
+
 span.dc_pt {
-    font-size: 12px;
+    font-size: 13px;
     margin-left: 7px;
     font-weight: 900;
     color: rgb(0,190,49);
 }
 
 span.sale_prc {
-    font-size: 13px;
+    font-size: 14px;
     margin-left: 2px;
     font-weight: 900;
 }
 
 del.cnsmr_prc {
-    font-size: 10px;
+    font-size: 11px;
     margin-left: 2px;
     color: #cecece;
+}
+
+/*------링크 속성 디폴트로-----*/
+a {
+    color: inherit; /* 부모 요소로부터 색깔 상속받기 */
+    text-decoration: none; /* 밑줄 없애기 */
+}
+
+
+/*----- 타이틀 아이콘 색상 변경 -------*/
+
+.fa-suitcase {
+    color: #ff8cda;
+}
+
+.fa-dumbbell{
+    color: #a6c45d;
+}
+
+.fa-kiss-wink-heart {
+    color: #ff5795;
+}
+
+.fa-house-user {
+    color: #5facff;
 }

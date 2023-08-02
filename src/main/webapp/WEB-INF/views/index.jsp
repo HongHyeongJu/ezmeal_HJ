@@ -10,6 +10,12 @@
 <head>
     <title>ezmeal home</title>
     <link rel="stylesheet" href="/css/main.css">
+
+    <style>
+        .footer {
+            margin-top: 20px; /* 원하는 크기로 조절 */
+        }
+    </style>
 </head>
 <body>
 
@@ -44,10 +50,13 @@
 <script src="/javascript/main1.js"></script>
 
 <!-- 메인 추천 상품 -->
-<jsp:include page="index_display_product.jsp"/>
+<div class="index_display_product">
+    <jsp:include page="index_display_product.jsp"/>
+</div>
+<div class="index_footer">
+    <jsp:include page="footer.jsp"/>
+</div>
 
-
-<jsp:include page="footer.jsp"/>
 
 <!--start : scroll back to top-->
 <button id="backtotop-btn">

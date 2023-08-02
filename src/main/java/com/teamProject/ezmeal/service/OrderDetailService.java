@@ -22,4 +22,9 @@ public class OrderDetailService {
     public Map<String, Object> getOutsideOrderDetailInfo(Long orderId) {
         return orderDetailDao.selectOutsideOrderDetailInfo(orderId);
     }
+
+    // 주문 번호에 따른 주문 상세 pk 받아오기
+    public List<Long> getOrderDetailPk(Long orderId) {
+        return orderDetailDao.selectOrderDetailPk(orderId);
+    }
 }

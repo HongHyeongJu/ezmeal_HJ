@@ -5,11 +5,9 @@ import java.util.Objects;
 
 public class ProductOptionDto {
     Long opt_seq, prod_cd;
-    /* opt_name:10개 세트   full_name:불닭볶음김밥 10개 세트 */
+    /* opt_name:10개 세트 */
     String  dc_cd, name, typ;
-    /*원래 Table에는 name컬럼만 있음 (name가 해당함.)
-    full_name은 단일상품의 원래 이름+옵션명(상품 Table에서 Pk로 찾으면 찾을 수 있는 것))*/
-    Integer qty, cnsmr_prc, sale_prc;
+    Integer qty, cnsmr_prc, sale_prc, dc_rate;
     String use_yn, del_yn, rmk;
     LocalDateTime in_dtm;
     String in_id;
@@ -18,7 +16,7 @@ public class ProductOptionDto {
 
     /*---------------------------------------------------------------*/
     public ProductOptionDto(Long prod_cd, String dc_cd, String name, String typ,
-                            Integer qty, Integer cnsmr_prc, Integer sale_prc, String in_id, String up_id) {
+                            Integer qty, Integer cnsmr_prc, Integer sale_prc, Integer dc_rate, String in_id, String up_id) {
         this.prod_cd = prod_cd;
         this.dc_cd = dc_cd;
         this.name = name;
@@ -26,6 +24,7 @@ public class ProductOptionDto {
         this.qty = qty;
         this.cnsmr_prc = cnsmr_prc;
         this.sale_prc = sale_prc;
+        this.dc_rate = dc_rate;
         this.use_yn = "y";
         this.del_yn = "n";
         this.in_id = in_id;
@@ -62,6 +61,7 @@ public class ProductOptionDto {
                 ", qty=" + qty +
                 ", cnsmr_prc=" + cnsmr_prc +
                 ", sale_prc=" + sale_prc +
+                ", dc_rate=" + dc_rate +
                 ", rmk='" + rmk + '\'' +
                 ", in_dtm=" + in_dtm +
                 ", in_id='" + in_id + '\'' +
@@ -130,9 +130,11 @@ public class ProductOptionDto {
         return sale_prc;
     }
 
-    public void setSale_prc(Integer sale_prc) {
-        this.sale_prc = sale_prc;
-    }
+    public void setSale_prc(Integer sale_prc) { this.sale_prc = sale_prc; }
+
+    public Integer getDc_rate() { return dc_rate; }
+
+    public void setDc_rate(Integer dc_rate) { this.dc_rate = dc_rate;  }
 
     public String getUse_yn() {
         return use_yn;

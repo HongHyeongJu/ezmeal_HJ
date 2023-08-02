@@ -11,7 +11,7 @@ html {
 
 /* -------------------------------  상품 상세 상단 ----------------------------------- */
 .head_main {
-    margin-top: 110px;
+    margin-top: 10px;
     width: 1100px;
     height: auto;
     background-color: white;
@@ -126,7 +126,7 @@ div.review_set {
 div.prod_price_set {
     width: 550px;
     border-bottom: 1px solid  #c6e2cd;  /* 아래쪽 구분선 설정 */
-    padding-bottom: 50px;
+    padding-bottom: 40px;
     margin-bottom: 0px;
     font-size: 180%;
 }
@@ -255,16 +255,18 @@ div.prod_price_set {
 
 .make_li ul {
     border-radius: 10px;
-    margin-left: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 10px;
     list-style: none;
     display: flex;
-    width: 500px;
+    width: 535px;
     height: 30px;
     align-items: center;
     justify-content: space-between;
     padding: 10px;
     border: none;
-    margin-bottom: 10px;
+
     background-color: rgb(246, 250, 246);
 }
 
@@ -760,12 +762,6 @@ button.order_btn, button.addcart_btn {
     transition: max-height 0.2s ease-out;
 }
 
-.empty-space {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100px; /* 화면의 세로 높이를 100%로 설정 */
-}
 
 .go_up > a {
     text-decoration: none; /* 밑줄 없애기 */

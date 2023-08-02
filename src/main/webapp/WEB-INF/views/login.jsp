@@ -47,7 +47,7 @@
                 <button type="submit" class="form_btn" value="login">로그인</button>
                 <div class="login-bottom">
                     <div class="remember-id">
-                        <input type="checkbox" name="remember" id="remember" value="on" ${empty cookie.id.value ? "":"checked"}/>
+                        <input type="checkbox" name="remember" id="remember" class="remember" value="on" ${empty cookie.id.value ? "":"checked"}/>
                         아이디기억
                     </div>
                     <div class="find">
