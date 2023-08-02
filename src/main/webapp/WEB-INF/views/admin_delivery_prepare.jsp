@@ -11,6 +11,7 @@
 <head>
     <title>ezmeal_admin | 배송중 준비</title>
     <link rel="stylesheet" href="/css/screens/admin_order.css">
+    <link rel="stylesheet" href="/css/screens/admin_order_delivery.css">
 </head>
 <body>
 <!-- 관리자 페이지 헤더 -->
@@ -74,13 +75,13 @@
                         <table class="admin-order__content-table">
                             <thead>
                             <tr>
-                                <th><input type="checkbox" /></th>
+                                <th><input class="order-id__all-checkBox" type="checkbox" /></th>
                                 <th>주문일</th>
                                 <th>주문번호</th>
                                 <th>주문자</th>
                                 <th>묶음선택</th>
                                 <!-- 동일 주문번호 내부에서만 묶음선택 가능-->
-                                <th><input type="checkbox" name="check" id="check" /></th>
+                                <th><input type="checkbox" class="dlvar-id__all-checkBox"/></th>
                                 <!-- 묶음 선택으로 묶인 것중에서 묶음 배송을 할 것 check -> 묶음 배송 처리 btn 눌러서 update-->
                                 <th>운송장정보</th>
                                 <!-- td에 select로 자체배송, 우체국 배송 , 넣어주기 | input 만들어서 송정번호저장하기 -->

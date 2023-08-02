@@ -1,5 +1,7 @@
 package com.teamProject.ezmeal.controller;
 
+import com.teamProject.ezmeal.domain.AdminMemberDto;
+import com.teamProject.ezmeal.domain.joinDomain.AdminOrderOrderDto;
 import com.teamProject.ezmeal.module.AdminDueModule;
 import com.teamProject.ezmeal.service.AdminOrderService;
 import lombok.RequiredArgsConstructor;
@@ -25,16 +27,34 @@ public class AdminOrderController {
     @PostMapping("/dynamic-before-management")
     @ResponseBody
     public List<Map<String, Object>> dynamicBeforeManagement(@RequestBody String periodString) {
+        System.out.println("----------------------------------");
+        System.out.println("adminOrderController-dynamicBeforeManagement 시작");
+        System.out.println("periodString = " + periodString);
         Map<String, Object> periodData = AdminDueModule.getPeriodData(periodString); // 기간을 받는 module 함수 {startTime: Object, endTime: Object};
+        System.out.println("periodData = " + periodData);
         return adminOrderService.getAdminBeforeManageInfo(periodData);
     }
 
-    // 상태 update
+    // 주문 발주 확인 - 상태 update
+    /* todo
+    *   1. stus a1 -> a2, h1
+    *       1.1. update | om,od : a1 -> h1
+    *       1.2. insert | osh : a1 -> a2
+    *                           * 취소, 반품, 묶음 배송 아닌 경우 == 모든 경우가 동일 할 때 주문상세 번호 : 1
+    *       1.3.                * dm  : a1 -> h1 | 이미 h1으로 생성 되어서 할 필요 X
+    *                           * dsh : 아직까지 history 변경 필요 안함.
+    * */
     @PatchMapping("/before-management")
     @ResponseBody
-    public String test(@RequestBody List<Long> orderIdList) {
+    public String test(@SessionAttribute AdminMemberDto loginAdminInfo, @RequestBody List<Long> orderIdList) {
+        System.out.println("------------------ adminOrderController @PatchMapping(\"/before-management\") ----------------");
+        System.out.println("employee = " + loginAdminInfo);
         System.out.println("orderIdList = " + orderIdList);
-        int i = adminOrderService.setOrderStatusAfterCheckAdminOrderBtn(orderIdList);
+        // orderMsterMapper에 넣을 dto 생성
+        AdminOrderOrderDto adminOrderOrderDto = new AdminOrderOrderDto("h1", loginAdminInfo.getEmp_acct_id(), orderIdList, "발주 확인");
+        // 객체 {status : "", up_id : "", orderIdList: []}
+        adminOrderService.setOrderStatusAfterCheckAdminOrderBtn(adminOrderOrderDto); // order master, order detail stus update
+        adminOrderService.insertOrderHistoryAfterCheckAdminOrder(adminOrderOrderDto); // order status history insert
         return "success";
     }
 

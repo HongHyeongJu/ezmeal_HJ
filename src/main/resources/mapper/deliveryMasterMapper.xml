@@ -6,15 +6,16 @@
     <!-- 주문 완료 후, insert 되는 배송지 기본 정보 TODO 결제 취소시, 사라져야 함-->
     <insert id="insertDelivery">
         insert into tb_delivery_master (dlvar_id, ord_id, ord_prod_dtl_id,
-                                        rcpr, rcpr_phone,
-                                        typ, start_pnt, desti, desti_dtl, req_mtr, in_mtd,
-                                        stus, msg,
-                                        rcv_sns_yn, box_size)
+        rcpr, rcpr_phone,
+        typ, start_pnt, desti, desti_dtl, req_mtr, in_mtd,
+        stus, msg,
+        rcv_sns_yn, box_size)
         VALUES
         <foreach collection="list" item="deliveryMasterDto" separator=",">
             (#{deliveryMasterDto.dlvar_id}, #{deliveryMasterDto.ord_id}, #{deliveryMasterDto.ord_prod_dtl_id},
             #{deliveryMasterDto.rcpr}, #{deliveryMasterDto.rcpr_phone},
-            #{deliveryMasterDto.typ}, #{deliveryMasterDto.start_pnt}, #{deliveryMasterDto.desti}, #{deliveryMasterDto.desti_dtl}, #{deliveryMasterDto.req_mtr}, #{deliveryMasterDto.in_mtd},
+            #{deliveryMasterDto.typ}, #{deliveryMasterDto.start_pnt}, #{deliveryMasterDto.desti},
+            #{deliveryMasterDto.desti_dtl}, #{deliveryMasterDto.req_mtr}, #{deliveryMasterDto.in_mtd},
             #{deliveryMasterDto.stus}, #{deliveryMasterDto.msg},
             #{deliveryMasterDto.rcv_sns_yn}, #{deliveryMasterDto.box_size})
         </foreach>
@@ -46,6 +47,7 @@
         and od.ord_id = dm.ord_id
         and pm.mbr_id = m.mbr_id
         and od.ord_prod_dtl_id = dm.ord_prod_dtl_id
+        and dm.stus in ('h1','h2')
         <if test="startTime != null">
             AND od.in_dtm >= STR_TO_DATE(#{startTime}, '%Y-%m-%d') -- 기본값 00:00:00
         </if>
@@ -61,4 +63,366 @@
         pm.pay_mtd
         order by date_format(od.in_dtm, '%Y-%m-%d')
     </select>
+
+
+    <!-- 묶음 배송 update 쿼리, 단일일 경우와 다중일 경우 모두 사용 가능 -->
+    <update id="update_bundle_yn" parameterType="com.teamProject.ezmeal.domain.restAPIDomain.BundleData">
+        UPDATE tb_delivery_master
+        SET bndl_yn = IF(ord_id IN
+        <foreach collection="ord_id" item="ordId" open="(" separator="," close=")">
+            #{ordId}
+        </foreach>
+        AND dlvar_id IN
+        <foreach collection="dlvar_id" item="dlvarId" open="(" separator="," close=")">
+            #{dlvarId}
+        </foreach>
+        , 'y', 'n')
+        WHERE ord_id IN
+        <foreach collection="ord_id" item="ordId" open="(" separator="," close=")">
+            #{ordId}
+        </foreach>
+    </update>
+
+    <!-- ordId로 dlvarId list 받아오기 : 송장번호 등록 상태, 배송중 처리 상태 때 사용 -->
+    <select id="select_dlvarId_bndl_y" resultType="Long">
+        select ord_prod_dtl_id
+        from tb_delivery_master
+        where bndl_yn = 'y'
+        and ord_id in
+        <foreach collection="list" item="ordId" open="(" close=")" separator=",">
+            #{ordId}
+        </foreach>
+    </select>
+
+    <!-- ordId로 dlvarId list 받아오기 : 송장번호 등록 상태, 배송중 처리 상태 때 사용 -->
+    <select id="select_dlvarId_bndl_n" resultType="Long">
+        select ord_prod_dtl_id
+        from tb_delivery_master
+        where bndl_yn &lt;&gt; 'y'
+        and ord_id in
+        <foreach collection="list" item="ordId" open="(" close=")" separator=",">
+            #{ordId}
+        </foreach>
+    </select>
+
+    <!-- ordId로 dlvarId 개수 list 받아오기 : order master의 상태 변화로 등록 -->
+    <select id="select_dlvarId_count_list" resultType="int">
+        select count(*)
+        from tb_delivery_master
+        where ord_id in
+        <foreach collection="list" item="ordId" open="(" close=")" separator=",">
+            #{ordId}
+        </foreach>
+        group by ord_id
+    </select>
+
+    <!-- admin 송장번호 등록시, 송장번호, 공급사, 배송비 등록 (todo. 3차 때 table 분리 후, dlvarId로 송장정보 등록)  -->
+    <update id="update_admin_invoice_num" parameterType="list">
+        UPDATE tb_delivery_master
+        SET
+        vend = CASE ord_id
+        <foreach collection="list" item="info" separator=" ">
+            WHEN #{info.ordId} THEN #{info.dlvarVend}
+        </foreach>
+        END,
+        invc_id = CASE ord_id
+        <foreach collection="list" item="info" separator=" ">
+            WHEN #{info.ordId} THEN #{info.invoiceNum}
+        </foreach>
+        END,
+        dexp = CASE ord_id
+        <foreach collection="list" item="info" separator=" ">
+            WHEN #{info.ordId} THEN #{info.dlvarExpense}
+        </foreach>
+        END
+        WHERE ord_id IN
+        <foreach collection="list" item="info" open="(" separator="," close=")">
+            #{info.ordId}
+        </foreach>
+    </update>
+
+    <!-- 송장 번호 등록 stus 저장 : dm, od에서 사용 -->
+    <update id="update_invoice_status">
+        update tb_delivery_master dm, tb_order_detail od
+        set dm.stus = #{status},
+        od.stus = #{status},
+        dm.up_dtm = now(),
+        od.up_dtm = now(),
+        dm.up_id = #{id},
+        od.up_id = #{id}
+        where dm.ord_prod_dtl_id = od.ord_prod_dtl_id
+        and dm.ord_prod_dtl_id in
+        <foreach collection="pkIdList" item="ordDetailId" open="(" separator="," close=")">
+            #{ordDetailId}
+        </foreach>
+    </update>
+
+    <!-- 송장 번호 등록 된 정보를 통해서 delivery history insert -->
+    <insert id="insert_invoice_delivery_history">
+        INSERT INTO tb_delivary_history (dlvar_id, stus, chg_rsn, in_id, up_id)
+        SELECT dlvar_id, stus, #{changeReason}, up_id, up_id
+        FROM tb_delivery_master
+        WHERE ord_id in
+        <foreach collection="pkIdList" item="ordId" open="(" separator="," close=")">
+            #{ordId}
+        </foreach>
+        and bndl_yn = 'y';
+    </insert>
+
+    <!-- 배송중 버튼 누를 시, bndl_y인 order Detail, delivery master status 변경-->
+    <update id="update_shipping_status_bndl_y">
+        update tb_delivery_master dm, tb_order_detail od
+        set dm.stus = #{status},
+        od.stus = #{status},
+        dm.up_dtm = now(),
+        od.up_dtm = now(),
+        dm.up_id = #{id},
+        od.up_id = #{id}
+        where dm.ord_prod_dtl_id = od.ord_prod_dtl_id
+        and dm.bndl_yn = 'y'
+        and dm.ord_id in
+        <foreach collection="pkIdList" item="ordId" open="(" separator="," close=")">
+            #{ordId}
+        </foreach>
+    </update>
+
+    <!-- 배송중 버튼 누를 시, bndl_n인 order Detail, delivery master status 변경-->
+    <update id="update_shipping_status_bndl_n">
+        update tb_delivery_master dm, tb_order_detail od
+        set dm.stus = #{status},
+        od.stus = #{status},
+        dm.up_dtm = now(),
+        od.up_dtm = now(),
+        dm.up_id = #{id},
+        od.up_id = #{id},
+        dm.invc_id = null,
+        dm.vend = null,
+        dm.dexp = null
+        where dm.ord_prod_dtl_id = od.ord_prod_dtl_id
+        and dm.bndl_yn &lt;&gt; 'y'
+        and dm.ord_id in
+        <foreach collection="pkIdList" item="ordId" open="(" separator="," close=")">
+            #{ordId}
+        </foreach>
+    </update>
+
+
+    <!-- 배송중 버튼 누를 시, 배송 master 정보를 통해서 bndl_y인 delivery history insert -->
+    <insert id="insert_shipping_delivery_history_bndl_y">
+        INSERT INTO tb_delivary_history (dlvar_id, stus, chg_rsn, in_id, up_id)
+        SELECT dlvar_id, stus, #{changeReason}, up_id, up_id
+        FROM tb_delivery_master
+        WHERE ord_id in
+        <foreach collection="pkIdList" item="ordId" open="(" separator="," close=")">
+            #{ordId}
+        </foreach>
+        and bndl_yn = 'y';
+    </insert>
+
+    <!-- 배송중 버튼 누를 시, 배송 master 정보를 통해서 bndl_n인 delivery history insert -->
+    <insert id="insert_shipping_delivery_history_bndl_n">
+        INSERT INTO tb_delivary_history (dlvar_id, stus, chg_rsn, in_id, up_id)
+        SELECT dlvar_id, stus, #{changeReason}, up_id, up_id
+        FROM tb_delivery_master
+        WHERE ord_id in
+        <foreach collection="pkIdList" item="ordId" open="(" separator="," close=")">
+            #{ordId}
+        </foreach>
+        and bndl_yn = 'n';
+    </insert>
+
+    <!-- 배송중 버튼 누를 시, order master 상태를 update : bndl_n == 'h3' 존재시, 부분배송중인 'h5' 없을 시 'h4' 상태변경 -->
+    <update id="update_order_master_shipping_status">
+        update tb_order_master om, tb_delivery_master dm
+        set
+        om.stus = IF(dm.stus LIKE 'h3', 'h5', 'h4'), <!--dm.stus가 h3일 경우 h5 아니면 h4-->
+        om.up_dtm = now(),
+        om.up_id = dm.up_id
+        where dm.ord_id = om.ord_id
+        and dm.ord_id in
+        <foreach collection="list" item="ordId" open="(" separator="," close=")">
+            #{ordId}
+        </foreach>
+    </update>
+    <!--   like 로 작성한 쿼리가 맞는지 확인 필요 - 2방안 -->
+    <!--    UPDATE tb_order_master om-->
+    <!--    JOIN tb_delivery_master dm ON om.ord_id = dm.ord_id-->
+    <!--    SET om.stus =-->
+    <!--    IF(EXISTS(-->
+    <!--    SELECT 1-->
+    <!--    FROM tb_delivery_master dm_sub-->
+    <!--    WHERE dm_sub.ord_id = dm.ord_id-->
+    <!--    AND dm_sub.stus = 'h3'-->
+    <!--    ), 'h5', 'h4')-->
+    <!--    WHERE dm.ord_id IN (20230717940, 20230717941);-->
+
+
+    <!--    &lt;!&ndash; 배송중으로 상태 변경, 동일 ord_id를 갔지만 묶음 배송 처리가 되지 않은 상품에 한해서는 상태가 변경되지 않고 대신 해당 상품은 송장번호,배송비,공급사 정보 초기화 &ndash;&gt;-->
+    <!--    <update id="update_shipping_status_only_bundleY">-->
+    <!--        UPDATE tb_delivery_master-->
+    <!--        SET-->
+    <!--        stus = IF(bndl_yn = 'y', #{status}, stus),-->
+    <!--        invc_id = IF(bndl_yn = 'y', invc_id, NULL),-->
+    <!--        vend = IF(bndl_yn = 'y', vend, NULL),-->
+    <!--        dexp = IF(bndl_yn = 'y', dexp, NULL),-->
+    <!--        up_dtm = now(),-->
+    <!--        up_id = #{id}-->
+    <!--        WHERE ord_id in-->
+    <!--        <foreach collection="pkIdList" item="ordId" open="(" separator="," close=")">-->
+    <!--            #{ordId}-->
+    <!--        </foreach>-->
+    <!--    </update>-->
+
+
+    <!-- 배송중 에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member -->
+    <select id="select_shipping_delivery_info_with_od_pm_m" resultType="map">
+        select
+        date_format(od.in_dtm, '%Y-%m-%d') as in_dtm_format, # 주문일
+        od.ord_id, # 주문번호
+        m.name, # 주문자명
+        GROUP_CONCAT(date_format(dm.up_dtm, '%Y-%m-%d') SEPARATOR ', ') as up_dtm_format, # 배송일
+        GROUP_CONCAT(dm.dlvar_id SEPARATOR ', ') as dlvar_id, # 배송지 pk // todo 배송 상세에 주문상세번호 넣어야함
+        dm.invc_id, # 송장번호
+        dm.vend, # 공급사
+        GROUP_CONCAT(od.name SEPARATOR ', ') as prod_name, # 주문상품 명
+        GROUP_CONCAT(od.qty SEPARATOR ', ') as qty, # 주문상품 수량
+        COUNT(m.name) as count # 중복 수량
+        from tb_order_master om,
+        tb_order_detail od,
+        tb_member m,
+        tb_delivery_master dm
+        where dm.stus = 'h4'
+        and om.mbr_id = m.mbr_id
+        and om.ord_id = od.ord_id
+        and od.ord_prod_dtl_id = dm.ord_prod_dtl_id
+        <if test="startTime != null">
+            AND od.in_dtm >= STR_TO_DATE(#{startTime}, '%Y-%m-%d') -- 기본값 00:00:00
+        </if>
+        <if test="endTime != null">
+            AND od.in_dtm &lt;= STR_TO_DATE(CONCAT(#{endTime}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+        </if>
+        group by date_format(od.in_dtm, '%Y-%m-%d'),
+        od.ord_id,
+        m.name,
+        dm.invc_id,
+        dm.vend
+        order by date_format(od.in_dtm, '%Y-%m-%d')
+    </select>
+
+    <!-- ordId로 dlvarId 받아오기 -->
+    <select id="select_dlvarId_from_ordId" resultType="Long">
+        select dlvar_id
+        from tb_delivery_master
+        where ord_id in
+        <foreach collection="list" item="ordId" open="(" separator="," close=")">
+            #{ordId}
+        </foreach>
+    </select>
+
+    <!-- 배송중 page에서 배송완료 일 경우, stus, up-dtm, up-id update : dm, od-->
+    <update id="update_ship_complete_stus">
+        update tb_delivery_master dm, tb_order_detail od
+        set dm.stus = #{status},
+        od.stus = #{status},
+        dm.up_dtm = now(),
+        od.up_dtm = now(),
+        dm.up_id = #{id},
+        od.up_id = #{id}
+        where dm.ord_prod_dtl_id = od.ord_prod_dtl_id
+        and dm.dlvar_id in
+        <foreach collection="pkIdList" item="dlvarId" open="(" separator="," close=")">
+            #{dlvarId}
+        </foreach>
+    </update>
+
+
+    <!-- 배송중 page에서 배송완료 일 경우 delivery history에 insert 하기-->
+    <insert id="insert_ship_complete_delivery_hist">
+        INSERT INTO tb_delivary_history (dlvar_id, stus, chg_rsn, in_id, up_id)
+        SELECT dlvar_id, stus, #{changeReason}, up_id, up_id
+        FROM tb_delivery_master
+        WHERE dlvar_id in
+        <foreach collection="pkIdList" item="dlvarId" open="(" separator="," close=")">
+            #{dlvarId}
+        </foreach>
+    </insert>
+
+    <!-- 배송중 order master 조건에 따라서 배송완료, 부분 배송완료 설정하기 : 배송준비중의 join하는 방식이 아닌 suquery로 성능 높임 -->
+    <update id="update_ship_complete_order_master_status">
+        UPDATE tb_order_master om
+        SET om.up_id = #{id},
+        om.stus =
+        IF(EXISTS(
+        SELECT 1
+        FROM tb_delivery_master dm
+        WHERE om.ord_id = dm.ord_id
+        AND dm.stus &lt;&gt; #{status}
+        ), 'h7', #{status})
+        WHERE om.ord_id IN
+        <foreach collection="pkIdList" item="ordId" open="(" separator="," close=")">
+            #{ordId}
+        </foreach>
+    </update>
+
+    <!--  배송 완료에서 기본 배송 관련 정보 보여줌 : 종합적으로 보여주는 값 - 주문상세, 배송 master, 결제 master, member -->
+    <select id="select_complete_delivery_info_with_od_pm_m" resultType="map">
+        select
+        date_format(od.in_dtm, '%Y-%m-%d') as in_dtm_format, # 주문일
+        od.ord_id, # 주문번호
+        m.name, # 주문자명
+        GROUP_CONCAT(date_format(dm.up_dtm, '%Y-%m-%d') SEPARATOR ', ') as up_dtm_format, # 배송일
+        GROUP_CONCAT(dm.dlvar_id SEPARATOR ', ') as dlvar_id, # 배송지 pk
+        dm.invc_id, # 송장번호
+        dm.vend, # 공급사
+        GROUP_CONCAT(od.name SEPARATOR ', ') as prod_name, # 주문상품 명
+        GROUP_CONCAT(od.prod_cd SEPARATOR ', ') as prod_cd, # 주문상품 pk
+        GROUP_CONCAT(od.qty SEPARATOR ', ') as qty, # 주문상품 수량
+        COUNT(m.name) as count, # 중복 수량
+        GROUP_CONCAT(od.stus separator ', ') as stus # 상품 상태
+        from tb_order_master om,
+        tb_order_detail od,
+        tb_member m,
+        tb_delivery_master dm
+        where od.stus in ('h6', 'a3') # 배송완료, 구매확정
+        and om.mbr_id = m.mbr_id
+        and om.ord_id = od.ord_id
+        and od.ord_prod_dtl_id = dm.ord_prod_dtl_id
+        <if test="startTime != null">
+            AND od.in_dtm >= STR_TO_DATE(#{startTime}, '%Y-%m-%d') -- 기본값 00:00:00
+        </if>
+        <if test="endTime != null">
+            AND od.in_dtm &lt;= STR_TO_DATE(CONCAT(#{endTime}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+        </if>
+        group by date_format(od.in_dtm, '%Y-%m-%d'),
+        od.ord_id,
+        m.name,
+        dm.invc_id,
+        dm.vend
+        order by date_format(od.in_dtm, '%Y-%m-%d')
+    </select>
+
+    <!-- 수동으로 배송완료 admin page에서 구매확정으로 변경 시, od - stus update -->
+    <update id="update_fixed_complete_manual">
+        update tb_order_detail od
+        set od.stus = #{status},
+        od.up_id = #{id},
+        od.up_dtm = now()
+        where od.ord_prod_dtl_id in
+        (select ord_prod_dtl_id
+        from tb_delivery_master
+        where dlvar_id in
+        <foreach collection="pkIdList" item="dlvarId" open="(" close=")" separator=",">
+            #{dlvarId}
+        </foreach>
+        )
+    </update>
+
+
+    <!-- osh insert가 1 이상일 경우, 자동으로 배송완료 admin page에서 'h6'이 order_detail 중에서 up_dtm이 now()보다 1주일 이상이면 구매확정 처리 -->
+    <update id="update_fixed_complete_auto">
+        update tb_order_detail od
+        set od.stus = 'a3'   # 구매확정 조건으로 변경
+        where od.stus = 'h6' # 배송완료 중 조건
+          AND od.up_dtm &lt; DATE_SUB(NOW(), INTERVAL 7 DAY);
+    </update>
 </mapper>
