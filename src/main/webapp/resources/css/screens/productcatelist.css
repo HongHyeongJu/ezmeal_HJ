@@ -72,7 +72,7 @@ body {
 .prod_outer{
     /* background-color:blueviolet; */
     width: 245px;
-    height: 520px;
+    height: 480px;
     border: 0px #000;
 }
 
@@ -127,7 +127,7 @@ body {
 
 .review_set {
     text-align: right;
-    margin-top : 4px;
+    margin-top : 0px;
     margin-right: 5px;
     margin-bottom : 5px;
 }
@@ -160,8 +160,8 @@ body {
 .prod_title  {
     padding: 0%;
     display: block;
-    margin-top: 18px;
-    margin-bottom: 10px;
+    margin-top: 13px;
+    margin-bottom: 7px;
     margin-left: 0px;
     margin-right: 5px;
     word-break: break-word;
@@ -249,7 +249,7 @@ span.sale_prc {
 .button_wrapper {
     display: flex;
     align-items: center;
-    margin-top: 0px;
+    margin-top: -7px;
 }
 
 .qty {

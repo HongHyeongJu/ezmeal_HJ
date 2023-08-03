@@ -290,7 +290,7 @@
         </a>
       </li>
       <li><a href="/product/headerlist?headertyp=bigdc">특가 | 혜택</a></li>
-      <li><a href="#">이벤트</a></li>
+      <li><a href="/notice">고객센터</a></li>
     </div>
 
 

@@ -31,21 +31,39 @@
 <div class="head_main">
   <div class="head_main_left">
 
+    <!-- 메인 이미지 -->
     <c:forEach var="img" items="${imgList}" varStatus="status">
       <c:if test="${img.typ=='대표'}">
-        <img class="main_img" src="../img/${img.url}.png"  id="main_img"/>
+        <img class="main_img" src="../img/${not empty img.url ? img.url : 'ezmeal_logo'}.png"  id="main_img"/>
       </c:if>
     </c:forEach>
 
 
+    <!-- 미니 이미지 -->
     <ul class="mini_img_set">
-      <c:forEach var="img" items="${imgList}">
-        <c:if test="${img.typ=='메인'}">
-          <img class="mini_img 메인" src="../img/${img.url}.png" />
+      <c:forEach var="img" items="${imgList}" varStatus="status">
+        <c:if test="${img.typ=='메인' and status.index < 5}">
+          <img class="mini_img 메인" src="../img/${not empty img.url ? img.url : 'ezmeal_logo'}.png" />
         </c:if>
       </c:forEach>
     </ul>
     <div class="main_left 아래 여백"></div>
+
+<%--    <c:forEach var="img" items="${imgList}" varStatus="status">--%>
+<%--      <c:if test="${img.typ=='대표'}">--%>
+<%--        <img class="main_img" src="../img/${img.url}.png"  id="main_img"/>--%>
+<%--      </c:if>--%>
+<%--    </c:forEach>--%>
+
+
+<%--    <ul class="mini_img_set">--%>
+<%--      <c:forEach var="img" items="${imgList}">--%>
+<%--        <c:if test="${img.typ=='메인'}">--%>
+<%--          <img class="mini_img 메인" src="../img/${img.url}.png" />--%>
+<%--        </c:if>--%>
+<%--      </c:forEach>--%>
+<%--    </ul>--%>
+<%--    <div class="main_left 아래 여백"></div>--%>
   </div>
 
   <!--------------------------------------------- 메인 오른쪽 정보 --------------------------------------------------->
@@ -327,11 +345,14 @@
       <div class="answer">아 고객님 연락드리겠습니다.</div>
     </td>
   </tr>
+
+  <!-- 리뷰 하드코딩 -->
+
   <tr>
     <td class="inquiry_title accordion">&nbsp;Q. 불닭맛 있어요?</td>
     <td class="inquiry_wrt">한자*</td>
     <td class="inquiry_wrt_dt">2023.06.13.</td>
-    <td class="inquiry_stus">답변중</td>
+    <td class="inquiry_stus">답변완료</td>
   </tr>
   <tr>
     <td colspan="4">
@@ -357,6 +378,39 @@
       </div>
     </td>
   </tr>
+
+  <!-- 리뷰 하드코딩 -->
+  <tr>
+    <td class="inquiry_title accordion">&nbsp;Q. 5개 세트는 안파나요?</td>
+    <td class="inquiry_wrt">김태*</td>
+    <td class="inquiry_wrt_dt">2023.08.03.</td>
+    <td class="inquiry_stus">답변완료</td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      <div class="answer">
+        아 고객님  저희는 10의 배수만 취급합니다.
+        10개 세트 구입하시고 반 나누시면 되겠습니다.
+        좋은 하루 되세요^^
+      </div>
+    </td>
+  </tr>
+
+  <!-- 리뷰 하드코딩 -->
+  <tr>
+    <td class="inquiry_title accordion">&nbsp;Q. 조리법이 궁금해요!</td>
+    <td class="inquiry_wrt">황태*</td>
+    <td class="inquiry_wrt_dt">2023.08.05.</td>
+    <td class="inquiry_stus">답변완료</td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      <div class="answer">
+        전자레인지에 데워드시면 되시겠습니다.
+      </div>
+    </td>
+  </tr>
+
   </tbody>
 </table>
 <div class="bottom_empty">
@@ -369,6 +423,23 @@
 </div>
 
 <!------------------------------------- 자바스크립트 ------------------------------------------->
+<script>
+  window.onload = function() {
+    /*페이지 로드 시 */
+    makeReviewAvgStarImg();   /*리뷰 별점 이미지 출력*/
+    imgFunction();   /*이미지 교체 기능 넣기*/
+    updatePrice();   /*기본으로 가격 업데이트*/
+    changeMainImage(document.getElementById("main_img"))
+
+    /*선택한 옵션으로 바로 가격 바뀌도록*/
+    let optSelect = document.getElementById("opt_select");
+
+    optSelect.addEventListener('change', function() {
+      updatePrice();
+    });
+
+  }
+</script>
 <script src="/javascript/productdetail.js"></script>
 <script src="/javascript/productdetailoption.js"></script>
 <script src="/javascript/productdetail_img_and_order.js"></script>

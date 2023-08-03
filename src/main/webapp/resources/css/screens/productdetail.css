@@ -273,7 +273,7 @@ div.prod_price_set {
     margin-bottom: 10px;
     list-style: none;
     display: flex;
-    width: 535px;
+    width: auto;
     height: 30px;
     align-items: center;
     justify-content: space-between;
