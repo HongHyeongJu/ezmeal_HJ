@@ -48,10 +48,6 @@ public class AdminProductController {
         ProductDto productDto = request.getProductDto();
         List<ProductOptionDto> productOptionDtos = request.getProductOptionDto();
 
-        for(ProductOptionDto optDto : productOptionDtos){
-            System.out.println("optDto: "+optDto.toString());
-        }
-
         Map<String,Integer> registResult = productService.prodAndOptionRegist(productDto, productOptionDtos);
 
         // 처리가 성공적으로 끝나면, 응답을 클라이언트에 보냅니다.
@@ -79,17 +75,21 @@ public class AdminProductController {
 
     @GetMapping("/prod/list")
     public String adminProdList(Model model, Long prod_cd) throws SQLException {
-        /*관리자용 상품 페이지(읽기)에 필요한 것 모두 받아오기*/
+        /*관리자용 상품 목록 출력에 필요한 것 모두 받아오기*/
         HashMap map = productService.getOneProductByProdCdForMng(prod_cd);
 
         /*모델에 담기*/
-        model.addAttribute("product", map.get("product"));
         model.addAttribute("optList", map.get("optList"));
-        model.addAttribute("imgList", map.get("imgList"));
-        model.addAttribute("dcList", map.get("dcList"));
         model.addAttribute("cateList", map.get("cateList"));
         model.addAttribute("custList", map.get("custList"));
         model.addAttribute("stusList", map.get("stusList"));
+
+        /*관리자 전체상품 리스트 받아오기*/
+        List<ProductDto> allProdList = productService.getAllProdListForMng();
+        model.addAttribute("allProdList", allProdList);
+//        System.out.println("allProdList.size()"+allProdList.size());
+//        allProdList.forEach(a-> System.out.println(a.getName()));
+
         return "product_admin_list";
     }
 

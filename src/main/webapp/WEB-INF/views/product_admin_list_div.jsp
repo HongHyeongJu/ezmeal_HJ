@@ -29,6 +29,7 @@
                         <div class="sc_title_div">
                             <label>카테고리</label>
                             <select id="cate_cd" >
+                                    <option value="0">전체</option>
                                 <c:forEach items="${cateList}" var="cate">
                                     <option value="${cate.cate_cd}">${cate.name}</option>
                                 </c:forEach>
@@ -63,6 +64,7 @@
                         <div class="sc_title_div">
                             <label>거래처</label>
                             <select id="cust_cd">
+                                <option value="0">전체</option>
                                 <c:forEach items="${custList}" var="cust">
                                     <option value="${cust.cust_cd}">${cust.cust_nm}</option>
                                 </c:forEach>
@@ -102,11 +104,11 @@
     <div class="prod_list_table_btn_div">
         <table class="prod_list_table_btn_table">
             <tr>
-                <th class="btn_th"><button>버튼</button></th>
-                <th class="btn_th"><button>버튼</button></th>
-                <th class="btn_th"><button>버튼</button></th>
-                <th class="btn_th"><button>버튼</button></th>
-                <th class="btn_th"><button>버튼</button></th>
+                <th class="btn_th"><button>진열</button></th>
+                <th class="btn_th"><button>상태변경</button></th>
+                <th class="btn_th"><button>엑셀다운로드</button></th>
+                <th class="btn_th"><button>인쇄</button></th>
+                <th class="btn_th"><button>삭제</button></th>
             </tr>
         </table>
     </div>
@@ -122,30 +124,64 @@
                 <th class="table_title_1 cate_cd">카테고리</th>
                 <th class="table_title_1 prod_cd">상품코드</th>
                 <th class="table_title_1 name">상품명</th>
-<%--                <th class="table_title_1 typ_img">대표 이미지</th>--%>
-<%--                <td class="table_title_3 typ_img">대표 이미지</td>--%>
                 <th class="table_title_1 sale_prc">판매가</th>
                 <th class="table_title_1 sfkp_stus">보관방법</th>
+                <th class="table_title_1 opt_yn">옵션상품</th>
                 <th class="table_title_1 fst_reg_dt">등록일</th>
+                <th class="table_title_1 dp_yn">진열상태</th>
+                <th class="table_title_1 prod_stus">상품상태</th>
                 <th class="table_title_1 inven_stus">재고상태</th>
             </tr>
+
             <!-- 각 상품 정보를 <tr>으로 감싸서 표 형태로 출력 -->
-            <tr class="info_info_tr"  data-cate_cd="" data-prod_cd="" data-name="" data-sale_prc="" data-sfkp_stus="" data-fst_reg_dt=""
-                data-inven_stus="">
-                <td class="table_title_3 check"><input type="checkbox"></td>
-                <td class="table_title_3 no">1</td>
-                <td class="table_title_3 cate_cd">닭가슴살</td>
-                <td class="table_title_3 prod_cd">
-                    <a class="product_link prod_cd" href="">P003423</a>
-                </td>
-                <td class="table_title_3 name">
-                    <a class="product_link name" href="">맛있는 닭꼬치 3종</a>
-                </td>
-                <td class="table_title_3 sale_prc">5,900원</td>
-                <td class="table_title_3 sfkp_stus">냉동</td>
-                <td class="table_title_3 fst_reg_dt">2023-08-12</td>
-                <td class="table_title_3 inven_stus">안전</td>
-            </tr>
+            <c:forEach var="prod" items="${allProdList}" varStatus="status">
+
+                <c:choose>
+                    <c:when test="${prod.opt_yn == 'Y' and not empty optList[prod.prod_cd]}">
+                        <c:set var="optIndexZeroSalePrc" value="${optList[prod.prod_cd].get(0).sale_prc}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="optIndexZeroSalePrc" value="${prod.sale_prc}"/>
+                    </c:otherwise>
+                </c:choose>
+
+
+
+                <tr class="info_info_tr" id="${prod.prod_cd}"  data-cate_cd="${prod.cate_cd}" data-prod_cd="${prod.prod_cd}"
+                    data-name="${prod.name}"
+                    data-sale_prc="${optIndexZeroSalePrc}"
+                    data-sfkp_stus="${prod.sfkp_stus}" data-fst_reg_dt="${prod.fst_reg_dt}"
+                    data-inven_stus="">
+                    <td class="table_title_3 check"><input type="checkbox"></td>
+                    <td class="table_title_3 no">${status.index + 1}</td>
+                    <td class="table_title_3 cate_cd">${prod.cate_cd}</td>
+                    <td class="table_title_3 prod_cd">
+                        <a class="product_link prod_cd" href="">P0034${prod.prod_cd}</a>
+                    </td>
+                    <td class="table_title_3 name">
+                        <a class="product_link name" href="">${prod.name}</a>
+                    </td>
+                    <td class="table_title_3 sale_prc">${optIndexZeroSalePrc}</td>
+                    <td class="table_title_3 sfkp_stus">${prod.sfkp_stus}</td>
+                    <td class="table_title_3 opt_yn">${prod.opt_yn}</td>
+                    <td class="table_title_3 fst_reg_dt">${prod.fst_reg_dt}</td>
+                    <td class="table_title_3 dp_yn">${prod.dp_yn}</td>
+                    <td class="table_title_3 prod_stus">
+                        <c:choose>
+                            <c:when test="${prod.prod_stus == 1}">판매중</c:when>
+                            <c:when test="${prod.prod_stus == 2}">품절임박</c:when>
+                            <c:when test="${prod.prod_stus == 3}">일시품절</c:when>
+                            <c:when test="${prod.prod_stus == 4}">품절</c:when>
+                            <c:when test="${prod.prod_stus == 5}">판매중지</c:when>
+                            <c:when test="${prod.prod_stus == 6}">입고예정</c:when>
+                            <c:otherwise>상태 정보 없음</c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td class="table_title_3 inven_stus">안전</td>
+                </tr>
+
+            </c:forEach>
+
             <!-- ... -->
         </table>
     </div>

@@ -172,6 +172,13 @@ public class ProductDao {
         return session.selectList(namespace + "select_5_product_main_home");
     }
 
+    /* 관리자 상품 몰록에서 보여줄 삭제 안한 전체 상품 리스트 */
+    public List<ProductDto> selectAllProdListForMng() throws SQLException {
+        return session.selectList(namespace + "all_prod_list_fot_mng");
+    }
+
+
+
     /* 상품 등록하기 */
     /* 상품 수정하기 */
     /* 유효일-종료일 차이가 n일 이하인 것 찾기 */
