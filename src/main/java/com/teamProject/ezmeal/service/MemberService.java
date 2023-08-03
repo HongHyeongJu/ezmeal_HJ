@@ -72,6 +72,11 @@ public class MemberService {
         }
     }
 
+    // 회원가입시 장바구니 번호 부여
+    public int registerCartSeq(Long memberId) {
+        return memberDao.insertCartSeq(memberId);
+    }
+
     // 로그인한 회원정보를 가져오는 로직
     public MemberDto getMemberInfo(Long memberId) {    // 회원정보수정페이지에 띄워줄 회원정보를 조회한다.
         return memberDao.selectMemberInfo(memberId);
