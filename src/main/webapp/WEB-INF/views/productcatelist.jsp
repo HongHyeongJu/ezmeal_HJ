@@ -17,21 +17,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
   <link rel="stylesheet" href="/css/screens/productcatelist.css?ver=2"/>
+
+    <jsp:include page="header_specific_styles.jsp" />
+
 </head>
 <body>
 
 <!--헤더 내려오는 공백-->
-<div class="empty"></div>
+<jsp:include page="header.jsp"/>
+<div class="empty_top">
+</div>
 <ul class="지붕묶음" id="section1">
   <input type="hidden" data-cate_cd="${cate_cd}">
+<%--  <span class="category_name">${category_name}</span>--%>
   <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=default" class="sort-link active" data-sort="default">추천순</a></li>
   <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=new" class="sort-link" data-sort="new">신상품순</a></li>
   <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=lowprc" class="sort-link" data-sort="lowprc">낮은가격순</a></li>
   <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=highprc" class="sort-link" data-sort="higprc">높은가격순</a></li>
-
 </ul>
 
-<!--전달 받은 상품 리스트 하나한 꺼내기-->
+<!--전달 받은 상품 리스트 하나만 꺼내기-->
 <c:forEach var="prod" items="${prodList}" varStatus="status">
   <!-- 4개씩 ul 태그로 감싸기 -->
   <c:if test="${status.index % 4 == 0}">
@@ -43,9 +48,9 @@
       <!--------------------------------------------------------------------------------------------->
       <figure class="prod_top top_figure">
         <a href="/product/detail?cate_cd=05&prod_cd=${prod.getProd_cd()}"> <!--상품 대표 이미지-->
-          <c:set var="productImg" value="${prodImgList[status.index].url}"/>
+            <c:set var="productImage" value="${prodImgMap[prod.prod_cd]}" />
           <img id="prod_top top_img"
-               src="/img/${productImg}.png"/>
+               src="/img/${productImage.url}.png"/>
 <%--               src="/img/${empty productImg ? 'ezmeal_logo' : productImg}.png"/>--%>
         </a>
 
@@ -97,16 +102,10 @@
             <c:choose>
                 <c:when test="${not empty prodOptMap[prod.prod_cd]}"> <!--옵션 있을 때--------------->
 
-
-                  <c:set var="cnsmr_prc_opt" value="${prodOptMap[prod.prod_cd].get(0).cnsmr_prc}" />
-                  <c:set var="sale_prc_opt" value="${prodOptMap[prod.prod_cd].get(0).sale_prc}" />
-
                   <!--할인 퍼센트-->
-                  <c:if test="${cnsmr_prc_opt != sale_prc_opt}">
-                      <span class="dc_cd">
-                        <strong>${(cnsmr_prc_opt - sale_prc_opt) / cnsmr_prc_opt * 100}</strong>%
-                      </span>&nbsp;
-                  </c:if>
+                  <span class="dc_cd">
+                          <strong>${prodOptMap[prod.prod_cd].get(0).dc_rate}</strong>%
+                  </span>
 
                   <!--판매 가격-->
                   <span class="sale_prc">
@@ -121,17 +120,13 @@
                   </c:if>
 
                 </c:when>
-                <c:otherwise> <!--옵션 있을 때----------------------------------------------->
-
-                  <c:set var="cnsmr_prc" value="${prod.getCnsmr_prc()}" />
-                  <c:set var="sale_prc" value="${prod.getSale_prc()}" />
+                <c:otherwise> <!--옵션 없을 때----------------------------------------------->
 
                   <!--할인 퍼센트-->
-                  <c:if test="${cnsmr_prc != sale_prc}">
-                      <span class="dc_cd">
-                        <strong>${(cnsmr_prc - sale_prc) / cnsmr_prc * 100}</strong>%
-                      </span>&nbsp;
-                  </c:if>
+                  <span class="dc_cd">
+                        <strong>${prod.getDc_rate()}</strong>%
+                  </span>
+
 
                   <!--판매 가격-->
                   <span class="sale_prc">
@@ -203,11 +198,11 @@
 
   <script src="/javascript/productlistaddcart.js"></script>
   <script>
-    // msg 값을 확인하고 alert 창 띄우기 없는 상품코드 일 때
-      var msg = "${msg}";
-      if (msg !== "") {
-        alert(msg);
-      }
+    <%--// msg 값을 확인하고 alert 창 띄우기 없는 상품코드 일 때--%>
+    <%--  var msg = "${msg}";--%>
+    <%--  if (msg !== "") {--%>
+    <%--    alert(msg);--%>
+    <%--  }--%>
   </script>
 
   <script src="https://code.jquery.com/jquery-3.7.0.js"></script>

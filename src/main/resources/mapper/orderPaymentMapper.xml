@@ -3,8 +3,60 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="orderPaymentDao">
-    <insert id="insertOrderPayment"  parameterType="Map">
+    <insert id="insertOrderPayment" parameterType="Map">
         INSERT INTO tb_order_payment (ord_id, pay_id)
         values (#{orderId}, #{payId});
     </insert>
+
+    <!-- 처음 주문 내역에 들어 갈 경우 모든 주문 내역을 보여준다. -->
+    <select id="select_all_order_payment_list" resultType="OrderPaymentJoinDto">
+        select om.ord_id,
+               om.prod_smry,
+               osc.name                                 as stus,
+               DATE_FORMAT(om.in_dtm, '%Y-%m-%d %H:%i') as date_time,
+               pm.pay_mtd,
+               format(pm.pay_prc, 0)                    as pay_prc_format
+        from tb_order_payment op,
+             tb_order_master om,
+             tb_payment_master pm,
+             tb_order_status_code osc
+        where op.ord_id = om.ord_id
+          and op.pay_id = pm.pay_id
+          and om.mbr_id = #{mbrId}
+          and osc.ord_prod_stus_cd = om.stus
+        order by om.in_dtm desc
+    </select>
+
+    <!-- 조회 시작, 조회 마감일 나타내기 -->
+    <select id="select_order_payment_start_end_date" resultType="map">
+        select DATE_FORMAT(MIN(om.in_dtm), '%Y-%m-%d') as start_date,
+               DATE_FORMAT(MAX(om.in_dtm), '%Y-%m-%d') as end_date
+        from tb_order_payment op,
+             tb_order_master om,
+             tb_payment_master pm
+        where op.ord_id = om.ord_id
+          and op.pay_id = pm.pay_id
+          and om.mbr_id = #{mbrId}
+    </select>
+
+    <!-- 조회 기간에 따른 주문 내역 가지고 오기-->
+    <select id="select_order_payment_period" resultType="OrderPaymentJoinDto">
+        SELECT om.ord_id,
+               om.prod_smry,
+               osc.name                                 as stus,
+               DATE_FORMAT(om.in_dtm, '%Y-%m-%d %H:%i') as date_time,
+               pm.pay_mtd,
+               format(pm.pay_prc, 0)                    as pay_prc_format
+        FROM tb_order_payment op,
+             tb_order_master om,
+             tb_payment_master pm,
+             tb_order_status_code osc
+        WHERE op.ord_id = om.ord_id
+          AND op.pay_id = pm.pay_id
+          and osc.ord_prod_stus_cd = om.stus
+          AND om.mbr_id = #{mbrId}
+          AND om.in_dtm >= STR_TO_DATE(#{startTime}, '%Y-%m-%d')
+          AND om.in_dtm &lt;= STR_TO_DATE(CONCAT(#{endTime}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+        ORDER BY om.in_dtm DESC
+    </select>
 </mapper>

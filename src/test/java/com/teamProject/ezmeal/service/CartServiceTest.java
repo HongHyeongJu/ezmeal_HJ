@@ -22,7 +22,7 @@ public class CartServiceTest {
 
     @Test
     public void generalProducts() {
-        List<CartJoinProductDto> stringList = cartProductService.getProducts(1L);
+        List<CartJoinProductDto> stringList = cartProductService.getProductList(1L);
         System.out.println("product = " + stringList.size()); //3
     }
 

@@ -1,0 +1,80 @@
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+
+body {
+    font-family: 'NanumSquare', sans-serif;
+}
+/* 테이블 스타일 */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+
+
+/* 테이블 스타일 */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+/* 테이블 헤더 스타일 */
+th {
+    border-bottom: 1px solid rgb(0, 199, 40);
+    background-color: rgb(246, 250, 246);
+    padding: 15px;
+    text-align: left;
+}
+
+/* 테이블 셀 스타일 */
+td {
+    border-bottom: 1px solid rgb(230 233 230);;
+    padding: 20px;
+    text-align: left;
+
+}
+
+/* 첫 번째 열 스타일 */
+td.notice_td:first-child,
+th:first-child {
+    border-left: 1px solid rgb(0, 199, 40);;
+}
+
+/* 마지막 열 스타일 */
+td.notice_td:last-child,
+th:last-child {
+    border-right: 1px solid #000;
+}
+
+/* 첫 번째 열과 마지막 열의 선 없애기 */
+td.notice_td:first-child,
+td.notice_td:last-child,
+th:first-child,
+th:last-child {
+    border-left: none;
+    border-right: none;
+}
+
+.page-number{
+    margin-top: 50px;
+}
+ul.page_list_num_ul {
+    list-style: none; /* 목록표시 제거 */
+    padding: 0; /* 패딩 제거 */
+    display: flex; /* 항목들을 수평으로 정렬 */
+    justify-content:center;
+}
+
+
+li.page_list_num {
+    margin-right: 20px; /* 항목들 사이에 공간 추가 */
+}
+
+/* 마지막 항목의 오른쪽 여백을 제거 */
+li.page_list_num:last-child {
+    margin-right: 0;
+}
+
+.thispage {
+    font-weight: 900;
+    color: #2ebd46;
+}

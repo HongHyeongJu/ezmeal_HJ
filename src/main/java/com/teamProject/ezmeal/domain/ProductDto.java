@@ -9,7 +9,7 @@ import java.util.Objects;
 public class ProductDto {
     private Long prod_cd;
     private String cate_cd, prod_stus, cust_cd, dc_cd, name, mng_prod_nm, sfkp_stus, sfkp_mtd;
-    private Integer sp_prc, cnsmr_prc, sale_prc, mgn_rate;
+    private Integer sp_prc, cnsmr_prc, sale_prc, dc_rate, mgn_rate;
     private String dscpt;
 
     private String detail;
@@ -29,7 +29,7 @@ public class ProductDto {
 
 
     public ProductDto(String cate_cd,String prod_stus,String cust_cd,String dc_cd,String name,String mng_prod_nm,
-               String sfkp_stus,String sfkp_mtd,Integer sp_prc,Integer cnsmr_prc,Integer sale_prc,
+               String sfkp_stus,String sfkp_mtd,Integer sp_prc,Integer cnsmr_prc,Integer sale_prc, Integer dc_rate,
                Integer mgn_rate, String dscpt,String detail,Integer min_qty,Integer weight,
                String stnd,String orplc,String recipe,String mtd,String distb_tlmt,
                String vld_start_dt,String vld_end_dt,String mng,String fst_reg_dt,
@@ -46,6 +46,7 @@ public class ProductDto {
         this.sp_prc=sp_prc;
         this.cnsmr_prc=cnsmr_prc;
         this.sale_prc=sale_prc;
+        this.dc_rate=dc_rate;
         this.mgn_rate=mgn_rate;
         this.dscpt=dscpt;
         this.detail=detail;
@@ -70,7 +71,7 @@ public class ProductDto {
         this.up_id=up_id;
     }
 
-    ProductDto(){}
+    public ProductDto(){}
     /*-------------------------------------------------------------------   [생성자 끝]   -------------------*/
 
     /*-----------------------------------------------------------------   [toString & equals 시작]   -------*/
@@ -195,9 +196,13 @@ public class ProductDto {
         return sale_prc;
     }
 
-    public void setSale_prc(int sale_prc) {
+    public void setSale_prc(Integer sale_prc) {
         this.sale_prc = sale_prc;
     }
+
+    public Integer getDc_rate() { return dc_rate; }
+
+    public void setDc_rate(Integer dc_rate) { this.dc_rate = dc_rate; }
 
     public Integer getMgn_rate() { return mgn_rate; }
 

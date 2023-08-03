@@ -39,8 +39,8 @@ public class CartProductDao {
     */
 
     // 일반 상품 : 냉동, 냉장, 상온 분리
-    public List<CartJoinProductDto> selectProduct(Long cartSeq) {
-        return session.selectList(namespace + "product", cartSeq);
+    public List<CartJoinProductDto> selectProductList(Long cartSeq) {
+        return session.selectList(namespace + "product_list", cartSeq);
     }
 
     // 개별 상품 삭제 : JS fetch를 이용한 rest API 수행
@@ -103,13 +103,8 @@ public class CartProductDao {
 
 
     /*회원 장바구니에 해당 상품이 있는지 확인.  */   /* (변경부분) opt_seq도 비교하도록 추가함 */
-    public CartProductDto selectProductInCart(Long mbr_id, Long prod_cd, Long opt_seq) {
-        System.out.println("[다오] select");
-        HashMap map = new HashMap();
-        map.put("mbr_id",mbr_id);
-        map.put("prod_cd",prod_cd);
-        map.put("opt_seq",opt_seq);
-        return session.selectOne(namespace + "select_product_in_cart", map);
+    public CartProductDto selectProductInCart(CartProductDto cartProductDto) {
+        return session.selectOne(namespace + "select_product_in_cart", cartProductDto);
     }
 
 
@@ -121,10 +116,14 @@ public class CartProductDao {
 
     /*상품 목록, 상품 상세에서 장바구니에 상품 담기  (seq 자동증가 버전) */
     public int insertAddCart(CartProductDto cartProductDto) {
+        System.out.println("?????????"+cartProductDto.getQty());
         System.out.println("[다오] insert");
         return session.insert(namespace + "add_product_to_cart_seq", cartProductDto);
     }
 
-
+    // taewan
+    public int updateCartProductAfterOrder(Long cartSeq) {
+        return session.update(namespace + "update_after_order", cartSeq);
+    }
 
 }

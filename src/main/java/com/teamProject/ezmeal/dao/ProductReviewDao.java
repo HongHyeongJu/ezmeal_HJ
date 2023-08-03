@@ -104,6 +104,17 @@ public class ProductReviewDao {
     *한 회원에 대한 리뷰묶음(배송완료 역순, 역순이란걸 어떻게 정하지...-> 책을 봐라.)*/
 
 
+    /*모든 상품들의 개별 리뷰 평점 */
+    public Map<Long,Object> selectReviewAvgAllProduct() throws SQLException {
+        return session.selectMap(namespace+"get_review_average_all","prod_cd");
+    }
+
+
+    /*모든 상품의 개별 전체리뷰수 */
+    public Map<Long,Integer> selectReviewCntAllProduct() throws SQLException {
+        return session.selectMap(namespace+"get_review_count_all","prod_cd");
+    }
+
 
 
 

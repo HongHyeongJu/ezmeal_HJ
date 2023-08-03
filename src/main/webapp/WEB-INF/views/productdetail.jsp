@@ -15,12 +15,17 @@
   <link rel="stylesheet" href="/css/screens/productdetail.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic&display=swap"
-        rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
 </head>
 <body>
 <div class="empty-space" id="section0"></div>
+
+<!-- 헤더 -->
+<jsp:include page="header.jsp"/>
 
 <!-----------------------------------------  메인 왼쪽 사진  ---------------------------------------------------->
 <div class="head_main">
@@ -70,7 +75,7 @@
           <c:set var="sale_prc" value="${optList.get(0).getSale_prc()}" />
 
           <c:if test="${cnsmr_prc != sale_prc}">
-            <strong class="dc_pt">${(cnsmr_prc - sale_prc) / cnsmr_prc * 100}%</strong>
+            <strong class="dc_pt">${optList.get(0).getDc_rate()}}%</strong>
           </c:if>
 
           <strong class="sale_prc">${sale_prc}&nbsp;원</strong>
@@ -85,7 +90,7 @@
           <c:set var="sale_prc" value="${product.getSale_prc()}" />
 
           <c:if test="${cnsmr_prc != sale_prc}">
-            <strong class="dc_pt">${(cnsmr_prc - sale_prc) / cnsmr_prc * 100}%</strong>
+            <strong class="dc_pt">${product.getDc_rate()}%</strong>
           </c:if>
 
           <strong class="sale_prc">${sale_prc}&nbsp;원</strong>
@@ -130,7 +135,7 @@
           <select class="select_box" id="opt_select">
             <c:forEach items="${optList}" var="option">
               <option value="${option.opt_seq}_${option.sale_prc}">
-                  &nbsp;${product.getName()}&nbsp;${option.name}&nbsp;&nbsp;${option.sale_prc}원
+                &nbsp;${product.getName()}&nbsp;${option.name}&nbsp;&nbsp;${option.sale_prc}원&nbsp;&nbsp;(${option.dc_rate}% 할인)
               </option>
             </c:forEach>
           </select>
@@ -360,7 +365,7 @@
 <!------------------------------------- 아래 빈 공간 ------------------------------------------->
 
 <div class="empty-space">
-  <button class="go_up"><a href="#section0">맨 위로 올라가기</a></button>
+
 </div>
 
 <!------------------------------------- 자바스크립트 ------------------------------------------->

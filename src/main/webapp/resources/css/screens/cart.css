@@ -230,14 +230,14 @@ button icon 누르면 위 아래로 변경되는 JS 수행 필요
 .cart__item_price {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     width: 120px;
     height: 50px;
     font-weight: bold;
 }
 
-.cart__item_product-price{
+.cart__item_product-price {
     text-decoration: line-through;
     font-weight: 100;
     font-size: small;
@@ -301,7 +301,8 @@ button icon 누르면 위 아래로 변경되는 JS 수행 필요
     align-items: baseline;
     width: 245px;
     box-sizing: border-box;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
+    margin-bottom:10px;
     border-bottom: 0.1px solid #28a745;
 }
 
@@ -313,12 +314,19 @@ button icon 누르면 위 아래로 변경되는 JS 수행 필요
 }
 
 .dlvar_destination {
+    display:flex;
+    justify-content: center;
+    align-items:center;
     width: 244px;
     height: 64px;
     box-sizing: border-box;
     padding-bottom: 16px;
+    margin-bottom:20px;
 }
 
+.dlvar_destination p {
+    line-height: 2;
+}
 /* 공통 button
 배송지 변경 & 주문하기
  */
@@ -386,7 +394,8 @@ button icon 누르면 위 아래로 변경되는 JS 수행 필요
  */
 
 /* checkbox 요소 - check 된 경우 */
-input[type="checkbox"] {
+.cart__items_nav__checkbox[type="checkbox"],
+.cart__item_nav__checkbox[type="checkbox"] {
     appearance: none;
     border: 1px solid rgb(188, 181, 181);
     outline: none;
@@ -399,13 +408,15 @@ input[type="checkbox"] {
 }
 
 /* checkbox 요소 - check 된 경우 */
-input[type="checkbox"]:checked {
+.cart__items_nav__checkbox[type="checkbox"]:checked,
+.cart__item_nav__checkbox[type="checkbox"]:checked {
     border: none;
     background-color: #28a745; /* 선택된 상태일 때의 배경색 */
 }
 
 /* checkbox 내부 가상요소 - check 안된 경우 */
-input[type="checkbox"]::before {
+.cart__items_nav__checkbox[type="checkbox"]::before,
+.cart__item_nav__checkbox[type="checkbox"]::before {
     content: "V";
     position: absolute;
     top: 50%;
@@ -418,7 +429,8 @@ input[type="checkbox"]::before {
 }
 
 /* checkbox 내부 가상요소 - check 된 경우 */
-input[type="checkbox"]:checked::before {
+.cart__items_nav__checkbox[type="checkbox"]:checked::before,
+.cart__item_nav__checkbox[type="checkbox"]:checked::before {
     content: "V";
     /* 선택된 상태일 때의 스타일 */
     color: white;

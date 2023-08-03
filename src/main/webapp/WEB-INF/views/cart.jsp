@@ -13,6 +13,7 @@ change this template use File | Settings | File Templates. --%>
     <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
+<jsp:include page="header.jsp"/>
 <main class="cart">
     <div class="cart__name">
         <h1>장바구니</h1>
@@ -24,7 +25,7 @@ change this template use File | Settings | File Templates. --%>
             <div class="cart__items_category_btns cart__items_nav">
                 <label class="cart__items_nav__choise">
                     <input type="checkbox" class="cart__items_nav__checkbox"/>
-                    <span>전체선택 (0/${count}개) |</span>
+                    <span>전체선택 (<span class="cart__items_selected_num">0</span>/${count}개) | </span>
                 </label>
                 <button class="cart__items_nav__btn_rm">선택삭제</button>
             </div>
@@ -63,8 +64,8 @@ change this template use File | Settings | File Templates. --%>
                                     <button type="button" class="count_up__btn">+</button>
                                 </div>
                                 <div class="cart__item_price">
-                                    <span class="cart__item_sale_prc">${item.sale_prc}</span>
-                                    <span class="cart__item_product-price" ${item.cnsmr_prc eq item.sale_prc ? 'hidden' : ''}>${item.cnsmr_prc}</span>
+                                    <span class="cart__item_sale_prc" part_prc="${item.sale_prc}">${item.sale_prc_format}원</span>
+                                    <span class="cart__item_product-price" part_prc="${item.cnsmr_prc}" ${item.cnsmr_prc_format eq item.sale_prc_format ? 'hidden' : ''}>${item.cnsmr_prc_format}원</span>
 
                                 </div>
                                 <button class="cart__delete_btn" type="button" data-testid="delete">
@@ -106,8 +107,8 @@ change this template use File | Settings | File Templates. --%>
                                     <button type="button" class="count_up__btn">+</button>
                                 </div>
                                 <div class="cart__item_price">
-                                    <span class="cart__item_sale_prc">${item.sale_prc}</span>
-                                    <span class="cart__item_product-price" ${item.cnsmr_prc eq item.sale_prc ? 'hidden' : ''}>${item.cnsmr_prc}</span>
+                                    <span class="cart__item_sale_prc" part_prc="${item.sale_prc}">${item.sale_prc_format}원</span>
+                                    <span class="cart__item_product-price" part_prc="${item.cnsmr_prc}" ${item.cnsmr_prc_format eq item.sale_prc_format ? 'hidden' : ''}>${item.cnsmr_prc_format}원</span>
                                 </div>
                                 <button class="cart__delete_btn" type="button" data-testid="delete">
                                     x
@@ -149,8 +150,8 @@ change this template use File | Settings | File Templates. --%>
                                     <button type="button" class="count_up__btn">+</button>
                                 </div>
                                 <div class="cart__item_price">
-                                    <span class="cart__item_sale_prc">${item.sale_prc}</span>
-                                        <span class="cart__item_product-price" ${item.cnsmr_prc eq item.sale_prc ? 'hidden' : ''}>${item.cnsmr_prc}</span>
+                                    <span class="cart__item_sale_prc" part_prc="${item.sale_prc}">${item.sale_prc_format}원</span>
+                                    <span class="cart__item_product-price" part_prc="${item.cnsmr_prc}" ${item.cnsmr_prc_format eq item.sale_prc_format ? 'hidden' : ''}>${item.cnsmr_prc_format}원</span>
                                 </div>
                                 <button class="cart__delete_btn" type="button" data-testid="delete">
                                     x
@@ -175,11 +176,10 @@ change this template use File | Settings | File Templates. --%>
                     <div class="dlvar_destination">
                         <c:choose>
                             <c:when test="${empty defaultAddress}">
-                                <a href="/login?redirectURL=/cart">로그인해주세요</a>
+                                <a href="/address/add?redirectURL=/cart">배송지 등록 해주세요</a>
                             </c:when>
                             <c:otherwise>
-                                <p>${defaultAddress.desti}</p>
-                                <p>${defaultAddress.desti_dtl}</p>
+                                <p>${defaultAddress.desti} ${defaultAddress.desti_dtl}</p>
                             </c:otherwise>
                         </c:choose>
                     </div>

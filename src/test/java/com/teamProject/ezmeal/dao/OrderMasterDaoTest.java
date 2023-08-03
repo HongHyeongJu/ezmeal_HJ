@@ -27,6 +27,12 @@ public class OrderMasterDaoTest {
 
     @Test
     public void selectOrderMaster() {
-        OrderMasterDto orderMasterDto = orderMasterDao.selectOrderMaster();
+        OrderMasterDto orderMasterDto = orderMasterDao.selectOrderMaster(1001L);
+    }
+
+    @Test
+    public void selectOrderId(){
+        Long orderId = orderMasterDao.selectOrderId(1001L);
+        System.out.println("orderId = " + orderId);
     }
 }

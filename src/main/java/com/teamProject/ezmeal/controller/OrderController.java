@@ -13,13 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -39,25 +37,36 @@ public class OrderController {
     private final CouponJoinService couponJoinService;
     private final MemberCouponService memberCouponService;
 
-    private final OrderPaymentAddressService orderPaymentAddressService;
+    private final OrderPaymentAddressService orderPaymentAddressService; // transactional 거는 복합 service
 
     private final InventoryEventService inventoryEventService;
 
+    private final OrderMasterService orderMasterService;
+    private final OrderDetailService orderDetailService;
 
     //    private static Long orderNumber = 0L;
     private static Long orderNumber = Math.round(Math.random() * 10000);
     //    private static Long paymentNumber = 0L;
     private static Long paymentNumber = Math.round(Math.random() * 10000);
 
+    private static final String status = "a1"; // 결제 완료 상태 코드
+
     @GetMapping
     public String getOrder(@SessionAttribute Long memberId, Model model) {
+        System.out.println("---------- OrderController getMapping getOrder ----------------");
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US); // 가격에 , 표시해주는 것
+
         Long cartSeq = cartService.getCartSeq(memberId);
+        System.out.println("cartSeq = " + cartSeq);
         DeliveryAddressDto selectedAddress = deliveryAddressService.getOrderAddress(memberId); // 선택된 배송지, 없으면 기본배송지
+        System.out.println("selectedAddress = " + selectedAddress);
         List<CartJoinProductDto> cartProductList = cartProductService.getOrderProduct(cartSeq); // 주문할 상품 목록
+        System.out.println("cartProductList = " + cartProductList);
         MemberDto memberInfo = memberDao.selectMemberInfo(memberId); // 회원정보
+        System.out.println("memberInfo = " + memberInfo);
 
         // 결제 금액 계산
-        Map<String, Integer> priceMap = new HashMap<>();
+        Map<String, String> priceMap = new HashMap<>();
         int productPrice = 0; // 상품금액
         int orderPrice = 0; // 주문금액
         int productsDiscount = 0; // 상품할인금액
@@ -68,15 +77,19 @@ public class OrderController {
             productsDiscount += (cartProduct.getCnsmr_prc() - cartProduct.getSale_prc()) * cartProduct.getCp_qty(); // 할인 금액
         }
 
-        priceMap.put("productPrice", productPrice);
-        priceMap.put("orderPrice", orderPrice);
-        priceMap.put("productsDiscount", productsDiscount);
+        priceMap.put("productPrice", numberFormat.format(productPrice));
+        priceMap.put("orderPrice", numberFormat.format(orderPrice));
+        priceMap.put("productsDiscount", numberFormat.format(productsDiscount));
+
+        System.out.println("priceMap = " + priceMap);
 
         // 적립금
         // 사용가능 적립금, 등급별 적립 예정금액
         Map<String, Integer> pointMap = new HashMap<>();
         int pointCanUse = pointTransactionHistoryDao.pointCanUse(memberId); // 사용가능 적립금
+        System.out.println("pointCanUse = " + pointCanUse);
         int pointRate = (orderPrice / 100) * (memberGradeBenefitDao.getPointRate(memberId)); // 적립 예정금액
+        System.out.println("pointRate = " + pointRate);
         pointMap.put("userPoint", pointCanUse);
         pointMap.put("pointRate", pointRate);
 
@@ -154,7 +167,7 @@ public class OrderController {
         /* INSERT */
         // order master
         System.out.println("orderMaster start ");
-        OrderMasterDto orderMasterDto = new OrderMasterDto(orderPk, memberId, "oc", expectPoint, orderPaymentAddressData.getProdSummaryName()); // 주문 master insert
+        OrderMasterDto orderMasterDto = new OrderMasterDto(orderPk, memberId, status, expectPoint, orderPaymentAddressData.getProdSummaryName()); // 주문 master insert
         orderPaymentAddressService.registerOrderMaster(orderMasterDto); // 주문 master insert
         System.out.println("orderMaster finish ");
 
@@ -178,7 +191,7 @@ public class OrderController {
 
         // orderDetail
         System.out.println("orderDetail start ");
-        orderPaymentAddressService.registerOrderDetail(orderDetailList);
+        orderPaymentAddressService.registerOrderDetail(orderDetailList); // 여기서 주문상세 insert
         System.out.println("orderDetail finish ");
 
         // order status history
@@ -188,11 +201,28 @@ public class OrderController {
 
         // delivery master
         System.out.println("delivery master start ");
-        DeliveryMasterDto deliveryMasterDto = new DeliveryMasterDto(orderPk, orderAddress.getRcpr(), orderAddress.getPhone(), "주문_묶음",
-                "(주)ezmeal 종로69 YMCA 5층 518호", orderAddress.getDesti(), orderAddress.getDesti_dtl(),
-                orderPaymentAddressData.getDeliveryPlace(), orderPaymentAddressData.getDeliveryDetail() + orderPaymentAddressData.getDeliveryInput(),
-                "dr", "ma", orderPaymentAddressData.getDeliveryMsg(), "중");
-        orderPaymentAddressService.registerDeliveryMaster(deliveryMasterDto); // 객체 넣어야함
+        List<DeliveryMasterDto> deliveryMasterList = new ArrayList<>(); // 주문상세 정보 담는 통
+        // 주문상세 pk list로 받아와서 배송 master로 넘기
+        List<Long> orderDetailPkList = orderDetailService.getOrderDetailPk(orderPk); // delivery master에 넣는 orderDetailPk list
+        for (Long orderDetailPk : orderDetailPkList) {
+            DeliveryMasterDto deliveryMasterDto = new DeliveryMasterDto(
+                    orderPk,
+                    orderDetailPk,
+                    orderAddress.getRcpr(),
+                    orderAddress.getPhone(),
+                    "(주)ezmeal 종로69 YMCA 5층 518호",
+                    orderAddress.getDesti(),
+                    orderAddress.getDesti_dtl(),
+                    orderPaymentAddressData.getDeliveryPlace(),
+                    orderPaymentAddressData.getDeliveryDetail() + orderPaymentAddressData.getDeliveryInput(),
+                    "h1",
+                    "ma",
+                    orderPaymentAddressData.getDeliveryMsg(),
+                    "중");
+            deliveryMasterList.add(deliveryMasterDto);
+        }
+
+        orderPaymentAddressService.registerDeliveryMaster(deliveryMasterList); // 객체리스트를 넣어야함
         System.out.println("delivery master finish ");
         return "success";
     }
@@ -223,7 +253,7 @@ public class OrderController {
         System.out.println("finish inventory quantity update");
 
         // point 사용하는 경우 해당 로직 수행
-        if (eventDataList.get(0) != 0L){
+        if (eventDataList.get(0) != 0L) {
             System.out.println("start select point info");
             PointTransactionCodeDto usePointInfo = inventoryEventService.getUsePointInfo("USEPOINT"); // 포인트 코드
             // 포인트 코드 : trjs_cd, name, pnt=0
@@ -248,6 +278,9 @@ public class OrderController {
 
         }
 
+        System.out.println("start update cartProd");
+        inventoryEventService.setCartProductAfterOrder(cartSeq);
+        System.out.println("finish update cartProd");
 
         return "success";
     }
@@ -275,6 +308,15 @@ public class OrderController {
 
         MemberDto memberInfo = memberDao.selectMemberInfo(memberId);
         return new PaymentAPIData(paymentPk, finalPrice, memberInfo.getName(), memberInfo.getPhone(), memberInfo.getEmail());
+    }
+
+
+    @GetMapping("/complete")
+    public String orderComplete(@SessionAttribute Long memberId, Model model) {
+        // 주문번호정도만 있으면 됨
+        Long orderId = orderMasterService.getOrderId(memberId);
+        model.addAttribute("orderId", orderId);
+        return "orderComplete";
     }
 
     /* 메서드 추출 */
@@ -305,7 +347,7 @@ public class OrderController {
                 orderProduct.getCnsmr_prc() * orderProduct.getCp_qty(),
                 orderProduct.getCnsmr_prc() * orderProduct.getCp_qty() - orderProduct.getSale_prc() * orderProduct.getCp_qty(),
                 orderProduct.getSale_prc() * orderProduct.getCp_qty(),
-                "oc"
+                status
         );
     }
 }

@@ -60,7 +60,7 @@ document.querySelectorAll('.wishlist_btn').forEach((button) => {
 /*----------- 장바구니 값 넘기기 (옵션 없는 일반 상품)--------------*/
 
 document.querySelectorAll('.addcart_btn').forEach((button) => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click',   function() {
 
         /* 상품코드 가져오기 */
         let prodCdElement = document.getElementById("prod_cd_is");
@@ -106,30 +106,36 @@ document.querySelectorAll('.addcart_btn').forEach((button) => {
             /* 옵션 ul값 다 찾아오기 */
             let ulTags = document.getElementsByClassName('make_ul');
 
+            let cartProductDto = [];  // 배열 선언 추가
+
             for (let ul of ulTags) {
                 let optSeq = parseInt(ul.dataset.value.split('_')[4]);
                 let optQty = parseInt(ul.dataset.value.split('_')[2]);
                 console.log("optSeq:"+optSeq);
                 console.log("optQty:"+optQty);
 
-                $.ajax({
-                    url: "/cart/add",
-                    type: "POST",
-                    data: JSON.stringify({
-                        prod_cd: prod_cd,
-                        opt_seq: optSeq,
-                        typ: typ,
-                        qty: optQty
-                    }),
-                    contentType: "application/json",
-                    success: function(response) {
-                        alert("옵션상품 장바구니 담기 성공!");
-                    },
-                    error: function(xhr, status, error) {
-                        alert("옵션상품 장바구니 담기 실패!");
-                    }
+                // 각 옵션 상품을 객체로 만들어 배열에 넣기
+                cartProductDto.push({
+                    prod_cd: prod_cd,
+                    opt_seq: optSeq,
+                    typ: typ,
+                    qty: optQty
                 });
             }
+
+            // 배열을 서버로 보내기
+            $.ajax({
+                url: "/cart/adds",
+                type: "POST",
+                data: JSON.stringify(cartProductDto),
+                contentType: "application/json",
+                success: function(response) {
+                    alert("옵션상품 장바구니 담기 성공!");
+                },
+                error: function(xhr, status, error) {
+                    alert("옵션상품 장바구니 담기 실패!");
+                }
+            });
 
         }
 

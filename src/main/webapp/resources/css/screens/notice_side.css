@@ -1,0 +1,141 @@
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+
+body {
+    font-family: 'NanumSquare', sans-serif;
+}
+.notice-content-box {
+    position: relative;
+    min-width: 1100px;
+}
+
+.notice-content {
+    display: flex;
+    width: 1100px;
+    padding: 50px 0px 80px;
+    margin: 0px auto;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.notice-left {
+    width: 200px;
+}
+
+.notice-sidemenu-title {
+    height: 75px;
+    padding: 5px 0px 30px 1px;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 35px;
+    color: black;
+    letter-spacing: -1px;
+    text-decoration: none;
+    position: relative;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:active,
+a:focus,
+a:hover,
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 선택된 링크에 대한 아웃라인 제거 */
+a:focus {
+    outline: none;
+}
+
+.notice-sidemenu-list {
+    border: 1px solid rgb(242, 242, 242);
+    list-style: none;
+    text-decoration: none;
+}
+
+.notice-sidemenu-list-title :hover {
+    background-color: rgb(250, 250, 250);
+    color: #65d674;
+    font-weight: 500;
+}
+
+.notice-sidemenu-list-title {
+    cursor: pointer;
+    border-bottom: 1px solid rgb(242, 242, 242);
+    padding: 15px 13px 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 19px;
+    letter-spacing: -0.3px;
+    font-size: 14px;
+    color: rgb(102, 102, 102);
+}
+
+.side-guide-box {
+    padding: 15px 5px;
+    border: 1px solid #e6e6e6;
+    margin-top: 100px;
+    display: block;
+}
+
+.dt {
+    color: #333;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.phone-num {
+    color: #333;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    letter-spacing: -0.5px;
+}
+
+.dd {
+    color: #666;
+    line-height: 19px;
+}
+
+.notice-right {
+    width: 850px;
+    /*float: center;*/
+}
+
+.notice-content-title-box {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding-bottom: 27px;
+    justify-content: space-between;
+}
+
+.notice-content-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.notice-title {
+    font-weight: 500;
+    font-size: 24px;
+    color: #333;
+    letter-spacing: -0.5px;
+    line-height: 48px;
+}
+
+.notice-title-explain {
+    padding-left: 11px;
+    font-size: 14px;
+    letter-spacing: -0.3px;
+    color: #999;
+    line-height: 20px;
+}
+

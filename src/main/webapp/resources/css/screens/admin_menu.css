@@ -1,0 +1,84 @@
+.menu_container_div {
+    display: flex;
+    height: 865px;
+    width: 188px;
+    height: auto;
+}
+
+
+#menu_list {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    width: 190px;
+    height:auto;
+    min-height: 950px;
+    background-color: rgb(25, 38, 66);
+}
+
+#menu_list a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 상위 요소의 색상 상속 */
+    display: block; /* 블록 레벨 요소로 변경 */
+}
+
+#menu_list a li {
+    width:  170px;
+    height: 25px;
+    border-top: 1px solid rgb(191, 191, 191);
+    list-style: none;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    font-size: 17px;
+    font-weight: 500;
+    color: white;
+}
+
+/*주문, 상품, 고객, 게시판*/
+.main_li {
+    width:  170px;
+    height: 35px;
+    border-top: 1px solid rgb(191, 191, 191);
+    list-style: none;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 20px;
+    padding-top: 15px;
+    font-size: 17px;
+    font-weight: 500;
+    color: white;
+}
+
+/*서브 메뉴들 (클릭하면 나옴)*/
+.sub_li {
+    padding-top: 5px;
+    font-size: 16px !important;
+    height: 20px;
+    background-color: rgb(45, 58, 88);
+}
+
+
+
+.hidden {
+    display: none;
+}
+
+/*커서 깜빡임 없애기*/
+.main_li {
+    background-color: rgb(25, 38, 66);
+    caret-color: transparent;
+}
+
+/* 호버 효과에 적용할 스타일 속성들 */
+.main_li:hover {
+    background-color: rgb(72, 85, 116);
+
+}
+
+.sub_li:hover {
+    background-color: rgb(72, 85, 116);
+
+}

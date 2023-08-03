@@ -115,4 +115,22 @@
     </select>
 
 
+
+    <!--모든 상품에 대해서 평균 / 리뷰수 가져오기-->
+    <!--해당 카테고리에 있는 별점 평균 받아오기 Map(prod_cd , round(avg(star),1))-->
+    <select id="get_review_average_all"  resultType="Map">
+        SELECT prod_cd, Round(avg(star),1) as avg
+        FROM tb_product_review
+        WHERE del_yn='n'
+        GROUP BY prod_cd
+    </select>
+
+    <!--해당 카테고리에 있는 리뷰 총개수 받아오기 Map(prod_cd , count(*))-->
+    <select id="get_review_count_all"  resultType="Map">
+        SELECT prod_cd, count(*) as count
+        FROM tb_product_review
+        WHERE del_yn='n'
+        GROUP BY prod_cd
+    </select>
+
 </mapper>

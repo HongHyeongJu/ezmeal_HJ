@@ -52,8 +52,11 @@ public class ProductOptionDao {
         return session.update(namespace+"update_option", productOptionDto);
     }
 
-
-
+    /*옵션 추가하기*/
+    public Integer optionInsert(ProductOptionDto productOptionDto) throws SQLException {
+        System.out.println("optionInsert 시작");
+        return session.insert(namespace+"insert_option", productOptionDto);
+    }
 
 
 

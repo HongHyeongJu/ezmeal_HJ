@@ -158,13 +158,13 @@ function handleSelectOrderModal(event) {
         const useCoupon = document.querySelector(".order_benu__coupon");
 
         if (dcList.length === 1) {
-            useCoupon.textContent = "-" + dcList[0] + "원";
+            useCoupon.textContent = "-" + dcList[0].toLocaleString('ko-KR') + "원";
         } else {
             const orderPrice = document.querySelector(".order_benu__order_price").textContent;
             const beforeMaxRateDC = regexWonToNum(orderPrice) / 100 * dcList[0];
             const afterMaxRateDC = beforeMaxRateDC > dcList[1] ? dcList[1] : beforeMaxRateDC;
             console.log(afterMaxRateDC);
-            useCoupon.textContent = "-" + afterMaxRateDC + "원";
+            useCoupon.textContent = "-" + afterMaxRateDC.toLocaleString('ko-KR') + "원";
         }
 
         changePaymentPrice(); // 최종결제 금액 변경
@@ -225,11 +225,7 @@ function handleShowInfoInput(event) {
 
 
 // point 사용 검증 : 음수까지 가능
-const regexWonToNum = function (numberWithWon) {
-    const regexPoint = /(-?\d+)/; // 숫자 정규식
-    const maxPointList = numberWithWon.match(regexPoint);
-    return parseInt(maxPointList[0]);
-};
+const regexWonToNum = (numberWithWon) => parseInt(numberWithWon.replace(/[^\d-]/g, ''));
 
 // point 초과시 검증
 function handleValidatePoint() {
@@ -257,8 +253,8 @@ const changePaymentPrice = function () {
     paymentList.forEach((payment) => {
         totalPaymentPrice += regexWonToNum(payment.textContent);
     })
-    document.querySelector(".order__price").textContent = totalPaymentPrice + " 원 결제하기";
-    document.querySelector(".order_benu__total").textContent = totalPaymentPrice + " 원";
+    document.querySelector(".order__price").textContent = totalPaymentPrice.toLocaleString('ko-KR') + " 원 결제하기";
+    document.querySelector(".order_benu__total").textContent = totalPaymentPrice.toLocaleString('ko-KR') + " 원";
 }
 
 
@@ -311,6 +307,7 @@ async function order() {
         const update = await updateDataAfterPayment(orderPaymentAddressData);
         console.log(update);
 
+        window.location.href ="/order/complete"; // 마지막 redirection 이동
     } catch (e) {
         console.log(e);
     } finally {

@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.*;
 public class SimpleRestController {
     @GetMapping("/test")
     public String test() {
-        return "test";
+        return "afterTestJSP/test";
     }
     @GetMapping("/ajax")
     public String ajax() {
-        return "ajax";
+        return "afterTestJSP/ajax";
     }
 
     @PostMapping("/send")

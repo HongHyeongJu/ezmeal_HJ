@@ -38,7 +38,7 @@ public class CartController {
         // todo 선택 배송지 존재시, 선택배송지가 되도록 logic 작성 필요 - selectAddress
         DeliveryAddressDto defaultAddress = deliveryAddressService.getDefaultAddress(memberId);
         // 상품 list
-        List<CartJoinProductDto> productsList = cartProductService.getProducts(cartSeq);
+        List<CartJoinProductDto> productsList = cartProductService.getProductList(cartSeq);
         int productCount = productsList.size();
 
         // 상품 목록 type별로 분리하기
@@ -47,6 +47,7 @@ public class CartController {
         List<CartJoinProductDto> outSideList = new ArrayList<>();
 
         for (CartJoinProductDto product : productsList) {
+            System.out.println("product = " + product);
             if (product.getTyp().equals(TYPE_NAME[0])) iceList.add(product);
             else if (product.getTyp().equals(TYPE_NAME[1])) coldList.add(product);
             else if (product.getTyp().equals(TYPE_NAME[2])) outSideList.add(product);
@@ -145,11 +146,15 @@ public class CartController {
     @PostMapping("/add")
     public ResponseEntity<String> addCart(@RequestBody CartProductDto cartProductDto, @SessionAttribute Long memberId, RedirectAttributes reAtt) {
 
-        System.out.println("------------컨트롤러 진입-----------");
+        System.out.println("---------컨트롤러 진입---일반상품 장바구니 담기--------");
         System.out.println("memberId: "+memberId);
         System.out.println("cartProductDto: "+cartProductDto.toString());
+        System.out.println("상품정보: "+cartProductDto.getProd_cd());
+        System.out.println("상품정보: "+cartProductDto.getTyp());
+        System.out.println("상품정보: "+cartProductDto.getQty());
+        System.out.println("상품정보: "+cartProductDto.getOpt_seq());
 
-        memberId = 1007L;
+//        memberId = 1007L;
         System.out.println("memberId: "+memberId);
 
 
@@ -163,6 +168,41 @@ public class CartController {
         }
 
         boolean addCartResult = cartProductService.addProductToCart(memberId, cartProductDto);
+
+        /*insert 실패했을 때*/
+        if(addCartResult){
+            System.out.println("[컨트롤러] insert 성공");
+            return ResponseEntity.ok("Success message");
+        } else {
+            System.out.println("[컨트롤러] insert 실패");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("insert 실패");
+        }
+
+    }
+
+    @PostMapping("/adds")
+    public ResponseEntity<String> addsCart(@RequestBody CartProductDto[] cartProductDtos, @SessionAttribute Long memberId, RedirectAttributes reAtt) {
+
+        System.out.println("---------컨트롤러 진입---옵션상품 장바구니 담기--------");
+        System.out.println("memberId: "+memberId);
+        for(CartProductDto dto : cartProductDtos){
+            System.out.println("dto: "+dto.toString());
+        }
+
+//        memberId = 1007L;
+        System.out.println("memberId: "+memberId);
+
+
+        // mbr_id 값 체크
+        if(memberId == null) {
+            System.out.println("[컨트롤러]mbr_id 없음");
+            /* 현재 카트에 추가하려는 상품및수량 챙겨서 로그인 페이지로 보내기.*/
+            reAtt.addAttribute("msg","noLoginMember_From_CartAdd");
+            /* 수정해야할 부분 */
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비로그인 회원 장바구니 추가. 로그인으로 보내버려");
+        }
+
+        boolean addCartResult = cartProductService.addProductListToCart(memberId, cartProductDtos);
 
         /*insert 실패했을 때*/
         if(addCartResult){

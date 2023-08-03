@@ -1,0 +1,135 @@
+.order-detail__title {
+    width: 820px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid black;
+    margin-bottom: 50px;
+    padding: 0 10px 20px 0;
+}
+
+.main-section-right__order-detail {
+    width: 820px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 공통 부분 */
+.order-detail__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid lightgrey;
+    width: 750px;
+}
+
+.order-detail__main {
+    width: 750px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.order-detail__products-main:last-child, /* last-child는 부모요소 내부의 요소들에 한해서만 적용 */
+.order-detail__delivery-main,
+.order-detail__payment-main,
+.order-detail__order-info-main {
+    margin-bottom: 40px;
+}
+
+/* 개별 부분 */
+
+.order-detail__products-main__products {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.order-detail__products-img {
+    width: 63px;
+    height: 75px;
+}
+
+.order-detail__products-main__products-definition {
+    display: flex;
+    flex-direction: column;
+    margin: 4px 0 0 10px;
+}
+
+.order-detail__products-header__detail-link {
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 기본 색상 상속 */
+    margin-bottom: 10px;
+}
+
+.order-detail_seler_prc {
+    font-weight: bold;
+}
+
+.order-detail_cnsmr_prc {
+    text-decoration: line-through;
+    color: gray;
+    font-weight: 100;
+    font-size: small;
+}
+
+.order-detail__products-main__status {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.order-detail__products__status-function {
+    border: 1px solid rgb(246, 250, 246);
+    background-color: rgb(246, 250, 246);
+    border-radius: 20px;
+    padding: 3px 8px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.order-detail__delivery-main {
+    justify-content: center;
+}
+
+.order-detail__payment-main > ul,
+.order-detail__order-info-main > ul,
+.order-detail__address-main > ul,
+.order-detail__payment-main > ul > li,
+.order-detail__order-info-main > ul > li,
+.order-detail__address-main > ul > li {
+    list-style: none;
+    padding-left: 0;
+}
+
+.order-detail__payment-main > ul > li {
+    width: 750px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.order-detail__payment-main > ul > li:last-child {
+    font-weight: bold;
+}
+
+.order-detail__order-info-main > ul > li,
+.order-detail__address-main > ul > li {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.order-detail__order-info-main > ul > li > span:first-child {
+    width: 100px;
+}
+
+.order-detail__address-main > ul > li > span:first-child {
+    width: 180px;
+}

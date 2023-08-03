@@ -1,84 +1,69 @@
-<%@ page import="com.teamProject.ezmeal.domain.MemberDto" %>
-<%@ page import="com.teamProject.ezmeal.service.MemberService" %>
-<%@ page import="javax.servlet.http.HttpSession" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%--<%@ page session="false" %>--%>
-<%--<c:set var="loginId"--%>
-<%--       value="${pageContext.request.getSession(false)==null ? '' : pageContext.request.session.getAttribute('id')}"/>--%>
-
-<c:set var="loginOutLink" value="${sessionScope.memberId==null ? '/login' : '/logout'}"/>
-<c:set var="loginOut" value="${sessionScope.memberId==null ? '로그인' : '로그아웃'}"/>
-<%--<%--%>
-<%--    HttpSession session1 = request.getSession();--%>
-<%--    Long memberId = (Long) session1.getAttribute("memberId");--%>
-<%--    MemberService memberService = (MemberService) request.getAttribute("memberService");--%>
-<%--    if (memberId != null && memberService != null) {--%>
-<%--        MemberDto loginMbrInfo = memberService.mbrInfo(memberId);--%>
-<%--        request.setAttribute("loginMbrInfo", loginMbrInfo);--%>
-<%--    }--%>
-
-<%--%>--%>
-<!DOCTYPE html>
-<html lang="en">
+<%--
+  Created by IntelliJ IDEA.
+  User: hubaek
+  Date: 2023/07/24
+  Time: 3:47 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ezMeal-test</title>
+    <title>ezmeal home</title>
+    <link rel="stylesheet" href="/css/main.css">
+
+    <style>
+        .footer {
+            margin-top: 20px; /* 원하는 크기로 조절 */
+        }
+    </style>
 </head>
 <body>
 
 <jsp:include page="header.jsp"/>
-<div style="padding-top: 100px">
 
-    <li><a href="/login">로그인 - test용 Id: 12, pw: 12 </a></li>
-
-    <p> wan </p>
-    <li><a href="/cart">장바구니</a></li>
-    <li><a href="/address">배송지</a></li>
-    <li><a href="/order">주문서</a></li>
-
-
-
-
-
-    <br/>
-    <br/>
-
-    <p> hhj </p>
-    <ul>
-        <li><a href="/product/catelist?cate_cd=02">상품 목록</a></li>
-        <li><a href="/product/detail?cate_cd=05&prod_cd=3">상품 상세(옵션X)</a></li>
-        <li><a href="/product/detail?cate_cd=05&prod_cd=16">상품 상세(옵션O)</a></li>
-
-
-
-
-
-
-
-    </ul>
-    <br/>
-    <br/>
-
-    <p> baek </p>
-    <ul>
-        <c:if test="${not empty loginMbrInfo}">
-            <li><a href="/mypage/modify">회원명 : ${loginMbrInfo.name}</a></li>
-        </c:if>
-        <li><a href="<c:url value='${loginOutLink}'/>">${loginOut}</a></li>
-        <li><a href="/member/signup">회원가입</a></li>
-        <li><a href="/mypage/modify">마이페이지</a></li>
-
-
-
-
-
-
-
-
-    </ul>
+<div class="slide_container">
+<!--start : img slide-->
+    <div class="image-slideshow">
+        <div class="image fade">
+            <img
+                    src="/img/main/slideimg_1.jpg"
+                    style="width: 100%; height: auto"
+                    alt="7월신메뉴"
+            />
+        </div>
+        <div class="image fade">
+            <img
+                    src="/img/main/slideimg_2.jpg"
+                    style="width: 100%; height: auto"
+                    alt="구독신청"
+            />
+        </div>
+        <div class="image fade">
+            <img
+                    src="/img/main/slideimg_3.jpg"
+                    style="width: 100%; height: auto"
+                    alt="콘텐츠"
+            />
+        </div>
+    </div>
 </div>
-<jsp:include page="footer.jsp"/>
+<script src="/javascript/main1.js"></script>
+
+<!-- 메인 추천 상품 -->
+<div class="index_display_product">
+    <jsp:include page="index_display_product.jsp"/>
+</div>
+<div class="index_footer">
+    <jsp:include page="footer.jsp"/>
+</div>
+
+
+<!--start : scroll back to top-->
+<button id="backtotop-btn">
+    <a href="#top" style="color: white">Top</a>
+</button>
+
+<!--end : back to top button-->
+<script src="https://kit.fontawesome.com/3dd102f0de.js" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tb_product_status">
+
+
+    <!--모든 상품 상태코드 찾기-->
+
+    <select id="select_all_prod_stus" resultType="ProductStatusDto">
+        SELECT *
+        FROM tb_product_status
+        WHERE use_yn = 'y' AND  del_yn = 'n'
+    </select>
+
+</mapper>
+
+
+
+

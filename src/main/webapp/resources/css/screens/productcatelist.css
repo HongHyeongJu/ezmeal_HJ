@@ -1,28 +1,33 @@
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
 body {
-    font-family: 'FontName', sans-serif;
+    font-family: 'NanumSquare', sans-serif;
     word-break: keep-all;   /*브라우저가 단어를 분리하지 않고 한 줄에 유지*/
     overflow-wrap: break-word;   /* 텍스트가 주어진 컨테이너의 너비를 초과할 경우 단어를 분리하여 줄을 바꾸는 방식을 지정하는 데 사용*/
     letter-spacing: -0.5px;
 }
-
+* {
+    font-family: 'NanumSquare', sans-serif;
+    caret-color: transparent;
+}
 /** {*/
 /*    font-family: 'Black Han Sans', sans-serif;*/
 /*    font-family: 'Nanum Gothic', sans-serif;*/
 /*}*/
 
-.empty {
-    height: 200px;
+.empty_top {
+    height: 15px;
 }
 
 
 
 .지붕묶음 {
-    width: 980px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     padding: 0;
-    margin-right: auto;
-    margin-left: auto;
+    margin-left: 77%;
+    margin-right: 27%;
+    height: 20px;
+
 }
 
 
@@ -51,19 +56,19 @@ body {
 .prod_list_li {
     box-sizing: border-box; /* 요소의 경계 상자 크기 설정을 위해 추가 */
     padding: 0px; /* 각 항목의 패딩 설정 */
-    margin: 5px;
+    margin: 0px;
     border: 0px #000;
     margin-bottom: 0;
     margin-top: 0;
     list-style-type: none;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .prod_outer{
     /* background-color:blueviolet; */
-    margin-left: 5px;
-    margin-right: 5px;
-    width: 220px;
-    height: 430px;
+    width: 245px;
+    height: 520px;
     border: 0px #000;
 }
 
@@ -79,11 +84,12 @@ body {
 
 /*상품 이미지*/
 .prod_top img {
-    width: 96%;
-    height: 96%;
+    width: 250px;
+    height: 320px;
     object-fit: contain;
     margin: 2%;
-    border-radius: 5%;
+    border-radius: 0;
+    object-fit: cover;
 }
 
 /*보관방법*/
@@ -109,15 +115,16 @@ body {
 
 /*이미지 아래부분 전체*/
 .prod_bottom{
-    width: 220px;
+    width: 245px;
     height: 190px;   /* 옵션있어서*/
     /* background-color:gainsboro; */
-    border: 0px #000;
+    border: 2px solid #0000;
 }
 
 .review_set {
     text-align: right;
-    margin-right: 6px;
+    margin-top : 4px;
+    margin-right: 5px;
     margin-bottom : 5px;
 }
 
@@ -141,34 +148,41 @@ body {
 /*------------------------------------*/
 
 .in_middle {
-    height: 70px;
+    height: 55px;
     margin-top: -10px;
+
 }
 
 .prod_title  {
     padding: 0%;
     display: block;
-    margin-top: 15px;
-    margin-bottom: 5px;
+    margin-top: 18px;
+    margin-bottom: 10px;
     margin-left: 0px;
     margin-right: 5px;
     word-break: break-word;
 }
 
 .prod_name {
-    font-size: 100%;
-    margin-left: 5px;
+    font-size: 16px;
+    margin-left: 12px;
     word-break: break-word;
 }
 
 .dc_cd {
-    color: cornflowerblue;
+    color: rgb(0, 199, 40);
     display: inline-block;
     font-weight: bold;
-    padding-left:8px;
+    padding-left:12px;
     margin-bottom: 1%;
     margin-right: -8px;
+
 }
+
+.dc_cd > strong{
+    font-weight: 900;
+}
+
 
 div.in_middle > a {
     height: 70px;
@@ -182,12 +196,13 @@ span.sale_prc {
     margin-right: 5px;
     font-size: 120%;
     font-weight: bold; /* 굵은 글꼴 설정 */
+
     font-style: normal;
 }
 
 
 .cnsmr_prc {
-    color:gray;
+    color: #cac6c6;
     text-decoration: line-through;
     margin-top: 2px;
     display: inline-block;
@@ -195,9 +210,15 @@ span.sale_prc {
     margin-bottom: 10px;
 }
 
+.sale_prc > strong{
+    font-weight: 900;
+}
+
+
+
 .dc_cd_prod_dscpt_wrapper {
     display: flex;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .dc_cd,  .sale_prc,  .cnsmr_prc {
@@ -224,7 +245,7 @@ span.sale_prc {
 .button_wrapper {
     display: flex;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 0px;
 }
 
 .qty {
@@ -238,7 +259,7 @@ span.sale_prc {
 }
 
 .min_btn {
-    margin-left: 10px;
+    margin-left: 15px;
 }
 
 .min_btn,
@@ -258,20 +279,19 @@ span.sale_prc {
     width : 39px;
     height : 35px;
     margin-right: 20px;
-    margin-left: 5px;
+    margin-left: 0px;
     margin-bottom: 3px;
     border: 1px solid gray;
     border: none;
     border-radius: 50%;
     background-color: transparent;
-    background-color: #ddf1ff ;
     cursor: pointer;
 }
 
 .wishlist_btn {
     width : 35px;
     height : 35px;
-    margin-left: 25px;
+    margin-left: 50px;
     margin-right: 5px;
     margin-bottom: 1px;
     border: 1px solid gray;
@@ -283,7 +303,8 @@ span.sale_prc {
 
 .fas {
     font-size: 16px; /* 아이콘 크기 조정 */
-    color: #60b3ed ;
+    color: rgb(0, 199, 40);
+
 }
 
 .far {
@@ -298,7 +319,7 @@ span.sale_prc {
     width: 90px;
     height: 20px;
     border: 1px solid #d3d3d3;
-    color: #297aad;
+    color: #228dd0;
 }
 
 .hidden_option  option  {
@@ -319,13 +340,16 @@ a:focus {
 
 /*------------찜하기 호버-----------*/
 .wishlist_btn .fa-heart {
-    color: #dad9d9; /* 기본 색상 */
+    color: #ffdcd8; /* 기본 색상 */
 }
 
 .wishlist_btn.hover .fa-heart {
-    color: #ffbcd1 /* 호버 상태 색상 */
+    color: #ff9284; /* 호버 상태 색상 */
 }
 
 .submit_btn.hover .fa-shopping-cart {
-    color: #116cbe /* 호버 상태 색상 */
+    color: #0f5739 /* 호버 상태 색상 */
 }
+
+
+
