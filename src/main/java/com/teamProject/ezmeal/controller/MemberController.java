@@ -84,7 +84,7 @@ public class MemberController {
 
         // 2. DB에 신규회원 정보를 저장
         try {
-            int rowCnt = memberService.registerMember(memberDto);    // insert
+            int rowCnt = memberService.registerMember(memberDto);    // insert 회원가입
 
             if (rowCnt!=1) {  // insert가 되지않았을 때 signup페이지로 가도록 함
                 rattr.addFlashAttribute("msg","회원가입이 되지 않았습니다. 다시 시도해주세요");
@@ -97,8 +97,13 @@ public class MemberController {
             System.out.println("memberId = " + memberId);
             HttpSession session = req.getSession();
             session.setAttribute("memberId",memberId);
+            // 회원가입완료한 회원정보를 세션에 담는다.
             MemberDto loginMbrInfo = memberService.getMemberInfo(memberId);
             session.setAttribute("loginMbrInfo",loginMbrInfo);
+
+            // 회원가입하면, 장바구니seq를 각 회원에 부여한다.
+            memberService.registerCartSeq(memberId);
+
             model.addAttribute("checkSignupSuccess", "signup success!!");
             return "redirect:/member/signupSuccess"; // insert 성공시에 signupSuccess 페이지로 감
         } catch (Exception e) {
