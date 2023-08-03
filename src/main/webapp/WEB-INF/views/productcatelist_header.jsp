@@ -38,7 +38,7 @@
         <div class="prod_outer" data-prod-idx="${status.index}">
             <!--------------------------------------------------------------------------------------------->
             <figure class="prod_top top_figure">
-                <a href="/product/detail?cate_cd=05&prod_cd=${prod.getProd_cd()}"> <!--상품 대표 이미지-->
+                <a href="/product/detail?prod_cd=${prod.getProd_cd()}"> <!--상품 대표 이미지-->
                     <c:set var="productImage" value="${prodImgMap[prod.prod_cd]}"/>
                     <img id="prod_top top_img"
                          src="/img/${productImage != null ? productImage.url : 'ezmeal_logo'}.png"/>
