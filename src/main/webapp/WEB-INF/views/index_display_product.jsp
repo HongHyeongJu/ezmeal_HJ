@@ -37,7 +37,7 @@
         <div class="prod_outer">
           <c:set var="emplImg" value="${prodImgMap[empl.prod_cd]}" />
           <figure>
-            <img src="/img/${productImage.url}.png">
+            <img src="/img/${emplImg.url}.png">
           </figure>
           <div class="prod_text">
             <span class="pord_name">${empl.name}</span>

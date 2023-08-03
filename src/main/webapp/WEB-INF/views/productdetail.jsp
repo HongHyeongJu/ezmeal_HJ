@@ -32,22 +32,35 @@
   <div class="head_main_left">
 
     <!-- 메인 이미지 -->
-    <c:forEach var="img" items="${imgList}" varStatus="status">
-      <c:if test="${img.typ=='대표'}">
-        <img class="main_img" src="../img/${not empty img.url ? img.url : 'ezmeal_logo'}.png"  id="main_img"/>
-      </c:if>
-    </c:forEach>
-
+    <c:choose>
+      <c:when test="${not empty imgList}">
+        <c:forEach var="img" items="${imgList}" varStatus="status">
+          <c:if test="${img.typ=='대표'}">
+            <img class="main_img" src="/img/${img.url}.png" id="main_img"/>
+          </c:if>
+        </c:forEach>
+      </c:when>
+      <c:otherwise>
+        <img class="main_img" src="/img/ezmeal_logo.png" id="main_img"/>
+      </c:otherwise>
+    </c:choose>
 
     <!-- 미니 이미지 -->
     <ul class="mini_img_set">
-      <c:forEach var="img" items="${imgList}" varStatus="status">
-        <c:if test="${img.typ=='메인' and status.index < 5}">
-          <img class="mini_img 메인" src="../img/${not empty img.url ? img.url : 'ezmeal_logo'}.png" />
-        </c:if>
+      <c:forEach varStatus="status" begin="1" end="5">
+        <c:choose>
+          <c:when test="${not empty imgList and status.count <= imgList.size()}">
+            <c:set var="img" value="${imgList[status.count-1]}" />
+            <c:if test="${img.typ=='메인'}">
+              <img class="mini_img 메인" src="../img/${img.url}.png" id="mini_img_${status.count}"/>
+            </c:if>
+          </c:when>
+          <c:otherwise>
+            <img class="mini_img 메인" src="../img/ezmeal_logo.png" id="mini_img_${status.count}"/>
+          </c:otherwise>
+        </c:choose>
       </c:forEach>
     </ul>
-    <div class="main_left 아래 여백"></div>
 
 <%--    <c:forEach var="img" items="${imgList}" varStatus="status">--%>
 <%--      <c:if test="${img.typ=='대표'}">--%>
