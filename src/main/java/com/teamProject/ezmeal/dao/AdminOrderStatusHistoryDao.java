@@ -15,8 +15,8 @@ public class AdminOrderStatusHistoryDao {
     private static final String namespace = "orderStatusHistoryDao.";
 
     // 주문 발주 버튼 클릭시, 이력이 남음. 발주 확인 버튼은 모든 주문 상세를 통합하므로 주문상세에 관한 정보 고려할 필요 없다.
-    public int insertOrderAfterCheckAdminOrder(AdminOrderOrderDto afterOrderCheckData) {
-        return session.insert(namespace + "insert_order_after_check_admin_order", afterOrderCheckData);
+    public int insertOrderAfterCheckAdminOrder(AdminOrderOrderDto adminOrderOrderDto) {
+        return session.insert(namespace + "insert_order_after_check_admin_order", adminOrderOrderDto);
     }
 
     //  배송완료 admin 에서 구매확정 update 상황이 존재시 order status history 먼저 insert

@@ -48,7 +48,6 @@
     </div>
 </div>
 <script src="/javascript/main1.js"></script>
-
 <!-- 메인 추천 상품 -->
 <div class="index_display_product">
     <jsp:include page="index_display_product.jsp"/>

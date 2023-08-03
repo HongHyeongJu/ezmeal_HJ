@@ -51,10 +51,11 @@ public class AdminOrderController {
         System.out.println("employee = " + loginAdminInfo);
         System.out.println("orderIdList = " + orderIdList);
         // orderMsterMapper에 넣을 dto 생성
-        AdminOrderOrderDto adminOrderOrderDto = new AdminOrderOrderDto("h1", loginAdminInfo.getEmp_acct_id(), orderIdList, "발주 확인");
+        AdminOrderOrderDto adminOrderOrderDtoUpdate = new AdminOrderOrderDto("h1", loginAdminInfo.getEmp_acct_id(), orderIdList, "발주 확인");
+        AdminOrderOrderDto adminOrderOrderDtoInsert = new AdminOrderOrderDto("a2", loginAdminInfo.getEmp_acct_id(), orderIdList, "발주 확인");
         // 객체 {status : "", up_id : "", orderIdList: []}
-        adminOrderService.setOrderStatusAfterCheckAdminOrderBtn(adminOrderOrderDto); // order master, order detail stus update
-        adminOrderService.insertOrderHistoryAfterCheckAdminOrder(adminOrderOrderDto); // order status history insert
+        adminOrderService.setOrderStatusAfterCheckAdminOrderBtn(adminOrderOrderDtoUpdate); // order master, order detail stus update
+        adminOrderService.insertOrderHistoryAfterCheckAdminOrder(adminOrderOrderDtoInsert); // order status history insert
         return "success";
     }
 

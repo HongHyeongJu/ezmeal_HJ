@@ -20,6 +20,9 @@ public class ProductOptionDaoTest {
     @Autowired
     ProductOptionDao productOptionDao;
 
+    @Autowired
+    ProductCategoryDao productCategoryDao;
+
     /*카테고리에 내보낼 옵션 객체*/
     @Test
     public void selectOptionInCategory() throws SQLException {
@@ -79,6 +82,15 @@ public class ProductOptionDaoTest {
     }
 
 
+    @Test
+    public void setProductCategoryDao() throws SQLException {
+//        Map<String, String> map = productCategoryDao.selectCateCdAndNameList();
+//        for (Map.Entry<String, String> entry : map.entrySet()) {
+//            String cate_cd = entry.getKey();
+//            String name = entry.getValue();
+//            System.out.println("cate_cd: " + cate_cd + ", name: " + name);
+//        }
+    }
 
 
 

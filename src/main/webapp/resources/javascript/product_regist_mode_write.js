@@ -85,10 +85,10 @@ document.querySelector('#productForm').addEventListener('submit', function(event
 
     //등록날짜
     const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-    const day = String(currentDate.getDate()).padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}`;
+    // const year = currentDate.getFullYear();
+    // const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    // const day = String(currentDate.getDate()).padStart(2, '0');
+    // const formattedDate = `${year}-${month}-${day}`;
 
     // HTML 폼 요소에 접근하여 메인 상품 값을 가져오기
     const productDto = {
@@ -118,7 +118,7 @@ document.querySelector('#productForm').addEventListener('submit', function(event
         vld_start_dt: document.querySelector('#vld_start_dt').value,
         vld_end_dt: document.querySelector('#vld_end_dt').value,
         mng: document.querySelector('#mng').value,
-        fst_reg_dt: formattedDate,
+        fst_reg_dt: currentDate,
         sale_yn: document.querySelector('input[name="product.sale_yn"]:checked').value,
         dp_yn: document.querySelector('input[name="product.dp_yn"]:checked').value,
         del_yn: 'n',
