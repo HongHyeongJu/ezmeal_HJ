@@ -32,7 +32,7 @@
       </li>
 
       <c:forEach var="empl" items="${emplList}" varStatus="status">
-      <a href="/product/detail?cate_cd=05&prod_cd=${empl.prod_cd}">
+      <a href="/product/detail?prod_cd=${empl.prod_cd}">
       <li class="health_prod_li">
         <div class="prod_outer">
           <c:set var="emplImg" value="${prodImgMap[empl.prod_cd]}" />
