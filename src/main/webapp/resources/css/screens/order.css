@@ -5,7 +5,6 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    margin-top: 156px; /*상단 nav 공간 제공*/
 }
 
 /* 장바구니 title */
@@ -61,6 +60,13 @@
 /* 1.2.1. */
 /* h4마다 category인데 개별 class명이 따로 존재한다. */
 /* 공통 */
+
+.order_category > span,
+.order_category_small > span{
+    font-size: large;
+    font-weight: 600;
+}
+
 .order_category {
     display: flex;
     justify-content: space-between;
@@ -72,11 +78,11 @@
     border-bottom: solid 1px black;
 }
 
-/* 1.2.1. */
+.order_category:first-child {
+    margin-top: 0;
+}
 
-/* TODO
-  button icon 누르면 위 아래로 변경되는 JS 수행 필요
-  */
+/* 1.2.1. */
 
 /* 1.2.1 상품접고 열기 button */
 /* button은 border이 사라지는 순간 btn 내부 값의 크기가 btn의 크기기 된다.
@@ -125,7 +131,7 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
 
 /* 수량 */
 .order__item__count div {
-    width: 30px;
+    width: 80px;
     height: 28px;
     /* text 중앙에 두기 */
     display: flex;
@@ -138,16 +144,18 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
     width: 700px;
     min-height: 40px;
     margin-right: 20px;
-    /* 수직 중앙 정렬 */
-    display: flex;
-    align-items: center;
+}
+
+.order__item_list_description >p:first-child {
+    margin-right:5px;
+    margin-bottom: 10px;
 }
 
 /* 소비자, 판매가 가격 */
 .order__item_price {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: end;
     width: 120px;
     height: 50px;
@@ -189,7 +197,15 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
 
 /* 배송지 정보 */
 .delivery_address_id div {
-    margin-bottom: 10px;
+    width: 400px;
+    display:flex;
+    margin-bottom: 18px;
+}
+
+.delivery_address_id div span:first-child,
+.order_info_template:first-of-type div span,
+.order_info_template__radiobox > div >span {
+    font-weight: bolder;
 }
 
 .order_info_delivery {
@@ -267,6 +283,29 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
     margin-bottom: 0;
 }
 
+/* 결제수단 선택 */
+.pay_methods {
+    align-items: center;
+    box-sizing: unset;
+}
+
+.pay_method {
+    text-align: center;
+    padding: 0;
+    width: 140px;
+    height: 44px;
+    margin-right: 10px;
+    font-size: 16px;
+    opacity: 0.7;
+}
+
+.pay_method:hover,
+.pay_method:focus,
+.pay_method_clicked {
+    opacity: 1;
+    border: 1px solid black;
+}
+
 .order_info_template__title_point2 {
     margin-top: 0;
 }
@@ -284,7 +323,8 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
 
 .order__btn_kakao {
     background-color: var(--kakaoYellow);
-    color: black;
+    color: rgb(62, 59, 59);
+
 }
 
 .order__btn_toss {
@@ -383,6 +423,20 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
     /* height를 0으로 잡아서 숨기는 방법도 있었는데 나중에 확인하기  */
 }
 
+/* 개인정보수집제공*/
+.order__agreement div {
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+.order__agreement__btn {
+    padding: 1px 8px;
+    margin-left: 10px;
+}
+
+.order__agreement div:last-child {
+    font-weight: bold;
+}
 
 /* order-modal detail */
 .modal_body {
