@@ -306,7 +306,7 @@
       <span class="rv_kword">여기 키워드리뷰.... 가져와야서 반복출력...</span>
       <span class="rv_title">${review.title}</span>
       <span class="rv_stmt">${review.stmt}</span>
-      <span class="rv_img"><img src="../../img/P005.png" width="100px" height="100px" id="img01"></span>
+      <span class="rv_img"><img src="../../img/6.png" width="100px" height="100px" id="img01"></span>
     </li>
   </ul>
 </c:forEach>
@@ -323,7 +323,7 @@
                         또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.
                         또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.
                     </span>
-    <span class="rv_img"><img src="../../img/G005.png" width="100px" height="100px" id="img02"></span>
+    <span class="rv_img"><img src="../../img/4.png" width="100px" height="100px" id="img02"></span>
 
   </li>
 
@@ -436,27 +436,12 @@
 </div>
 
 <!------------------------------------- 자바스크립트 ------------------------------------------->
-<script>
-  window.onload = function() {
-    /*페이지 로드 시 */
-    makeReviewAvgStarImg();   /*리뷰 별점 이미지 출력*/
-    imgFunction();   /*이미지 교체 기능 넣기*/
-    updatePrice();   /*기본으로 가격 업데이트*/
-    changeMainImage(document.getElementById("main_img"))
-
-    /*선택한 옵션으로 바로 가격 바뀌도록*/
-    let optSelect = document.getElementById("opt_select");
-
-    optSelect.addEventListener('change', function() {
-      updatePrice();
-    });
-
-  }
-</script>
-<script src="/javascript/productdetail.js"></script>
-<script src="/javascript/productdetailoption.js"></script>
-<script src="/javascript/productdetail_img_and_order.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<%--<script src="/javascript/productdetailoption.js"></script>--%>
+<%--<script src="/javascript/productdetail_img_and_order.js"></script>--%>
+<%--<script src="/javascript/productdetail.js"></script>--%>
+<script src="/javascript/productDetailCombined.js"></script>
+
 <script>
   src="https://kit.fontawesome.com/6478f529f2.js"
   crossOrigin="awesome"
