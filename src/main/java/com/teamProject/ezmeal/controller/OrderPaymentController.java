@@ -22,7 +22,12 @@ public class OrderPaymentController {
     public String getOrderPaymentTemplate(@SessionAttribute Long memberId, Model model) {
         Map<String, String> startEndDate = orderPaymentService.getStartEndDate(memberId);
         System.out.println("OrderPaymentController - getOrderPaymentTemplate 진입" + startEndDate); // Mapper의 반환 type을 map으로 하면 column명이 map의 key가 된다.
+
+        Map<String, Integer> countOrderDelivery = orderPaymentService.countOrderDeliveryNum(memberId);
+        System.out.println("countOrderDelivery = " + countOrderDelivery);
+
         model.addAttribute("startEndDate", startEndDate);
+        model.addAttribute("countOrderDelivery", countOrderDelivery);
         return "orderPayment";
 
     }
