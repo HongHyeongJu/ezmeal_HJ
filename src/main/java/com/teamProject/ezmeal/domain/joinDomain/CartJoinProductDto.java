@@ -13,8 +13,8 @@ public class CartJoinProductDto {
     private Long opt_seq;
     private String typ;
     private String soldout_yn;
-    private Integer cp_qty;
-    private Integer po_qty;
+    private Integer cp_qty; // 장바구니 상품 수량
+    private Integer po_qty; // 수량
     private String name;
     private Integer cnsmr_prc;
     private Integer sale_prc;
