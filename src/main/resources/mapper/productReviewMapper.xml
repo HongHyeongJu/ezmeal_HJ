@@ -10,6 +10,7 @@
         SELECT *
         FROM tb_product_review
         WHERE mbr_id = #{mbr_id} AND del_yn = 'n'
+        ORDER BY wrt_dt DESC
     </select>
 
     <!-- 한 회원의 1개 꺼내기 -->
@@ -132,5 +133,9 @@
         WHERE del_yn='n'
         GROUP BY prod_cd
     </select>
+
+
+
+
 
 </mapper>
