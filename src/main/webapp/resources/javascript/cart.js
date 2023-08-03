@@ -176,9 +176,10 @@ const groupExpectSalePrice = function () { // 다중 선택시 사용하는 가�
 
         const quantity = parseInt(element.querySelector(".count_num").value); // 상품 수량
 
-        const salePrice = parseInt(cartItemPriceSpans[0].textContent.replace(/,/g, '').replace("원", '')); // 1,000원 -> 1000원
+        const salePrice = parseInt(cartItemPriceSpans[0].getAttribute('part_prc'));
 
-        const productPrice = parseInt(cartItemPriceSpans[1].textContent.replace(/,/g, '').replace("point", ''));
+        const productPrice = parseInt(cartItemPriceSpans[1].getAttribute('part_prc'));
+
         PRODUCT_PRICE += quantity * productPrice;
         SALE_PRICE += quantity * (productPrice - salePrice);
         EXPECTED_PRICE += quantity * salePrice;

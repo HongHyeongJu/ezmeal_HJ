@@ -28,6 +28,7 @@ public class MemberController {
     private final LoginService loginService;
 
 
+    // 아이디 중복체크 로직
     @PostMapping("/checkIdDuplicate")
     @ResponseBody
     public Map<String, Boolean> checkIdDuplicate(@RequestBody Map<String, String> request) {    // id중복체크 post JSON
@@ -43,6 +44,7 @@ public class MemberController {
         }
     }
 
+    // 이메일 중복체크 로직
     @PostMapping("/checkEmailDuplicate")
     @ResponseBody
     public Map<String, Boolean> checkEmailDuplicate(@RequestBody Map<String, String> request) {
@@ -58,12 +60,13 @@ public class MemberController {
         }
     }
 
+    // 회원가입페이지 조회
     @GetMapping("/signup")
     public String getMemberAdd() {    // 회원가입 버튼 클릭시 signup.jsp 화면 보여준다
         return "signup";
     }
-    // PostMapping(/signup)
-    // View success.jsp
+
+    // 회원가입 요청
     @PostMapping("/signup")
     public String postMemberAdd(@Valid MemberDto memberDto, BindingResult bindingResult, String lgin_id, String lgin_pw ,
                                 Model model, RedirectAttributes rattr, HttpServletRequest req) {
@@ -81,7 +84,7 @@ public class MemberController {
 
         // 2. DB에 신규회원 정보를 저장
         try {
-            int rowCnt = memberService.registerMember(memberDto);    // insert
+            int rowCnt = memberService.registerMember(memberDto);    // insert 회원가입
 
             if (rowCnt!=1) {  // insert가 되지않았을 때 signup페이지로 가도록 함
                 rattr.addFlashAttribute("msg","회원가입이 되지 않았습니다. 다시 시도해주세요");
@@ -94,10 +97,15 @@ public class MemberController {
             System.out.println("memberId = " + memberId);
             HttpSession session = req.getSession();
             session.setAttribute("memberId",memberId);
+            // 회원가입완료한 회원정보를 세션에 담는다.
             MemberDto loginMbrInfo = memberService.getMemberInfo(memberId);
             session.setAttribute("loginMbrInfo",loginMbrInfo);
+
+            // 회원가입하면, 장바구니seq를 각 회원에 부여한다.
+            memberService.registerCartSeq(memberId);
+
             model.addAttribute("checkSignupSuccess", "signup success!!");
-            return "signupSuccess"; // insert 성공시에 signupSuccess 페이지로 감
+            return "redirect:/member/signupSuccess"; // insert 성공시에 signupSuccess 페이지로 감
         } catch (Exception e) {
             e.printStackTrace();
 //            rattr.addAttribute(memberDto);
@@ -106,12 +114,21 @@ public class MemberController {
         }
     }
 
+    // 회원가입 완료페이지
+    @GetMapping("/signupSuccess")
+    public String getMemberAddSuccess(@SessionAttribute Long memberId, Model model) {
+        MemberDto loginMbrInfo = memberService.getMemberInfo(memberId);
+        model.addAttribute("loginMbrInfo",loginMbrInfo);
+        return "signupSuccess";
+    }
+
     // 아이디찾기
     @GetMapping("/find/id")
     public String getMemberFindId() {
         return "findId";
     }
 
+    // 아이디 찾기 요청
     @PostMapping("/find/id")
     public String postMemberFindID(String name, String email, Model model) {
         // 아이디 찾기에서 입력한 이름과 이메일을 받아서 아이디를 찾는다.
@@ -129,6 +146,7 @@ public class MemberController {
         return "findPw";
     }
 
+    // 비밀번호 찾기 요청
     @PostMapping("/find/password")
     public String postMemberFindPw(String lgin_id, String email, Model model){
         System.out.println("lgin_id = " + lgin_id);
