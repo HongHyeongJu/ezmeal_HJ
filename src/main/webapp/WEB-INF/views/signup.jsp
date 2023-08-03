@@ -11,25 +11,28 @@
 <html>
 <head>
   <title>회원가입</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/screens/signup.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
-<section class="section">
-  <c:if test="${not empty errorMsg}">
-    <script>
-      // 회원가입 란 중에 비어있는 칸 경고창
-      const errorMessage = "${errorMsg}";
-      alert(errorMessage);
-    </script>
-  </c:if>
-
-  <div class="title">회원가입</div>
-  <!-- 회원가입 타이틀 끝 -->
-
-  <form action="<c:url value="/member/signup"/>" method="post" onsubmit="return validateForm()">
-    <div id="msg" class="msg"></div>
+  <section class="section">
+    <c:if test="${not empty errorMsg}">
+      <script>
+        // 회원가입 란 중에 비어있는 칸 경고창
+        const errorMessage = "${errorMsg}";
+        alert(errorMessage);
+      </script>
+    </c:if>
+      
+    <div class="title">회원가입</div>
+    <!-- 회원가입 타이틀 끝 -->
+      
+      <form action="<c:url value="/member/signup"/>" method="post" onsubmit="return validateForm()">
+      <div id="msg" class="msg"></div>  
     <div class="content-section">
       <div class="top">
         <span class="star">*</span>필수입력사항
@@ -132,7 +135,7 @@
             <div class="msg"> <p id="phone-msg" class="valid-msg"></p> </div>
           </div>
           <div class="button-section">
-            <button class="button" type="button">
+            <button class="button" type="button" style="display: none">
               <span class="button-value">인증번호 받기</span>
             </button>
           </div>
@@ -290,12 +293,12 @@
 
     </div>
     <!-- content-section의 끝 -->
-  </form>
-</section>
+      </form>
+  </section>
 
-<script>
-  const msg = "${msg}";
-</script>
+  <script>
+    const msg = "${msg}";
+  </script>
 <script src="/javascript/signup.js"></script>
 <%--<jsp:include page="footer.jsp"/>--%>
 </body>

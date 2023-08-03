@@ -19,15 +19,23 @@
   <link rel="stylesheet" href="/css/screens/productcatelist.css?ver=2"/>
     <jsp:include page="header_specific_styles.jsp" />
     <style>
-        .empty {
-            height: 0px !important;
+        .empty_top {
+            height: 30px !important;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
 
 <jsp:include page="header.jsp"/>
-
+<div class="empty_top">
+    <span class="header_title">${headerTitle}</span>
+</div>
 <!--전달 받은 상품 리스트 하나만 꺼내기-->
 <c:forEach var="prod" items="${prodList}" varStatus="status">
   <!-- 4개씩 ul 태그로 감싸기 -->

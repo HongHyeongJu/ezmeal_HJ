@@ -31,7 +31,7 @@ public class AdminLoginController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/";
+        return "adminLogin";
     }
 
     @PostMapping("/login")
@@ -42,7 +42,7 @@ public class AdminLoginController {
         HttpSession session = request.getSession();
         session.setAttribute("empId", empId);
         session.setAttribute("loginAdminInfo", loginAdminInfo);
-        return "admin";
+        return "admin_member_info";
     }
 
 }

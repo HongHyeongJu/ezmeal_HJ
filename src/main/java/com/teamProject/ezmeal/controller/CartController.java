@@ -47,6 +47,7 @@ public class CartController {
         List<CartJoinProductDto> outSideList = new ArrayList<>();
 
         for (CartJoinProductDto product : productsList) {
+            System.out.println("product = " + product);
             if (product.getTyp().equals(TYPE_NAME[0])) iceList.add(product);
             else if (product.getTyp().equals(TYPE_NAME[1])) coldList.add(product);
             else if (product.getTyp().equals(TYPE_NAME[2])) outSideList.add(product);

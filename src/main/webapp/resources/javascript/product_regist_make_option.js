@@ -54,7 +54,7 @@ addButton.addEventListener('click', function(event) {
         </li>
         <li>
             <span class="opt_list_namespan">할인율</span>
-            <input type="number" name="options[${optionNumber}].opt_dc_per" min="0" disabled value="0"><span>%</span>
+            <input type="number" name="options[${optionNumber}].dc_rate" min="0" disabled value="0"><span>%</span>
         </li>
         <li class="last_li">
             <span  class="opt_list_namespan">비고</span>
@@ -109,11 +109,11 @@ addButton.addEventListener('click', function(event) {
         document.querySelector(`.opt_list_ul[data-id="${optionNumber}"] input[name="options[${optionNumber}].sale_prc"]`).value = Math.round(sale_prc);
 
         // 여기에서 할인율을 계산합니다.
-        const optDcPerInput = document.querySelector(`.opt_list_ul[data-id="${optionNumber}"] input[name="options[${optionNumber}].opt_dc_per"]`);
+        const dcRateInput = document.querySelector(`.opt_list_ul[data-id="${optionNumber}"] input[name="options[${optionNumber}].dc_rate"]`);
 
         let opt_Sc_Per = cnsmr_prc !== 0 ? ((cnsmr_prc - sale_prc) / cnsmr_prc) * 100 : 0;
 
-        optDcPerInput.value = Math.floor(opt_Sc_Per);
+        dcRateInput.value = Math.floor(opt_Sc_Per);
     });
 
 
@@ -132,15 +132,15 @@ optionContainer.addEventListener('change', function(event) {
         // '소비자가', '판매가', '할인율' input 필드를 가져옵니다.
         const cnsmrPrcInput = document.querySelector(`.opt_list_ul[data-id="${optionNumber}"] input[name="options[${optionNumber}].cnsmr_prc"]`);
         const salePrcInput = document.querySelector(`.opt_list_ul[data-id="${optionNumber}"] input[name="options[${optionNumber}].sale_prc"]`);
-        const optDcPerInput = document.querySelector(`.opt_list_ul[data-id="${optionNumber}"] input[name="options[${optionNumber}].opt_dc_per"]`);
+        const dcRateInput = document.querySelector(`.opt_list_ul[data-id="${optionNumber}"] input[name="options[${optionNumber}].dc_rate"]`);
 
         // 할인율을 계산합니다.
         const opt_Cnsmr_Prc = parseFloat(cnsmrPrcInput.value);
         const opt_Sale_Prc = parseFloat(salePrcInput.value);
 
-        let opt_Sc_Per = opt_Cnsmr_Prc !== 0 ? ((opt_Cnsmr_Prc - opt_Sale_Prc) / opt_Cnsmr_Prc) * 100 : 0;
+        let opt_Dc_Rate = opt_Cnsmr_Prc !== 0 ? ((opt_Cnsmr_Prc - opt_Sale_Prc) / opt_Cnsmr_Prc) * 100 : 0;
 
-        optDcPerInput.value = Math.floor(opt_Sc_Per);
+        dcRateInput.value = Math.floor(opt_Dc_Rate);
 
     }
 });
@@ -159,7 +159,7 @@ const qtyInput = document.querySelector('#qtyInput');
 const dcCdSelect = document.querySelector('#dcCdSelect');
 const cnsmrPrcInput = document.querySelector('#cnsmrPrcInput');
 const salePrcInput = document.querySelector('#salePrcInput');
-const optDcPerInput = document.querySelector('#optDcPerInput');
+const dcRateInput = document.querySelector('#dcRateInput');
 
 const productCnsmrPrcInput = document.querySelector('#cnsmr_prc');
 
@@ -187,6 +187,6 @@ dcCdSelect.addEventListener('change', function() {
     }
 
     salePrcInput.value = Math.round(salePrc);
-    optDcPerInput.value = Math.round((1 - salePrc / cnsmrPrc) * 100);
+    dcRateInput.value = Math.round((1 - salePrc / cnsmrPrc) * 100);
 
 });

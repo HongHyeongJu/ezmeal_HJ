@@ -1,0 +1,9 @@
+select[name="admin-order__select-type"],
+.invc,
+.delivery_fee
+{
+    width: 147px;
+    display:block;
+    text-align: center;
+    margin-bottom: 10px;
+}

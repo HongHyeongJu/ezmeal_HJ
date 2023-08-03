@@ -7,4 +7,43 @@
         insert into tb_order_status_history (ord_id, stus)
         values (#{ordId}, 'oc');
     </insert>
+
+    <!-- 주문 발주 버튼 클릭시, 이력이 남음. 발주 확인 버튼은 모든 주문 상세를 통합하므로 주문상세에 관한 정보 고려할 필요 없다. -->
+    <insert id="insert_order_after_check_admin_order"
+            parameterType="com.teamProject.ezmeal.domain.joinDomain.AdminOrderOrderDto">
+        insert into tb_order_status_history (ord_id, stus, chg_dtm, chg_rsn, in_id, up_id)
+        values
+        <foreach collection="pkIdList" item="orderId" separator=",">
+            (#{orderId}, #{status}, now(), #{changeReason}, #{id}, #{id})
+        </foreach>
+    </insert>
+
+    <!-- 배송완료 admin 에서 구매확정 update 상황이 존재시 order status history 먼저 insert -->
+    <insert id="insert_fixed_complete_auto">
+        INSERT INTO tb_order_status_history (ord_id, ord_prod_dtl_id, stus, chg_dtm, chg_rsn)
+        SELECT od.ord_id,
+               od.ord_prod_dtl_id,
+               'a3',
+               NOW(),
+               '배송완료 1주일 후 자동 구매확정 처리'
+        FROM tb_order_detail od
+        WHERE stus = 'h6'
+          AND od.up_dtm &lt; DATE_SUB(NOW(), INTERVAL 7 DAY);
+    </insert>
+
+    <!-- 배송완료 admin에서 수동으로 구매 확정시, 이력 남기기 -->
+    <insert id="insert_fixed_complete_manual">
+        insert into tb_order_status_history (ord_id, ord_prod_dtl_id, stus, chg_dtm, chg_rsn, in_id, up_id)
+        select od.ord_id, od.ord_prod_dtl_id, od.stus, now(), #{changeReason}, od.up_id, od.up_id
+        from tb_order_detail od
+        where od.ord_prod_dtl_id in
+        (select ord_prod_dtl_id
+        from tb_delivery_master
+        where dlvar_id in
+        <foreach collection="pkIdList" item="dlvarId" open="(" close=")" separator=",">
+            #{dlvarId}
+        </foreach>
+        )
+    </insert>
+
 </mapper>

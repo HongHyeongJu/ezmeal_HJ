@@ -13,9 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.lang.Integer.parseInt;
@@ -76,6 +74,7 @@ public class ProductService {
                 System.out.println("5");
             }
 
+            System.out.println("cate_cd:"+cate_cd);
             System.out.println("sortkeyword: "+sortkeyword);
             System.out.println("prodList.size(): "+ prodList);
 
@@ -106,7 +105,7 @@ public class ProductService {
     }
 
     /*각 카테고리별 옵션 있는 상품은 K:상품코드 V:옵션리스트 Map으로 전달*/
-    public Map<Long,List<ProductOptionDto>> prodCdListChangeToOptionMap(String cate_cd) throws SQLException {
+    public HashMap<Long,List<ProductOptionDto>> prodCdListChangeToOptionMap(String cate_cd) throws SQLException {
         List<Long> prodCdList = productDao.selectProductProdCdListByCateCd(cate_cd);
         HashMap map = new HashMap();
         for(Long prod_cd : prodCdList){
@@ -144,6 +143,32 @@ public class ProductService {
 
         return prodDetailMap;
     }
+
+
+    /*메인페이지에 보여줄 상품 5개 들어있는 List * 4개 보내기   직장인, 헬스, 먹잘알, 자취생*/
+    public HashMap getMainDisplayProductList() throws SQLException {
+        List<ProductDto> emplList = productDao.selectMainEmplList();
+        List<ProductDto> healthList = productDao.selectMainHealthList();
+        List<ProductDto> homeList = productDao.selectMainHomeList();
+        List<ProductDto> eatList = productDao.selectMainEatList();
+
+        HashMap map = new HashMap();
+        map.put("healthList", healthList);
+        map.put("emplList", emplList);
+        map.put("homeList", homeList);
+        map.put("eatList", eatList);
+
+        return map;
+    }
+
+
+
+
+
+
+
+
+    /*-----------------------------------------------  관리자  -----------------------------------------*/
 
 
     /*관리자 상품 관리 페이지(읽기, 수정용)*/
@@ -207,7 +232,7 @@ public class ProductService {
     *옵션 update, insert 카운트 해주기. optUpdateCnt / optInsertCnt
     *알려줄것들 Map(prodInsertCnt, prodUpdateCnt,optUpdateCnt, optInsertCnt)으로 반환
     * */
-    public Map<String, Integer> prodAndOptionRegist(ProductDto productDto, List<ProductOptionDto> productOptionDtos) throws SQLException {
+    public HashMap<String, Integer> prodAndOptionRegist(ProductDto productDto, List<ProductOptionDto> productOptionDtos) throws SQLException {
         Integer prodInsertCnt = 0;
         Integer prodUpdateCnt = 0;
         Integer optInsertCnt = 0;
@@ -224,7 +249,7 @@ public class ProductService {
             if(optListSize>0) {
                 /*상품정보로 낱개 옵션 만들기*/
                 prodOptOne = new ProductOptionDto(null, productDto.getDc_cd(), "낱개", "qty", 1,
-                                productDto.getCnsmr_prc(), productDto.getSale_prc(), productDto.getIn_id(), productDto.getUp_id());
+                                productDto.getCnsmr_prc(), productDto.getSale_prc(), productDto.getDc_rate(), productDto.getIn_id(), productDto.getUp_id());
                 /*옵션 List 0번째로 낱개 옵션 넣어주기*/
                 productOptionDtos.add(0, prodOptOne);
                 /*옵션 있을 때 일반 상품에서 소비자가, 판매가 없애기로 했음*/
@@ -312,41 +337,47 @@ public class ProductService {
 
             /*headerTyp에 따라 상품 리스트 받아오기*/
             List<ProductDto> prodList;
-
+            String headerTitle = "";
             if ("new".equals(headerTyp)) {
                 prodList = productDao.selectByNewProduct();
+                headerTitle = "신상품";
                 System.out.println("new");
             } else if ("best".equals(headerTyp)) {
                 prodList = productDao.selectByBestProduct();
+                headerTitle = "베스트";
                 System.out.println("best");
             } else if ("bigdc".equals(headerTyp)) {
                 prodList = productDao.selectByBigDcProduct();
+                headerTitle = "특가 | 혜택";
                 System.out.println("bigdc");
             } else {
                 prodList = productDao.selectByNewProduct();
+                headerTitle = "신상품";
                 System.out.println("else");
             }
 
             System.out.println("서비스 headerTyp: "+headerTyp);
             System.out.println("서비스 prodList.size(): "+ prodList);
 
+
+            HashMap fourTypesMap = getAllTypImgOptRivews();
+
             /*모든상품 '대표'이미지 리스트*/
-            Map<Long,ProductImgDto> prodImgMap = productImgService.getAllRecentTypImgListConvertToMap();
+            Map<Long,ProductImgDto> prodImgMap = (Map<Long,ProductImgDto>)fourTypesMap.get("prodImgMap");
             /*모든상품의 옵션 리스트*/
-            Map<Long,List<ProductOptionDto>> prodOptMap =  prodCdListChangeToOptionMap("0");
-            /*할인율 강조를 위한 할인코드 리스트 */
-//            List<ProductDiscountDto> discountList = productDiscountDao.selectDiscountListByCateCd();
+            Map<Long,List<ProductOptionDto>> prodOptMap = (Map<Long,List<ProductOptionDto>>)fourTypesMap.get("prodOptMap");
             /*모든상품  평점, 리뷰 숫자*/
-            Map<Long,Double> reviewAvgMap = productReviewDao.selectReviewAvgAllProduct();
-            Map<Long,Integer> reviewCntMap = productReviewDao.selectReviewCntAllProduct();
+            Map<Long,Double> reviewAvgMap = (Map<Long,Double>)fourTypesMap.get("reviewAvgMap");
+            Map<Long,Integer> reviewCntMap = (Map<Long,Integer>)fourTypesMap.get("reviewCntMap");
+
 
             HashMap ProdListMap = new HashMap<>();
             ProdListMap.put("prodList",prodList);
             ProdListMap.put("prodImgMap",prodImgMap);
             ProdListMap.put("prodOptMap",prodOptMap);
-//            ProdListMap.put("discountList",discountList);
             ProdListMap.put("reviewAvgMap",reviewAvgMap);
             ProdListMap.put("reviewCntMap",reviewCntMap);
+            ProdListMap.put("headerTitle",headerTitle);
 
             return ProdListMap;
 
@@ -357,8 +388,24 @@ public class ProductService {
 
     }
 
+    /*모두 가져오기 종합세트 대표이미지, 옵션 리스트, 리뷰 평점, 리뷰 총개수*/
+    public HashMap getAllTypImgOptRivews() throws SQLException {
+        HashMap prepareListMap = new HashMap<>();
+        /*모든상품 '대표'이미지 리스트*/
+        Map<Long,ProductImgDto> prodImgMap = productImgService.getAllRecentTypImgListConvertToMap();
+        /*모든상품의 옵션 리스트*/
+        Map<Long,List<ProductOptionDto>> prodOptMap =  prodCdListChangeToOptionMap("0");
+        /*모든상품  평점, 리뷰 숫자*/
+        Map<Long,Object> reviewAvgMap = productReviewDao.selectReviewAvgAllProduct();
+        Map<Long,Integer> reviewCntMap = productReviewDao.selectReviewCntAllProduct();
 
+        prepareListMap.put("prodImgMap",prodImgMap);
+        prepareListMap.put("prodOptMap",prodOptMap);
+        prepareListMap.put("reviewAvgMap",reviewAvgMap);
+        prepareListMap.put("reviewCntMap",reviewCntMap);
 
+        return prepareListMap;
+    }
 
 
     /*-----------관리자용-------------------*/

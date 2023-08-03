@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -60,9 +62,6 @@ public class MypageController {
         Long memberId = (Long) session.getAttribute("memberId");    // 현재로그인 중인 회원번호를 가져온다.
         try {
             MemberDto loginMbrInfo = memberService.getMemberInfo(memberId);   // 현재 로그인중인 회원정보를 조회한다.
-//            System.out.println("loginMbrInfo.getLgin_id() = " + loginMbrInfo.getLgin_id());
-//            System.out.println("loginMbrInfo.getName() = " + loginMbrInfo.getName());
-//            System.out.println("loginMbrInfo.getEmail() = " + loginMbrInfo.getEmail());
             model.addAttribute("loginMbrInfo",loginMbrInfo);    // JSP에서 loginMbrInfo 객체를 불러오기위해 모델에 담아서 넘겨준다.
             return "modify";
         } catch (Exception e) {
@@ -71,11 +70,26 @@ public class MypageController {
     }
 
     @PostMapping("/modify") // 회원정보수정이 완료되면 마이페이지로 돌아감
-    public String postMemberModify(MemberDto memberDto) {
+    public String postMemberModify(@SessionAttribute Long memberId, RedirectAttributes rattr,
+                                   Model model, MemberDto memberDto, String originPw, String newPw) {
         try {
-            // int 값 확인 필요
-            memberService.modifyMember(memberDto);
-            return "mypage";
+
+            // 회원수정 form에서 입력한 현재 비밀번호(orginPw)가
+            // 로그인한 회원의 현 비밀번호(lgin_pw)와 일치하는지 확인
+            MemberDto loginMember = memberService.getMemberInfo(memberId);
+
+            if (!(loginMember.getLgin_pw().equals(originPw))) {
+                rattr.addFlashAttribute("msg","현재 비밀번호를 확인해주세요.");
+                return "redirect:/mypage/modify";
+            } else {
+                // 회원수정에서 새 비밀번호를 입력한 값으로 변경한다.
+                memberDto.setLgin_pw(newPw);
+                memberService.modifyMember(memberDto);
+                model.addAttribute("modifyMsg","수정되었습니다.");
+//                rattr.addFlashAttribute("modifyMsg","수정되었습니다.");
+                return "mypage";
+            }
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

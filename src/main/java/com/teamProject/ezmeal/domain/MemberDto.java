@@ -1,5 +1,9 @@
 package com.teamProject.ezmeal.domain;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -7,6 +11,8 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Data
+@RequiredArgsConstructor
 public class MemberDto {
     private long mbr_id;
     private long rfnd_acc_id;
@@ -50,7 +56,7 @@ public class MemberDto {
     private String grd_img;
 
     // 생성자 생성
-    public MemberDto(){}
+
 
     // 회원가입 최소값만 넣기위한 생성자
     public MemberDto(String name, String gender, String birth, String phone,
@@ -64,84 +70,20 @@ public class MemberDto {
         this.lgin_pw = lgin_pw;
     }
 
-    public MemberDto(long mbr_id, long rfnd_acc_id, String name, Integer role, String gender, String birth, String phone, String email,
-                     String sc_typ, String sc_lgin_id, String lgin_id, String lgin_pw, String rcmdr_cd, String acct_now_stus,
-                     String mbr_grd, String mbr_subs_agre, String usg_terms, String psnlinfo_usg_yn, String age_14_over_yn,
-                     String markt_ad_dstn_yn, String event_bnef_yn, String del_yn, LocalDateTime in_dtm, String in_id,
-                     LocalDateTime up_dtm, String up_id) {
-        this.mbr_id = mbr_id;
-        this.rfnd_acc_id = rfnd_acc_id;
+    // 관리자페이지에서 회원 목록 조회를 위한 생성자
+    public MemberDto(String name, String gender, String birth, String phone, String lgin_id, LocalDateTime in_dtm, String mbr_grd_name) {
         this.name = name;
-        this.role = role;
         this.gender = gender;
         this.birth = birth;
         this.phone = phone;
-        this.email = email;
-        this.sc_typ = sc_typ;
-        this.sc_lgin_id = sc_lgin_id;
         this.lgin_id = lgin_id;
-        this.lgin_pw = lgin_pw;
-        this.rcmdr_cd = rcmdr_cd;
-        this.acct_now_stus = acct_now_stus;
-        this.mbr_grd = mbr_grd;
-        this.mbr_subs_agre = mbr_subs_agre;
-        this.usg_terms = usg_terms;
-        this.psnlinfo_usg_yn = psnlinfo_usg_yn;
-        this.age_14_over_yn = age_14_over_yn;
-        this.markt_ad_dstn_yn = markt_ad_dstn_yn;
-        this.event_bnef_yn = event_bnef_yn;
-        this.del_yn = del_yn;
         this.in_dtm = in_dtm;
-        this.in_id = in_id;
-        this.up_dtm = up_dtm;
-        this.up_id = up_id;
+        this.mbr_grd_name = mbr_grd_name;
     }
+
     // equals and hashcode() 추가
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MemberDto memberDto = (MemberDto) o;
-        return mbr_id == memberDto.mbr_id && rfnd_acc_id == memberDto.rfnd_acc_id && Objects.equals(name, memberDto.name) && Objects.equals(role, memberDto.role) && Objects.equals(gender, memberDto.gender) && Objects.equals(birth, memberDto.birth) && Objects.equals(phone, memberDto.phone) && Objects.equals(email, memberDto.email) && Objects.equals(sc_typ, memberDto.sc_typ) && Objects.equals(sc_lgin_id, memberDto.sc_lgin_id) && Objects.equals(lgin_id, memberDto.lgin_id) && Objects.equals(lgin_pw, memberDto.lgin_pw) && Objects.equals(rcmdr_cd, memberDto.rcmdr_cd) && Objects.equals(acct_now_stus, memberDto.acct_now_stus) && Objects.equals(mbr_grd, memberDto.mbr_grd) && Objects.equals(mbr_subs_agre, memberDto.mbr_subs_agre) && Objects.equals(usg_terms, memberDto.usg_terms) && Objects.equals(psnlinfo_usg_yn, memberDto.psnlinfo_usg_yn) && Objects.equals(age_14_over_yn, memberDto.age_14_over_yn) && Objects.equals(markt_ad_dstn_yn, memberDto.markt_ad_dstn_yn) && Objects.equals(event_bnef_yn, memberDto.event_bnef_yn) && Objects.equals(del_yn, memberDto.del_yn) && Objects.equals(in_dtm, memberDto.in_dtm) && Objects.equals(in_id, memberDto.in_id) && Objects.equals(up_dtm, memberDto.up_dtm) && Objects.equals(up_id, memberDto.up_id);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(mbr_id, rfnd_acc_id, name, role, gender, birth, phone, email, sc_typ, sc_lgin_id, lgin_id, lgin_pw, rcmdr_cd, acct_now_stus, mbr_grd, mbr_subs_agre, usg_terms, psnlinfo_usg_yn, age_14_over_yn, markt_ad_dstn_yn, event_bnef_yn, del_yn, in_dtm, in_id, up_dtm, up_id);
-    }
 
-    // toString() 추가
-    @Override
-    public String toString() {
-        return "UserDto{" +
-                "mbr_id=" + mbr_id +
-                ", rfnd_acc_id=" + rfnd_acc_id +
-                ", name='" + name + '\'' +
-                ", role=" + role +
-                ", gender='" + gender + '\'' +
-                ", birth='" + birth + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", sc_typ='" + sc_typ + '\'' +
-                ", sc_lgin_id='" + sc_lgin_id + '\'' +
-                ", lgin_id='" + lgin_id + '\'' +
-                ", lgin_pw='" + lgin_pw + '\'' +
-                ", rcmdr_cd='" + rcmdr_cd + '\'' +
-                ", acct_now_stus='" + acct_now_stus + '\'' +
-                ", mbr_grd='" + mbr_grd + '\'' +
-                ", mbr_subs_agre='" + mbr_subs_agre + '\'' +
-                ", usg_terms='" + usg_terms + '\'' +
-                ", psnlinfo_usg_yn='" + psnlinfo_usg_yn + '\'' +
-                ", age_14_over_yn='" + age_14_over_yn + '\'' +
-                ", markt_ad_dstn_yn='" + markt_ad_dstn_yn + '\'' +
-                ", event_bnef_yn='" + event_bnef_yn + '\'' +
-                ", del_yn='" + del_yn + '\'' +
-                ", in_dtm=" + in_dtm +
-                ", in_id='" + in_id + '\'' +
-                ", up_dtm=" + up_dtm +
-                ", up_id='" + up_id + '\'' +
-                '}';
-    }
 
     // getter, setter 추가
     public long getMbr_id() {

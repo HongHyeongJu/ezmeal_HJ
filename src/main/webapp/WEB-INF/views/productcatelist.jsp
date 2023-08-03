@@ -25,9 +25,11 @@
 
 <!--헤더 내려오는 공백-->
 <jsp:include page="header.jsp"/>
-<div class="empty"></div>
+<div class="empty_top">
+</div>
 <ul class="지붕묶음" id="section1">
   <input type="hidden" data-cate_cd="${cate_cd}">
+<%--  <span class="category_name">${category_name}</span>--%>
   <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=default" class="sort-link active" data-sort="default">추천순</a></li>
   <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=new" class="sort-link" data-sort="new">신상품순</a></li>
   <li class="지붕"><a href="/product/catelist?cate_cd=${cate_cd}&sortkeyword=lowprc" class="sort-link" data-sort="lowprc">낮은가격순</a></li>
@@ -100,16 +102,10 @@
             <c:choose>
                 <c:when test="${not empty prodOptMap[prod.prod_cd]}"> <!--옵션 있을 때--------------->
 
-
-                  <c:set var="cnsmr_prc_opt" value="${prodOptMap[prod.prod_cd].get(0).cnsmr_prc}" />
-                  <c:set var="sale_prc_opt" value="${prodOptMap[prod.prod_cd].get(0).sale_prc}" />
-
                   <!--할인 퍼센트-->
-                  <c:if test="${cnsmr_prc_opt != sale_prc_opt}">
-                      <span class="dc_cd">
-                        <strong>${(cnsmr_prc_opt - sale_prc_opt) / cnsmr_prc_opt * 100}</strong>%
-                      </span>&nbsp;
-                  </c:if>
+                  <span class="dc_cd">
+                          <strong>${prodOptMap[prod.prod_cd].get(0).dc_rate}</strong>%
+                  </span>
 
                   <!--판매 가격-->
                   <span class="sale_prc">
@@ -124,17 +120,13 @@
                   </c:if>
 
                 </c:when>
-                <c:otherwise> <!--옵션 있을 때----------------------------------------------->
-
-                  <c:set var="cnsmr_prc" value="${prod.getCnsmr_prc()}" />
-                  <c:set var="sale_prc" value="${prod.getSale_prc()}" />
+                <c:otherwise> <!--옵션 없을 때----------------------------------------------->
 
                   <!--할인 퍼센트-->
-                  <c:if test="${cnsmr_prc != sale_prc}">
-                      <span class="dc_cd">
-                        <strong>${(cnsmr_prc - sale_prc) / cnsmr_prc * 100}</strong>%
-                      </span>&nbsp;
-                  </c:if>
+                  <span class="dc_cd">
+                        <strong>${prod.getDc_rate()}</strong>%
+                  </span>
+
 
                   <!--판매 가격-->
                   <span class="sale_prc">

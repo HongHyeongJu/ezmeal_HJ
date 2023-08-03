@@ -3,6 +3,9 @@
 const selectAllBtn = document.querySelector(".cart__items_nav__checkbox"); // 전체 선택
 const selectBtns = document.querySelectorAll(".cart__item_nav__checkbox"); // 선택
 
+// todo. 일단은 수량 추가되는 부분만 js로 수행, 상품 삭제 같은 부분은 3차 때 동적 html로 변경시 동적으로 변경되도록 수행할 것임.
+const countSelectNum = document.querySelector('.cart__items_selected_num') // 좌상단 선택된 상품수량 개수
+
 const bannerPrice = document.querySelectorAll(".payment__prod span:last-child") // 배너 가격
 
 const deleteBtns = document.querySelectorAll(".cart__delete_btn"); // 삭제 표시 버튼
@@ -194,7 +197,7 @@ async function debounceUpdateQuantity(event) {
         clearTimeout(debounceInitTime);
     }
     debounceInitTime = setTimeout(() => {
-        console.log('workINg');
+        console.log('working');
         updateCartProductQuantity(event)
     }, 500);
 }
@@ -208,10 +211,19 @@ function handleUpdateCartProductQuantity(event) {
        event.target.value : input, select, textarea 같은 form 요소일 경우 value를 가지고 온다.
        event.target.textContent : form이 아닌 요소들 내부의 text 경우 value를 가지고 온다.
      */
-
+    console.log('----------handleUpdateCartProductQuantity------------')
+    console.log('event');
+    console.log(event.target);
     const minusPlusBtn = event.target.textContent; // -  || + string
 
+    /* closest() : 해당 요소의 부모인 경우만 적용 */
     const cartProductInputQuantity = event.target.parentNode.querySelector('.count_num'); // 상품수량 tag
+    const cartProductList = event.target.closest('li'); // 해당 event의 부모 li tag
+    const cartProductPriceSpanAll = cartProductList.querySelectorAll('.cart__item_price > span'); // 내부 가격 span tag
+
+    console.log('-----------cartProductPriceSpanAll---------------');
+    console.log(cartProductPriceSpanAll);
+
     let QUANTITY = parseInt(cartProductInputQuantity.value); // 상품 수량
 
     if (minusPlusBtn === '-' && QUANTITY > 1)
@@ -219,16 +231,41 @@ function handleUpdateCartProductQuantity(event) {
     else if (minusPlusBtn === '+' && QUANTITY < 100)
         cartProductInputQuantity.value = ++QUANTITY;
 
+    console.log('----------start : handleUpdateCartProductQuantity - cartProductPriceSpanAll ------------')
+    cartProductPriceSpanAll.forEach((cartProductPriceSpan) => {
+        const partPriceInt = parseInt(cartProductPriceSpan.getAttribute('part_prc'));
+        // console.log(partPriceInt);
+        // console.log(QUANTITY);
+        const priceCalculate = partPriceInt * QUANTITY; // 원화 포맷팅 후 계산
+        const priceFormat = priceCalculate.toLocaleString('ko-KR') + '원'; // 계산 다한 가격 원화로 변경
+        // console.log(priceFormat);
+        cartProductPriceSpan.innerHTML = priceFormat;
+    })
+    console.log('----------finish : handleUpdateCartProductQuantity - cartProductPriceSpanAll ------------')
+
 }
 
 // 상품 수량 업데이트 함수
 async function updateCartProductQuantity(event) {
     const cartProductList = event.target.parentNode.parentNode; // 장바구니 상품 리스트 <li></li>
+    const cartProductPriceSpanAll = cartProductList.querySelectorAll('.cart__item_price > span'); // 내부 가격 span tag
     const cartProductSequence = cartProductList.getAttribute('cart_prod_seq'); // 장바구니 상품 리스트 pk
     const cartProdSeq_quantity_List = [parseInt(cartProductSequence)];// 문자열로 된 숫자를 정수로 변환하여 배열에 추가
 
     const cartProductInputQuantity = event.target.parentNode.querySelector('.count_num'); // 상품수량 tag
     let QUANTITY = parseInt(cartProductInputQuantity.value); // 상품 수량
+
+    console.log('----------start : updateCartProductQuantity - cartProductPriceSpanAll ------------')
+    cartProductPriceSpanAll.forEach((cartProductPriceSpan) => {
+        const partPriceInt = parseInt(cartProductPriceSpan.getAttribute('part_prc'));
+        console.log(partPriceInt);
+        console.log(QUANTITY);
+        const priceCalculate = partPriceInt * QUANTITY; // 원화 포맷팅 후 계산
+        const priceFormat = priceCalculate.toLocaleString('ko-KR') + '원'; // 계산 다한 가격 원화로 변경
+        console.log(priceFormat);
+        cartProductPriceSpan.innerHTML = priceFormat;
+    })
+    console.log('----------finish : updateCartProductQuantity - cartProductPriceSpanAll ------------')
 
     // 1. 비동기 검증 수행
     await validation(cartProdSeq_quantity_List); // [장바구니 상품 pk]
@@ -362,6 +399,7 @@ function selectAllProduct() {
     dynamicNum = check ? selectBtns.length : 0;
 
     groupExpectSalePrice();
+    countSelectNum.innerText = CART_PROD_SEQ_LIST.length;
     console.log("all : " + CART_PROD_SEQ_LIST);
 
 }
@@ -380,6 +418,7 @@ function selectProduct(event) {
     }
     selectAllBtn.checked = (selectBtns.length === dynamicNum);
     groupExpectSalePrice();
+    countSelectNum.innerText = CART_PROD_SEQ_LIST.length;
     console.log("prod : " + CART_PROD_SEQ_LIST)
 }
 

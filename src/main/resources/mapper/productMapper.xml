@@ -50,14 +50,14 @@
 
     <!-- 카테고리 분류코드로 상품리스트 받기 (mini), 전체 카테고리 리스트에 출력되는 값만.-->
     <select id="select_product_list_cate_cd_mini" parameterType="String" resultType="ProductDto">
-        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate
         FROM tb_product
         WHERE cate_cd LIKE concat(#{cate_cd}, '%')  AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
     </select>
 
     <!--낮은 가격 순-->
     <select id="select_product_list_cate_cd_mini_lowprc" parameterType="String" resultType="ProductDto">
-        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate
         FROM tb_product USE INDEX (tb_product_sale_prc_index)
         WHERE cate_cd LIKE concat(#{cate_cd}, '%')  AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
         ORDER BY sale_prc
@@ -66,7 +66,7 @@
 
     <!--높은 가격 순-->
     <select id="select_product_list_cate_cd_mini_highprc" parameterType="String" resultType="ProductDto">
-        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate
         FROM tb_product USE INDEX (tb_product_sale_prc_index)
         WHERE cate_cd LIKE concat(#{cate_cd}, '%')  AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
         ORDER BY sale_prc desc
@@ -74,10 +74,18 @@
 
     <!--최근 등록 순-->
     <select id="select_product_list_cate_cd_mini_new" parameterType="String" resultType="ProductDto">
-        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate
         FROM tb_product USE INDEX (tb_product_fst_reg_dt_index)
         WHERE cate_cd LIKE concat(#{cate_cd}, '%')  AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
         ORDER BY STR_TO_DATE(fst_reg_dt, '%Y/%m/%d') desc
+    </select>
+
+    <!--할인율 높은 순-->
+    <select id="select_product_list_cate_cd_mini_dc_rate" parameterType="String" resultType="ProductDto">
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate
+        FROM tb_product USE INDEX (tb_product_fst_reg_dt_index)
+        WHERE cate_cd LIKE concat(#{cate_cd}, '%')  AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
+        ORDER BY dc_rate desc
     </select>
 
     <!--후기 많은 순 , 판매량 순 이후에 추가할 수 있음-->
@@ -88,8 +96,54 @@
 <!--        ORDER BY fst_reg_dt desc-->
 <!--    </select>-->
 
+    <!--메인상품 [empl]-->
+    <select id="select_5_product_main_empl" resultType="ProductDto">
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate
+        FROM main_product_common_view
+        WHERE cate_cd LIKE '02%'
+        ORDER BY sale_prc DESC
+        LIMIT 5
+    </select>
 
-<!-- ~~~~~ 카테고리 정렬기준 따라 호출하는 쿼리문(끝) ~~~~~ -->
+    <!--메인상품 [health]-->
+    <select id="select_5_product_main_health" resultType="ProductDto">
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate
+        FROM main_product_common_view
+        WHERE cate_cd = '0101'
+        ORDER BY fst_reg_dt DESC
+        LIMIT 5
+    </select>
+
+    <!--메인상품 [eat]-->
+    <select id="select_5_product_main_eat" resultType="ProductDto">
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate
+        FROM main_product_common_view
+        ORDER BY fst_reg_dt DESC
+        LIMIT 5
+    </select>
+
+    <!--empl, health, eat 에서 공통적인 부분으로 뽑아낸 뷰 생성해서 사용함.
+        CREATE VIEW main_product_common_view AS
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate, cate_cd, fst_reg_dt
+        FROM tb_product
+        WHERE sale_yn = 'y' AND dp_yn = 'y' AND del_yn = 'n' AND prod_stus IN (1, 2) AND opt_yn = 'n';
+-->
+
+
+    <!--메인상품 [home]-->
+    <select id="select_5_product_main_home" resultType="ProductDto">
+        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate
+        FROM tb_product USE INDEX (tb_product_fst_reg_dt_index)
+        WHERE opt_yn = 'y' AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
+        ORDER BY fst_reg_dt desc
+        LIMIT 5
+    </select>
+
+
+
+
+
+    <!-- ~~~~~ 카테고리 정렬기준 따라 호출하는 쿼리문(끝) ~~~~~ -->
 
 <!-- 컨트롤러는 흐름 서비스에서 준 결과로만, 서비스는 비즈니스 -->
 
@@ -112,11 +166,11 @@
     <!--새 상품 추가하기-->
     <insert id="insert_product" parameterType="ProductDto" >
         INSERT INTO tb_product (cate_cd, prod_stus, cust_cd, dc_cd, name, mng_prod_nm, sfkp_stus, sfkp_mtd, sp_prc,
-                                cnsmr_prc, sale_prc, mgn_rate, dscpt, detail, min_qty, weight, stnd, orplc, recipe,
+                                cnsmr_prc, sale_prc, dc_rate, mgn_rate, dscpt, detail, min_qty, weight, stnd, orplc, recipe,
                                 mtd, distb_tlmt, vld_start_dt, vld_end_dt, mng, fst_reg_dt, sale_yn, dp_yn,
                                 del_yn, inv_yn, opt_yn, rmk, in_dtm, in_id, up_dtm, up_id)
         VALUES (#{cate_cd}, #{prod_stus}, #{cust_cd}, #{dc_cd}, #{name}, #{mng_prod_nm}, #{sfkp_stus}, #{sfkp_mtd},
-                #{sp_prc}, #{cnsmr_prc}, #{sale_prc}, #{mgn_rate}, #{dscpt}, #{detail}, #{min_qty}, #{weight},
+                #{sp_prc}, #{cnsmr_prc}, #{sale_prc}, #{dc_rate}, #{mgn_rate}, #{dscpt}, #{detail}, #{min_qty}, #{weight},
                 #{stnd}, #{orplc}, #{recipe}, #{mtd}, #{distb_tlmt}, #{vld_start_dt}, #{vld_end_dt}, #{mng},
                 #{fst_reg_dt}, #{sale_yn}, #{dp_yn}, #{del_yn}, #{inv_yn}, #{opt_yn}, #{rmk}, now(),
                 #{in_id},  now(), #{up_id})
@@ -127,7 +181,7 @@
         UPDATE tb_product
         SET cate_cd=#{cate_cd}, prod_stus=#{prod_stus}, cust_cd=#{cust_cd}, dc_cd=#{dc_cd}, name=#{name},
             mng_prod_nm=#{mng_prod_nm}, sfkp_stus=#{sfkp_stus}, sfkp_mtd=#{sfkp_mtd}, sp_prc=#{sp_prc},
-            cnsmr_prc=#{cnsmr_prc}, sale_prc=#{sale_prc}, mgn_rate=#{mgn_rate}, dscpt=#{dscpt}, detail=#{detail},
+            cnsmr_prc=#{cnsmr_prc}, sale_prc=#{sale_prc}, dc_rate=#{dc_rate}, mgn_rate=#{mgn_rate}, dscpt=#{dscpt}, detail=#{detail},
             min_qty=#{min_qty}, weight=#{weight}, stnd=#{stnd}, orplc=#{orplc}, recipe=#{recipe}, mtd=#{mtd},
             distb_tlmt=#{distb_tlmt}, vld_start_dt=#{vld_start_dt}, vld_end_dt=#{vld_end_dt}, mng=#{mng}, fst_reg_dt=#{fst_reg_dt},
             sale_yn=#{sale_yn}, dp_yn=#{dp_yn}, del_yn=#{del_yn}, inv_yn=#{inv_yn}, opt_yn=#{opt_yn}, rmk=#{rmk}, up_dtm=now(), up_id='ezmeal'
@@ -185,6 +239,7 @@
         SET sale_yn='y' and dp_yn='y' and del_yn='y'
         WHERE prod_cd = #{prod_cd}
     </update>
+
 
     <!-- 카테고리별 개수 세기 -->
     <select id="count_cate_cd" resultType="Map">

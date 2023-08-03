@@ -11,4 +11,10 @@
     </select>
 
 
+    <select id="select_all_catecd_and_name" resultType="Map">
+        SELECT cate_cd, name
+        FROM tb_product_category
+        WHERE use_yn='y' AND  del_yn='n'
+    </select>
+
 </mapper>

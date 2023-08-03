@@ -143,18 +143,34 @@ public class ProductDao {
         return session.selectList(namespace + "fst_reg_dt_in_month");
     }
 
-    /* 신상품 */
+    /* 베스트 */
     public List<ProductDto> selectByBestProduct() throws SQLException {
         return session.selectList(namespace + "best_prod_review_count_higher");
     }
 
-    /* 신상품 */
+    /* 세일 혜택 */
     public List<ProductDto> selectByBigDcProduct() throws SQLException {
         return session.selectList(namespace + "prodset_big_dc");
     }
 
 
-
+    /*----------메인 상품 리스트 찾아오는 쿼리---------*/
+    /*[empl]*/
+    public List<ProductDto> selectMainEmplList() throws SQLException {
+        return session.selectList(namespace + "select_5_product_main_empl");
+    }
+    /*[health]*/
+    public List<ProductDto> selectMainHealthList() throws SQLException {
+        return session.selectList(namespace + "select_5_product_main_health");
+    }
+    /*[eat]*/
+    public List<ProductDto> selectMainEatList() throws SQLException {
+        return session.selectList(namespace + "select_5_product_main_eat");
+    }
+    /*[home]*/
+    public List<ProductDto> selectMainHomeList() throws SQLException {
+        return session.selectList(namespace + "select_5_product_main_home");
+    }
 
     /* 상품 등록하기 */
     /* 상품 수정하기 */

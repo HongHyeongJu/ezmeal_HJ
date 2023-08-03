@@ -17,7 +17,7 @@ public class PointTransactionHistoryDaoTest {
 
     @Test
     public void checkPointCanUse(){
-        int i = pointTransactionHistoryDao.pointCanUse(1001L);
+        int i = pointTransactionHistoryDao.pointCanUse(1012L);
         System.out.println("i = " + i);
     }
 

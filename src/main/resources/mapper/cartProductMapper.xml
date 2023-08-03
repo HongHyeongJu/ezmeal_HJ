@@ -37,11 +37,13 @@
                cp.opt_seq,
                cp.typ,
                cp.soldout_yn,
-               cp.qty                                  as cpQty,
-               IFNULL(po.qty, 1)                       AS poQty,
-               IFNULL(CONCAT(p.name,' ',po.name), p.name) AS name,
-               IFNULL(FORMAT(p.cnsmr_prc, 0), FORMAT(po.cnsmr_prc, 0))       AS cnsmr_prc_format,
-               IFNULL(FORMAT(p.sale_prc, 0), FORMAT(po.sale_prc, 0))          AS sale_prc_format
+               cp.qty                                                                    AS cpQty,
+               IFNULL(po.qty, 1)                                                         AS poQty,
+               IFNULL(CONCAT(p.name, ' ', po.name), p.name)                              AS name,
+               IFNULL(p.cnsmr_prc, po.cnsmr_prc)                                         AS cnsmr_prc,
+               IFNULL(p.sale_prc, po.sale_prc)                                           AS sale_prc,
+               IFNULL(FORMAT(p.cnsmr_prc * cp.qty, 0), FORMAT(po.cnsmr_prc * cp.qty, 0)) AS cnsmr_prc_format,
+               IFNULL(FORMAT(p.sale_prc * cp.qty, 0), FORMAT(po.sale_prc * cp.qty, 0))   AS sale_prc_format
         FROM tb_cart_product cp
                  JOIN tb_product p ON cp.prod_cd = p.prod_cd
                  LEFT JOIN tb_product_option po ON cp.opt_seq = po.opt_seq
@@ -99,13 +101,13 @@
                cp.prod_cd,
                cp.opt_seq,
                cp.typ,
-               cp.qty                                  as cpQty,
-               IFNULL(po.qty, 1)                       AS poQty,
-               IFNULL(CONCAT(p.name,' ',po.name), p.name) AS name,
-               IFNULL(p.cnsmr_prc, po.cnsmr_prc)       AS cnsmr_prc,
-               IFNULL(p.sale_prc, po.sale_prc)         AS sale_prc,
-               IFNULL(FORMAT(p.cnsmr_prc, 0), FORMAT(po.cnsmr_prc, 0))       AS cnsmr_prc_format,
-               IFNULL(FORMAT(p.sale_prc, 0), FORMAT(po.sale_prc, 0))          AS sale_prc_format
+               cp.qty                                                  as cpQty,
+               IFNULL(po.qty, 1)                                       AS poQty,
+               IFNULL(CONCAT(p.name, ' ', po.name), p.name)            AS name,
+               IFNULL(p.cnsmr_prc, po.cnsmr_prc)                       AS cnsmr_prc,
+               IFNULL(p.sale_prc, po.sale_prc)                         AS sale_prc,
+               IFNULL(FORMAT(p.cnsmr_prc, 0), FORMAT(po.cnsmr_prc, 0)) AS cnsmr_prc_format,
+               IFNULL(FORMAT(p.sale_prc, 0), FORMAT(po.sale_prc, 0))   AS sale_prc_format
         FROM tb_cart_product cp
                  JOIN tb_product p ON cp.prod_cd = p.prod_cd
                  LEFT JOIN tb_product_option po ON cp.opt_seq = po.opt_seq
