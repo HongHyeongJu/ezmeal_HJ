@@ -18,23 +18,6 @@ function increaseQuantity(btn) {
 }
 
 
-window.onload = function() {
-    /*페이지 로드 시 */
-    makeReviewAvgStarImg();   /*리뷰 별점 이미지 출력*/
-    imgFunction();   /*이미지 교체 기능 넣기*/
-    updatePrice();   /*기본으로 가격 업데이트*/
-    changeMainImage(document.getElementById("main_img"))
-
-    /*선택한 옵션으로 바로 가격 바뀌도록*/
-    let optSelect = document.getElementById("opt_select");
-
-    optSelect.addEventListener('change', function() {
-        updatePrice();
-    });
-
-}
-
-
 /* 상품 수량에 따른 가격 업데이트 */
 function updatePrice() {
     /*수량*/

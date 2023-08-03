@@ -48,7 +48,7 @@ public class IndexController {
         /*모든상품  평점, 리뷰 숫자*/
         Map<Long,Double> reviewAvgMap = (Map<Long,Double>)map4.get("reviewAvgMap");
         Map<Long,Integer> reviewCntMap = (Map<Long,Integer>)map4.get("reviewCntMap");
-        prodImgMap.forEach((k,v)-> System.out.println("k:"+k+",v:"+v.getUrl())); //이미지 url출력 확인
+//        prodImgMap.forEach((k,v)-> System.out.println("k:"+k+",v:"+v.getUrl())); //이미지 url출력 확인
         model.addAttribute("prodImgMap",prodImgMap);
         model.addAttribute("prodOptMap",prodOptMap);
         model.addAttribute("reviewAvgMap",reviewAvgMap);

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tb_notice">
+
+    <!--parameter 는 매개변수, 매개변수 타입을 noticeDto로 하면 noticeDto객체의 필드를 참조해서 쿼리에 필요한 파라미터 설정가능-->
+
+    <insert id="insertNotice" parameterType="noticeDto">
+    INSERT INTO tb_notice (writer, status, typ, title, wrt_dt, stmt)
+    VALUES (#{writer}, #{status}, #{typ}, #{title}, #{wrt_dt}, #{stmt})
+
+    </insert>
+
+
+    <update id="updateNotice" parameterType="noticeDto">
+    UPDATE tb_notice
+    SET writer  = #{writer},
+    status   = #{status},
+    typ     = #{typ},
+    title   = #{title},
+    wrt_dt  = #{wrt_dt},
+    stmt    = #{stmt},
+    WHERE notice_no = #{notice_no}
+    </update>
+
+<delete id="deleteNotice" > <!--notice_no라는 이름으로 long 타입의 값을 전달-->
+    DELETE FROM tb_notice
+    WHERE notice_no = #{notice_no}
+</delete>
+
+<select id="select_notice" parameterType="long" resultType="noticeDto"> <!--저 번호로 찾은 테이블 한 로우를 다 받아오는거.-->
+    SELECT notice_no,
+    writer,
+    status,
+    typ,
+    title,
+    DATE_FORMAT(wrt_dt, '%Y-%m-%d') as wrt_dt_format,
+    stmt
+    FROM tb_notice
+    WHERE notice_no = #{notice_no}
+</select>
+
+    <!--게시판 목록에 나와야 하는 내용들-->
+    <select id="selectNoticeDetail" parameterType="long" resultType="noticeDto">
+        SELECT  title, writer,status,typ, wrt_dt,  stmt
+        FROM tb_notice
+        WHERE notice_no = #{notice_no}
+    </select>
+
+
+    <select id="selectNoticeList" resultType="noticeDto" >
+        SELECT notice_no,
+               writer,
+               status,
+               typ,
+               title,
+               DATE_FORMAT(wrt_dt, '%Y-%m-%d') as wrt_dt_format,
+               stmt
+        FROM tb_notice
+        ORDER BY notice_no DESC
+        LIMIT #{offset},#{pageSize}
+    </select>
+
+
+   <!--리스트 날짜, 번호 역순대로   -->
+<select id="selectPage" parameterType="map" resultType="noticeDto">
+    SELECT notice_no, writer, status,typ, title, wrt_dt, stmt
+    FROM tb_notice
+    ORDER BY wrt_dt DESC, notice_no DESC
+    LIMIT #{offset}, #{pageSize}
+</select>
+
+    <!--전체 데이터 수를 조회-->
+    <select id="gettotalCnt" resultType="int">
+        SELECT COUNT(*) FROM tb_notice
+    </select>
+
+
+<!--전체 페이지 수를 계산하는 것, COUNT(*)를 한 페이지의 크기(게시물갯수?)(#{pageSize})로 나누어준 결과를 올림(CEIL)하여 페이지 수를 구함-->
+    <select id="gettotalPageCount" resultType="int">
+        SELECT CEIL(COUNT(*) / #{pageSize}) FROM tb_notice
+    </select>
+
+
+
+
+</mapper>
