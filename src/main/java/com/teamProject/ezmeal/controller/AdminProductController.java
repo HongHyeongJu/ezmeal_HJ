@@ -77,6 +77,21 @@ public class AdminProductController {
     }
 
 
+    @GetMapping("/prod/list")
+    public String adminProdList(Model model, Long prod_cd) throws SQLException {
+        /*관리자용 상품 페이지(읽기)에 필요한 것 모두 받아오기*/
+        HashMap map = productService.getOneProductByProdCdForMng(prod_cd);
+
+        /*모델에 담기*/
+        model.addAttribute("product", map.get("product"));
+        model.addAttribute("optList", map.get("optList"));
+        model.addAttribute("imgList", map.get("imgList"));
+        model.addAttribute("dcList", map.get("dcList"));
+        model.addAttribute("cateList", map.get("cateList"));
+        model.addAttribute("custList", map.get("custList"));
+        model.addAttribute("stusList", map.get("stusList"));
+        return "product_admin_list";
+    }
 
 
 
