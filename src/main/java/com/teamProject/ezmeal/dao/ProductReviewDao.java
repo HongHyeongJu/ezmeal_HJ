@@ -2,6 +2,7 @@ package com.teamProject.ezmeal.dao;
 
 import com.teamProject.ezmeal.domain.ProductDto;
 import com.teamProject.ezmeal.domain.ProductReviewDto;
+import com.teamProject.ezmeal.domain.ProductReviewTotalDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -105,14 +106,14 @@ public class ProductReviewDao {
 
 
     /*모든 상품들의 개별 리뷰 평점 */
-    public Map<Long,Object> selectReviewAvgAllProduct() throws SQLException {
-        return session.selectMap(namespace+"get_review_average_all","prod_cd");
+    public List<ProductReviewTotalDto> selectReviewAvgAllProduct() throws SQLException {
+        return session.selectList(namespace+"get_review_average_all");
     }
 
 
     /*모든 상품의 개별 전체리뷰수 */
-    public Map<Long,Integer> selectReviewCntAllProduct() throws SQLException {
-        return session.selectMap(namespace+"get_review_count_all","prod_cd");
+    public List<ProductReviewTotalDto> selectReviewCntAllProduct() throws SQLException {
+        return session.selectList(namespace+"get_review_count_all");
     }
 
 
