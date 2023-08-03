@@ -25,8 +25,8 @@ public class ProductCategoryDao {
     }
 
     /*(카테고리코드, 카테고리이름)의 Map*/
-    public Map<String,String> selectCateCdAndNameList() throws SQLException {
-        return session.selectMap(namespace+"select_all_catecd_and_name","cate_cd");
+    public List<ProductCategoryDto> selectCateCdAndNameList() throws SQLException {
+        return session.selectList(namespace+"select_all_catecd_and_name");
     }
 
 }

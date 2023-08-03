@@ -1,6 +1,7 @@
 package com.teamProject.ezmeal.dao;
 
 import com.teamProject.ezmeal.domain.ProductReviewDto;
+import com.teamProject.ezmeal.domain.ProductReviewTotalDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,10 +99,10 @@ public class ProductReviewDaoTest {
 
     @Test
     public void test6() throws SQLException {
-        Map<Long, Object> resultMap = productReviewDao.selectReviewAvgAllProduct();
+        List<ProductReviewTotalDto> resultMap = productReviewDao.selectReviewAvgAllProduct();
 
-        resultMap.forEach((k, v) -> {
-            System.out.println("k: " + k + ", v: " + v + ", class of v: " + v.getClass().getName());
+        resultMap.forEach((a) -> {
+            System.out.println(a.toString());
         });
     }
 

@@ -29,14 +29,14 @@ document.querySelectorAll('.wishlist_btn').forEach((button) => {
         $.ajax({
             url: "/wishlist/add",
             type: "POST",
-            data: JSON.stringify({ prod_cd: prod_cd}),
+            data: JSON.stringify({ prod_cd: prod_cd }),
             contentType: "application/json",
-            success: function(response) {
-                alert("찜하기 성공!");
+            dataType: "json", // 서버 응답이 JSON 형식임을 명시적으로 지정
+            success: function (response) {
+                alert(response); // 서버에서 보낸 메시지를 출력
             },
-            error: function(xhr, status, error) {
-                /*비로그인시에는 눌러도 아무 효과 없음*/
-                // alert(xhr.responseText);
+            error: function (xhr, status, error) {
+                alert(xhr.responseText); // 서버에서 보낸 에러 메시지를 출력
             }
         });
     });

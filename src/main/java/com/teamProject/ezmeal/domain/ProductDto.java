@@ -3,6 +3,7 @@ package com.teamProject.ezmeal.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -14,7 +15,8 @@ public class ProductDto {
 
     private String detail;
     private Integer min_qty, weight;
-    private String stnd, orplc, recipe, mtd, distb_tlmt, vld_start_dt, vld_end_dt, mng, fst_reg_dt;
+    private String stnd, orplc, recipe, mtd, distb_tlmt, vld_start_dt, vld_end_dt, mng;
+    private LocalDate fst_reg_dt;
     private String sale_yn, dp_yn, del_yn, inv_yn, opt_yn, rmk;
 
     private LocalDateTime in_dtm;
@@ -32,7 +34,7 @@ public class ProductDto {
                String sfkp_stus,String sfkp_mtd,Integer sp_prc,Integer cnsmr_prc,Integer sale_prc, Integer dc_rate,
                Integer mgn_rate, String dscpt,String detail,Integer min_qty,Integer weight,
                String stnd,String orplc,String recipe,String mtd,String distb_tlmt,
-               String vld_start_dt,String vld_end_dt,String mng,String fst_reg_dt,
+               String vld_start_dt,String vld_end_dt,String mng,LocalDate fst_reg_dt,
                String sale_yn,String dp_yn,String del_yn,String inv_yn,String opt_yn,String rmk,
                String in_id,String up_id){
         this.cate_cd=cate_cd;
@@ -304,11 +306,11 @@ public class ProductDto {
         this.mng = mng;
     }
 
-    public String getFst_reg_dt() {
+    public LocalDate getFst_reg_dt() {
         return fst_reg_dt;
     }
 
-    public void setFst_reg_dt(String fst_reg_dt) {
+    public void setFst_reg_dt(LocalDate fst_reg_dt) {
         this.fst_reg_dt = fst_reg_dt;
     }
 

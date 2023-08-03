@@ -26,6 +26,7 @@
 <!--헤더 내려오는 공백-->
 <jsp:include page="header.jsp"/>
 <div class="empty_top">
+    <span class="header_title">${cateName}</span>
 </div>
 <ul class="지붕묶음" id="section1">
   <input type="hidden" data-cate_cd="${cate_cd}">
@@ -48,9 +49,9 @@
       <!--------------------------------------------------------------------------------------------->
       <figure class="prod_top top_figure">
         <a href="/product/detail?cate_cd=05&prod_cd=${prod.getProd_cd()}"> <!--상품 대표 이미지-->
-            <c:set var="productImage" value="${prodImgMap[prod.prod_cd]}" />
-          <img id="prod_top top_img"
-               src="/img/${productImage.url}.png"/>
+            <c:set var="productImage" value="${prodImgMap[prod.prod_cd]}"/>
+            <img id="prod_top top_img"
+                 src="/img/${productImage != null ? productImage.url : 'ezmeal_logo'}.png"/>
 <%--               src="/img/${empty productImg ? 'ezmeal_logo' : productImg}.png"/>--%>
         </a>
 
@@ -79,14 +80,14 @@
           <div class="review_set">
               <a href="/product/detail?cate_cd=05&prod_cd=${prod.getProd_cd()}#section3">
 
-  <!--별 이미지(고정)-->
-            <span class="star_img"></span>
-            <c:set var="starAvg" value="${reviewAngMap[prod.prod_cd].avg}" />
-            <!--평균 점수-->
-            <span class="score">${empty starAvg ? 0 : starAvg}</span>
-            <c:set var="reviewCnt" value="${reviewCntMap[prod.prod_cd].count}" />
-            <!--리뷰 수-->
-            <span class="total_num">(${empty reviewCnt ? 0 : reviewCnt})</span>
+                  <!--별 이미지(고정)-->
+                  <span class="star_img"></span>
+                  <c:set var="starAvg" value="${reviewAvgMap[prod.prod_cd]}"/>
+                  <!--평균 점수-->
+                  <span class="score">${starAvg != null ? starAvg : 0}</span>
+                  <c:set var="reviewCnt" value="${reviewCntMap[prod.prod_cd]}"/>
+                  <!--리뷰 수-->
+                  <span class="total_num">(${reviewCnt != null ? reviewCnt : 0})</span>
               </a>
           </div>
 
@@ -102,10 +103,14 @@
             <c:choose>
                 <c:when test="${not empty prodOptMap[prod.prod_cd]}"> <!--옵션 있을 때--------------->
 
+                    <c:set var="cnsmr_prc_opt" value="${prodOptMap[prod.prod_cd].get(0).cnsmr_prc}"/>
+                    <c:set var="sale_prc_opt" value="${prodOptMap[prod.prod_cd].get(0).sale_prc}"/>
                   <!--할인 퍼센트-->
-                  <span class="dc_cd">
-                          <strong>${prodOptMap[prod.prod_cd].get(0).dc_rate}</strong>%
-                  </span>
+                    <c:if test="${cnsmr_prc_opt != sale_prc_opt}">
+                    <span class="dc_cd">
+                        <strong>${prodOptMap[prod.prod_cd].get(0).dc_rate}</strong>%
+                    </span>&nbsp;
+                    </c:if>
 
                   <!--판매 가격-->
                   <span class="sale_prc">

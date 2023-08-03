@@ -10,6 +10,7 @@
         SELECT *
         FROM tb_product_review
         WHERE mbr_id = #{mbr_id} AND del_yn = 'n'
+        ORDER BY wrt_dt DESC
     </select>
 
     <!-- 한 회원의 1개 꺼내기 -->
@@ -117,20 +118,24 @@
 
 
     <!--모든 상품에 대해서 평균 / 리뷰수 가져오기-->
-    <!--해당 카테고리에 있는 별점 평균 받아오기 Map(prod_cd , round(avg(star),1))-->
-    <select id="get_review_average_all"  resultType="Map">
-        SELECT prod_cd, Round(avg(star),1) as avg
+    <!--해당 카테고리에 있는 별점 평균 받아오기 List로(prod_cd , round(avg(star),1))-->
+    <select id="get_review_average_all"  resultType="ProductReviewTotalDto">
+        SELECT prod_cd, Round(avg(star),1) as rvAvg
         FROM tb_product_review
         WHERE del_yn='n'
         GROUP BY prod_cd
     </select>
 
     <!--해당 카테고리에 있는 리뷰 총개수 받아오기 Map(prod_cd , count(*))-->
-    <select id="get_review_count_all"  resultType="Map">
-        SELECT prod_cd, count(*) as count
+    <select id="get_review_count_all"  resultType="ProductReviewTotalDto">
+        SELECT prod_cd, count(*) as rvCnt
         FROM tb_product_review
         WHERE del_yn='n'
         GROUP BY prod_cd
     </select>
+
+
+
+
 
 </mapper>

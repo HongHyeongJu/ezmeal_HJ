@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 
 @Controller
@@ -22,30 +23,32 @@ public class WishListController {
     WishListService wishListService;
 
     @PostMapping("/wishlist/add")
-    public ResponseEntity<String>  addToCart(@RequestBody WishListDto wishListDto, @SessionAttribute Long memberId) throws SQLException {
-
+    public ResponseEntity<String> addToCart(@RequestBody WishListDto wishListDto, @SessionAttribute(required = false) Long memberId) throws SQLException {
         // mbr_id 값 체크
-        if(memberId == null) {
-            System.out.println("[컨트롤러]mbr_id 없음");
-            /* A.나중에는 현재 상품카테고리 정보로 다시 돌아올 수 있게 키워드 챙겨서 로그인창으로 보내기 */
-            /* B.그냥 의미없는 클릭으로 아무 반응 안해주기 (이게 좀 더 끌리네요 ) */
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비로그인 찜하기 클릭");
+        if (memberId == null) {
+            System.out.println("[컨트롤러] mbr_id 없음");
+            return ResponseEntity.ok("로그인이 필요합니다");
         }
 
         wishListDto.setMbr_id(memberId);
         boolean insertResult = wishListService.insertWishList(wishListDto);
-        /*insert 실패했을 때*/
-        if(insertResult){
-            System.out.println("[컨트롤러]insert 성공");
-            return ResponseEntity.ok("Success message");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("insert 실패");
-        }
 
+        if (insertResult) {
+            System.out.println("[컨트롤러] insert 성공");
+            return ResponseEntity.ok("찜하기 성공!");
+        } else {                     /* insert 실패했을 때 */
+            System.out.println("[컨트롤러] insert 실패");
+            return ResponseEntity.ok("이미 찜한 상품입니다");
+        }
     }
 
 
+
+
 }
+
+
+
 
 
 
