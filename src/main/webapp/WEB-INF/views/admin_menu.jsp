@@ -113,6 +113,9 @@
             <a href="홈페이지_주소">
                 <li class="hidden board_li sub_li">게시판 대시보드</li>
             </a>
+            <a href="/admin/notice/write">
+                <li class="hidden board_li sub_li">공지사항 등록</li>
+            </a>
             <a href="홈페이지_주소">
                 <li class="hidden board_li sub_li">공지게시판 관리</li>
             </a>

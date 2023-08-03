@@ -24,7 +24,7 @@ public class ProductDaoTest {
     @Test
     public void testInsertSelectDeleteProduct() throws Exception  {
         ProductDto productDto = new ProductDto("0201","1","CUST001","DC10%","불닭가슴살콘치즈볶음밥","[잇메이트] 불닭볶음밥 콘치즈맛","냉동","-18도 이하 냉동보관",2900,3900,3900,0,null,"신상 불닭시리즈 볶음밥",null,1,null,null,"상품설명/상세정보 참조","냉동상태인 제품포장을 살짝 뜯어 전자레인지에 넣어주세요.   냉동상태(700W) : 전자레인지에 약 1분 30초 조리 후 뒤집어서 30초 조리해주세요 / 해동상태(700W) : 해동된 제품은 전자레인지에 약 40~54초 조리해주세요",
-                "활용법 : 식단 조절시 활용, 샐러드와 같이 드세요","별도표기일까지","2023/01/01","2024/10/24","ateam02","2023/06/21","y","y","n","y","n",null,"ateam02","ateam02");
+                "활용법 : 식단 조절시 활용, 샐러드와 같이 드세요","별도표기일까지","2023/01/01","2024/10/24","ateam02",null,"y","y","n","y","n",null,"ateam02","ateam02");
 
         /*상품 생성*/
         int insert_num = productDao.insertProduct(productDto);
