@@ -6,15 +6,20 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Repository
 public class NoticeDao {
 
     @Autowired
     private SqlSession session;
     //@Autowired 어노테이션을 사용하여 자동으로 SqlSession 객체를 주입받
-
-    private String namespace = "notice.";
+    private String namespace = "tb_notice.";
 //MyBatis는 매퍼 파일의 SQL 문을 namespace와 SQL 아이디를 조합하여 찾아 실행
+
+
     public int select(long l) {
         return session.selectOne(namespace + "selectNotice");
     }
@@ -52,6 +57,31 @@ public class NoticeDao {
     public NoticeDto selectNoticeDetail(Long notice_no) {
         return session.selectOne(namespace + "selectNoticeDetail", notice_no);
     }
-// //notice_no에 해당하는 공지사항의 세부 정보를 조회
+    // //notice_no에 해당하는 공지사항의 세부 정보를 조회
+
+
+    public List<NoticeDto> selectNoticeList() {
+
+        System.out.println(session.selectList(namespace + "selectNoticeList"));
+        return session.selectList(namespace + "selectNoticeList");
+    }
+
+
+    public int save(NoticeDto noticeDto) { //값저장하려고 만든 메서드
+        return session.insert(namespace + "insertNotice",noticeDto );
+    }
+
+    public List<NoticeDto> selectNoticeList(Map map){
+        return session.selectList(namespace + "selectNoticeList", map);
+    }
+
+    public List<NoticeDto> selectNoticeListWithoutParams() {
+        System.out.println(session.selectList(namespace + "selectNoticeListWithoutParams"));
+        return session.selectList(namespace + "selectNoticeListWithoutParams");
+    }
+
+    public int selectTotalCnt(){
+        return session.selectOne(namespace + "gettotalCnt");
+    }
 
 }

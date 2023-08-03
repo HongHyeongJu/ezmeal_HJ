@@ -1,0 +1,72 @@
+.notice-board {
+    width: 1100px;
+    margin: 0 auto;
+}
+
+.notice-board-inner {
+    width: 100%;
+    padding: 50px 0px;
+}
+
+.notice-title {
+    font-weight: 900;
+    font-size: 24px;
+    color: #333;
+    letter-spacing: -0.5px;
+    line-height: 48px;
+    text-align: center;
+}
+
+.notice-title-explain {
+    padding-left: 11px;
+    font-size: 14px;
+    letter-spacing: -0.3px;
+    color: #999;
+    line-height: 20px;
+    text-align: center;
+}
+
+.notice-board-title {
+    width: 150px;
+    padding: 13px 10px 13px 10px;
+    background-color: rgb(246, 250, 246);
+    border-top: 1px solid rgb(244, 244, 244);
+    text-align: center;
+    font-weight: 800;
+    color: black;
+}
+
+.notice-board-explain {
+    width:700px;
+    padding-left: 25px;
+    align-self: center;
+}
+
+.notice-table {
+    padding: 30px 10px 100px;
+    border-bottom: 1px solid rgb(128, 128, 128);
+}
+
+.notice-board-listbtn {
+    display: flex;
+    width: 100%;
+    padding: 20px 0px;
+    justify-content: flex-end;
+}
+
+.board-listbtn {
+    display: block;
+    padding: 0px 10px;
+    text-align: center;
+    overflow: hidden;
+    width: 150px;
+    height: 42px;
+    border-radius: 0px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(48, 209, 75);
+    border: 0px none;
+}
+
+.board-listbtn-title span {
+    font-size: 13px;
+}

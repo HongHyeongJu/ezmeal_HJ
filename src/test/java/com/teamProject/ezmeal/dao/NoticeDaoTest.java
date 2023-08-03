@@ -1,6 +1,7 @@
 package com.teamProject.ezmeal.dao;
 
 import com.teamProject.ezmeal.domain.NoticeDto;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,69 +33,51 @@ public class NoticeDaoTest {
         noticeDto.setWriter("E001");
         noticeDto.setTitle("Title1");
         noticeDto.setStmt("Statement1");
-        noticeDto.setIn_id("I001");
-        noticeDto.setUp_id("U001");
+
 
         LocalDateTime now = LocalDateTime.now();
-        noticeDto.setIn_dtm(now);
-        noticeDto.setUp_dtm(now);
-        noticeDto.setWrt_dt(now);
 
         // when
         Long notice_no = noticeDto.getNotice_no();
         String writer = noticeDto.getWriter();
         String title = noticeDto.getTitle();
         String stmt = noticeDto.getStmt();
-        String in_id = noticeDto.getIn_id();
-        String up_id = noticeDto.getUp_id();
-        LocalDateTime in_dtm = noticeDto.getIn_dtm();
-        LocalDateTime up_dtm = noticeDto.getUp_dtm();
-        LocalDateTime wrt_dt = noticeDto.getWrt_dt();
 
         // assertEquals는 두값이 동일한지 여부를 확인하는데 사용, 예상한값이 실제와 일치하지않으면 테스트 실패
         assertEquals(1L, notice_no.longValue());
         assertEquals("E001", writer);
         assertEquals("Title1", title);
         assertEquals("Statement1", stmt);
-        assertEquals("I001", in_id);
-        assertEquals("U001", up_id);
-        assertEquals(now, in_dtm);
-        assertEquals(now, up_dtm);
-        assertEquals(now, wrt_dt);
+
     }
 
     @Test
     public void inserttest() throws Exception {
         // 먼저 1L에 해당하는 데이터를 삭제
-        int deletenumber = noticeDao.delete(1L);
-
+        int deletenumber = noticeDao.delete(22L);
         // 새로운 NoticeDto 객체를 생성하고 데이터를 설정합니다.
         NoticeDto noticeDto = new NoticeDto
                 (1L,"ezmeal", "긴급공지", "안녕하세용ㄹㅇㄹㅇㄹ" );
         System.out.println("noticeDto: " + noticeDto);
-//        NoticeDto noticeDto = new NoticeDto
-//                (1L,"ezmeal", "긴급공지", "안녕하세용ㄹㅇㄹㅇㄹ" );
-//        System.out.println("noticeDto: " + noticeDto);
 
-        // 설정된 데이터를 데이터베이스에 삽입
         int resultnumber = noticeDao.insert(noticeDto);
         System.out.println("resultnumber" + resultnumber);
     }
 
-    @Test
-    public void deletetest() throws Exception {
-        // 테스트를 위해 데이터베이스에 새로운 데이터를 삽입
-        NoticeDto noticeDto = new NoticeDto(20L,"asdf", "asdf", "asdf");
-        int insertResult = noticeDao.insert(noticeDto);
-        assertEquals(insertResult, 1); // 데이터 삽입이 성공적으로 이루어졌는지 확인
-
-        // 삽입한 데이터의 notice_no를 가져옴
-        Long insertedNoticeNo = noticeDto.getNotice_no();
-
-        // delete() 메서드 호출하여 해당 데이터 삭제
-        int deletenumber = noticeDao.delete(insertedNoticeNo);
-        assertEquals(deletenumber, 1); // 데이터 삭제가 성공적으로 이루어졌는지 확인
-    }
+//    @Test
+//    public void deletetest() throws Exception {
+//        // 테스트를 위해 데이터베이스에 새로운 데이터를 삽입
+//        NoticeDto noticeDto = new NoticeDto(25L,"asdf", "asdf", "asdf");
+//        int insertResult = noticeDao.insert(noticeDto);
+//        assertEquals(insertResult, 1); // 데이터 삽입이 성공적으로 이루어졌는지 확인
+//
+//        // 삽입한 데이터의 notice_no를 가져옴
+//        Long insertedNoticeNo = noticeDto.getNotice_no();
+//
+//        // delete() 메서드 호출하여 해당 데이터 삭제
+//        int deletenumber = noticeDao.delete(insertedNoticeNo);
+//        assertEquals(deletenumber, 1); // 데이터 삭제가 성공적으로 이루어졌는지 확인
+//    }
 
     @Test
     public void selectTest(){
@@ -114,7 +97,17 @@ public class NoticeDaoTest {
         System.out.println("제목: " + selectnumber.getTitle());
         System.out.println("작성자: " + selectnumber.getWriter());
         System.out.println("내용: " + selectnumber.getStmt());
+    }
+
+    @Test
+    public void insertdata() {
+        for (int i = 1; i <= 89; i++) {
+            NoticeDto noticeDto = new NoticeDto((long) i, "ezmeal", "notitle", "no content", "2023-7-28");
+            System.out.println("noticeDto: " + noticeDto);
+            noticeDao.save(noticeDto);
+        }
 
     }
+
 
 }

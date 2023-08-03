@@ -2,44 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="notice">
-<!--MyBatis에게 이 XML 파일의 ID를 "notice"로 사용하도록 지시-->
+<mapper namespace="tb_notice">
+
+    <!--parameter 는 매개변수, 매개변수 타입을 noticeDto로 하면 noticeDto객체의 필드를 참조해서 쿼리에 필요한 파라미터 설정가능-->
+
+    <insert id="insertNotice" parameterType="noticeDto">
+    INSERT INTO tb_notice (writer, status, typ, title, wrt_dt, stmt)
+    VALUES (#{writer}, #{status}, #{typ}, #{title}, #{wrt_dt}, #{stmt})
+
+    </insert>
 
 
-    <!--각 SQL문은 <insert>, <update>, <delete>, <select> 등의 태그
-    태그의 id 속성은 해당 SQL문의 ID를 지정하며,
-    parameterType 속성은 이 SQL문에서 사용하는 파라미터의 타입을 지정합니다.
-    resultType 속성은 SELECT문의 결과 타입을 지정-->
-
-
-<insert id="insertNotice" parameterType="noticeDto">
-    INSERT INTO tb_notice (writer, status, typ, title, wrt_dt, stmt, ranking, hide_yn, del_yn, in_dtm, in_id, up_dtm, up_id)
-    VALUES (#{writer}, #{status}, #{typ}, #{title}, #{wrt_dt}, #{stmt}, #{ranking}, #{hide_yn}, #{del_yn}, #{in_dtm}, #{in_id}, #{up_dtm}, #{up_id})
-
-</insert>
-
-
-<!-- 수정된버전을 넣으면 객체의변수와 컬럼명과 맞는 데이터로 덮어씌여준다.-->
-<update id="updateNotice" parameterType="noticeDto">
+    <update id="updateNotice" parameterType="noticeDto">
     UPDATE tb_notice
     SET writer  = #{writer},
     status   = #{status},
+    typ     = #{typ},
     title   = #{title},
     wrt_dt  = #{wrt_dt},
     stmt    = #{stmt},
-    ranking    = #{ranking},
-    hide_yn = #{hide_yn},
-    view_cnt   = #{view_cnt},
-    del_yn  = #{del_yn},
-    in_dtm  = #{in_dtm},
-    in_id   = #{in_id},
-    up_dtm  = #{up_dtm},
-    up_id   = #{up_id}
     WHERE notice_no = #{notice_no}
-</update>
-<!---->
-<delete id="deleteNotice" parameterType="long">
-    DELETE FROM tb_notice WHERE notice_no = #{notice_no}
+    </update>
+
+<delete id="deleteNotice" > <!--notice_no라는 이름으로 long 타입의 값을 전달-->
+    DELETE FROM tb_notice
+    WHERE notice_no = #{notice_no}
 </delete>
 
 <select id="select_notice" parameterType="long" resultType="noticeDto"> <!--저 번호로 찾은 테이블 한 로우를 다 받아오는거.-->
@@ -49,69 +36,53 @@
     typ,
     title,
     DATE_FORMAT(wrt_dt, '%Y-%m-%d') as wrt_dt_format,
-    stmt,
-    ranking,
-    hide_yn,
-    view_cnt,
-    del_yn,
-    in_dtm,
-    in_id,
-    up_dtm,
-    up_id
+    stmt
     FROM tb_notice
     WHERE notice_no = #{notice_no}
 </select>
 
-<select id="selectNoticeList" resultType="noticeDto"> <!--저 번호로 찾은 테이블 한 로우를 다 받아오는거.-->
-    SELECT notice_no,
-    writer,
-    status,
-    typ,
-    title,
-    DATE_FORMAT(wrt_dt, '%Y-%m-%d') as wrt_dt_format,
-    stmt,
-    ranking,
-    hide_yn,
-    view_cnt,
-    del_yn,
-    in_dtm,
-    in_id,
-    up_dtm,
-    up_id
-    FROM tb_notice
-    WHERE hide_yn='n' and del_yn='n' <!--조건 : 글 숨기기 안하고, 삭제되지 않은 글-->
-</select>
-
-<select id="getNoticeCount" resultType="int">
-    SELECT count(*) FROM tb_notice
-</select>
-
-<update id="increaseview_cnt" parameterType="int">
-    UPDATE tb_notice
-    set view_cnt = view_cnt + 1
-    where notice_no =  4
-</update>
+    <!--게시판 목록에 나와야 하는 내용들-->
+    <select id="selectNoticeDetail" parameterType="long" resultType="noticeDto">
+        SELECT  title, writer,status,typ, wrt_dt,  stmt
+        FROM tb_notice
+        WHERE notice_no = #{notice_no}
+    </select>
 
 
+    <select id="selectNoticeList" resultType="noticeDto" >
+        SELECT notice_no,
+               writer,
+               status,
+               typ,
+               title,
+               DATE_FORMAT(wrt_dt, '%Y-%m-%d') as wrt_dt_format,
+               stmt
+        FROM tb_notice
+        ORDER BY notice_no DESC
+        LIMIT #{offset},#{pageSize}
+    </select>
+
+
+   <!--리스트 날짜, 번호 역순대로   -->
 <select id="selectPage" parameterType="map" resultType="noticeDto">
-    SELECT notice_no, writer, status,typ, title, wrt_dt, stmt, view_cnt
+    SELECT notice_no, writer, status,typ, title, wrt_dt, stmt
     FROM tb_notice
     ORDER BY wrt_dt DESC, notice_no DESC
-    LIMIT 10;
-        <!--LIMIT #{offset}, #{pageSize}-->
+    LIMIT #{offset}, #{pageSize}
 </select>
 
+    <!--전체 데이터 수를 조회-->
+    <select id="gettotalCnt" resultType="int">
+        SELECT COUNT(*) FROM tb_notice
+    </select>
 
-<!--게시판 목록에 나와야 하는 내용들-->
-<select id="selectNoticeDetail" parameterType="long" resultType="noticeDto">
-    SELECT  title, writer, wrt_dt,  stmt
-    FROM tb_notice
-    WHERE notice_no = 3
-</select>
-<!--notice_no로  게시글을 선택하고, 그 게시글의 notice_no, writer, title, stmt, wrt_dt를 반환-->
-<!--LIMIT 절에서 숫자 뒤에 주석(해시태그) 기호(#)를 사용.
- ->SQL에서는 해시태그를 주석으로 인식하므로, LIMIT 절 뒤에 주석을 넣으면 문법 오류가 발생
- -->
+
+<!--전체 페이지 수를 계산하는 것, COUNT(*)를 한 페이지의 크기(게시물갯수?)(#{pageSize})로 나누어준 결과를 올림(CEIL)하여 페이지 수를 구함-->
+    <select id="gettotalPageCount" resultType="int">
+        SELECT CEIL(COUNT(*) / #{pageSize}) FROM tb_notice
+    </select>
+
+
 
 
 </mapper>

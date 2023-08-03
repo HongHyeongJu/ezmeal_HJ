@@ -4,9 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias alias="BoardDto" type="com.teamProject.ezmeal.domain.BoardDto"/>
         <typeAlias alias="SearchCondition" type="com.teamProject.ezmeal.domain.SearchCondition" />
-        <typeAlias alias="CommentDto" type="com.teamProject.ezmeal.domain.CommentDto"/>
 <!--        cart , cartProduct 추가 필요-->
         <typeAlias alias="CartDto" type="com.teamProject.ezmeal.domain.CartDto"/>
         <typeAlias alias="CartProductDto" type="com.teamProject.ezmeal.domain.CartProductDto"/>
@@ -51,8 +49,8 @@
 
         <!--공지사항-->
         <typeAlias alias="noticeDto" type="com.teamProject.ezmeal.domain.NoticeDto"></typeAlias>
-        <typeAlias alias="boardDto" type="com.teamProject.ezmeal.domain.BoardDto"></typeAlias>
-        <typeAlias alias="PageHandlerDto" type="com.teamProject.ezmeal.domain.PageHandler"></typeAlias>
+        <typeAlias alias="PageHandler" type="com.teamProject.ezmeal.domain.PageHandler"></typeAlias>
+
 
 
     </typeAliases>
