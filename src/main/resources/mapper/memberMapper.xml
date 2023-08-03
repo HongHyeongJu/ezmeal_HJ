@@ -65,6 +65,16 @@
                  )
     </insert>
 
+    <!--  회원가입시 장바구니 번호 부여 쿼리  -->
+    <insert id="insertCartSeq" parameterType="Long">
+        INSERT INTO tb_cart (
+                mbr_id
+        )
+        VALUES (
+                #{memberId}
+               )
+    </insert>
+
     <!--  회원정보를 조회하는 쿼리문  -->
     <select id="selectMemberInfo" parameterType="Long" resultType="MemberDto">
         SELECT m.*, g.name as mbr_grd_name, g.img as grd_img
