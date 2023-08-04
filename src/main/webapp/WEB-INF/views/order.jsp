@@ -151,7 +151,7 @@
                             </div>
 
                             <div class="order_info_delivery_msgYN">
-                                <span>배송 완료 메시지 전송 *</span>
+                                <span>배송 완료 메시지 전송*</span>
                                 <label>
                                     <input type="radio" name="delivery_msg" value="y"/>
                                     <span>예</span>
@@ -182,10 +182,9 @@
                         <div class="order_info_template_small">
                             <div class="order_info_template__title">
                                 <span>쿠폰적용</span>
-                                <button class="order__btn order__coupon btn-open-popup">
-                                    사용가능 쿠폰 N장 / 전체 쿠폰 ${couponList.size()}장
-                                </button>
+                                <button class="order__btn order__coupon btn-open-popup"> 사용가능 쿠폰 ${couponCnt}장 / 전체 쿠폰 ${couponList.size()}장 </button>
                                 <div class="order__coupon_pk" hidden>0</div>
+                                <button class="order__btn order__coupon_cancel">쿠폰선택취소</button>
                             </div>
                         </div>
                         <!--order_info_template 쿠폰 끝 -->
@@ -323,9 +322,9 @@
                     <th>사용기준</th>
                 </tr>
                 <c:forEach var="item" items="${couponList}">
-                    <tr class="order__modal_table_instance">
+                    <tr class="order__modal_table_instance ${item.can_use ? "": " order__modal_table_instance_can_not_use"}">
                         <td hidden>${item.mbr_coupn_id}</td>
-                        <td><input type="radio" name="coupon"/></td>
+                        <td><input type="radio" name="coupon" ${item.can_use ? "": " disabled"}/></td>
                         <td class="order__coupon_name">${item.name}</td>
                         <c:if test="${item.val <= 100}">
                             <td class="order__coupon_dc">${item.val}% 할인 - (최대 ${item.max_prc}원)</td>
@@ -341,7 +340,7 @@
             <!-- Modal  table 끝 -->
             <div class="order__modal_btn">
                 <button class="order__modal_ok">확인</button>
-                <button class="order__modal_cancel">선택 취소</button>
+                <button class="order__modal_cancel">취소</button>
             </div>
         </div>
         <!-- modal main contents-->

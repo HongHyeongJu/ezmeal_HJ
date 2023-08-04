@@ -6,10 +6,12 @@ const clickRow = document.querySelector(".order__modal_table"); // modal 내부 
 const selectOrderModal = document.querySelector(".order__modal_ok"); // modal 쿠폰선택
 const cancelOrderModal = document.querySelector(".order__modal_cancel"); // modal 쿠폰선택 취소
 const orderCouponTitle = document.querySelector(".order__coupon"); // 선택된 쿠폰 나오는 버튼
+const initCouponData = orderCouponTitle.textContent; // 초기 셋팅 쿠폰 textContent
 const orderCouponPk = document.querySelector(".order__coupon_pk"); // hidden으로 처리된 쿠폰 번호
+const cancelOrderCoupon = document.querySelector('.order__coupon_cancel'); // 사용하는 쿠폰 사용안하는 걸로 처리
 
 const orderPoint = document.querySelector(".order__point"); // 사용할 적립금
-const orderAllPointBtn = document.querySelector(".order__point_alluse");// 전체선택 쿠폰
+const orderAllPointBtn = document.querySelector(".order__point_alluse");// 전체선택 적립금
 
 const productSummary = document.querySelector(".order__prod_summary"); // 상품명 요약
 
@@ -169,8 +171,23 @@ function handleSelectOrderModal(event) {
             console.log(afterMaxRateDC);
             useCoupon.textContent = "-" + afterMaxRateDC.toLocaleString('ko-KR') + "원";
         }
-
         changePaymentPrice(); // 최종결제 금액 변경
+    }
+}
+// 사용하려고 한 쿠폰 사용 취소
+function handleCancelUseCoupon() {
+    // 기존의 값으로 나타내기
+    orderCouponTitle.textContent = initCouponData; // 초기 value로 설정
+    const useCoupon = document.querySelector(".order_benu__coupon"); // 베너창 쿠폰할인
+    useCoupon.textContent = "0 원";
+    changePaymentPrice(); // 최종결제 금액 변경
+}
+
+// 쿠폰 사용 취소
+function handleCancelOrderModal(event) {
+    if (event.target === cancelOrderModal) {
+        modal.classList.toggle("show");
+        if (!modal.classList.contains("show")) body.style.overflow = "auto"; // body scroll 원상 복구
     }
 }
 
@@ -335,8 +352,14 @@ async function order() {
 
 // 클릭된 쿠폰 정보 변수 저장 및 input check 해주기
 clickRow.addEventListener("click", handleClickRow);
+
 // 확인 버튼 누르면 쿠폰 정보 화면에 넣은 후 닫기
 selectOrderModal.addEventListener("click", handleSelectOrderModal);
+// 모달 취소 버튼 누를 시, 그냥 꺼짐
+cancelOrderModal.addEventListener('click', handleCancelOrderModal);
+// 쿠폰 사용 취소하기
+cancelOrderCoupon.addEventListener('click', handleCancelUseCoupon);
+
 orderBtn.addEventListener("click", order);
 //  point 사용 검증
 orderPoint.addEventListener("change", handleValidatePoint);

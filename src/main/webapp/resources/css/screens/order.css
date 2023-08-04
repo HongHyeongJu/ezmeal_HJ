@@ -196,8 +196,12 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
 /* 주문자 정보 끝 */
 
 /* 배송지 정보 */
+.delivery_address_id {
+    /* width:800px; */
+    /* box-sizing:border-box; */
+}
 .delivery_address_id div {
-    width: 400px;
+    width: 800px;
     display:flex;
     margin-bottom: 18px;
 }
@@ -206,6 +210,11 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
 .order_info_template:first-of-type div span,
 .order_info_template__radiobox > div >span {
     font-weight: bolder;
+}
+
+.delivery_address_id div span:last-child{
+    width: 800px;
+    line-height: 1.5;
 }
 
 .order_info_delivery {
@@ -257,12 +266,18 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
     margin-right: 10px;
     width: 400px;
     height: 44px;
-    padding: 0px 54px 0px 16px;
+    padding: 0 54px 0 16px;
     border: 1px solid rgb(221, 221, 221);
     background-color: var(--ezmealbackgroundGreen);
     font-size: 14px;
     text-align: left;
-    /* color: rgb(204, 204, 204); */
+    color: gray;
+}
+
+.order__coupon_cancel {
+    padding: 0;
+    width: 120px;
+    text-align: center;
     color: var(--ezmealGreen);
 }
 
@@ -462,4 +477,9 @@ class || class 선택자 || class>선택자 로만 css를 설정해주자.
 
 .order__modal_btn button {
     margin-right: 10px;
+}
+
+.order__modal_table_instance_can_not_use {
+    color: gray;
+    text-decoration: line-through grey 2px;
 }
