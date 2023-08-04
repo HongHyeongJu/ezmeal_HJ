@@ -71,7 +71,7 @@
     <p class="order-complete__p">주문 내역 및 상세 정보는 아래의 링크를 통해 확인할 수 있습니다.</p>
     <a class="order-complete__a" href="/">홈으로 돌아가기</a>
     <a class="order-complete__a" href="/orderPayment">주문 내역 확인하기</a>
-    <a class="order-complete__a" href="/orderDetail">주문 상세 확인하기</a>
+    <a class="order-complete__a" href="/order/detail/${orderId}">주문 상세 확인하기</a>
 </div>
 </body>
 </html>

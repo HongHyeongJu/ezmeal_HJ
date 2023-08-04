@@ -50,4 +50,9 @@ public class OrderPaymentDaoTest {
         int size = orderPaymentJoinDtos.size();
         System.out.println("size = " + size);
     }
+    @Test
+    public void count_order_delivery() {
+        Map<String, Integer> list = orderPaymentDao.selectOrderDeliveryNum(1001L);
+        System.out.println("list = " + list);
+    }
 }

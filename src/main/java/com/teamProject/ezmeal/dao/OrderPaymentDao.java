@@ -33,4 +33,9 @@ public class OrderPaymentDao {
     public List<OrderPaymentJoinDto> selectPeriodOrderPaymentList(Map<String, Object> periodData) {
         return session.selectList(namespace + "select_order_payment_period", periodData);
     }
+
+    // ezmeal myPage header에 넣을 주문 배송 개수
+    public  Map<String, Integer> selectOrderDeliveryNum(Long mbrId){
+        return session.selectOne(namespace + "count_order_delivery", mbrId);
+    }
 }
