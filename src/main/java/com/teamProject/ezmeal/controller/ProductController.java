@@ -44,24 +44,17 @@ public class ProductController {
 
         Map map4 = productService.getAllTypImgOptRivews();
             /*모든상품 '대표'이미지 리스트*/
-            Map<Long,ProductImgDto> prodImgMap = (Map<Long,ProductImgDto>)map4.get("prodImgMap");
+        Map<Long,ProductImgDto> prodImgMap = (Map<Long,ProductImgDto>)map4.get("prodImgMap");
             /*모든상품의 옵션 리스트*/
-            Map<Long,List<ProductOptionDto>> prodOptMap = (Map<Long,List<ProductOptionDto>>)map4.get("prodOptMap");
+        Map<Long,List<ProductOptionDto>> prodOptMap = (Map<Long,List<ProductOptionDto>>)map4.get("prodOptMap");
             /*모든상품  평점, 리뷰 숫자*/
-            Map<Long,Double> reviewAvgMap = (Map<Long,Double>)map4.get("reviewAvgMap");
-            Map<Long,Integer> reviewCntMap = (Map<Long,Integer>)map4.get("reviewCntMap");
+        Map<Long,Double> reviewAvgMap = (Map<Long,Double>)map4.get("reviewAvgMap");
+        Map<Long,Integer> reviewCntMap = (Map<Long,Integer>)map4.get("reviewCntMap");
 
         model.addAttribute("prodImgMap",prodImgMap);
         model.addAttribute("prodOptMap",prodOptMap);
         model.addAttribute("reviewAvgMap",reviewAvgMap);
         model.addAttribute("reviewCntMap",reviewCntMap);
-        System.out.println("prodImgMap: "+map4.get("prodImgMap").toString());
-        System.out.println("prodOptMap: "+map4.get("prodOptMap").toString());
-        System.out.println("reviewAvgMap: "+map4.get("reviewAvgMap").toString());
-        System.out.println("reviewCntMap: "+map4.get("reviewCntMap").toString());
-        System.out.println("[컨트롤러] sortkeyword: "+sortkeyword);
-
-        System.out.println("아 제발");
 
         return "productcatelist";
     }
@@ -92,8 +85,6 @@ public class ProductController {
         model.addAttribute("reviewAvgMap",reviewAvgMap);
         model.addAttribute("reviewCntMap",reviewCntMap);
 
-        System.out.println("[컨트롤러] headerTyp: "+headertyp);
-
         return "productcatelist_header";
     }
 
@@ -103,10 +94,6 @@ public class ProductController {
     public ResponseEntity<Map<String, Object>> productListByCateCd(@RequestBody String cate_cd, @RequestParam(required = false) String sortkeyword) throws SQLException {
         /*상품목록에 필요한 것 모두 받아오기*/
         Map map = productService.getProductListByCateCd(cate_cd, sortkeyword);
-        System.out.println("restcatelist 컨트롤러 지나갑니다");
-        System.out.println("prodList: "+map.get("prodList").toString());
-        System.out.println("[컨트롤러] sortkeyword: "+sortkeyword);
-
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
