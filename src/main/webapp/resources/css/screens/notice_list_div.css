@@ -75,32 +75,32 @@ li.page_list_num:last-child {
 }
 
 /* 페이징 핸들러 CSS */
-.pagging-wrap {
+.pagehandler_noticelist {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 30px 0;
+    margin: 50px 0;
 }
 
-.page-number {
+.page_number_list {
     display: flex;
     align-items: center;
 }
 
-.page {
+.page_number {
     display: inline-block;
     margin: 5px;
     padding: 5px 10px;
     text-decoration: none;
-    color: #333;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-weight: normal;
+    margin-right: 20px;
 }
 
-.paging-active {
+.page_number_active {
     background-color: #2ebd46;
-    color: white;
+    color: white !important;
     font-weight: 900;
 }
 
