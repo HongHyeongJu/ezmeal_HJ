@@ -51,9 +51,9 @@
                         아이디기억
                     </div>
                     <div class="find">
-                        <a rel="/member/find/id" class="find-a">아이디찾기</a>
+                        <a href="/member/find/id" class="find-a">아이디찾기</a>
                         <span class="find-span"></span>
-                        <a rel="/member/find/password" class="find-a">비밀번호찾기</a>
+                        <a href="/member/find/password" class="find-a">비밀번호찾기</a>
                     </div>
                 </div>
                 <!-- <label for="nextnext"><hr class="horizontal_line">
