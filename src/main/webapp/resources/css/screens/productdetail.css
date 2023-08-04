@@ -164,6 +164,7 @@ div.prod_price_set {
     background-size: 100%;
     background-repeat: no-repeat; /*그림 반복 막기*/
     vertical-align:sub;
+    margin-bottom: 2px;
 }
 
 .star_0_5_img {
@@ -174,6 +175,18 @@ div.prod_price_set {
     background-size: 100%;
     background-repeat: no-repeat; /*그림 반복 막기*/
     vertical-align:sub;
+    margin-bottom: 2px;
+}
+
+.star_0_img {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("../../img/star0.png");
+    background-size: 100%;
+    background-repeat: no-repeat; /*그림 반복 막기*/
+    vertical-align:sub;
+    margin-bottom: 2px;
 }
 
 .star_img.fst {padding-left: 2%;}
@@ -260,7 +273,7 @@ div.prod_price_set {
     margin-bottom: 10px;
     list-style: none;
     display: flex;
-    width: 535px;
+    width: auto;
     height: 30px;
     align-items: center;
     justify-content: space-between;

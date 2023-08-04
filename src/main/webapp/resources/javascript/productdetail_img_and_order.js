@@ -32,27 +32,18 @@ function changeMainImage(img) {
 
 /*------------  찜하기 버튼  --------*/
 
-document.querySelectorAll('.wishlist_btn').forEach((button) => {
-    button.addEventListener('click', function() {
-
-        /* 상품코드 가져오기 */
-        let prodCdElement = document.getElementById("prod_cd_is");
-        let prod_cd = prodCdElement.dataset.value;
-
-        $.ajax({
-            url: "/wishlist/add",
-            type: "POST",
-            data: JSON.stringify({ prod_cd: prod_cd}),
-            contentType: "application/json",
-            success: function(response) {
-                alert("찜하기 성공!");
-            },
-            error: function(xhr, status, error) {
-                /*비로그인시에는 눌러도 아무 효과 없음*/
-                // alert(xhr.responseText);
-            }
-        });
-    });
+$.ajax({
+    url: "/wishlist/add",
+    type: "POST",
+    data: JSON.stringify({ prod_cd: prod_cd }),
+    contentType: "application/json",
+    dataType: "json", // 서버 응답이 JSON 형식임을 명시적으로 지정
+    success: function (response) {
+        alert(response); // 서버에서 보낸 메시지를 출력
+    },
+    error: function (xhr, status, error) {
+        alert(xhr.responseText); // 서버에서 보낸 에러 메시지를 출력
+    }
 });
 
 
@@ -159,3 +150,4 @@ function addHover(button) {
 }
 
 buttons.forEach(addHover);
+

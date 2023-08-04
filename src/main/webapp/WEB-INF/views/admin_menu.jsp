@@ -57,7 +57,7 @@
 
 
             <li class="prod main_li" id="prod"><i class="fas fa-boxes"></i>&nbsp;&nbsp;상품</li>
-            <a href="/admin/prod">
+            <a href="/admin/prod/home">
                 <li class="hidden prod_li sub_li">상품 대시보드</li>
             </a>
             <a href="/admin/prod/list">
@@ -78,7 +78,7 @@
             <a href="/admin/prod/dccd">
                 <li class="hidden prod_li sub_li">상품 할인코드 관리</li>
             </a>
-            <a href="홈페이지_주소">
+            <a href="/admin/prod/cust">
                 <li class="hidden prod_li sub_li">거래처 관리</li>
             </a>
 
@@ -112,6 +112,9 @@
             <li class="board main_li" id="board"><i class="fas fa-clipboard"></i>&nbsp;&nbsp;&nbsp;&nbsp;게시판</li>
             <a href="홈페이지_주소">
                 <li class="hidden board_li sub_li">게시판 대시보드</li>
+            </a>
+            <a href="/admin/notice/write">
+                <li class="hidden board_li sub_li">공지사항 등록</li>
             </a>
             <a href="홈페이지_주소">
                 <li class="hidden board_li sub_li">공지게시판 관리</li>

@@ -6,7 +6,6 @@
 * 정수만큼 클래스에  star_1_img를 추가하고 hidden속성을 false로 바꾸기 document.getElementById('star1').hidden = false; */
 
 /* 0.5가 있는 경우 1개만 star_1_img를 추가해주기.  hidden속성을 false로 바꾸기 */
-
 function makeReviewAvgStarImg () {
     /*별점 태그 가져오기*/
     let divTag = document.getElementsByClassName('stars_set')[0];
@@ -15,22 +14,30 @@ function makeReviewAvgStarImg () {
     let reviewAvg = document.getElementById("reviewAvg");
     let avg = parseFloat(reviewAvg.dataset.avg);
 
-    /*별점평균만큼 태그 집어넣기*/
-    let halfStar = (avg % 1 !== 0) ? true : false;
+    /*별점 평균이 0보다 큰 경우에만 태그 생성*/
+    if (avg > 0) {
+        /*별점평균만큼 태그 집어넣기*/
+        let halfStar = (avg % 1 !== 0) ? true : false;
 
-    /*정수만큼 출력*/
-    for(let j = 1; j <= avg; j++){
-        let starImg = document.createElement('span');
-        starImg.className = 'star_1_img';
-        divTag.appendChild(starImg);
-    }
-    /*소수점이 있을 때*/
-    if(halfStar){
-        let halfStarImg = document.createElement('span');
-        halfStarImg.className = 'star_0_5_img';
-        divTag.appendChild(halfStarImg);
+        /*정수만큼 출력*/
+        for(let j = 1; j <= avg; j++){
+            let starImg = document.createElement('span');
+            starImg.className = 'star_1_img';
+            divTag.appendChild(starImg);
+        }
+        /*소수점이 있을 때*/
+        if(halfStar){
+            let halfStarImg = document.createElement('span');
+            halfStarImg.className = 'star_0_5_img';
+            divTag.appendChild(halfStarImg);
+        }
+    } else { // 별점 평균이 0일 때
+        let zeroStarImg = document.createElement('span');
+        zeroStarImg.className = 'star_0_img';
+        divTag.appendChild(zeroStarImg);
     }
 }
+
 
 
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -75,5 +82,22 @@ window.addEventListener('DOMContentLoaded', (event) => {
     });
 
 });
+
+
+
+window.onload = function() {
+    /*페이지 로드 시 */
+    makeReviewAvgStarImg();   /*리뷰 별점 이미지 출력*/
+    imgFunction();   /*이미지 교체 기능 넣기*/
+    updatePrice();   /*기본으로 가격 업데이트*/
+    changeMainImage(document.getElementById("main_img"))
+
+    /*선택한 옵션으로 바로 가격 바뀌도록*/
+    let optSelect = document.getElementById("opt_select");
+
+    optSelect.addEventListener('change', function() {
+        updatePrice();
+    });
+}
 
 

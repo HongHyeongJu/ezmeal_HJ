@@ -1,0 +1,263 @@
+
+.prod_list_table_div {
+    display: inline-block; /* 또는 display: flex; 등 */
+}
+
+
+/* btn 관련 css */
+.fst_reg_dt_btn,
+.admin__order_num {
+    border: 1px solid rgb(25, 38, 66);
+    border-radius: 6px;
+    background: inherit;
+    padding: 3px;
+    margin-left: 10px;
+    cursor: pointer;
+    width: 60px;
+}
+
+/* 검색 table 속성 */
+.admin_prod_search_comdition_table input,
+.admin_prod_search_comdition_table span,
+.admin_prod_search_comdition_table tr:last-child > td {
+    margin-left: 10px;
+}
+
+.fst_reg_dt_btn:hover,
+.admin__order_num:hover,
+.fst_reg_dt_btn:focus,
+.admin__order_num:focus{
+    background-color: rgb(25, 38, 66);
+    color: aliceblue;
+}
+
+.personal-day {
+    width: 100px;
+}
+
+/* table 관련 css */
+.admin_prod_search_comdition_div {
+    margin-bottom: 100px;
+}
+.admin_prod_search_comdition_table {
+    border-collapse: collapse; /* table border끼리 충돌나는거 방지 */
+    width: 100%;
+}
+
+.admin_prod_search_comdition_table th,
+.admin_prod_search_comdition_table td {
+    border: 1px solid black;
+    padding: 8px;
+}
+
+.admin_prod_search_comdition_table th {
+    width: 100px;
+    box-sizing: border-box;
+    background-color: #f2f2f2;
+    color: rgb(25, 38, 66);
+    font-weight: normal;
+}
+
+
+.admin_prod_search_comdition_table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+/* 상품 리스트 표 스타일 */
+.prod_info_table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+
+th.table_title_1, td.table_title_2 {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+th.table_title_1 {
+    background-color: #f2f2f2;
+}
+
+
+
+
+/*-------------------위아래 디브, 검색 칸 속성 수정-------------------*/
+
+/* 부모 컨테이너에도 flexbox 적용 */
+.product_admin_contain_div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 왼쪽 정렬 */
+    max-width: 1200px; /* 최대 너비를 1200px로 제한 */
+    margin: 0 auto; /* 가운데 정렬 */
+    margin-left: 50px;
+}
+
+
+/* .search_table_div_top와 .prod_list_table_div의 수직 정렬을 위한 CSS */
+.search_table_div_top, .prod_list_table_div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 왼쪽 정렬 */
+    width: 100%; /* 너비를 100%로 설정하여 부모의 크기를 따라감 */
+    max-width: 1200px; /* 최대 너비를 1200px로 제한 */
+}
+
+.search_table_div_top {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+
+/* 옵션: 컨테이너 내의 테이블의 너비를 조절 */
+.admin_prod_search_condition_table, .prod_info_table {
+    width: 1050px; /* 최대 너비를 1200px로 설정 */
+    border-collapse: collapse; /*표의 칸 사이의 간격 없도록*/
+}
+
+/* .sc_title_contain_div 안의 div 요소들을 수평 정렬 */
+.sc_title_contain_div {
+    display: flex;
+    justify-content: space-between; /* 자식 요소들 사이에 공간을 균등하게 배분 */
+    max-width: 1200px; /* 최대 너비를 1200px로 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+    padding: 5px 40px 5px 40px; /* 좌우 여백을 20px로 설정, 원하는 여백 크기로 조정 가능 */
+}
+
+
+/* .sc_title_div의 간격을 조절 */
+.sc_title_div {
+    margin-right: 10px; /* 우측 간격을 10px로 설정, 원하는 간격으로 조정 가능 */
+}
+
+/*날짜 선택 기간 칸 왼쪽 마진*/
+.date_input {
+    margin-left: 20px;
+}
+
+
+
+
+/*검색창 칸*/
+.table_title_search_td {
+    border: 1px solid black;
+    text-align: left;
+    padding-bottom: 10px ;
+    padding-top:  10px ;
+    padding-left: 43px;
+}
+
+.table_title_search_td input {
+    height: 25px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
+/*-------------- 가운데 버튼 디브 ---------------*/
+
+/* .prod_list_table_btn_div 안의 버튼들을 수평 정렬 */
+.prod_list_table_btn_div {
+    display: flex;
+    justify-content: flex-start; /* 자식 요소들을 왼쪽으로 정렬 */
+    gap: 10px; /* 버튼들 사이의 간격을 10px로 설정, 원하는 간격으로 조정 가능 */
+}
+
+/* 버튼 스타일 */
+.prod_list_table_btn_div button {
+    border: 1px solid rgb(25, 38, 66);
+    border-radius: 6px;
+    background: inherit;
+    padding: 3px;
+    cursor: pointer;
+    width: 80px; /* 버튼의 너비를 설정, 원하는 크기로 조정 가능 */
+}
+
+/* 버튼에 마우스를 올렸을 때와 포커스 됐을 때의 스타일 */
+.prod_list_table_btn_div button:hover,
+.prod_list_table_btn_div button:focus {
+    background-color: rgb(25, 38, 66);
+    color: aliceblue;
+}
+
+/* 테이블의 스타일 */
+.prod_info_table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 1200px; /* 최대 너비를 1200px로 설정 */
+}
+
+
+/* 테이블의 스타일 */
+.admin_prod_search_condition_table {
+    border-collapse: collapse;
+    max-width: 1200px; /* 최대 너비를 1200px로 설정 */
+    height: 150px; /* 테이블 높이를 120px로 고정 */
+    overflow-y: auto; /* 필요한 경우 스크롤 생성 */
+}
+
+
+
+/* 테이블의 th 스타일 */
+.btn_th {
+    border: 0px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+/* 테이블 내용이 스크롤될 때 스크롤 바 스타일 */
+.admin_prod_search_condition_table::-webkit-scrollbar {
+    width: 8px; /* 스크롤 바의 너비를 설정 */
+}
+.admin_prod_search_condition_table::-webkit-scrollbar-thumb {
+    background-color: #ccc; /* 스크롤 바 색상 설정 */
+    border-radius: 4px; /* 스크롤 바의 모서리를 둥글게 설정 */
+}
+
+
+
+
+
+/*-----상품 리스트---------*/
+
+.prod_info_table {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+/* 테이블의 스타일 */
+.prod_info_table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 1200px; /* 최대 너비를 1200px로 설정 */
+}
+
+/* 테이블의 td 스타일 */
+.table_title_3 {
+    border: 1px solid #ccc; /* 칸 사이에 1px의 회색 구분선 추가 */
+    padding: 8px;
+    text-align: center;
+}
+
+/*상품 출력칸의 높이*/
+.info_info_tr {
+    height: 50px; /* 원하는 높이로 변경 가능 */
+}
+
+
+/*-----2칸에 링크 걸기----*/
+a.product_link  {
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 상위 요소의 색상 상속 */
+    display: block; /* 블록 레벨 요소로 변경 */
+    font-size: 15px;
+    font-weight:inherit;
+}
+
+.name {
+    font-weight: 600;
+}

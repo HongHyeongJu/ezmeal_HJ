@@ -45,7 +45,7 @@
                 <dt>주문/배송</dt>
                 <dd>
                     <a href="/mypage/orderlist">
-                        <Strong class="num" id="orderConuntText">0</Strong>
+                        <Strong class="num" id="orderConuntText">${countOrderDelivery['order_num']} / ${countOrderDelivery['dlvar_num']}</Strong>
                         건
                     </a>
                 </dd>

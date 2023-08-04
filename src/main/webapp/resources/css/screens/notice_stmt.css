@@ -10,16 +10,17 @@
 
 .notice-title {
     font-weight: 900;
-    font-size: 24px;
+    font-size: 35px;
     color: #333;
-    letter-spacing: -0.5px;
+    letter-spacing: 1px;
     line-height: 48px;
     text-align: center;
+    padding-bottom:10px
 }
 
 .notice-title-explain {
     padding-left: 11px;
-    font-size: 14px;
+    font-size: 20px;
     letter-spacing: -0.3px;
     color: #999;
     line-height: 20px;
@@ -34,12 +35,14 @@
     text-align: center;
     font-weight: 800;
     color: black;
+    font-size: 20px;
 }
 
 .notice-board-explain {
     width:700px;
     padding-left: 25px;
     align-self: center;
+
 }
 
 .notice-table {
@@ -55,9 +58,10 @@
 }
 
 .board-listbtn {
-    display: block;
+    display: flex;
     padding: 0px 10px;
     text-align: center;
+    justify-content: center;
     overflow: hidden;
     width: 150px;
     height: 42px;
@@ -65,8 +69,13 @@
     color: rgb(255, 255, 255);
     background-color: rgb(48, 209, 75);
     border: 0px none;
+
 }
 
-.board-listbtn-title span {
-    font-size: 13px;
+.board-listbtn-title {
+    display: flex; /* Flex 컨테이너로 설정 */
+    justify-content: center; /* 가로 정렬을 중앙으로 설정 */
+    align-items: center; /* 세로 정렬을 중앙으로 설정 */
+    font-size: 18px;
+    font-weight: 500;
 }

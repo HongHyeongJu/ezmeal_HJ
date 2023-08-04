@@ -76,8 +76,8 @@
     <select id="select_product_list_cate_cd_mini_new" parameterType="String" resultType="ProductDto">
         SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate
         FROM tb_product USE INDEX (tb_product_fst_reg_dt_index)
-        WHERE cate_cd LIKE concat(#{cate_cd}, '%')  AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
-        ORDER BY STR_TO_DATE(fst_reg_dt, '%Y/%m/%d') desc
+        WHERE cate_cd LIKE CONCAT(#{cate_cd}, '%')  AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
+        ORDER BY fst_reg_dt DESC
     </select>
 
     <!--할인율 높은 순-->
@@ -254,8 +254,8 @@
     <select id="fst_reg_dt_in_month" resultType="ProductDto">
         SELECT *
         FROM tb_product
-        WHERE STR_TO_DATE(fst_reg_dt, '%Y-%m-%d') >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
-                AND sale_yn = 'y' AND dp_yn = 'y' AND del_yn = 'n'
+        WHERE fst_reg_dt >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+          AND sale_yn = 'y' AND dp_yn = 'y' AND del_yn = 'n'
     </select>
 
     <!-- [베스트 (리뷰수 n개 이상) ] 지금은 3개 이상-->
@@ -277,6 +277,13 @@
     </select>
 
 
+
+    <!--  관리자 상품 리스트용 전체 상품 리스트   -->
+    <select id="all_prod_list_fot_mng" resultType="ProductDto">
+        SELECT *
+        FROM tb_product
+        WHERE del_yn='n'
+    </select>
 
 <!--//필요한 값은 DB안에서 다 처리해서 나가기 (여러 함수나 SQL메서드를 사용해야 쎄보임!! 뭘좀 아는구나 ㅋㅋ good 구린건 안돼!! )-->
 

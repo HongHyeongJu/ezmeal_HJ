@@ -27,4 +27,9 @@ public class OrderPaymentService {
     public List<OrderPaymentJoinDto> getPeriodOrderPaymentList(Map<String, Object> periodData) {
         return orderPaymentDao.selectPeriodOrderPaymentList(periodData);
     }
+
+    // ezmeal myPage header에 넣을 주문 배송 개수
+    public  Map<String, Integer> countOrderDeliveryNum(Long memberId){
+        return orderPaymentDao.selectOrderDeliveryNum(memberId);
+    }
 }

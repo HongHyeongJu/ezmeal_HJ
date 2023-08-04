@@ -142,7 +142,7 @@ public class CartController {
     }
 
 
-    /*상품 목록, 상품 상세에서 장바구니에 상품 담기  (seq 자동증가 X 버전) */
+    /*상품 목록, 상품 상세에서 장바구니에 상품 담기  */
     @PostMapping("/add")
     public ResponseEntity<String> addCart(@RequestBody CartProductDto cartProductDto, @SessionAttribute Long memberId, RedirectAttributes reAtt) {
 

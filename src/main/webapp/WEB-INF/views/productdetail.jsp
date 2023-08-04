@@ -31,21 +31,52 @@
 <div class="head_main">
   <div class="head_main_left">
 
-    <c:forEach var="img" items="${imgList}" varStatus="status">
-      <c:if test="${img.typ=='대표'}">
-        <img class="main_img" src="../img/${img.url}.png"  id="main_img"/>
-      </c:if>
-    </c:forEach>
+    <!-- 메인 이미지 -->
+    <c:choose>
+      <c:when test="${not empty imgList}">
+        <c:forEach var="img" items="${imgList}" varStatus="status">
+          <c:if test="${img.typ=='대표'}">
+            <img class="main_img" src="/img/${img.url}.png" id="main_img"/>
+          </c:if>
+        </c:forEach>
+      </c:when>
+      <c:otherwise>
+        <img class="main_img" src="/img/ezmeal_logo.png" id="main_img"/>
+      </c:otherwise>
+    </c:choose>
 
-
+    <!-- 미니 이미지 -->
     <ul class="mini_img_set">
-      <c:forEach var="img" items="${imgList}">
-        <c:if test="${img.typ=='메인'}">
-          <img class="mini_img 메인" src="../img/${img.url}.png" />
-        </c:if>
+      <c:forEach varStatus="status" begin="1" end="5">
+        <c:choose>
+          <c:when test="${not empty imgList and status.count <= imgList.size()}">
+            <c:set var="img" value="${imgList[status.count-1]}" />
+            <c:if test="${img.typ=='메인'}">
+              <img class="mini_img 메인" src="../img/${img.url}.png" id="mini_img_${status.count}"/>
+            </c:if>
+          </c:when>
+          <c:otherwise>
+            <img class="mini_img 메인" src="../img/ezmeal_logo.png" id="mini_img_${status.count}"/>
+          </c:otherwise>
+        </c:choose>
       </c:forEach>
     </ul>
-    <div class="main_left 아래 여백"></div>
+
+<%--    <c:forEach var="img" items="${imgList}" varStatus="status">--%>
+<%--      <c:if test="${img.typ=='대표'}">--%>
+<%--        <img class="main_img" src="../img/${img.url}.png"  id="main_img"/>--%>
+<%--      </c:if>--%>
+<%--    </c:forEach>--%>
+
+
+<%--    <ul class="mini_img_set">--%>
+<%--      <c:forEach var="img" items="${imgList}">--%>
+<%--        <c:if test="${img.typ=='메인'}">--%>
+<%--          <img class="mini_img 메인" src="../img/${img.url}.png" />--%>
+<%--        </c:if>--%>
+<%--      </c:forEach>--%>
+<%--    </ul>--%>
+<%--    <div class="main_left 아래 여백"></div>--%>
   </div>
 
   <!--------------------------------------------- 메인 오른쪽 정보 --------------------------------------------------->
@@ -59,7 +90,7 @@
 
       </div>
       <!--별점 평균-->
-      <span class="score" id="reviewAvg" data-avg="${reivewAvg}">${reivewAvg}</span>점
+      <span class="score" id="reviewAvg" data-avg="${reivewAvg}">${empty reivewAvg?0:reivewAvg}</span>점
       <!--리뷰 개수-->
       (
       <span class="total_num">${reviewCount}</span>
@@ -75,7 +106,7 @@
           <c:set var="sale_prc" value="${optList.get(0).getSale_prc()}" />
 
           <c:if test="${cnsmr_prc != sale_prc}">
-            <strong class="dc_pt">${optList.get(0).getDc_rate()}}%</strong>
+            <strong class="dc_pt">${optList.get(0).getDc_rate()}%</strong>
           </c:if>
 
           <strong class="sale_prc">${sale_prc}&nbsp;원</strong>
@@ -275,7 +306,7 @@
       <span class="rv_kword">여기 키워드리뷰.... 가져와야서 반복출력...</span>
       <span class="rv_title">${review.title}</span>
       <span class="rv_stmt">${review.stmt}</span>
-      <span class="rv_img"><img src="../../img/P005.png" width="100px" height="100px" id="img01"></span>
+      <span class="rv_img"><img src="../../img/6.png" width="100px" height="100px" id="img01"></span>
     </li>
   </ul>
 </c:forEach>
@@ -292,7 +323,7 @@
                         또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.
                         또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.
                     </span>
-    <span class="rv_img"><img src="../../img/G005.png" width="100px" height="100px" id="img02"></span>
+    <span class="rv_img"><img src="../../img/4.png" width="100px" height="100px" id="img02"></span>
 
   </li>
 
@@ -327,11 +358,14 @@
       <div class="answer">아 고객님 연락드리겠습니다.</div>
     </td>
   </tr>
+
+  <!-- 리뷰 하드코딩 -->
+
   <tr>
     <td class="inquiry_title accordion">&nbsp;Q. 불닭맛 있어요?</td>
     <td class="inquiry_wrt">한자*</td>
     <td class="inquiry_wrt_dt">2023.06.13.</td>
-    <td class="inquiry_stus">답변중</td>
+    <td class="inquiry_stus">답변완료</td>
   </tr>
   <tr>
     <td colspan="4">
@@ -357,6 +391,39 @@
       </div>
     </td>
   </tr>
+
+  <!-- 리뷰 하드코딩 -->
+  <tr>
+    <td class="inquiry_title accordion">&nbsp;Q. 5개 세트는 안파나요?</td>
+    <td class="inquiry_wrt">김태*</td>
+    <td class="inquiry_wrt_dt">2023.08.03.</td>
+    <td class="inquiry_stus">답변완료</td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      <div class="answer">
+        아 고객님  저희는 10의 배수만 취급합니다.
+        10개 세트 구입하시고 반 나누시면 되겠습니다.
+        좋은 하루 되세요^^
+      </div>
+    </td>
+  </tr>
+
+  <!-- 리뷰 하드코딩 -->
+  <tr>
+    <td class="inquiry_title accordion">&nbsp;Q. 조리법이 궁금해요!</td>
+    <td class="inquiry_wrt">황태*</td>
+    <td class="inquiry_wrt_dt">2023.08.05.</td>
+    <td class="inquiry_stus">답변완료</td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      <div class="answer">
+        전자레인지에 데워드시면 되시겠습니다.
+      </div>
+    </td>
+  </tr>
+
   </tbody>
 </table>
 <div class="bottom_empty">
@@ -369,10 +436,12 @@
 </div>
 
 <!------------------------------------- 자바스크립트 ------------------------------------------->
-<script src="/javascript/productdetail.js"></script>
-<script src="/javascript/productdetailoption.js"></script>
-<script src="/javascript/productdetail_img_and_order.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<%--<script src="/javascript/productdetailoption.js"></script>--%>
+<%--<script src="/javascript/productdetail_img_and_order.js"></script>--%>
+<%--<script src="/javascript/productdetail.js"></script>--%>
+<script src="/javascript/productDetailCombined.js"></script>
+
 <script>
   src="https://kit.fontawesome.com/6478f529f2.js"
   crossOrigin="awesome"

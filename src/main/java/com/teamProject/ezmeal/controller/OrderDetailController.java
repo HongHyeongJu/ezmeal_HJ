@@ -2,12 +2,14 @@ package com.teamProject.ezmeal.controller;
 
 import com.teamProject.ezmeal.domain.OrderDetailDto;
 import com.teamProject.ezmeal.service.OrderDetailService;
+import com.teamProject.ezmeal.service.OrderPaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.util.List;
 import java.util.Map;
@@ -29,16 +31,19 @@ import java.util.Map;
 public class OrderDetailController {
 
     private final OrderDetailService orderDetailService;
+    private final OrderPaymentService orderPaymentService;
     @GetMapping("/detail/{orderId}")
-    public String getOrderDetail(@PathVariable Long orderId, Model model){
+    public String getOrderDetail(@SessionAttribute Long memberId, @PathVariable Long orderId, Model model){
         List<OrderDetailDto> orderDetailProductList = orderDetailService.getOrderDetailProductList(orderId); // 상세상품 list
         System.out.println("orderDetailProductList = " + orderDetailProductList);
         Map<String, Object> outsideOrderDetailInfo = orderDetailService.getOutsideOrderDetailInfo(orderId); // 상품 외 상세 정보
         System.out.println("outsideOrderDetailInfo = " + outsideOrderDetailInfo);
-        System.out.println("outsideOrderDetailInfo = " + outsideOrderDetailInfo);
+
+        Map<String, Integer> countOrderDelivery = orderPaymentService.countOrderDeliveryNum(memberId);
+        System.out.println("countOrderDelivery = " + countOrderDelivery);
+        model.addAttribute("countOrderDelivery", countOrderDelivery);
         model.addAttribute("orderDetailProductList", orderDetailProductList);
         model.addAttribute("outsideOrderDetailInfo", outsideOrderDetailInfo);
         return "orderDetail";
     }
 }
-

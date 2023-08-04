@@ -74,7 +74,33 @@ li.page_list_num:last-child {
     margin-right: 0;
 }
 
-.thispage {
-    font-weight: 900;
-    color: #2ebd46;
+/* 페이징 핸들러 CSS */
+.pagehandler_noticelist {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 50px 0;
 }
+
+.page_number_list {
+    display: flex;
+    align-items: center;
+}
+
+.page_number {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-weight: normal;
+    margin-right: 20px;
+}
+
+.page_number_active {
+    background-color: #2ebd46;
+    color: white !important;
+    font-weight: 900;
+}
+

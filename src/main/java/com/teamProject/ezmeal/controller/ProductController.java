@@ -34,15 +34,27 @@ public class ProductController {
     public String productListByCateCd(Model model, String cate_cd, @RequestParam(required = false) String sortkeyword) throws SQLException {
         System.out.println("/catelist 컨트롤러 지나갑니다");
         /*상품목록 표현에 필요한 것 모두 받아오기*/
+        model.addAttribute("cate_cd",cate_cd);
+
+        if(sortkeyword == null) sortkeyword = "default";
+
         Map map = productService.getProductListByCateCd(cate_cd, sortkeyword);
         model.addAttribute("prodList",map.get("prodList"));
-        model.addAttribute("prodImgMap",map.get("prodImgMap"));
-        model.addAttribute("prodOptMap",map.get("prodOptMap"));
-        model.addAttribute("reviewAvgMap",map.get("reviewAvgMap"));
-        model.addAttribute("reviewCntMap",map.get("reviewCntMap"));
-        model.addAttribute("cate_cd",cate_cd);
-        System.out.println("prodList: "+map.get("prodList").toString());
-        System.out.println("[컨트롤러] sortkeyword: "+sortkeyword);
+        model.addAttribute("cateName",map.get("cateName"));
+
+        Map map4 = productService.getAllTypImgOptRivews();
+            /*모든상품 '대표'이미지 리스트*/
+        Map<Long,ProductImgDto> prodImgMap = (Map<Long,ProductImgDto>)map4.get("prodImgMap");
+            /*모든상품의 옵션 리스트*/
+        Map<Long,List<ProductOptionDto>> prodOptMap = (Map<Long,List<ProductOptionDto>>)map4.get("prodOptMap");
+            /*모든상품  평점, 리뷰 숫자*/
+        Map<Long,Double> reviewAvgMap = (Map<Long,Double>)map4.get("reviewAvgMap");
+        Map<Long,Integer> reviewCntMap = (Map<Long,Integer>)map4.get("reviewCntMap");
+
+        model.addAttribute("prodImgMap",prodImgMap);
+        model.addAttribute("prodOptMap",prodOptMap);
+        model.addAttribute("reviewAvgMap",reviewAvgMap);
+        model.addAttribute("reviewCntMap",reviewCntMap);
 
         return "productcatelist";
     }
@@ -56,13 +68,22 @@ public class ProductController {
         /*그래서 전체 다 쓰이게 대표이미지 Map으로 다 가져오고 리뷰평균, 리뷰수도 cate_cd 검색없이 사용가능한 조건으로 전부다 가져와*/
         HashMap map = productService.getProductSetForHeader(headertyp);
         model.addAttribute("prodList",map.get("prodList"));
-        model.addAttribute("prodImgMap",map.get("prodImgMap"));
-        model.addAttribute("prodOptMap",map.get("prodOptMap"));
-        model.addAttribute("reviewAvgMap",map.get("reviewAvgMap"));
-        model.addAttribute("reviewCntMap",map.get("reviewCntMap"));
         model.addAttribute("headerTitle",map.get("headerTitle"));
         model.addAttribute("headerTyp",headertyp);
-        System.out.println("[컨트롤러] headerTyp: "+headertyp);
+
+        Map map4 = productService.getAllTypImgOptRivews();
+        /*모든상품 '대표'이미지 리스트*/
+        Map<Long,ProductImgDto> prodImgMap = (Map<Long,ProductImgDto>)map4.get("prodImgMap");
+        /*모든상품의 옵션 리스트*/
+        Map<Long,List<ProductOptionDto>> prodOptMap = (Map<Long,List<ProductOptionDto>>)map4.get("prodOptMap");
+        /*모든상품  평점, 리뷰 숫자*/
+        Map<Long,Double> reviewAvgMap = (Map<Long,Double>)map4.get("reviewAvgMap");
+        Map<Long,Integer> reviewCntMap = (Map<Long,Integer>)map4.get("reviewCntMap");
+
+        model.addAttribute("prodImgMap",prodImgMap);
+        model.addAttribute("prodOptMap",prodOptMap);
+        model.addAttribute("reviewAvgMap",reviewAvgMap);
+        model.addAttribute("reviewCntMap",reviewCntMap);
 
         return "productcatelist_header";
     }
@@ -73,10 +94,6 @@ public class ProductController {
     public ResponseEntity<Map<String, Object>> productListByCateCd(@RequestBody String cate_cd, @RequestParam(required = false) String sortkeyword) throws SQLException {
         /*상품목록에 필요한 것 모두 받아오기*/
         Map map = productService.getProductListByCateCd(cate_cd, sortkeyword);
-        System.out.println("restcatelist 컨트롤러 지나갑니다");
-        System.out.println("prodList: "+map.get("prodList").toString());
-        System.out.println("[컨트롤러] sortkeyword: "+sortkeyword);
-
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
