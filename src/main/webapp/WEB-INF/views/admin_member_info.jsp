@@ -84,11 +84,12 @@
             </div>
             <div class="right">
               <select id="rows" name="rows" class="select">
+<%--                <option value="all" selected>전체보기</option>--%>
                 <option value="10">10개씩보기</option>
                 <option value="20">20개씩보기</option>
                 <option value="30">30개씩보기</option>
                 <option value="40">40개씩보기</option>
-                <option value="50">50개씩보기</option>
+                <option value="50" selected>50개씩보기</option>
               </select>
             </div>
           </div>
