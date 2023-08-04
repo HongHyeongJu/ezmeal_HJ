@@ -94,14 +94,28 @@ public class OrderController {
         pointMap.put("pointRate", pointRate);
 
         // 쿠폰
+        int canUseCoupon=0;
         List<CouponJoinDto> couponList = couponJoinService.getCouponList(memberId); // 쿠폰 list
+        System.out.println("couponList = " + couponList);
+        // 사용 가능 쿠폰 logic 1. 쿠폰 자체 조건 (disabled)
+        for (CouponJoinDto coupon: couponList) {
+            if (coupon.getUse_base_prc() > orderPrice) {
+                coupon.setCan_use(false);
+                continue;
+            } // 쿠폰 최소금액보다 작으면 사용 불가
+            // todo. 마감기한, 사용가능 가한 2가지 정도 조건만 더 들어가면 거의 완벽할 듯
+            coupon.setCan_use(true);
+            canUseCoupon++;
+        }
+        System.out.println("couponList = " + couponList);
 
         model.addAttribute("selectedAddress", selectedAddress); // 배송 정보
         model.addAttribute("cartProductList", cartProductList); // 상품 목록
         model.addAttribute("memberInfo", memberInfo); // 주문자 정보
         model.addAttribute("priceMap", priceMap); // 결제금액
         model.addAttribute("pointMap", pointMap); // 적립금
-        model.addAttribute("couponList", couponList);  // 사용 가능 포인트
+        model.addAttribute("couponList", couponList);  // 쿠폰
+        model.addAttribute("couponCnt", canUseCoupon); // 사용가능 쿠폰 개수
 
         return "/order";
     }

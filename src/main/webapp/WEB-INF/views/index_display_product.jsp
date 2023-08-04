@@ -23,7 +23,7 @@
   <div class="singletyp_recoprod">
     <ul class="recoprod_ul">
       <span class="singletyp_title">
-        <i class="fas fa-suitcase"></i>&nbsp;직장인을 위한 추천! 베스트 후기 상품만 모았어요-
+        <i class="fas fa-suitcase"></i>&nbsp;직장인을 위한 추천!&nbsp;&nbsp;베스트 후기 상품만 모았어요-
       </span>
     </ul>
     <ul class="recoprod_ul">
@@ -32,12 +32,12 @@
       </li>
 
       <c:forEach var="empl" items="${emplList}" varStatus="status">
-      <a href="/product/detail?cate_cd=05&prod_cd=${empl.prod_cd}">
+      <a href="/product/detail?prod_cd=${empl.prod_cd}">
       <li class="health_prod_li">
         <div class="prod_outer">
           <c:set var="emplImg" value="${prodImgMap[empl.prod_cd]}" />
           <figure>
-            <img src="/img/${productImage.url}.png">
+            <img src="/img/${emplImg.url}.png">
           </figure>
           <div class="prod_text">
             <span class="pord_name">${empl.name}</span>
@@ -63,7 +63,7 @@
   <div class="singletyp_recoprod">
     <ul class="recoprod_ul">
       <span class="singletyp_title">
-        <i class="fas fa-dumbbell"></i>&nbsp;헬스인을 위한 추천! 식단 정해드립니다-
+        <i class="fas fa-dumbbell"></i>&nbsp;헬스인을 위한 추천!&nbsp;&nbsp;식단 정해드립니다-
       </span>
     </ul>
     <ul class="recoprod_ul">
@@ -104,7 +104,7 @@
   <div class="singletyp_recoprod">
     <ul class="recoprod_ul">
       <span class="singletyp_title">
-        <i class="far fa-kiss-wink-heart"></i>&nbsp;먹잘알을 위한 추천! 신제품을 맛보세요-
+        <i class="far fa-kiss-wink-heart"></i>&nbsp;먹잘알을 위한 추천!&nbsp;&nbsp;신제품을 맛보세요-
       </span>
     </ul>
     <ul class="recoprod_ul">
@@ -145,7 +145,7 @@
   <div class="singletyp_recoprod">
     <ul class="recoprod_ul">
       <span class="singletyp_title">
-        <i class="fas fa-house-user"></i>&nbsp;자취러를 위한 추천! 많이 살 수록 큰 할인-
+        <i class="fas fa-house-user"></i>&nbsp;자취러를 위한 추천!&nbsp;&nbsp;많이 살 수록 큰 할인-
       </span>
     </ul>
     <ul class="recoprod_ul">

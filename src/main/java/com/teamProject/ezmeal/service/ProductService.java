@@ -80,10 +80,10 @@ public class ProductService {
 
             Map<String, String> cateCdAndNameMap =productCategoryService.getAllProdCateCdAndNameList();
             String cateName = cateCdAndNameMap.get(cate_cd);
-            System.out.println("cate_cd:"+cate_cd);
-            System.out.println("cateName:"+cateName);
-            System.out.println("sortkeyword: "+sortkeyword);
-            System.out.println("prodList.size(): "+ prodList);
+//            System.out.println("cate_cd:"+cate_cd);
+//            System.out.println("cateName:"+cateName);
+//            System.out.println("sortkeyword: "+sortkeyword);
+//            System.out.println("prodList.size(): "+ prodList);
 
 //            HashMap fourTypesMap = getAllTypImgOptRivews();
 //
@@ -260,7 +260,7 @@ public class ProductService {
         /*혹시 낱개 옵션 만들어야 할까봐 미리 만드는 옵션 객체*/
         ProductOptionDto prodOptOne = null;
         int optListSize = productOptionDtos.size();
-        System.out.println("optListSize (1) = " + optListSize);
+//        System.out.println("optListSize (1) = " + optListSize);
 
 
         try {
@@ -323,10 +323,10 @@ public class ProductService {
                     }
                 }
             }
-            System.out.println("prodInsertCnt: "+prodInsertCnt);
-            System.out.println("prodUpdateCnt: "+prodUpdateCnt);
-            System.out.println("optInsertCnt: "+optInsertCnt);
-            System.out.println("optUpdateCnt: "+optUpdateCnt);
+//            System.out.println("prodInsertCnt: "+prodInsertCnt);
+//            System.out.println("prodUpdateCnt: "+prodUpdateCnt);
+//            System.out.println("optInsertCnt: "+optInsertCnt);
+//            System.out.println("optUpdateCnt: "+optUpdateCnt);
 
             map.put("prodInsertCnt",prodInsertCnt);
             map.put("prodUpdateCnt",prodUpdateCnt);
@@ -374,8 +374,8 @@ public class ProductService {
                 System.out.println("else");
             }
 
-            System.out.println("서비스 headerTyp: "+headerTyp);
-            System.out.println("서비스 prodList.size(): "+ prodList);
+//            System.out.println("서비스 headerTyp: "+headerTyp);
+//            System.out.println("서비스 prodList.size(): "+ prodList);
 
 
             HashMap fourTypesMap = getAllTypImgOptRivews();
@@ -416,13 +416,13 @@ public class ProductService {
         }
         /*모든상품의 옵션 리스트*/
         Map<Long,List<ProductOptionDto>> prodOptMap = prodCdListChangeToOptionMap("0");
-        System.out.println("prodOptMap = " + prodOptMap);
+//        System.out.println("prodOptMap = " + prodOptMap);
         if (prodOptMap == null) {
             System.out.println("prodOptMap is null");
         }
         /*모든상품  평점, 리뷰 숫자*/
         Map<Long,Object> reviewAvgMap = productReviewService.selectReviewAvgAllProduct();
-        System.out.println("reviewAvgMap = " + reviewAvgMap);
+//        System.out.println("reviewAvgMap = " + reviewAvgMap);
 
         if (reviewAvgMap == null) {
             System.out.println("reviewAvgMap is null");
@@ -438,6 +438,12 @@ public class ProductService {
         prepareListMap.put("reviewCntMap",reviewCntMap);
 
         return prepareListMap;
+    }
+
+
+    public List<ProductDto> getAllProdListForMng() throws SQLException {
+        List<ProductDto> list = productDao.selectAllProdListForMng();
+        return list;
     }
 
 

@@ -91,7 +91,7 @@
             <c:if test="${empty memberId}">
               <li class="user_menu_drop_list"><a href="/member/signup">회원가입</a></li>
             </c:if>
-            <li class="user_menu_drop_list"><a href="/mypage/modify">마이페이지</a></li>
+            <li class="user_menu_drop_list"><a href="/orderPayment">마이페이지</a></li>
           </ul>
         </nav>
       </div>

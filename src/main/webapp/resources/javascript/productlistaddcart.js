@@ -115,7 +115,7 @@ document.querySelectorAll('.submit_btn').forEach((button) => {
                 alert("장바구니 담기 성공!");
             },
             error: function(xhr, status, error) {
-                alert("장바구니 담기 실패!");
+                alert("로그인이 필요합니다");
             }
         });
     });

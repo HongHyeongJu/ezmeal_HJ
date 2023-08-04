@@ -6,10 +6,12 @@ const clickRow = document.querySelector(".order__modal_table"); // modal 내부 
 const selectOrderModal = document.querySelector(".order__modal_ok"); // modal 쿠폰선택
 const cancelOrderModal = document.querySelector(".order__modal_cancel"); // modal 쿠폰선택 취소
 const orderCouponTitle = document.querySelector(".order__coupon"); // 선택된 쿠폰 나오는 버튼
+const initCouponData = orderCouponTitle.textContent; // 초기 셋팅 쿠폰 textContent
 const orderCouponPk = document.querySelector(".order__coupon_pk"); // hidden으로 처리된 쿠폰 번호
+const cancelOrderCoupon = document.querySelector('.order__coupon_cancel'); // 사용하는 쿠폰 사용안하는 걸로 처리
 
 const orderPoint = document.querySelector(".order__point"); // 사용할 적립금
-const orderAllPointBtn = document.querySelector(".order__point_alluse");// 전체선택 쿠폰
+const orderAllPointBtn = document.querySelector(".order__point_alluse");// 전체선택 적립금
 
 const productSummary = document.querySelector(".order__prod_summary"); // 상품명 요약
 
@@ -32,6 +34,8 @@ let COUPON_DC; // 쿠폰 할인가
 let COUPON_PK; // 쿠폰 pk
 let EVENT_LIST = []; // [ 사용할 적립금, 사용할 쿠폰 pk ]
 
+let PAYMENT_TYPE; // 결제방식
+
 let DELIVERY_PLACE = ''; // 받으실 장소
 let DELIVERY_PLACE_DETAIL = ''; // 받으실 장소 detail
 let DELIVERY_PLACE_DETAIL_INPUT = ''; // 작성 text
@@ -45,10 +49,11 @@ IMP.init("imp67011510");
 // 실제 결제 연동 api
 const requestPay = function (orderMasterResult) {
     return new Promise((resolve, reject) => {
-        const {paymentPk, name, finalPrice, buyerName, phone, email} = orderMasterResult;
+        const {paymentType,paymentPk, name, finalPrice, buyerName, phone, email} = orderMasterResult;
         IMP.request_pay(
             {
-                pg: "kakaopay",
+                pg: paymentType, // kakaopay,tosspay
+                pay_method: "card", // toss에서만 사용
                 merchant_uid: paymentPk,
                 name: name,
                 amount: finalPrice,
@@ -166,8 +171,23 @@ function handleSelectOrderModal(event) {
             console.log(afterMaxRateDC);
             useCoupon.textContent = "-" + afterMaxRateDC.toLocaleString('ko-KR') + "원";
         }
-
         changePaymentPrice(); // 최종결제 금액 변경
+    }
+}
+// 사용하려고 한 쿠폰 사용 취소
+function handleCancelUseCoupon() {
+    // 기존의 값으로 나타내기
+    orderCouponTitle.textContent = initCouponData; // 초기 value로 설정
+    const useCoupon = document.querySelector(".order_benu__coupon"); // 베너창 쿠폰할인
+    useCoupon.textContent = "0 원";
+    changePaymentPrice(); // 최종결제 금액 변경
+}
+
+// 쿠폰 사용 취소
+function handleCancelOrderModal(event) {
+    if (event.target === cancelOrderModal) {
+        modal.classList.toggle("show");
+        if (!modal.classList.contains("show")) body.style.overflow = "auto"; // body scroll 원상 복구
     }
 }
 
@@ -227,11 +247,19 @@ function handleShowInfoInput(event) {
 // point 사용 검증 : 음수까지 가능
 const regexWonToNum = (numberWithWon) => parseInt(numberWithWon.replace(/[^\d-]/g, ''));
 
-// point 초과시 검증
+// point 초과시 검증 + point 입력이 number가 아닌 경우 - 0으로 나오게 하기
 function handleValidatePoint() {
     const inputPoint = parseInt(orderPoint.value);
+    // console.log("inputPoint"); // console.log(inputPoint); // console.log("inputPoint type"); // console.log(typeof inputPoint);
+    if (isNaN(inputPoint)) {
+        alert('숫자를 입력하세요');
+        orderPoint.value = 0;
+        return;
+    }
+
     const placeholder = orderPoint.placeholder;
     const maxPoint = regexWonToNum(placeholder);
+
     orderPoint.value = inputPoint > maxPoint ? maxPoint : inputPoint;
     const usePoint = document.querySelector(".order_benu__point");
     usePoint.textContent = "-" + orderPoint.value + " point";
@@ -270,6 +298,7 @@ async function order() {
     //  현재 결제 금액으로부터 사용가능한 coupon인지 검증 필요
     //  배송지 필수정보 다 넣었는지 확인 필요
     try {
+        console.log("---------- function order() 시작 -------------")
         EVENT_LIST.push(orderPoint.value === '' ? 0 : orderPoint.value); // 값이 없어서 list에서 출력시, null이지만 실제로는''로 적용된다.
         EVENT_LIST.push(orderCouponPk.textContent);
         console.log('get data for using paymentAPI');
@@ -279,6 +308,10 @@ async function order() {
         const productSummaryName = productSummary.textContent;
         // const encodingName = encodeURIComponent(productSummaryName);
         paymentData.name = productSummaryName; // 결제 api에 보낼 추가 정보
+        paymentData.paymentType = PAYMENT_TYPE; // 결제 api에 보낼 추가 정보
+
+        console.log("paymentData");
+        console.log(paymentData);
 
         console.log('start paymentAPI');
         const paymentResultData = await requestPay(paymentData); // 결제 응답
@@ -307,7 +340,7 @@ async function order() {
         const update = await updateDataAfterPayment(orderPaymentAddressData);
         console.log(update);
 
-        window.location.href ="/order/complete"; // 마지막 redirection 이동
+        window.location.href = "/order/complete"; // 마지막 redirection 이동
     } catch (e) {
         console.log(e);
     } finally {
@@ -319,8 +352,14 @@ async function order() {
 
 // 클릭된 쿠폰 정보 변수 저장 및 input check 해주기
 clickRow.addEventListener("click", handleClickRow);
+
 // 확인 버튼 누르면 쿠폰 정보 화면에 넣은 후 닫기
 selectOrderModal.addEventListener("click", handleSelectOrderModal);
+// 모달 취소 버튼 누를 시, 그냥 꺼짐
+cancelOrderModal.addEventListener('click', handleCancelOrderModal);
+// 쿠폰 사용 취소하기
+cancelOrderCoupon.addEventListener('click', handleCancelUseCoupon);
+
 orderBtn.addEventListener("click", order);
 //  point 사용 검증
 orderPoint.addEventListener("change", handleValidatePoint);
@@ -345,3 +384,19 @@ orderProdOpenClose.addEventListener("click", handleOpenCloseProduct);
 orderInfoLabel.forEach((label) => {
     label.addEventListener("click", handleShowInfoInput);
 });
+
+/* 결제 버튼 누를 시, list에 담는 과정 및 class에 토글 넣어주기
+* paymentBtnAll : 결제수단 선택 btn
+* handlePaymentBtn : 결제 수단 선택 시, toggle 작동 및 click 된 btn name 변수로 담기 -> 결제 api의 결제 수단으로 등록 |  pg의 value로 사용
+* */
+const paymentBtnAll = document.querySelectorAll('.pay_method');
+paymentBtnAll.forEach(paymentBtn => {
+    paymentBtn.addEventListener('click', handlePaymentBtn);
+})
+
+function handlePaymentBtn(event){
+    paymentBtnAll.forEach(paymentBtn => paymentBtn.classList.remove('pay_method_clicked'));
+    event.target.classList.toggle('pay_method_clicked');
+    const paymentType = event.target.name;
+    PAYMENT_TYPE = paymentType;
+}
