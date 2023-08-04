@@ -1,3 +1,24 @@
+// 페이지 조회시 바로 실행되는 함수, 회원 전체 목록 조회
+document.addEventListener("DOMContentLoaded", function () {
+    $.ajax({
+        url: '/admin/memberList',
+        type: 'GET',
+        dataType: 'json',
+        success: function(memberList) {
+            console.log(memberList);
+            viewMemberList(memberList);
+        },
+        error: function(error) {
+            console.error('Error:', error);
+        }
+    });
+
+});
+
+
+
+
+// 조회 버튼 클릭시, ajax get요청 보내서 회원정보를 조회
 $('#button').click(function (){
     const searchOption = $("#searchOption").val(); // select 값
     const searchValue = $("input[name='searchValue']").val();   // input태그 값
@@ -18,6 +39,7 @@ $('#button').click(function (){
     });
 });
 
+// 회원조회정보를 테이블 형식으로 html에 넣어주는 함수
 function viewMemberList(memberList){
     const tableBody = document.getElementById('memberTableBody');
     tableBody.innerHTML = '';   // 기존 테이블 내용 초기화

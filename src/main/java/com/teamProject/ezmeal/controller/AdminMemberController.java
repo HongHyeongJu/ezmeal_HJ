@@ -34,6 +34,14 @@ public class AdminMemberController {
         return "admin_member_info";
     }
 
+    // 회원 전체 목록 조회
+    @GetMapping("/admin/memberList")
+    @ResponseBody
+    public List<Map<String, Object>> getMemberList() {
+        return adminMemberService.getMemberList();
+    }
+
+
     // 조건에 맞는 회원정보 조회
     @GetMapping("/admin/members")
     @ResponseBody
