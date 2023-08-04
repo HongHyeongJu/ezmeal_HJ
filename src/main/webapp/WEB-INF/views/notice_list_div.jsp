@@ -11,6 +11,9 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="/css/screens/notice_list_div.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic&display=swap" rel="stylesheet">
 
 </head>
 <body>
@@ -80,16 +83,16 @@
             }
             //]]>
         </script>
-        <div class="pagging-wrap page-area">
-            <div class="page-number">
+        <div class="pagehandler_noticelist">
+            <div class="page_number_list">
                     <c:if test="${ph.isShowPrev()}">
-                        <a class="page" href="<c:url value="/notice?page=${ph.getBeginPage()-1}"/>"><</a>
+                        <a class="page_number" href="<c:url value="/notice?page=${ph.getBeginPage()-1}"/>"><</a>
                     </c:if>
                     <c:forEach var="i" begin="${ph.getBeginPage()}" end="${ph.getEndPage()}">
-                        <a class="page ${i==ph.getPage()? "paging-active" : ""}" href="<c:url value="/notice?page=${i}&pageSize=10"/>">${i}</a>
+                        <a class="page_number ${i==ph.getPage()? "page_number_active" : ""}" href="<c:url value="/notice?page=${i}&pageSize=10"/>">${i}</a>
                     </c:forEach>
                     <c:if test="${ph.isShowNext()}">
-                        <a class="page" href="<c:url value="/notice?page=${ph.endPage+1}"/>">></a>
+                        <a class="page_number" href="<c:url value="/notice?page=${ph.endPage+1}"/>">></a>
                     </c:if>
 
 

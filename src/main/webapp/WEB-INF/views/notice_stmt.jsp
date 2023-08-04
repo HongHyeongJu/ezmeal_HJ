@@ -10,6 +10,9 @@
 <head>
     <title>Title</title>
    <link rel="stylesheet" href="/css/screens/notice_stmt.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic&display=swap" rel="stylesheet">
 </head>
 <body>
 <jsp:include page="header.jsp"/>

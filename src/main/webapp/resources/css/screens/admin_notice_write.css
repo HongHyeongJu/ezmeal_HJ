@@ -1,0 +1,106 @@
+.notice-board {
+    max-width: 1200px;
+    /*margin: 0 auto;*/
+    background-color: #fff;
+    padding: 20px;
+}
+
+.notice-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+
+.admin-notice-resistration-table {
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.admin-notice-resistration-table-right {
+    width: 200px; ;
+    padding: 10px 30px;
+    height: auto;
+    text-align: center;
+    font-weight: 400;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: #f6f6f6;
+    line-height: 22px;
+    vertical-align: middle;
+}
+
+.admin-notice-resistration-table-left {
+    width: 1000px; ;
+}
+
+
+.notice-label {
+    display: flex;
+    align-items: center;
+}
+
+#admin-notice-input1,
+#admin-notice-input2 {
+    border: none;
+    width: 100%;
+    padding: 5px;
+
+
+}
+
+#admin-notice-input1:hover,
+#admin-notice-input1:focus,
+#admin-notice-input2:hover,
+#admin-notice-input2:focus {
+    outline: none;
+}
+
+.notice_stmt {
+    border: none; /* 외곽선 없애기 */
+    resize: none; /* 사용자 크기 조정 기능 비활성화 */
+    height: 1000px; /* 원하는 높이로 설정 */
+
+}
+
+.notice_stmt:hover,
+.notice_stmt:focus {
+    outline: none; /* 마우스 호버나 포커스 시 외곽선 없애기 */
+}
+
+.admin-notice_btn_box {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.admin-notice_btn_list,
+.admin-notice_btn_sub {
+    width: 100px;
+}
+
+.admin-notice_btn_list {
+    background-color: #192642;
+    color: #fff;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 10px;
+
+}
+
+.admin-notice_btn_sub {
+    background-color: #192642;
+    color: #fff;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.input [name="status"] {
+    margin-right: 20px;
+}

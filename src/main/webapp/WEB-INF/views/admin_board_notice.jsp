@@ -23,7 +23,7 @@
         <div class="admin_container_div">
             <!-- admin_container_div 내용.
             각자 맡은 관리자 페이지 내용 이 디브 안에 쓰면 됩니다.  -->
-            <%@ include file="admin_board_notice_write.jsp" %>
+            <%@ include file="admin_notice_write.jsp" %>
 
         </div>
 
