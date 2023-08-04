@@ -36,22 +36,19 @@
                 <!-- 주문상품 title 끝-->
                 <ul class="order__items__ul">
                     <%--TODO 이거 절대로 li 다음줄로 넘기면 안됨. 개행문자 적용이 되어서 kakao pay시 문제를 발생시킨다.--%>
-                    <li class="order__prod_summary" product_cnt="${cartProductList.size()}">${cartProductList.get(0).name} <c:if test="${cartProductList.size() -1 != 0}">외 ${cartProductList.size() -1}건</c:if></li>
+                    <li class="order__prod_summary"
+                        product_cnt="${cartProductList.size()}">${cartProductList.get(0).name} <c:if
+                            test="${cartProductList.size() -1 != 0}">외 ${cartProductList.size() -1}건</c:if></li>
 
                     <c:forEach var="item" items="${cartProductList}">
                         <!--반복 시작 -->
                         <!--장바구니 식품 반복 시작 -->
                         <li class="order__item_list order_li_hidden" cart_prod_seq="${item.cart_prod_seq}">
-                            <a href="/productlist/${item.prod_cd}" class="order__item_list__a">
-                                <img src="/img/${item.prod_cd}.png"/>
-                            </a>
+                            <img src="/img/${item.prod_cd}.png"/>
                             <!--상품사진 끝-->
                             <div class="order__item_list_description">
-                                <a href="">
                                     <p class="cart__item_list_prod_cd">[${item.prod_cd}]</p>
-                                    <br/>
-                                    <p>${item.name}</p>
-                                </a>
+                                    <p> ${item.name}</p>
                             </div>
                             <!--상품명 끝-->
                             <div class="order__item__count">
@@ -103,11 +100,11 @@
                     <div class="order_info_template__title order_info_delivery">
                         <span>배송지</span>
                         <div class="delivery_address_id" delivery_address_id="${selectedAddress.addr_id}">
-                            <div> 수령지 별명 : ${selectedAddress.rcpr}</div>
-                            <div> 수령지 기본 주소 : ${selectedAddress.desti}</div>
-                            <div> 수령지 상세 주소 : ${selectedAddress.desti_dtl}</div>
-                            <div> 수령인 : ${selectedAddress.rcpr}</div>
-                            <div> 수령인 연락처 : ${selectedAddress.phone}</div>
+                            <div> <span>수령지 별명 </span> <span>${selectedAddress.rcpr}</span></div>
+                            <div> <span>수령지 기본 주소</span> <span>${selectedAddress.desti}</span></div>
+                            <div> <span>수령지 상세 주소</span>  <span>${selectedAddress.desti_dtl}</span></div>
+                            <div> <span>수령인</span>  <span>${selectedAddress.rcpr}</span></div>
+                            <div> <span>수령인 연락처</span>  <span>${selectedAddress.phone}</span></div>
                         </div>
                     </div>
                     <div class="order_info_template__title">
@@ -215,17 +212,11 @@
                         </h4>
                         <!--결제수단 title 끝-->
                         <div class="order_info_template_small">
-                            <div class="order_info_template__title">
+                            <div class="order_info_template__title pay_methods">
                                 <span>결제수단 선택</span>
-                                <input type="radio" name="payment" id="creditCard" value="신용카드"/>
-                                <label for="creditCard" class="order__btn order_btn_method order__btn_creditCard"
-                                       value="신용카드">신용카드</label>
-                                <input type="radio" name="payment" id="kakao" value="kakao"/>
-                                <label for="kakao" class="order__btn order_btn_method order__btn_kakao" value="kakao">
-                                    kakao</label>
-                                <input type="radio" name="payment" id="Toss" value="Toss"/>
-                                <label for="Toss" class="order__btn order_btn_method order__btn_toss"
-                                       value="kakao">Toss</label>
+                                <button class="pay_method order__btn_creditCard" name="creditCard">신용카드</button>
+                                <button class="pay_method order__btn_kakao" name="kakaopay">카카오 페이</button>
+                                <button class="pay_method order__btn_toss" name="tosspay">Toss</button>
                             </div>
                         </div>
                         <!--order_info_template 결제수단 끝 -->
@@ -239,11 +230,21 @@
                         <div class="order_info_template_small">
                             <div class="order__agreement">
                                 <div>
+                                    <br />
                                     <span>개인정보 수집, 이용 및 처리 동의</span>
-                                    <button>보기</button>
-                                    <br/>
-                                    <span>개인정보 수집, 이용 및 처리 동의</span>
-                                    <button>보기</button>
+                                    <button class="order__agreement__btn">보기</button>
+                                </div>
+                                <div>
+                                    <span>결제대행 서비스 약관 동의</span>
+                                    <button class="order__agreement__btn">보기</button>
+                                </div>
+                                <div>
+                                    <span>전자지급 결제대행 서비스 이용약관 동의</span>
+                                    <button class="order__agreement__btn">보기</button>
+                                </div>
+                                <div>
+                                    <br />
+                                    <span>위 내용을 확인 하였으며 결제에 동의합니다.</span>
                                 </div>
                             </div>
                         </div>

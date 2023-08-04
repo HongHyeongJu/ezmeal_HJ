@@ -51,7 +51,8 @@ const renderHTMLFrom = function (allOrderPaymentList) {
                 <!-- order-history__products-main__products 끝 -->
                 <div class="order-history__products-main__status">
                     <span class="order-history__products__status-span">${allOrderPayment.stus}</span>
-                    <div class="order-history__products__status-function">전체취소(기능div)</div>
+                    ${allOrderPayment.stus_code === 'a1' || allOrderPayment.stus_code === 'h1' ? '<div class="order-history__products__status-function">전체취소</div>' : ''}
+                    ${allOrderPayment.stus_code === 'h6' ? '<div class="order-history__products__status-function">전체반품</div>' : ''}
                 </div>
                 <!-- order-history__products-main__status 끝 -->
             </div>`;
@@ -61,6 +62,7 @@ const renderHTMLFrom = function (allOrderPaymentList) {
 }
 
 /* 사용 함수 */
+
 // 처음 html loading 후, 바로 수행되는 함수
 function getOrderPaymentData() {
     fetch('/orderPayment/initData', {
@@ -130,7 +132,7 @@ function changePeriod(dateStr, period) {
 // string의 첫단어
 function convertStringToNumber(str) {
     const numberOnly = str.replace(/\D/g, "");
-    return  parseInt(numberOnly);
+    return parseInt(numberOnly);
 }
 
 /* EVENT 함수 */

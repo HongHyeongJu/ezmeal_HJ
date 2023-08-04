@@ -12,6 +12,7 @@
     <select id="select_all_order_payment_list" resultType="OrderPaymentJoinDto">
         select om.ord_id,
                om.prod_smry,
+               om.stus as stus_code,
                osc.name                                 as stus,
                DATE_FORMAT(om.in_dtm, '%Y-%m-%d %H:%i') as date_time,
                pm.pay_mtd,
@@ -58,5 +59,13 @@
           AND om.in_dtm >= STR_TO_DATE(#{startTime}, '%Y-%m-%d')
           AND om.in_dtm &lt;= STR_TO_DATE(CONCAT(#{endTime}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
         ORDER BY om.in_dtm DESC
+    </select>
+
+    <!-- ezmeal myPage header에 넣을 주문 배송 개수 -->
+    <select id="count_order_delivery" resultType="map">
+        select count(*) AS order_num,
+               SUM(IF(stus >= 'h2', 1, 0)) AS dlvar_num
+        from tb_order_master
+        where mbr_id = #{mbrId}
     </select>
 </mapper>

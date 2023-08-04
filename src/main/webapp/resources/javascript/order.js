@@ -32,6 +32,8 @@ let COUPON_DC; // 쿠폰 할인가
 let COUPON_PK; // 쿠폰 pk
 let EVENT_LIST = []; // [ 사용할 적립금, 사용할 쿠폰 pk ]
 
+let PAYMENT_TYPE; // 결제방식
+
 let DELIVERY_PLACE = ''; // 받으실 장소
 let DELIVERY_PLACE_DETAIL = ''; // 받으실 장소 detail
 let DELIVERY_PLACE_DETAIL_INPUT = ''; // 작성 text
@@ -45,10 +47,11 @@ IMP.init("imp67011510");
 // 실제 결제 연동 api
 const requestPay = function (orderMasterResult) {
     return new Promise((resolve, reject) => {
-        const {paymentPk, name, finalPrice, buyerName, phone, email} = orderMasterResult;
+        const {paymentType,paymentPk, name, finalPrice, buyerName, phone, email} = orderMasterResult;
         IMP.request_pay(
             {
-                pg: "kakaopay",
+                pg: paymentType, // kakaopay,tosspay
+                pay_method: "card", // toss에서만 사용
                 merchant_uid: paymentPk,
                 name: name,
                 amount: finalPrice,
@@ -227,11 +230,19 @@ function handleShowInfoInput(event) {
 // point 사용 검증 : 음수까지 가능
 const regexWonToNum = (numberWithWon) => parseInt(numberWithWon.replace(/[^\d-]/g, ''));
 
-// point 초과시 검증
+// point 초과시 검증 + point 입력이 number가 아닌 경우 - 0으로 나오게 하기
 function handleValidatePoint() {
     const inputPoint = parseInt(orderPoint.value);
+    // console.log("inputPoint"); // console.log(inputPoint); // console.log("inputPoint type"); // console.log(typeof inputPoint);
+    if (isNaN(inputPoint)) {
+        alert('숫자를 입력하세요');
+        orderPoint.value = 0;
+        return;
+    }
+
     const placeholder = orderPoint.placeholder;
     const maxPoint = regexWonToNum(placeholder);
+
     orderPoint.value = inputPoint > maxPoint ? maxPoint : inputPoint;
     const usePoint = document.querySelector(".order_benu__point");
     usePoint.textContent = "-" + orderPoint.value + " point";
@@ -270,6 +281,7 @@ async function order() {
     //  현재 결제 금액으로부터 사용가능한 coupon인지 검증 필요
     //  배송지 필수정보 다 넣었는지 확인 필요
     try {
+        console.log("---------- function order() 시작 -------------")
         EVENT_LIST.push(orderPoint.value === '' ? 0 : orderPoint.value); // 값이 없어서 list에서 출력시, null이지만 실제로는''로 적용된다.
         EVENT_LIST.push(orderCouponPk.textContent);
         console.log('get data for using paymentAPI');
@@ -279,6 +291,10 @@ async function order() {
         const productSummaryName = productSummary.textContent;
         // const encodingName = encodeURIComponent(productSummaryName);
         paymentData.name = productSummaryName; // 결제 api에 보낼 추가 정보
+        paymentData.paymentType = PAYMENT_TYPE; // 결제 api에 보낼 추가 정보
+
+        console.log("paymentData");
+        console.log(paymentData);
 
         console.log('start paymentAPI');
         const paymentResultData = await requestPay(paymentData); // 결제 응답
@@ -307,7 +323,7 @@ async function order() {
         const update = await updateDataAfterPayment(orderPaymentAddressData);
         console.log(update);
 
-        window.location.href ="/order/complete"; // 마지막 redirection 이동
+        window.location.href = "/order/complete"; // 마지막 redirection 이동
     } catch (e) {
         console.log(e);
     } finally {
@@ -345,3 +361,19 @@ orderProdOpenClose.addEventListener("click", handleOpenCloseProduct);
 orderInfoLabel.forEach((label) => {
     label.addEventListener("click", handleShowInfoInput);
 });
+
+/* 결제 버튼 누를 시, list에 담는 과정 및 class에 토글 넣어주기
+* paymentBtnAll : 결제수단 선택 btn
+* handlePaymentBtn : 결제 수단 선택 시, toggle 작동 및 click 된 btn name 변수로 담기 -> 결제 api의 결제 수단으로 등록 |  pg의 value로 사용
+* */
+const paymentBtnAll = document.querySelectorAll('.pay_method');
+paymentBtnAll.forEach(paymentBtn => {
+    paymentBtn.addEventListener('click', handlePaymentBtn);
+})
+
+function handlePaymentBtn(event){
+    paymentBtnAll.forEach(paymentBtn => paymentBtn.classList.remove('pay_method_clicked'));
+    event.target.classList.toggle('pay_method_clicked');
+    const paymentType = event.target.name;
+    PAYMENT_TYPE = paymentType;
+}
