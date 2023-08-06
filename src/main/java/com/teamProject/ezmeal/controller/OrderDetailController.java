@@ -1,15 +1,15 @@
 package com.teamProject.ezmeal.controller;
 
 import com.teamProject.ezmeal.domain.OrderDetailDto;
+import com.teamProject.ezmeal.domain.joinDomain.AdminOrderOrderDto;
+import com.teamProject.ezmeal.service.AdminDeliveryService;
 import com.teamProject.ezmeal.service.OrderDetailService;
 import com.teamProject.ezmeal.service.OrderPaymentService;
+import com.teamProject.ezmeal.service.OrderStatusHistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -32,6 +32,8 @@ public class OrderDetailController {
 
     private final OrderDetailService orderDetailService;
     private final OrderPaymentService orderPaymentService;
+    private final OrderStatusHistoryService orderStatusHistoryService;
+
     @GetMapping("/detail/{orderId}")
     public String getOrderDetail(@SessionAttribute Long memberId, @PathVariable Long orderId, Model model){
         List<OrderDetailDto> orderDetailProductList = orderDetailService.getOrderDetailProductList(orderId); // 상세상품 list
@@ -45,5 +47,14 @@ public class OrderDetailController {
         model.addAttribute("orderDetailProductList", orderDetailProductList);
         model.addAttribute("outsideOrderDetailInfo", outsideOrderDetailInfo);
         return "orderDetail";
+    }
+
+    @PatchMapping("/detail/fixed")
+    @ResponseBody
+    public String updateFixedOrder(@RequestBody Long orderDetailId ){
+        System.out.println("orderDetailPk = " + orderDetailId);
+        int updateNum = orderDetailService.setOrderFixed(orderDetailId); // 주문상세 page에서 구매확정으로 변경 시, od - stus update
+        int insertNum = orderStatusHistoryService.setFixedComplete(orderDetailId); // 주문상세 page에서 구매확정시, 이력 남기기
+        return "success";
     }
 }

@@ -46,4 +46,11 @@
         )
     </insert>
 
+    <!-- 주문상세 page에서 구매확정시, 이력 남기기 -->
+    <insert id="insert_fixed_complete">
+        insert into tb_order_status_history (ord_id, ord_prod_dtl_id, stus, chg_dtm, chg_rsn, in_id, up_id)
+        select od.ord_id, od.ord_prod_dtl_id, od.stus, now(), '사용자 구매확정 처리 수행', od.up_id, od.up_id
+        from tb_order_detail od
+        where od.ord_prod_dtl_id = #{ordDtlId}
+    </insert>
 </mapper>

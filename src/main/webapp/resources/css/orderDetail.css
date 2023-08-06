@@ -83,16 +83,25 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 110px
 }
 
-.order-detail__products__status-function {
+.order-detail__product_fixed,
+.order-detail__product_review,
+.order-detail__product_review_finish{
     border: 1px solid rgb(246, 250, 246);
     background-color: rgb(246, 250, 246);
     border-radius: 20px;
     padding: 3px 8px;
     cursor: pointer;
     margin-top: 10px;
+    font-size: inherit;
 }
+
+.order-detail__product_review_finish{
+    cursor: inherit;
+}
+
 
 .order-detail__delivery-main {
     justify-content: center;

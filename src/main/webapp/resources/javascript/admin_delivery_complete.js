@@ -118,6 +118,8 @@ periodBtnAll.forEach((periodBtn) => {
 
 // 전체 선택 버튼 누를 경우
 bndlAllBtn.addEventListener("click", () => selectAllBNDL('dlvar_id'));
+
+// 구매확정 처리
 deliveryCompleteFixed.addEventListener('click',
     () => handleClickAdminDeliveryBtn('/admin/delivery/complete/fixed', '/admin/delivery/complete', DLVAR_SEQ_LIST, '구매확정 완료')
-); // 배송완료 처리
+);

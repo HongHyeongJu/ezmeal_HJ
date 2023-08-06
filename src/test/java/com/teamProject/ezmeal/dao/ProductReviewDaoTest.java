@@ -107,8 +107,13 @@ public class ProductReviewDaoTest {
     }
 
 
-
-
-
+    //taewan
+    @Test
+    public void insert_mini_review_from_orderDetail() {
+        ProductReviewDto dto = new ProductReviewDto(111L, "title", "후기를 30자나쓰라니 힘드네요", 5, 4L);
+        dto.setOrd_id(1001L);
+        dto.setMbr_id(1001L);
+        productReviewDao.insertReviewFromOrderDetail(dto);
+    }
 
 }

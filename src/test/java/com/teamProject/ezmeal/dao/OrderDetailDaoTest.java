@@ -60,7 +60,7 @@ public class OrderDetailDaoTest {
 
     @Test
     public void selectOrderDetailProductList () {
-        List<OrderDetailDto> orderDetailDtos = orderDetailDao.selectOrderDetailProductList(202307144199L);
+        List<OrderDetailDto> orderDetailDtos = orderDetailDao.selectOrderDetailProductList(20230717940L);
         System.out.println("orderDetailDtos = " + orderDetailDtos);
         System.out.println("orderDetailDtos.size() = " + orderDetailDtos.size());
     }
@@ -75,5 +75,14 @@ public class OrderDetailDaoTest {
     public void selectOrderDetailPk () {
         List<Long> longs = orderDetailDao.selectOrderDetailPk(202307248158L);
         System.out.println("longs = " + longs);
+    }
+    @Test
+    public void update_order_fixed() {
+        int i = orderDetailDao.updateOrderFixed(2023071794001L);
+    }
+
+    @Test
+    public void update_order_review() {
+        int i = orderDetailDao.updateOrderReview(2023071794001L);
     }
 }
