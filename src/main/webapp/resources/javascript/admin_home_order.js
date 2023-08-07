@@ -1,43 +1,61 @@
-//start: 주문 그래프
 google.charts.load("current", { packages: ["corechart"] });
 google.charts.setOnLoadCallback(drawPieChart);
 
 function drawPieChart() {
     const data = new google.visualization.DataTable();
-    data.addColumn("timeofday", "Time of Day");
-    data.addColumn("number", "Motivation Level");
+    data.addColumn("string", "월");
+    data.addColumn("number", "주문량");
 
     data.addRows([
-        [{ v: [8, 0, 0], f: "8 am" }, 1],
-        [{ v: [9, 0, 0], f: "9 am" }, 2],
-        [{ v: [10, 0, 0], f: "10 am" }, 3],
-        [{ v: [11, 0, 0], f: "11 am" }, 4],
-        [{ v: [12, 0, 0], f: "12 pm" }, 5],
-        [{ v: [13, 0, 0], f: "1 pm" }, 6],
-        [{ v: [14, 0, 0], f: "2 pm" }, 7],
-        [{ v: [15, 0, 0], f: "3 pm" }, 8],
-        [{ v: [16, 0, 0], f: "4 pm" }, 9],
-        [{ v: [17, 0, 0], f: "5 pm" }, 10],
+        ["9", 120],
+        ["10", 400],
+        ["11", 660],
+        ["12", 1000],
+        ["1", 1200],
+        ["2", 2000],
+        ["3", 1300],
+        ["4", 1600],
+        ["5", 2000],
+        ["6", 5000],
+        ["7", 3000],
+        ["8", 2600]
     ]);
 
-    const options = {
-        title: "금일 주문 현황",
+    var options = {
+        title: "월별 주문량",
         hAxis: {
-            title: "Time of Day",
-            format: "h:mm a",
-            viewWindow: {
-                min: [7, 30, 0],
-                max: [17, 30, 0],
+            title: "2022년 9월 ~ 2023년 8월",
+            titleTextStyle: {
+                color: "#333",
+                fontSize: 16,
             },
         },
         vAxis: {
-            title: "Rating (scale of 1-10)",
+            title: "주문 량",
+            titleTextStyle: {
+                color: "#333",
+                fontSize: 14,
+            },
+            minValue: 0,
+            gridlines: {
+                color: "transparent",
+            },
         },
-
-        width: 500, // 원하는 차트의 너비
-        height: 300, // 원하는 차트의 높이
+        colors: ["rgb(0, 199, 40)"],
+        width: 550,
+        height: 300,
+        legend: {
+            position: "none", // 범례 숨김
+        },
+        chartArea: {
+            left: 50,
+            top: 40,
+            width: "85%",
+            height: "70%",
+        },
     };
-    const chart = new google.visualization.ColumnChart(
+
+    var chart = new google.visualization.ColumnChart(
         document.getElementById("chart_shape1")
     );
 
