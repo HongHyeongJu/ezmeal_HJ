@@ -160,6 +160,9 @@ table {
 .mBoard .center {
     text-align: center;
 }
+.center .left{
+    text-align: left;
+}
 tbody {
     display: table-row-group;
     vertical-align: middle;

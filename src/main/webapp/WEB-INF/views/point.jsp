@@ -56,10 +56,10 @@
             <div class="mBoard eczmil30">
                 <table>
                     <colgroup>
-                        <col style="width:100px">
-                        <col style="width:450px;">
+                        <col style="width:130px">
+                        <col style="width:400px;">
                         <col style="width:120px">
-                        <col style="width:100px">
+                        <col style="width:120px">
                     </colgroup>
                     <thead>
                     <tr>
@@ -74,7 +74,7 @@
                     <c:forEach var="point" items="${pointList}">
                         <tr>
                             <td>${point.formattedTrjsDtm}</td>
-                            <td>${point.dscpt}</td>
+                            <td class="left">${point.name}</td>
                             <td>${point.vld_end_dt}</td>
                             <td>${point.trjs_pnt}</td>
                         </tr>
