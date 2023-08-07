@@ -25,7 +25,7 @@
         <div class="all">
             <div class="admin_graph">
                 <h1>주문</h1>
-                <div class="chart_div">
+                <div class="chart_div chart_div_order">
                     <h2 class="chart_name">주문량</h2>
                     <div id="chart_shape1"></div>
                 </div>
