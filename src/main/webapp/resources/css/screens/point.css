@@ -1,0 +1,174 @@
+.css-171zbec {
+    width: 820px;
+}
+*, :after, :before {
+    box-sizing: border-box;
+    margin: 0;
+}
+*, :after, :before, legend, td, th {
+    padding: 0;
+}
+body, button, input, select, textarea {
+    font-size: 14px;
+    color: #333;
+}
+.css-j0lifa {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding-bottom: 27px;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.css-fhxb3m {
+    display: flex;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.css-1268zpe {
+    font-weight: 500;
+    font-size: 24px;
+    color: rgb(51, 51, 51);
+    letter-spacing: -0.5px;
+    line-height: 48px;
+}
+.css-a3vgo2 {
+    padding-left: 11px;
+    font-size: 14px;
+    letter-spacing: -0.3px;
+    color: rgb(153, 153, 153);
+    line-height: 20px;
+}
+.css-1brkpx3 {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    border: 1px solid rgb(221, 221, 221);
+    margin-bottom: 40px;
+}
+.css-1brkpx3 > .item:first-of-type {
+    border-right: 1px solid rgb(221, 221, 221);
+}
+.css-1brkpx3 > .item {
+    display: flex;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 34px 60px 36px;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+}
+dl {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+.css-1brkpx3 > .item > .label {
+    color: rgb(0, 0, 0);
+    line-height: 20px;
+    font-size: 14px;
+}
+.css-1brkpx3 > .item > .price {
+    color: rgb(0, 199, 40);
+    line-height: 30px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0px;
+}
+dd {
+    display: block;
+    margin-inline-start: 40px;
+}
+.css-1brkpx3 > .item > .price > .unit {
+    font-weight: 400;
+}
+/* .board {
+    display: flex;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    border-top: 2px solid rgb(51, 51, 51);
+    border-bottom: 1px solid rgb(51, 51, 51);
+    padding: 20px 0px;
+    line-height: 20px;
+    letter-spacing: -0.5px;
+    font-size: 14px;
+    font-weight: 700;
+    list-style: none;
+    text-align: center;
+} */
+/* .css-5v2xqx {
+    padding: 50px 0px;
+    display: flex;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 400;
+    color: rgb(117, 117, 117);
+} */
+
+.section {
+    margin: 0 0 24px;
+}
+
+
+.mBoard {
+    position: relative;
+    overflow: auto;
+    border-right: 1px solid #d9dadc;
+    border-left: 1px solid #d9dadc;
+    background-color: #fff;
+}
+.mBoard table {
+    border-top: 1px solid #d9dadc;
+}
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+table {
+    table-layout: fixed;
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+.mBoard thead th {
+    border: 1px solid #d9dadc;
+    text-align: center;
+    vertical-align: middle;
+}
+.mBoard th {
+    font-weight: normal;
+    background-color: #fafafb;
+}
+.mBoard th, .mBoard td {
+    padding: 9px 9px 7px;
+    vertical-align: top;
+}
+.mBoard .center {
+    text-align: center;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+.mBoard td {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+.mBoard tbody td {
+    border: 1px solid #d9dadc;
+}
