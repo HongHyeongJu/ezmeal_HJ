@@ -1,12 +1,15 @@
 package com.teamProject.ezmeal.domain;
 
+import lombok.Data;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Data
 public class ProductReviewDto {
 
-    private Long revw_id, ord_id, prod_cd, mbr_id;
+    private Long revw_id, ord_id, prod_cd, mbr_id, ord_prod_dtl_id;
     private String writer, title, stmt;
     private LocalDate dlvry_cmpl_dt, revw_posbl_dt, wrt_dt;
     private Integer thumb, star;
@@ -60,6 +63,7 @@ public class ProductReviewDto {
         return "ProductReviewDto{" +
                 "revw_id=" + revw_id +
                 ", ord_id=" + ord_id +
+                ", ord_prod_dtl_id=" + ord_prod_dtl_id +
                 ", mbr_id=" + mbr_id +
                 ", writer=" + writer +
                 ", prod_cd='" + prod_cd + '\'' +
@@ -211,4 +215,17 @@ public class ProductReviewDto {
     public void setUp_id(String up_id) {
         this.up_id = up_id;
     }
+
+    // taewan
+
+
+    public ProductReviewDto( Long ord_prod_dtl_id, String title, String stmt, Integer star,Long prod_cd) {
+        this.ord_prod_dtl_id = ord_prod_dtl_id;
+        this.title = title;
+        this.stmt = stmt;
+        this.star = star;
+        this.prod_cd = prod_cd;
+    }
+
+
 }

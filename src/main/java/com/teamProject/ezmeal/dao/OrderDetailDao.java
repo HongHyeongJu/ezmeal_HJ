@@ -33,4 +33,15 @@ public class OrderDetailDao {
     public List<Long> selectOrderDetailPk(Long ordId) {
         return session.selectList(namespace + "select_order_detail_pk", ordId);
     }
+
+    // 주문상세 page에서 구매확정으로 변경 시, od - stus update
+    public int updateOrderFixed(Long ordDtlId) {
+        return session.update(namespace + "update_order_fixed", ordDtlId);
+    }
+
+    // 주문상세 page에서 리뷰작성 시, review_yn update
+    public int updateOrderReview(Long ordDtlId) {
+        return session.update(namespace + "update_order_review", ordDtlId);
+    }
+
 }

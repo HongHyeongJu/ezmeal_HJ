@@ -134,8 +134,14 @@
         GROUP BY prod_cd
     </select>
 
-
-
-
+    <!-- taewan -->
+    <!--리뷰 생성-->
+<!--    todo logic 깔끔하게 해서 writer 다시 받아오기-->
+    <insert id="insert_mini_review_from_orderDetail" parameterType="ProductReviewDto">
+        INSERT INTO tb_product_review (ord_id, ord_prod_dtl_id, title, stmt,star, mbr_id,
+                                       prod_cd, writer, wrt_dt, revw_opub_yn)
+        VALUES (#{ord_id}, #{ord_prod_dtl_id},  #{title}, #{stmt}, #{star}, #{mbr_id},
+                #{prod_cd}, '김*바', CURDATE(), 'y')
+    </insert>
 
 </mapper>

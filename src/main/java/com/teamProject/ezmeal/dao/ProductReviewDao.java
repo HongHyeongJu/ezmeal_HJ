@@ -116,7 +116,11 @@ public class ProductReviewDao {
         return session.selectList(namespace+"get_review_count_all");
     }
 
-
+    // taewan
+    /*리뷰 생성하기*/
+    public Integer insertReviewFromOrderDetail(ProductReviewDto productReviewDto) {
+        return session.insert("insert_mini_review_from_orderDetail", productReviewDto);
+    }
 
 
 
