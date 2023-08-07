@@ -41,7 +41,7 @@
                 <a href="/product/detail?prod_cd=${prod.getProd_cd()}"> <!--상품 대표 이미지-->
                     <c:set var="productImage" value="${prodImgMap[prod.prod_cd]}"/>
                     <img id="prod_top top_img"
-                         src="/img/${productImage != null ? productImage.url : 'ezmeal_logo'}.png"/>
+                         src="/img/${productImage != null ? productImage.url : 'ezmeal_logo.png'}"/>
                         <%--            <img id="prod_top top_img"--%>
                         <%--               src="/img/${productImage.url}.png"/>--%>
                         <%--               src="/img/${empty productImg ? 'ezmeal_logo' : productImg}.png"/>--%>
