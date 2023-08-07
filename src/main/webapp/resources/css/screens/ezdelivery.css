@@ -55,16 +55,6 @@ a {
     position: relative;
 }
 
-.search_inner_box {
-    position: absolute;
-    border-style: none;
-    align-items: center;
-    font-size: 16px;
-    width: 300px;
-    height: 30px;
-    margin-top: 10px;
-}
-
 .search_inner_box:hover,
 .search_inner_box:focus {
     outline: none;
@@ -484,10 +474,10 @@ section ul li.active {
 }
 
 .delivery-region {
-    width: 1400px;
+    width: 1000px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     transform: translate(20%, 20%);
 }
 
