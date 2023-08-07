@@ -98,7 +98,7 @@ document.querySelector('#productForm').addEventListener('submit', function(event
     let opt_yn = productOptionDto.length > 0 ? 'y' : 'n';
 
     //등록날짜
-    const currentDate = new Date();
+    // const currentDate = new Date();
     // const year = currentDate.getFullYear();
     // const month = String(currentDate.getMonth() + 1).padStart(2, '0');
     // const day = String(currentDate.getDate()).padStart(2, '0');
@@ -132,7 +132,7 @@ document.querySelector('#productForm').addEventListener('submit', function(event
         vld_start_dt: document.querySelector('#vld_start_dt').value,
         vld_end_dt: document.querySelector('#vld_end_dt').value,
         mng: document.querySelector('#mng').value,
-        fst_reg_dt: currentDate,
+        fst_reg_dt: null,
         sale_yn: document.querySelector('input[name="product.sale_yn"]:checked').value,
         dp_yn: document.querySelector('input[name="product.dp_yn"]:checked').value,
         del_yn: 'n',
@@ -211,9 +211,12 @@ document.querySelector('#productForm').addEventListener('submit', function(event
 
 
     },
-    error: function(error) {
+    error: function(xhr, status, error) {
         alert("등록 실패");
         console.log(error);
+        alert("상태 코드: " + xhr.status);
+        alert("응답 본문: " + xhr.responseText);
+        alert("오류 메시지: " + error);
     },
 });
 
