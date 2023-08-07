@@ -25,7 +25,7 @@
         <div class="left_bigdiv">
             <div class="left page_info_div">
                 <h3>상품 판매 설정</h3>
-                <p>상품 등록 페이지 입니다.  ${mode} </p>
+                <p>상품 등록 페이지 입니다 </p>
             </div>
             <!--------------- page_info_div ---------------->
             <div class="left product_info_div">
@@ -55,8 +55,8 @@
                         <th>재고관리 여부</th>
                     </tr>
                     <tr>
-                        <td>
-                            <select id="prod_stus" name="product.prod_stus" ${mode == 'READ' ? 'readonly' : ''} >
+                        <td class="select_box_center">
+                            <select id="prod_stus" name="product.prod_stus" class="select_box " ${mode == 'READ' ? 'readonly' : ''} >
                                 <c:forEach items="${stusList}" var="stus">
                                     <option value="${stus.prod_stus_cd}"
                                             <c:if test="${not empty product.getProd_stus() and stus.prod_stus_cd == product.getProd_stus()}">selected</c:if>
@@ -82,7 +82,7 @@
             <div class="left product_names_div">
                 <label for="name" class="name_label"><strong>상품 거래처:</strong>
                 </label>
-                <select id="cust_cd" name="product.cust_cd">
+                <select id="cust_cd" name="product.cust_cd" class="select_box">
                     <c:forEach items="${custList}" var="cust">
                         <option value="${cust.cust_cd}"
                                 <c:if test="${not empty product.getCust_cd() and cust.cust_cd == product.getCust_cd()}">selected</c:if>
@@ -91,7 +91,7 @@
                 </select>
                 <label for="name" class="name_label2"><strong>상품 카테고리:</strong>
                 </label>
-                <select id="cate_cd" name="product.cate_cd">
+                <select id="cate_cd" name="product.cate_cd" class="select_box">
                     <c:forEach items="${cateList}" var="cate">
                         <option value="${cate.cate_cd}"
                                 <c:if test="${not empty product.getCate_cd() and cate.cate_cd == product.getCate_cd()}">selected</c:if>
@@ -121,7 +121,7 @@
                             <p>원</p>
                         </td>
                         <td>
-                            <select id="dc_cd" name="product.dc_cd">
+                            <select id="dc_cd" name="product.dc_cd" class="select_box">
                                 <c:forEach items="${dcList}" var="dc">
                                     <option value="${dc.dc_cd}"
                                             data-discount-type="${dc.typ}"
@@ -174,7 +174,7 @@
                             <!-- [3] 할인코드 -->
                             <li>
                                 <span>할인코드</span>
-                                <select name="options[${status.index}].dc_cd">
+                                <select name="options[${status.index}].dc_cd" class="select_box" >
                                     <c:forEach items="${dcList}" var="dc">
                                         <option value="${dc.dc_cd}"
                                                 <c:if test="${not empty option.dc_cd and dc.dc_cd == option.dc_cd}">selected</c:if>
@@ -233,12 +233,10 @@
                     </tr>
                     <tr>
                         <th class="storage_header sh_2">보관방법</th>
-                        <td>
+                        <td class="storage_header_td_input">
                             <input type="radio" name="product.sfkp_mtd" value="실온보관" ${product.getSfkp_mtd().equals("실온보관") ? 'checked' : ''}>실온보관
                             <input type="radio" name="product.sfkp_mtd" value="냉장보관(0~10도)" ${product.getSfkp_mtd().equals("냉장보관(0~10도)") ? 'checked' : ''}>냉장보관(0~10도)
                             <input type="radio" name="product.sfkp_mtd" value="-18도 이하 냉동보관" ${product.getSfkp_mtd().equals("-18도 이하 냉동보관") ? 'checked' : ''}>-18도 이하 냉동보관
-                            <br>
-                            <br>
                             <input type="radio" name="product.sfkp_mtd" value="직접입력">직접입력
                             <input type="text" id="custom_sfkp_mtd" name="custom_sfkp_mtd" placeholder="직접 입력" disabled>
                         </td>
@@ -252,15 +250,15 @@
                 <table class="storage_div_table">
                     <tr class="storage_div_tr">
                         <th class="storage_header">상품 요약설명</th>
-                        <td><textarea id="dscpt" name="product.dscpt" rows="3" cols="50">${product.getDscpt()}</textarea></td>
+                        <td><textarea id="dscpt" name="product.dscpt" rows="3" cols="60" maxlength="640px" >${product.getDscpt()}</textarea></td>
                     </tr>
                     <tr class="storage_div_tr ">
                         <th class="storage_header">상품 상세설명</th>
-                        <td><textarea id="detail" name="product.detail" rows="3" cols="50">${product.getDetail()}</textarea></td>
+                        <td><textarea id="detail" name="product.detail" rows="3" cols="60" maxlength="640px">${product.getDetail()}</textarea></td>
                     </tr>
                     <tr class="storage_div_tr">
                         <th class="storage_header">비고</th>
-                        <td><textarea id="rmk" name="product.rmk" rows="3" cols="50">${product.getRmk()}</textarea></td>
+                        <td><textarea id="rmk" name="product.rmk" rows="3" cols="60" maxlength="640px">${product.getRmk()}</textarea></td>
                     </tr>
                 </table>
             </div>
@@ -277,16 +275,15 @@
                         <td><input type="number" id="min_qty" name="product.min_qty" value="${product.getMin_qty()}" min="1" value="1" ><p>개</p></td>
                         <td><input type="number" id="weight" name="product.weight" value="${product.getWeight()}"><p>g</p></td>
                         <td><input type="text" id="stnd" name="product.stnd" value="${product.getStnd()}" placeholder="가로*세로*너비" ></td>
+
                     </tr>
                 </table>
                 <table class="dscpt_set_div_table_2">
                     <tr>
                         <th class="dscpt_header">조리법</th>
-                        <td colspan="3" rows="3" cols="50" ><textarea id="recipe" name="product.recipe" rows="3" cols="50" >${product.getRecipe()}</textarea></td>
-                    </tr>
-                    <tr>
+                        <td  ><textarea id="recipe" name="product.recipe" rows="2" cols="50" maxlength="640px">${product.getRecipe()}</textarea></td>
                         <th class="dscpt_header">활용법</th>
-                        <td colspan="3" rows="3" cols="50" ><textarea id="mtd" name="product.mtd" rows="3" cols="50" >${product.getMtd()}</textarea></td>
+                        <td  ><textarea id="mtd" name="product.mtd" rows="2" cols="50" maxlength="640px">${product.getMtd()}</textarea></td>
                     </tr>
                     <tr class="dscpt_set_tr_2">
                         <th class="dscpt_header">소비기한</th>
@@ -304,44 +301,48 @@
             </div>
             <!--------------- product_detail_info_div ---------------->
 
-            <div class="right img_upload_div">
-                <input type='file'  name='uploadFile' multiple>
-                <button type="button"  id="uploadBtn">Upload</button>
-            </div>
+<%--            <div class="right img_upload_div">--%>
+<%--                <input type='file'  name='uploadFile' multiple>--%>
+<%--                <button type="button"  id="uploadBtn">Upload</button>--%>
+<%--            </div>--%>
             <!--------------- img_upload_div ---------------->
 
             <div class="right img_set_div">
                 <ul class="upload_img_thumnail img_ul_1">
-                    <li>대표</li><br>
-                    <li><img src='/resource/img/attach.png'></li>
-                </ul>
-                <ul class="upload_img_thumnail img_ul_2">
-                    <li>메인</li><br>
-                    <li><img src='/resource/img/attach.png'></li>
-                    <li><img src='/resource/img/attach.png'></li>
-                    <li><img src='/resource/img/attach.png'></li>
-                    <li><img src='/resource/img/attach.png'></li>
-                </ul>
-                <ul class="upload_img_thumnail img_ul_3">
-                    <li>상세</li><br>
-                    <li><img src='/resource/img/attach.png'></li>
+                    <li clas="img_li_title">상품 이미지 등록</li><br>
+                    <li clas="img_li_dtail">대표 이미지 1개, 상품 상세 메인 이미지 N개, 상세 이미지 1개 등록해주세요<br>
+                        상세 이미지 권장 사이즈: 가로 1100px
+                        </li><br><br>
+                    <li clas="img_li_input"><input type="file" name="uploadProdImg" id="mainImgInput" multiple></li>
                 </ul>
             </div>
             <!--------------- img_set_div ---------------->
 
             <div class="right button_set_div">
-                <button type="submit"  class="prod_btn" id="regi_btn">상품 등록</button>
-                <button type="button"  class="prod_btn" id="modi_btn">상품 수정</button>
-                <button type="button"  class="prod_btn" id="modi_post_btn">상품 수정</button>
-                <button type="button"  class="prod_btn" id="del_btn">상품 삭제</button>
-                <button type="button"  class="prod_btn" id="list_btn">상품 목록</button>
-                <button type="button"  class="prod_btn" id="prev_btn">미리보기</button>
+        <c:if test="${mode == 'READ'}">
+            <button type="submit" class="prod_btn btn_css" id="regi_btn">상품 등록</button>
+        </c:if>
+        <c:if test="${mode == 'WRITE'}">
+            <button type="submit" class="prod_btn btn_css" id="regi_post_btn">상품 등록</button>
+        </c:if>
+        <c:if test="${mode == 'READ'}">
+            <button type="button" class="prod_btn btn_css" id="modi_btn">상품 수정</button>
+        </c:if>
+        <c:if test="${mode == 'MODIFY'}">
+            <button type="submit" class="prod_btn btn_css" id="modi_post_btn">상품 수정</button>
+        </c:if>
+        <c:if test="${mode == 'READ'}">
+                <button type="button" class="prod_btn btn_css" id="del_btn" >상품 삭제</button>
+        </c:if>
+                <a href="/admin/prod/list"><button type="button" class="prod_btn btn_css" id="list_btn" >상품 목록</button></a>
             </div>
+
             <!--------------- button_set_div ---------------->
         </div>
     </div>
 </form>
-
+<!--제이쿼리 사용을 위한 스크립트-->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script>
     window.onload = function() {
         /* 공급가, 소비자가, 할인코드에 이벤트 등록하기 */
@@ -353,7 +354,7 @@
 <!-- JavaScript 코드 -->
 <!-- 공급가, 소비자가, 할인코드에 이벤트 등록하기 -->
 <!---- 보관상태 직접입력 선택시에만 텍스트칸 활성화----->
-<script src="/javascript/product_regist_mode_write.js"></script>
+<script src="/javascript/product_regist_mode_write_copy.js"></script>
 
 
 <script src="/javascript/product_regist_make_option.js"></script>
@@ -375,3 +376,4 @@
 <%--    }--%>
 
 <%--</script>--%>
+

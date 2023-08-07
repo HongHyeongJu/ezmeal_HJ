@@ -48,6 +48,19 @@ public class ProductImgServiceTest {
         typeAndUrlMap.forEach((k,v)-> System.out.println("k: "+k+", v: "+v));
 
     }
+    
+    
+    
+        @Test
+    public void test3() throws SQLException {
+        ProductImgDto productImgDto = new ProductImgDto( 100L, "테스트" , "테스트", "테스트",  300,  300, "테스트", null );
+        int insertNum = productImgService.registProductImgInfoOne(productImgDto);
+            System.out.println("insertNum = " + insertNum);
+
+    }
+
+    
+    
 
 
 }

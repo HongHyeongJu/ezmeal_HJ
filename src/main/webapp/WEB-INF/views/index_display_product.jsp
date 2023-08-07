@@ -37,7 +37,7 @@
         <div class="prod_outer">
           <c:set var="emplImg" value="${prodImgMap[empl.prod_cd]}" />
           <figure>
-            <img src="/img/${emplImg.url}.png">
+            <img src="/img/${emplImg.url}">
           </figure>
           <div class="prod_text">
             <span class="pord_name">${empl.name}</span>
@@ -77,7 +77,7 @@
           <div class="prod_outer">
             <c:set var="healthImg" value="${prodImgMap[health.prod_cd]}" />
             <figure>
-              <img src="/img/${healthImg.url}.png">
+              <img src="/img/${healthImg.url}">
             </figure>
             <div class="prod_text">
               <span class="pord_name">${health.name}</span>
@@ -118,7 +118,7 @@
           <div class="prod_outer">
             <c:set var="eatImg" value="${prodImgMap[eat.prod_cd]}" />
             <figure>
-              <img src="/img/${eatImg.url}.png">
+              <img src="/img/${eatImg.url}">
             </figure>
             <div class="prod_text">
               <span class="pord_name">${eat.name}</span>
@@ -159,7 +159,7 @@
           <div class="prod_outer">
             <c:set var="homeImg" value="${prodImgMap[home.prod_cd]}" />
             <figure>
-              <img src="/img/${homeImg.url}.png">
+              <img src="/img/${homeImg.url}">
             </figure>
             <div class="prod_text">
               <span class="pord_name">${home.name}</span>
