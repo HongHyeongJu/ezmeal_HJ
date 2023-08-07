@@ -329,7 +329,7 @@
             <button type="button" class="prod_btn btn_css" id="modi_btn">상품 수정</button>
         </c:if>
         <c:if test="${mode == 'MODIFY'}">
-            <button type="submit" class="prod_btn btn_css" id="modi_post_btn">상품 수정</button>
+            <button type="button" class="prod_btn btn_css" id="modi_post_btn">상품 수정</button>
         </c:if>
         <c:if test="${mode == 'READ'}">
                 <button type="button" class="prod_btn btn_css" id="del_btn" >상품 삭제</button>
