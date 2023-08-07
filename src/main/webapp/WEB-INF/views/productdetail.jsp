@@ -36,7 +36,7 @@
       <c:when test="${not empty imgList}">
         <c:forEach var="img" items="${imgList}" varStatus="status">
           <c:if test="${img.typ=='대표'}">
-            <img class="main_img" src="/img/${img.url}.png" id="main_img"/>
+            <img class="main_img" src="/img/${img.url}" id="main_img"/>
           </c:if>
         </c:forEach>
       </c:when>
@@ -52,7 +52,8 @@
           <c:when test="${not empty imgList and status.count <= imgList.size()}">
             <c:set var="img" value="${imgList[status.count-1]}" />
             <c:if test="${img.typ=='메인'}">
-              <img class="mini_img 메인" src="../img/${img.url}.png" id="mini_img_${status.count}"/>
+              <img class="mini_img 메인" src="../img/${img.url}" id="mini_img_${status.count}"/>
+<%--              <img class="mini_img 메인" src="../img/${img.url}.png" id="mini_img_${status.count}"/>--%>
             </c:if>
           </c:when>
           <c:otherwise>
@@ -243,7 +244,7 @@
   </ul>
   <c:forEach var="img" items="${imgList}">
     <c:if test="${img.typ=='상세'}">
-      <img class="detail_img" src="../ezmeal/"${img.url}".png">
+      <img class="detail_img" src="../ezmeal/${img.url}">
     </c:if>
   </c:forEach>
 
