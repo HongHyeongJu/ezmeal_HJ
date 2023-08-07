@@ -28,13 +28,13 @@
         <div class="sign-up-container">
             <form action="/member/signup" method="get">
                 <h1>회원가입하기</h1>
-                <label for="startstart">소셜 및 일반회원으로 가입할 수 있습니다</label>
-                <figure class="ss_start" style="margin-bottom: 0px;">
-                    <img class="ss_start_img" src="/img/kakao_login.png" width="350px" height="50px" />
-                </figure>
-                <figure class="ss_start">
-                    <img class="ss_start_img" src="/img/naver_login.png" width="350px" height="50px" />
-                </figure>
+                <label>소셜 및 일반회원으로 가입할 수 있습니다</label>
+<%--                <figure class="ss_start" style="margin-bottom: 0px;">--%>
+<%--                    <img class="ss_start_img" src="/img/kakao_login.png" width="350px" height="50px" />--%>
+<%--                </figure>--%>
+<%--                <figure class="ss_start">--%>
+<%--                    <img class="ss_start_img" src="/img/naver_login.png" width="350px" height="50px" />--%>
+<%--                </figure>--%>
                 <button class="start_btn"><a href="/member/signup">&gt;&gt;&nbsp;일반회원 가입하기&nbsp;&lt;&lt;</a></button>
             </form>
         </div>
@@ -58,12 +58,12 @@
                 </div>
                 <!-- <label for="nextnext"><hr class="horizontal_line">
                     &nbsp;또는&nbsp;<hr class="horizontal_line"></label> -->
-                <figure class="ss_login" style="margin-bottom: 0px;">
-                    <img class="ss_login_img" src="/img/kakao_login.png" width="350px" height="50px" />
-                </figure>
-                <figure class="ss_login">
-                    <img class="ss_login_img" src="/img/naver_login.png" width="350px" height="50px" />
-                </figure>
+<%--                <figure class="ss_login" style="margin-bottom: 0px;">--%>
+<%--                    <img class="ss_login_img" src="/img/kakao_login.png" width="350px" height="50px" />--%>
+<%--                </figure>--%>
+<%--                <figure class="ss_login">--%>
+<%--                    <img class="ss_login_img" src="/img/naver_login.png" width="350px" height="50px" />--%>
+<%--                </figure>--%>
 
             </form>
         </div>
@@ -75,7 +75,7 @@
             </div>
             <div class="overlay-right">
                 <figure class="ezmeal_log">
-                    <img src="/img/ezmeal_logo2.png" width="150px" height="150px" />
+                    <img src="/img/main/ezmeal_logo.png" width="150px" height="150px" />
                 </figure>
                 <!-- <h1>EZ_MEAL</h1> -->
                 <p>EZ_MEAL이 처음이라면?</p>
