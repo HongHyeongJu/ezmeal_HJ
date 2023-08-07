@@ -15,12 +15,25 @@
     </properties>
 
     <dependencies>
+
+        <!--파일 업로드를 위한 디팬던시 추가  commons-io  &  commons-fileupload  --><!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.11.0</version>
+        </dependency><!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.5</version>
+        </dependency>
+
         <!--		&lt;!&ndash; https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind &ndash;&gt;-->
-        		<dependency>
-        			<groupId>com.fasterxml.jackson.core</groupId>
-        			<artifactId>jackson-databind</artifactId>
-        			<version>2.15.1</version>
-        		</dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.15.1</version>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1 -->
         <!--		이자식이 mysql warning 띄우는 녀석 절대 쓰지 말 것-->
