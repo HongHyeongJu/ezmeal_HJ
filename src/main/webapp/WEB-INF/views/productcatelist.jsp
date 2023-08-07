@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: hhju2
@@ -114,8 +115,11 @@
 
                   <!--판매 가격-->
                   <span class="sale_prc">
-                          <strong>${sale_prc_opt}</strong>원
+                          <strong><fmt:formatNumber value="${sale_prc_opt}" type="number" pattern="#,##0"/> </strong>원
                   </span>
+<%--                  <span class="sale_prc">--%>
+<%--                          <strong>${sale_prc_opt}</strong>원--%>
+<%--                  </span>--%>
 
                   <!--소비자 가격-->
                   <c:if test="${cnsmr_prc_opt != sale_prc_opt}">
@@ -127,16 +131,25 @@
                 </c:when>
                 <c:otherwise> <!--옵션 없을 때----------------------------------------------->
 
+                      <c:set var="cnsmr_prc" value="${prod.getCnsmr_prc()}" />
+                      <c:set var="sale_prc" value="${prod.getSale_prc()}" />
+
+
                   <!--할인 퍼센트-->
-                  <span class="dc_cd">
-                        <strong>${prod.getDc_rate()}</strong>%
-                  </span>
+                  <c:if test="${cnsmr_prc != sale_prc}">
+                      <span class="dc_cd">
+                            <strong>${prod.getDc_rate()}</strong>%
+                      </span>
+                  </c:if>
 
 
                   <!--판매 가격-->
                   <span class="sale_prc">
-                        <strong>${prod.getSale_prc()}</strong>원
+                          <strong><fmt:formatNumber value="${prod.getSale_prc()}" type="number" pattern="#,##0"/> </strong>원
                   </span>
+<%--                  <span class="sale_prc">--%>
+<%--                        <strong>${prod.getSale_prc()}</strong>원--%>
+<%--                  </span>--%>
 
                   <!--소비자 가격-->
                   <c:if test="${cnsmr_prc != sale_prc}">

@@ -200,7 +200,7 @@ span.sale_prc {
     margin-right: 5px;
     font-size: 120%;
     font-weight: bold; /* 굵은 글꼴 설정 */
-
+    width: 180px;
     font-style: normal;
 }
 
