@@ -53,7 +53,7 @@
     </select>
 
     <select id="selectPointList" parameterType="Long" resultType="PointTransactionHistoryDto">
-        SELECT trjs_dtm, dscpt, vld_end_dt, trjs_pnt
+        SELECT trjs_dtm, name, dscpt, vld_end_dt, trjs_pnt
         FROM TB_POINT_TRANSACTION_HISTORY
         WHERE mbr_id = #{memberId}
         ORDER BY pnt_trjs_hist_seq desc
