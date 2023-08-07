@@ -23,7 +23,7 @@
 <!--start : 공지사항 글 등록 페이지-->
 <div class="notice-board">
     <div class="notice-board-inner">
-        <div class="notice-title">공지사항</div> <!--글 등록 페이지 상단 제목-->
+        <div class="notice-title">공지사항 등록</div> <!--글 등록 페이지 상단 제목-->
     </div>
 
     <!-- 글 등록 테이블 -->
@@ -40,22 +40,36 @@
                     <!--name 속성은 보통 데이터베이스의 열(컬럼) 이름과 매칭되도록 설정-->
                 </td>
             </tr>
+    <%@ page import="java.text.SimpleDateFormat"%>
+    <%@ page import="java.util.Date"%>
+
+    <%
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDate = sdf.format(new Date());
+    %>
+    <tr> <!--status : 작성일-->
+        <th class="admin-notice-resistration-table-right">작성일</th>
+        <td class="admin-notice-resistration-table-left">
+            <input type="text" id="admin-notice-input2" name="wrt_dt" value="<%= currentDate %>" required style = "font-size: medium">
+        </td>
+    </tr>
             <tr> <!--status : 공지중요도-->
                 <th class="admin-notice-resistration-table-right">공지 중요도</th>
-                <td class="admin-notice-resistration-table-left ">
-                    <label><input type="radio" name="status" value="긴급" ${product.getSfkp_stus().equals("긴급") ? 'checked' : ''}>긴급</label>
-                    <label><input type="radio" name="status" value="중요" ${product.getSfkp_stus().equals("중요") ? 'checked' : ''}>중요</label>
-                    <label><input type="radio" name="status" value="일반" ${product.getSfkp_stus().equals("일반") ? 'checked' : ''}>일반</label>
-
+                <td class="admin-notice-resistration-table-left" >
+                    <label style="margin-right: 20px;"><input type="radio" name="status" value="긴급" ${product.getSfkp_stus().equals("긴급") ? 'checked' : ''}>긴급</label>
+                    <label style="margin-right: 20px;"><input type="radio" name="status" value="중요" ${product.getSfkp_stus().equals("중요") ? 'checked' : ''}>중요</label>
+                    <label style="margin-right: 20px;"><input type="radio" name="status" value="일반" ${product.getSfkp_stus().equals("일반") ? 'checked' : ''}>일반</label>
+                </td>
     </td>
     </tr>
     <tr> <!--typ : 공지유형-->
         <th class="admin-notice-resistration-table-right">공지 유형</th>
         <td class="admin-notice-resistration-table-left ">
-            <label><input type="radio" name="typ" value="배송" ${product.getSfkp_stus().equals("배송") ? 'checked' : ''}>배송</label>
-            <label><input type="radio" name="typ" value="정책" ${product.getSfkp_stus().equals("정책") ? 'checked' : ''}>정책</label>
-            <label><input type="radio" name="typ" value="서비스점검" ${product.getSfkp_stus().equals("서비스점검") ? 'checked' : ''}>서비스점검</label>
-            <label><input type="radio" name="typ" value="기타" ${product.getSfkp_stus().equals("기타") ? 'checked' : ''}>기타</label>
+            <label style="margin-right: 20px;"><input type="radio" name="typ" value="배송" ${product.getSfkp_stus().equals("배송") ? 'checked' : ''}>배송</label>
+            <label style="margin-right: 20px;"><input type="radio" name="typ" value="정책" ${product.getSfkp_stus().equals("정책") ? 'checked' : ''}>정책</label>
+            <label style="margin-right: 20px;"><input type="radio" name="typ" value="서비스점검" ${product.getSfkp_stus().equals("서비스점검") ? 'checked' : ''}>서비스점검</label>
+            <label style="margin-right: 20px;"><input type="radio" name="typ" value="기타" ${product.getSfkp_stus().equals("기타") ? 'checked' : ''}>기타</label>
+
         </td>
     </tr>
     <tr> <!--stmt : 공지 게시글 본문-->
@@ -64,21 +78,16 @@
             <textarea class="notice_stmt" name="stmt"></textarea>
         </td>
     </tr>
-<%--    <tr> <!-- 비밀번호-->--%>
-<%--        <th class="admin-notice-resistration-table-right">비밀번호</th>--%>
-<%--        <td class="admin-notice-resistration-table-left ">--%>
-<%--            <input type="text" id="admin-notice-input2" name="input2" required>--%>
-<%--        </td>--%>
-<%--    </tr>--%>  <!--내 db에는 비밀번호가 없어 -->
+
 
     <tr> <!-- 공지 글 보이게 할지 안할지 여부-->
         <th class="admin-notice-resistration-table-right">글 게시여부</th>
         <td class="admin-notice-resistration-table-left ">
-            <span class="notice-label"> <!--글 숨김여부-->
-              <input id="hide_y/n" name="hide_yn"  value="true" type="checkbox"> <!--체크하면 게시글이 보이고 안하면 안보임-->
-               <label for="hide_y/n"></label>
-             </span>
-            <!--hide[]의 []은 체크박스의 값을 배열형태로 서버로 전송하고자 할때 사용, B는 체크박스가 선택되었을때 서버로 전송되는값-->
+             <span class="notice-label"> <!--글 숨김여부-->
+            <input id="hide_y/n" name="hide_yn" value="true" type="checkbox">
+                 <!--체크하면 게시글이 보이고 안하면 안보임-->
+            <label for="hide_y/n"></label>
+            </span>
         </td>
     </tr>
     </table>

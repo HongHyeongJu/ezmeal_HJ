@@ -57,7 +57,7 @@ public class NoticeDaoTest {
         int deletenumber = noticeDao.delete(22L);
         // 새로운 NoticeDto 객체를 생성하고 데이터를 설정합니다.
         NoticeDto noticeDto = new NoticeDto
-                (1L,"ezmeal", "긴급공지", "안녕하세용ㄹㅇㄹㅇㄹ" );
+                ("ezmeal", "긴급공지", "안녕하세용ㄹㅇㄹㅇㄹ" );
         System.out.println("noticeDto: " + noticeDto);
 
         int resultnumber = noticeDao.insert(noticeDto);
@@ -102,12 +102,23 @@ public class NoticeDaoTest {
     @Test
     public void insertdata() {
         for (int i = 1; i <= 89; i++) {
-            NoticeDto noticeDto = new NoticeDto((long) i, "ezmeal", "notitle", "no content", "2023-7-28");
+            NoticeDto noticeDto = new NoticeDto("ezmeal", "notitle", "no content", "2023-7-28");
             System.out.println("noticeDto: " + noticeDto);
             noticeDao.save(noticeDto);
         }
 
     }
+
+    @Test
+    public void test4(){
+        NoticeDto noticeDto = new NoticeDto("ezmeal", "notitle", "no content", "2023-7-28");
+        System.out.println("noticeDto: " + noticeDto.toString());
+        int insert_num= noticeDao.insert(noticeDto);
+        System.out.println("insert_num = " + insert_num);
+        
+    }
+
+
 
 
 }

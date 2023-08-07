@@ -25,7 +25,62 @@
         각자 맡은 관리자 페이지 내용 이 디브 안에 쓰면 됩니다.  -->
         <h1>admin home 입니다.</h1>
     </div>
+    <div class="all">
+        <div class="admin_graph">
+            <h1>주문</h1>
+            <div class="chart_div">
+                <h2 class="chart_name">주문량</h2>
+                <div id="chart_shape1"></div>
+            </div>
+        </div>
 
+        <div class="admin_graph">
+            <h1>상품</h1>
+            <div class="chart_div">
+                <h2 class="chart_name">홍형주</h2>
+                <div id="chart_shape2"></div>
+            </div>
+        </div>
+        <div class="admin_graph">
+            <h1>회원</h1>
+            <div class="chart_div">
+                <h2 class="chart_name">백현욱</h2>
+                <div id="chart_shape3"></div>
+            </div>
+        </div>
+        <div class="admin_graph">
+            <h1>게시판</h1>
+            <div class="chart_div">
+                <h2 class="chart_name">이나경</h2>
+                <div id="chart_shape4"></div>
+            </div>
+        </div>
+    </div>
+
+    <!--주문 그래프-->
+    <script
+            type="text/javascript"
+            src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <!--상품 그래프-->
+    <script
+            type="text/javascript"
+            src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <!--회원 그래프-->
+    <script
+            type="text/javascript"
+            src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <!--게시판 그래프-->
+    <script
+            type="text/javascript"
+            src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <!-- js 링크-->
+    <script src="adminmain.js"></script>
 </div>
 </body>
 </html>
+
+
