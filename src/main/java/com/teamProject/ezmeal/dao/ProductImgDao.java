@@ -43,6 +43,12 @@ public class ProductImgDao {
         return session.selectList(namespace+"select_all_img_list_typ_is_represent");
     }
 
+    /*이미지 INSERT*/
+    public int insertImgOne(ProductImgDto productImgDto) throws SQLException {
+        return session.insert(namespace+"insert_prod_img", productImgDto);
+    }
+
+
 
 }
 

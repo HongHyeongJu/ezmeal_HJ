@@ -80,40 +80,10 @@ public class ProductService {
 
             Map<String, String> cateCdAndNameMap =productCategoryService.getAllProdCateCdAndNameList();
             String cateName = cateCdAndNameMap.get(cate_cd);
-//            System.out.println("cate_cd:"+cate_cd);
-//            System.out.println("cateName:"+cateName);
-//            System.out.println("sortkeyword: "+sortkeyword);
-//            System.out.println("prodList.size(): "+ prodList);
-
-//            HashMap fourTypesMap = getAllTypImgOptRivews();
-//
-//            /*모든상품 '대표'이미지 리스트*/
-//            Map<Long,ProductImgDto> prodImgMap = (Map<Long,ProductImgDto>)fourTypesMap.get("prodImgMap");
-//            /*모든상품의 옵션 리스트*/
-//            Map<Long,List<ProductOptionDto>> prodOptMap = (Map<Long,List<ProductOptionDto>>)fourTypesMap.get("prodOptMap");
-//            /*모든상품  평점, 리뷰 숫자*/
-//            Map<Long,Double> reviewAvgMap = (Map<Long,Double>)fourTypesMap.get("reviewAvgMap");
-//            Map<Long,Integer> reviewCntMap = (Map<Long,Integer>)fourTypesMap.get("reviewCntMap");
-
-//            /*카테고리 상품 '대표'이미지 리스트*/
-//            Map<Long,ProductImgDto> prodImgMap = productImgService.cateCdImgListConvertToMap(cate_cd);
-//            /*카테고리 상품의 옵션 리스트*/
-//            Map<Long,List<ProductOptionDto>> prodOptMap =  prodCdListChangeToOptionMap(cate_cd);
-//            /*할인율 강조를 위한 할인코드 리스트 */
-////            List<ProductDiscountDto> discountList = productDiscountDao.selectDiscountListByCateCd();
-//            /*상품 평점, 리뷰 숫자*/
-//            Map<Long,Double> reviewAvgMap = productReviewDao.selectReviewAvgForProdList(cate_cd);
-//            Map<Long,Integer> reviewCntMap = productReviewDao.selectReviewCntForProdList(cate_cd);
 
             HashMap ProdListMap = new HashMap<>();
             ProdListMap.put("prodList",prodList);
             ProdListMap.put("cateName",cateName);
-//            ProdListMap.put("prodImgMap",prodImgMap);
-//            ProdListMap.put("prodOptMap",prodOptMap);
-////            ProdListMap.put("discountList",discountList);
-//            ProdListMap.put("reviewAvgMap",reviewAvgMap);
-//            ProdListMap.put("reviewCntMap",reviewCntMap);
-
             return ProdListMap;
 
         } catch (SQLException e) {
@@ -182,10 +152,6 @@ public class ProductService {
 
 
 
-
-
-
-
     /*-----------------------------------------------  관리자  -----------------------------------------*/
 
 
@@ -214,6 +180,8 @@ public class ProductService {
         return registProductMap;
     }
 
+
+
     /* 관리자 페이지 읽기, 수정 시 -> 할인,카테고리,거래처,상태 리스트 받아오기 */
     public HashMap getListForProductRegist () throws SQLException {
 
@@ -235,117 +203,6 @@ public class ProductService {
 
         return registProductMap;
 
-    }
-
-    /*관리자 상품 등록 메서드*/
-    /*상품 1개와 옵션 리스트를 매개변수로 받는다. 이거 PK중요해서 트랜잭션 해야함
-    *optList size() == 0이면 바로 아래 로직.
-    *optList size() > 0이면 새 옵션 객체 만들기
-    *상품 변수로 생성. optList의 index 0번 으로 넣기
-    * -------------------------------
-    *상품에 prod_cd가 ==null이면 Insert하고 1 받기, pk받기(가장 큰수의 pK)
-    *prod_cd != null 이면 update하고 1받기. pk 꺼내기
-    *꺼낸 pk -> option에 setProd_cd() 해주기
-    *prod_cd로 찾은 optList랑 equals면 update / 아니면 insert
-    *옵션 update, insert 카운트 해주기. optUpdateCnt / optInsertCnt
-    *알려줄것들 Map(prodInsertCnt, prodUpdateCnt,optUpdateCnt, optInsertCnt)으로 반환
-    * */
-    public HashMap<String, Integer> prodAndOptionRegist(ProductDto productDto, List<ProductOptionDto> productOptionDtos) throws SQLException {
-        Integer prodInsertCnt = 0;
-        Integer prodUpdateCnt = 0;
-        Integer optInsertCnt = 0;
-        Integer optUpdateCnt = 0;
-        HashMap<String, Integer> map = new HashMap<>();
-
-        /*혹시 낱개 옵션 만들어야 할까봐 미리 만드는 옵션 객체*/
-        ProductOptionDto prodOptOne = null;
-        int optListSize = productOptionDtos.size();
-//        System.out.println("optListSize (1) = " + optListSize);
-
-
-        try {
-            if(optListSize>0) {
-                /*상품정보로 낱개 옵션 만들기*/
-                prodOptOne = new ProductOptionDto(null, productDto.getDc_cd(), "낱개", "qty", 1,
-                                productDto.getCnsmr_prc(), productDto.getSale_prc(), productDto.getDc_rate(), productDto.getIn_id(), productDto.getUp_id());
-                /*옵션 List 0번째로 낱개 옵션 넣어주기*/
-                productOptionDtos.add(0, prodOptOne);
-                /*옵션 있을 때 일반 상품에서 소비자가, 판매가 없애기로 했음*/
-                productDto.setCnsmr_prc(null);
-                productDto.setSale_prc(null);
-            }
-
-            optListSize = productOptionDtos.size();
-            System.out.println("optListSize (2) = " + optListSize);
-
-            System.out.println("상품 Insert하기 전. PK_Prod_Cd: "+productDao.selectMaxProdCd());
-            /*상품 PK prod_cd*/
-            Long pkProdCd = productDto.getProd_cd();
-            System.out.println("productDto.getProd_cd() = " + pkProdCd);
-
-            /*상품 Insert나 Update하기*/
-            if(pkProdCd==null){
-                prodInsertCnt += productDao.insertProduct(productDto);
-                pkProdCd = productDao.selectMaxProdCd() ;
-                System.out.println("Insert 후 pkProdCd "+pkProdCd);
-            } else {
-                /*이미 있는 상품*/
-                System.out.println("이미 있어서 UPDATE");
-                prodUpdateCnt += productDao.updateProductInfo(productDto);
-            }
-
-            if(optListSize>0) {
-                /*prod_cd로 찾아오는 optList*/
-                boolean optEq = false;
-                List<ProductOptionDto> compareOptList = productOptionDao.selectOptionProductsByProdCd(pkProdCd);
-                /*반복문으로 옵션 없으면 Insert 있으면 Update*/
-                for (ProductOptionDto newOption : productOptionDtos) { /*폼에서 받아온 옵션 리스트*/
-                    // 옵션에 상품코드 넣어주기
-                    newOption.setProd_cd(pkProdCd);
-                    newOption.setTyp("qty");
-                    newOption.setIn_id("ezmeal");
-                    newOption.setUp_id("ezmeal");
-
-                    // 기존에 동일한 옵션이 있는지 확인
-                    boolean found = false;
-                    for (ProductOptionDto existingOption : compareOptList) {
-                        if (newOption.equals(existingOption)) {
-                            found = true;
-                            break;
-                        }
-                    }
-
-                    // 기존에 동일한 옵션이 있다면 update, 그렇지 않으면 insert
-                    if (found) {
-                        optUpdateCnt += productOptionDao.optionUpdate(newOption);
-                    } else {
-                        optInsertCnt += productOptionDao.optionInsert(newOption);
-                    }
-                }
-            }
-//            System.out.println("prodInsertCnt: "+prodInsertCnt);
-//            System.out.println("prodUpdateCnt: "+prodUpdateCnt);
-//            System.out.println("optInsertCnt: "+optInsertCnt);
-//            System.out.println("optUpdateCnt: "+optUpdateCnt);
-
-            map.put("prodInsertCnt",prodInsertCnt);
-            map.put("prodUpdateCnt",prodUpdateCnt);
-            map.put("optInsertCnt",optInsertCnt);
-            map.put("optUpdateCnt",optUpdateCnt);
-
-            return map;
-
-        } catch (SQLException e) {
-            System.out.println("SQLException");
-            return map;
-        } catch (NullPointerException e) {
-            System.out.println("NullPointerException");
-            return map;
-        } catch (Exception e) {
-            e.printStackTrace();  // 예외 정보를 출력합니다.
-            System.out.println("Exception: " + e.getMessage());  // 예외 메시지를 출력합니다.
-            return map;
-        }
     }
 
     /*헤더 판매 상품화면 (신상품,베스트,특가)을 위한 메서드  (이미지, 옵션, 리뷰 등 조건없이 다 가져옴)*/
@@ -406,6 +263,8 @@ public class ProductService {
 
     }
 
+
+
     /*모두 가져오기 종합세트 대표이미지, 옵션 리스트, 리뷰 평점, 리뷰 총개수*/
     public HashMap getAllTypImgOptRivews() throws SQLException {
         HashMap prepareListMap = new HashMap<>();
@@ -447,36 +306,8 @@ public class ProductService {
     }
 
 
-    /*-----------관리자용-------------------*/
-    /*상품 등록 페이지-> 상품, 할인, 이미지, 재고(0,safe), 옵션(y일 경우) n개 생성*/
-
-    /*상품 등록 트랜잭션-> 상품등록, 이미지등록, 재고(0,safe)생성, 옵션(y일 경우) n개 생성*/
-
-    /*상품 읽기/수정 페이지  전체 상품 목록을 가져온다. 할인, 이미지, 옵션 가져오기*/
-
-    /*상품 수정 완료 -> 전체상품목록이랑 비교해서 equals가 아닌것만 update, 이미지 리스트도 마찬가지. 옵션도 마찬가지*/
-
-
-
-
-
-
-    /*만들일 없을 것 같지만. 관리자의 할인코드 생성/수정/삭제 */
-
 
 
 }
 
 
-
-//@Service
-//@EnableRetry
-//public class ProductService {
-
-/*이런게 있다고 함 */
-//    @Retryable(value = SQLException.class, maxAttempts = 3, backoff = @Backoff(delay = 1000))
-//    @Recover
-//    public void recover(SQLException e) {
-//        logger.error("Error occurred in getProductListByCateCd", e);
-//        throw new RuntimeException("DB 조회 중 에러가 발생했습니다.", e);
-//    }

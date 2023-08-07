@@ -24,10 +24,12 @@
                od.ord_id,
                od.prod_cd,
                od.name,
-               format(od.seler_prc, 0) as seler_prc_format,
-               format(od.cnsmr_prc, 0) as cnsmr_prc_format,
+               od.review_yn,
+               format(od.setl_expct_prc, 0) as setl_expct_prc_format,
+               format(od.tot_prc, 0)        as tot_prc_format,
                od.qty,
-               osc.name                as stus
+               osc.name                     as stus,
+               osc.ord_prod_stus_cd
                # todo -> 상태 코드 table과 연결해서 실제 한글로 된 상태를 받아온다. 그리고 상품 img url도 받아와야한다. - 장바구니도 그렇게 했는지 확인 필요, 주문서도
         from tb_order_detail as od,
              tb_order_status_code as osc
@@ -70,4 +72,18 @@
         where ord_id = #{ordId}
     </select>
 
+    <!-- 주문상세 page에서 구매확정으로 변경 시, od - stus update -->
+    <update id="update_order_fixed">
+        update tb_order_detail od
+        set od.stus   = 'a3',
+            od.up_dtm = now()
+        where od.ord_prod_dtl_id = #{ordDtlId}
+    </update>
+
+    <!-- 주문상세 page에서 리뷰작성 시, review_yn update -->
+    <update id="update_order_review">
+        update tb_order_detail od
+        set od.review_yn = 'y'
+        where od.ord_prod_dtl_id = #{ordDtlId}
+    </update>
 </mapper>

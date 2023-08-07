@@ -72,4 +72,12 @@
             #{pk_id}
         </foreach>
     </update>
+
+    <!-- 주문 상세에 배송 상세 정보 보내줄지 말지 알리는 기준 -->
+    <select id="select_check_show_delivery_info" resultType="int">
+        select count(*)
+        from tb_order_master
+        where stus > 'h1'
+        and ord_id = #{ordId};
+    </select>
 </mapper>

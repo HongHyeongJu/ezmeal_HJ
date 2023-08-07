@@ -173,7 +173,7 @@ th.table_title_1 {
     background: inherit;
     padding: 3px;
     cursor: pointer;
-    width: 80px; /* 버튼의 너비를 설정, 원하는 크기로 조정 가능 */
+    width: 120px; /* 버튼의 너비를 설정, 원하는 크기로 조정 가능 */
 }
 
 /* 버튼에 마우스를 올렸을 때와 포커스 됐을 때의 스타일 */

@@ -30,38 +30,20 @@ public class IndexController {
         model.addAttribute("homeList",prodListMap.get("homeList"));
         model.addAttribute("eatList",prodListMap.get("eatList"));
 
-//        HashMap prepareListMap = productService.getAllTypImgOptRivews();
-
-//        /*모든상품 '대표'이미지 리스트*/
-//        Map<Long, ProductImgDto> prodImgMap = (Map<Long,ProductImgDto>)prepareListMap.get("prodImgMap");
-//        /*모든상품의 옵션 리스트*/
-//        Map<Long, List<ProductOptionDto>> prodOptMap = (Map<Long,List<ProductOptionDto>>)prepareListMap.get("prodOptMap");
-//        /*모든상품  평점, 리뷰 숫자*/
-//        Map<Long,Double> reviewAvgMap = (Map<Long,Double>)prepareListMap.get("reviewAvgMap");
-//        Map<Long,Integer> reviewCntMap = (Map<Long,Integer>)prepareListMap.get("reviewCntMap");
-
-        Map map4 = productService.getAllTypImgOptRivews();
-        /*모든상품 '대표'이미지 리스트*/
-        Map<Long,ProductImgDto> prodImgMap = (Map<Long,ProductImgDto>)map4.get("prodImgMap");
-        /*모든상품의 옵션 리스트*/
-        Map<Long,List<ProductOptionDto>> prodOptMap = (Map<Long,List<ProductOptionDto>>)map4.get("prodOptMap");
-        /*모든상품  평점, 리뷰 숫자*/
-        Map<Long,Double> reviewAvgMap = (Map<Long,Double>)map4.get("reviewAvgMap");
-        Map<Long,Integer> reviewCntMap = (Map<Long,Integer>)map4.get("reviewCntMap");
-//        prodImgMap.forEach((k,v)-> System.out.println("k:"+k+",v:"+v.getUrl())); //이미지 url출력 확인
-        model.addAttribute("prodImgMap",prodImgMap);
-        model.addAttribute("prodOptMap",prodOptMap);
-        model.addAttribute("reviewAvgMap",reviewAvgMap);
-        model.addAttribute("reviewCntMap",reviewCntMap);
-//        System.out.println("prodImgMap : "+prodImgMap.size());
-//        System.out.println("prodOptMap : "+prodOptMap.size());
-//        System.out.println("reviewAvgMap : "+reviewAvgMap.size());
-//        System.out.println("reviewCntMap : "+reviewCntMap.size());
+        Map map4 = productService.getAllTypImgOptRivews();  /*모든상품 '대표'이미지 리스트, 옵션 리스트, 평점, 리뷰 숫자*/
+        model.addAttribute("prodImgMap",map4.get("prodImgMap"));
+        model.addAttribute("prodOptMap",map4.get("prodOptMap"));
+        model.addAttribute("reviewAvgMap",map4.get("reviewAvgMap"));
+        model.addAttribute("reviewCntMap",map4.get("reviewCntMap"));
 
         return "index";
     }
 
 
+    @GetMapping("/ezDelivery")
+    public String ezDelivery(){
+        return "ezdelivery";
+    }
 
 
 }

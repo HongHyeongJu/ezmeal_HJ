@@ -1,0 +1,2 @@
+맥:file.upload-dir=/Users/blake/projects/teampProject/syusyu/src/main/webapp/resources/static/image/product/
+윈:file.upload-dir=c:\\user\\~\\image   (img폴더로 가는 경로)

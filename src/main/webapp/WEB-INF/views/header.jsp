@@ -285,7 +285,7 @@
       <li><a href="/product/headerlist?headertyp=new">신상품</a></li>
       <li><a href="/product/headerlist?headertyp=best">베스트</a></li>
       <li>
-        <a href="#">
+        <a href="/ezDelivery">
           <img src="/img/main/ez_deli_logo_line.png" class="ezdeliveryimg">
         </a>
       </li>

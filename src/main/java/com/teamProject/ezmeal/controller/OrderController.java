@@ -228,7 +228,7 @@ public class OrderController {
                     orderAddress.getDesti(),
                     orderAddress.getDesti_dtl(),
                     orderPaymentAddressData.getDeliveryPlace(),
-                    orderPaymentAddressData.getDeliveryDetail() + orderPaymentAddressData.getDeliveryInput(),
+                    orderPaymentAddressData.getDeliveryDetail() +" | 비밀번호 : " + orderPaymentAddressData.getDeliveryInput(),
                     "h1",
                     "ma",
                     orderPaymentAddressData.getDeliveryMsg(),

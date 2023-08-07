@@ -42,19 +42,11 @@ public class ProductController {
         model.addAttribute("prodList",map.get("prodList"));
         model.addAttribute("cateName",map.get("cateName"));
 
-        Map map4 = productService.getAllTypImgOptRivews();
-            /*모든상품 '대표'이미지 리스트*/
-        Map<Long,ProductImgDto> prodImgMap = (Map<Long,ProductImgDto>)map4.get("prodImgMap");
-            /*모든상품의 옵션 리스트*/
-        Map<Long,List<ProductOptionDto>> prodOptMap = (Map<Long,List<ProductOptionDto>>)map4.get("prodOptMap");
-            /*모든상품  평점, 리뷰 숫자*/
-        Map<Long,Double> reviewAvgMap = (Map<Long,Double>)map4.get("reviewAvgMap");
-        Map<Long,Integer> reviewCntMap = (Map<Long,Integer>)map4.get("reviewCntMap");
-
-        model.addAttribute("prodImgMap",prodImgMap);
-        model.addAttribute("prodOptMap",prodOptMap);
-        model.addAttribute("reviewAvgMap",reviewAvgMap);
-        model.addAttribute("reviewCntMap",reviewCntMap);
+        Map map4 = productService.getAllTypImgOptRivews(); /*모든상품 '대표'이미지 리스트, 옵션 리스트, 평점, 리뷰 숫자*/
+        model.addAttribute("prodImgMap",map4.get("prodImgMap"));
+        model.addAttribute("prodOptMap",map4.get("prodOptMap"));
+        model.addAttribute("reviewAvgMap",map4.get("reviewAvgMap"));
+        model.addAttribute("reviewCntMap",map4.get("reviewCntMap"));
 
         return "productcatelist";
     }
@@ -71,19 +63,11 @@ public class ProductController {
         model.addAttribute("headerTitle",map.get("headerTitle"));
         model.addAttribute("headerTyp",headertyp);
 
-        Map map4 = productService.getAllTypImgOptRivews();
-        /*모든상품 '대표'이미지 리스트*/
-        Map<Long,ProductImgDto> prodImgMap = (Map<Long,ProductImgDto>)map4.get("prodImgMap");
-        /*모든상품의 옵션 리스트*/
-        Map<Long,List<ProductOptionDto>> prodOptMap = (Map<Long,List<ProductOptionDto>>)map4.get("prodOptMap");
-        /*모든상품  평점, 리뷰 숫자*/
-        Map<Long,Double> reviewAvgMap = (Map<Long,Double>)map4.get("reviewAvgMap");
-        Map<Long,Integer> reviewCntMap = (Map<Long,Integer>)map4.get("reviewCntMap");
-
-        model.addAttribute("prodImgMap",prodImgMap);
-        model.addAttribute("prodOptMap",prodOptMap);
-        model.addAttribute("reviewAvgMap",reviewAvgMap);
-        model.addAttribute("reviewCntMap",reviewCntMap);
+        Map map4 = productService.getAllTypImgOptRivews(); /*모든상품 '대표'이미지 리스트, 옵션 리스트, 평점, 리뷰 숫자*/
+        model.addAttribute("prodImgMap",map4.get("prodImgMap"));
+        model.addAttribute("prodOptMap",map4.get("prodOptMap"));
+        model.addAttribute("reviewAvgMap",map4.get("reviewAvgMap"));
+        model.addAttribute("reviewCntMap",map4.get("reviewCntMap"));
 
         return "productcatelist_header";
     }
@@ -108,13 +92,6 @@ public class ProductController {
 
         /*상품 상세페이지에 필요한 것 모두 받아오기*/
         HashMap map = productService.getOneProductByProdCd(prod_cd);
-
-        /*품절된 상품인 경우*/
-//        if(map.get("product")==null){
-//            redirectAttributes.addAttribute("msg","품절된 상품입니다.");
-//            return "redirect:/product/catelist?cate_cd="+cate_cd ;
-//        }
-
         model.addAttribute("product",map.get("product"));
         model.addAttribute("optList",map.get("optList"));
         model.addAttribute("imgList",map.get("imgList"));
@@ -129,181 +106,6 @@ public class ProductController {
     }
     /*서비스에서 묶어 오기 중간에 에러났을 때 대처는 서비스에서  ->  묶어도 3개로 됨. 고민해보기 값 없을 떄*/
     /*DB가 꺼진다면,,? select도 안됨.  db연결 직접 끊기..ㅋㅋ  */
-
-
-
-
-
-
-
-
-
-
-
-        /*-------------------------------  관리자용 상품 등록.수정.읽기.삭제 시작  ------------------------------------------*/
-
-//    /*관리자 상품 CRUD page - READ */
-//    @GetMapping("/regist/read")
-//    public String productRegistPage(Model model, Long prod_cd) throws SQLException, JsonProcessingException {
-//        /*관리자용 상품 페이지(읽기)에 필요한 것 모두 받아오기*/
-//        HashMap map = productService.getOneProductByProdCdForMng(prod_cd);
-//
-//        /*모델에 담기*/
-//        model.addAttribute("product", map.get("product"));
-//        model.addAttribute("optList", map.get("optList"));
-//        model.addAttribute("imgList", map.get("imgList"));
-//        model.addAttribute("dcList", map.get("dcList"));
-//        model.addAttribute("cateList", map.get("cateList"));
-//        model.addAttribute("custList", map.get("custList"));
-//        model.addAttribute("stusList", map.get("stusList"));
-//        model.addAttribute("mode","READ");
-//
-//        return "productRegistration";
-//
-//    }
-
-
-//    /*관리자 상품 CRUD page - WRITE 새상품 등록 페이지 */
-//    @GetMapping("/regist/write")
-//    public String productMngRegistWritePage(Model model) throws SQLException {
-//
-//        /*관리자용 상품 페이지(읽기)에 필요한 것 모두 받아오기*/
-//        HashMap map = productService.getListForProductRegist();
-//
-//        /*모델에 담기*/
-//        model.addAttribute("dcList", map.get("dcList"));
-//        model.addAttribute("cateList", map.get("cateList"));
-//        model.addAttribute("custList", map.get("custList"));
-//        model.addAttribute("stusList", map.get("stusList"));
-//        model.addAttribute("mode","WRITE");
-//
-//        return "productRegistration";
-//    }
-//    /*------------------------------*/
-//
-//    @PostMapping("/regist/write")
-//    public ResponseEntity<?> registerProduct(@RequestBody ProductRegistrationRequest request) throws SQLException {
-//        // 이제 request 안에는 ProductDto 객체와 ProductOptionDto 객체 리스트 있음
-//        ProductDto productDto = request.getProductDto();
-//        List<ProductOptionDto> productOptionDtos = request.getProductOptionDto();
-//
-//        for(ProductOptionDto optDto : productOptionDtos){
-//            System.out.println("optDto: "+optDto.toString());
-//        }
-//
-//        Map<String,Integer> registResult = productService.prodAndOptionRegist(productDto, productOptionDtos);
-//
-//        // 처리가 성공적으로 끝나면, 응답을 클라이언트에 보냅니다.
-//        return ResponseEntity.ok(registResult);
-//    }
-
-
-
-
-//
-//
-//    /*관리자 상품 CRUD page - WRITE */
-//    @PostMapping("/regist/write")
-//    public void productMngRegistWritePostPage(ProductDto productDto, ProductOptionDto[] productOptionDto) throws SQLException {
-//
-//        System.out.println("productDto: "+productDto);
-//        System.out.println();
-//        System.out.println("optDto.length: "+productOptionDto.length);
-//    }
-//    /*------------------------------*/
-
-
-
-
-    /*관리자 상품 CRUD page - UPDATE */ /*수정 시작하려는 화면!  업데이트문 아직*/
-    @GetMapping("/regist/modify")
-    public String productMngRegistModifyPage(Long prod_cd, Model model) throws SQLException {
-//        ProductDto productDto = productService.getProductByProdCd(prod_cd);
-        /*모델에 담기*/
-//        model.addAttribute("productDto", productDto);
-        model.addAttribute("mode", "UPDATE_MODE");
-
-        return "productRegistration";
-    }
-
-    /*------------------------------*/
-    /*관리자 상품 CRUD page - UPDATE */ /*수정 다하고 객체가 넘어왔음. 업데이트문 아직*/
-    @PostMapping("/regist/modify")
-    public String productMngRegistUpdatePage(ProductDto productDto, Model model) throws SQLException {
-
-        /*서비스에서 업데이트 하는 메서드 사용하겠지?
-        * 업데이트 성공하면 성공 로우수 1이니까
-        * 반환값 1일 때 로직 작성하자
-        * 반환값 1이 아닐때는 예외처리 해야해*/
-        /*모델에 담기*/
-
-
-        return "productRegistration";
-    }
-    /*------------------------------*/
-
-
-    /*관리자 상품 CRUD page - DELETE */
-
-
-    @PostMapping("/testProd")
-    public String testProd(@RequestBody ProductDto productDto, Model model) throws SQLException {
-        /*테스트용이라서 prod_cd 안줌*/
-        model.addAttribute("productDto",productDto);
-
-        return "testProd";
-    }
-
-
-    /*-------------------------------  관리자용 상품 관리 페이지 시작  ------------------------------------------*/
-
-    @GetMapping("/mng/productlist")
-    public String productMngListPage(Model model, String cate_cd) throws SQLException {
-
-        /*해당 상품코드의 상품객체 1개 전달*/  /*원래는 상품 List인데 지금 테스트중이라 하나만*/  /*매개변수 String prod_cd*/
-//        ProductDto productDto = productService.searchProdCd(prod_cd);
-
-        /*카테고리 코드로 검색해서 상품 리스트를 반환*/
-//        List productCateCdList = productService.getProductListByCateCd(cate_cd);
-
-        /*나중에는 이미지도 전달해야겠지...*/
-
-        /*모델에 담기*/
-//        model.addAttribute("productDto", productDto);
-//        model.addAttribute("productCateCdList", productCateCdList);
-
-
-        return "productMngList";
-
-    }
-
-
-    @GetMapping("/firststep")
-    public String makeCategoryTest() throws SQLException {
-
-        return "productcatelist_test";
-    }
-
-
-    @GetMapping("/make_cate_list")
-    public HashMap makeCategoryTest(String cate_cd, @RequestParam(required = false) String sortkeyword) throws SQLException {
-
-        /*상품목록 표현에 필요한 것 모두 받아오기*/
-        HashMap map = productService.getProductListByCateCd(cate_cd, sortkeyword);
-//        model.addAttribute("prodList",map.get("prodList"));
-//        model.addAttribute("prodImgList",map.get("prodImgList"));
-//        model.addAttribute("prodOptMap",map.get("prodOptMap"));
-//        model.addAttribute("reviewAngMap",map.get("reviewAngMap"));
-//        model.addAttribute("reviewCntMap",map.get("reviewCntMap"));
-//        model.addAttribute("cate_cd",cate_cd);
-        System.out.println("비동기로 리스트 만들기!");
-
-        return map;
-    }
-
-
-
-
 
 
 

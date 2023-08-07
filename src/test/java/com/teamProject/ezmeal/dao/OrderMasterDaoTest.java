@@ -35,4 +35,10 @@ public class OrderMasterDaoTest {
         Long orderId = orderMasterDao.selectOrderId(1001L);
         System.out.println("orderId = " + orderId);
     }
+
+    @Test
+    public void select_check_show_delivery_info() {
+        int i = orderMasterDao.selectShowDeliveryInfo(20230717940L);
+        System.out.println("i = " + i);
+    }
 }

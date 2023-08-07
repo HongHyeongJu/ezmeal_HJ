@@ -40,12 +40,12 @@
                     <div class="order-detail__products-main__products">
                         <img src="/img/${orderDetailProduct.prod_cd}.png" class="order-detail__products-img"/>
                         <div class="order-detail__products-main__products-definition">
-                            <a href="" class="order-detail__products-header__detail-link">
+                            <a href="/product/detail?prod_cd=${orderDetailProduct.prod_cd}" class="order-detail__products-header__detail-link">
                                 [${orderDetailProduct.prod_cd}] ${orderDetailProduct.name}
                             </a>
                             <div class="가격 수량">
-                                <span class="order-detail_seler_prc">${orderDetailProduct.seler_prc_format}원</span>
-                                <span class="order-detail_cnsmr_prc"  ${orderDetailProduct.seler_prc_format eq orderDetailProduct.cnsmr_prc_format ? 'hidden' : ''}>${orderDetailProduct.cnsmr_prc_format}원</span>
+                                <span class="order-detail_seler_prc">${orderDetailProduct.setl_expct_prc_format}원</span>
+                                <span class="order-detail_cnsmr_prc"  ${orderDetailProduct.setl_expct_prc_format eq orderDetailProduct.tot_prc_format ? 'hidden' : ''}>${orderDetailProduct.tot_prc_format}원</span>
                                 <span>| ${orderDetailProduct.qty}개</span>
                             </div>
                         </div>
@@ -53,8 +53,17 @@
                     <!-- order-detail__main 끝 -->
 
                     <div class="order-detail__products-main__status">
-                        <span class="order-detail__products__status-span">${orderDetailProduct.stus} <%--todo - 상태코드랑 나중에 연결--%> </span>
-                        <div class="order-detail__products__status-function"> 리뷰작성하기 <%-- todo 조건 들어가야함 --%> </div>
+                        <span class="order-detail__products__status-span">${orderDetailProduct.stus}</span>
+                        <c:if test="${orderDetailProduct.ord_prod_stus_cd eq 'h6'}">
+                            <button class="order-detail__product_fixed" ord_dtl_pk='${orderDetailProduct.ord_prod_dtl_id}'>구매확정하기</button>
+                        </c:if>
+                        <%-- 처음 들어갈 경우는 jsp에서 load, 구매확정 btn 누를 경우 rest API로 변경 --%>
+                        <c:if test="${orderDetailProduct.ord_prod_stus_cd eq 'a3' and orderDetailProduct.review_yn eq 'n'}">
+                            <button class="order-detail__product_review btn-open-popup" ord_dtl_pk='${orderDetailProduct.ord_prod_dtl_id}' prod_cd = '${orderDetailProduct.prod_cd}'>리뷰 작성하기</button>
+                        </c:if>
+                        <c:if test="${orderDetailProduct.ord_prod_stus_cd eq 'a3' and orderDetailProduct.review_yn eq 'y'}">
+                            <button class="order-detail__product_review_finish" >리뷰 작성완료</button>
+                        </c:if>
                     </div>
                     <!-- order-detail__products-main__status 끝 -->
                 </div>
@@ -67,7 +76,24 @@
         </div>
         <!-- 배송조회 header 끝 -->
         <div class="order-detail__main order-detail__delivery-main">
-            <span>배송중 단계부터 배송상태 확인이 가능합니다.</span>
+            <c:if test="${result != 1}">
+                <span>배송중 단계부터 배송상태 확인이 가능합니다.</span>
+            </c:if>
+            <c:if test="${result eq 1}">
+                <span> 총 ${deliveryDataCount.get('totalDeliveryCnt')} 건 중 정상 배송 ${deliveryDataCount.get('normalDeliveryCnt')} 건,
+                <c:if test="${deliveryDataCount.get('waitDeliveryCnt') != 0 }">
+                    배송 보류 ${deliveryDataCount.get('waitDeliveryCnt')} 건 </span>
+                </c:if>
+                <br/>
+                <c:forEach var="deliveryHistory" items="${deliveryHistoryList}">
+                    <div class="order-detail__dlvar-hist">
+                        <p>${deliveryHistory.get("chg_dtm")}</p>
+                        <p> ${deliveryHistory.get("chg_rsn")}</p>
+                    </div>
+                </c:forEach>
+                <span> ${dlvarHist} </span>
+            </c:if>
+
         </div>
         <!-- order-detail__main 끝 -->
 
@@ -126,5 +152,9 @@
     </div>
     <!-- main-section-right__order-detail 끝 -->
 </div>
+<div class="prod_review_modal"></div>
+<script src="/javascript/module/admin_order_ajax.js"></script>
+<script src="/javascript/orderDetail.js"></script>
+<script src="/javascript/prod_review_modal.js"></script>
 </body>
 </html>
