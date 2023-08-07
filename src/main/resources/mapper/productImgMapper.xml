@@ -43,6 +43,16 @@
           AND del_yn = 'n'
     </select>
 
+    <insert id="insert_prod_img" parameterType="ProductImgDto">
+        INSERT INTO tb_product_img (prod_cd, typ, detail,
+                                    url, verti_size, width_size, extns,
+                                    file_size_lim, use_yn, del_yn, rmk,
+                                    in_dtm, in_id, up_dtm, up_id)
+        VALUES ( #{prod_cd}, #{typ}, #{detail}, #{url},
+                #{verti_size}, #{width_size}, #{extns}, #{file_size_lim}, #{use_yn},
+                #{del_yn}, #{rmk}, now(), 'ezmeal2',  now(), 'ezmeal2' )
+    </insert>
+
 
 
 </mapper>

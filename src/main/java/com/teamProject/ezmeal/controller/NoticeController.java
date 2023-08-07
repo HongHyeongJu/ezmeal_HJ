@@ -7,31 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Controller
-public class NoticeController<pageHandler> {
+public class NoticeController {
 
     @Autowired
     NoticeService noticeService;
-//
-//    @GetMapping("/notice")
-//    public String showNotice(Integer page, Integer pageSize, Model model) {
-//
-//        if(page == null) page = 1;
-//        if(pageSize == null) pageSize = 10;
-//
-//
-//        List<NoticeDto> list = noticeService.getNoticeList(); //공지사항 목록 가져옴
-//        System.out.println("list = " + list);
-//        model.addAttribute("noticeList", list); //공지사항목록을 model객체에 담아서 뷰로 전달.
-//
-//        return "notice";
-//    }
-//
+
     @GetMapping("/notice")  // 0731 :이거로해야 화면이 나오긴 한다.
     public String showNotice(Integer page, Integer pageSize, Model model) {
 
@@ -57,6 +44,19 @@ public class NoticeController<pageHandler> {
 
         return "notice_list";
     }
+
+    @PostMapping("/noticeresistration")
+    public String noticeResistration(String title, String typ, String status, String stmt,String hide_yn  ){
+        System.out.println("imkkkkkkkkkkkkkkkkkkkkkk");
+        System.out.println(title);
+        System.out.println(typ);
+        System.out.println(status);
+        System.out.println(stmt);
+        System.out.println(hide_yn);
+        return "redirect:/admin/notice/write";
+//        return "admin_notice_write";
+    }
+
 
 
 

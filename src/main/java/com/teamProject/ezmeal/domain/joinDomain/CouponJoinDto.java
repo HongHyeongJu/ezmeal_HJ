@@ -16,5 +16,6 @@ public class CouponJoinDto {
     private String name;
     private Integer val;
     private Integer max_prc;
-    private Integer use_base_prc;
+    private Integer use_base_prc;       // 사용가능 조건 중 사용 가능 최소 가격
+    private boolean can_use;            // 초기화 안될 경우 init value = false
 }

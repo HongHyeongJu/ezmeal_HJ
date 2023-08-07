@@ -6,7 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -136,7 +139,8 @@ public class AdminProductService {
 
             System.out.println("상품 Insert하기 전. PK_Prod_Cd: "+productDao.selectMaxProdCd());
             /*상품 PK prod_cd*/
-            Long pkProdCd = productDto.getProd_cd();
+            Long pkProdCd = 0L;
+            pkProdCd =  productDto.getProd_cd();
             System.out.println("productDto.getProd_cd() = " + pkProdCd);
 
             /*상품 Insert나 Update하기*/
@@ -184,6 +188,8 @@ public class AdminProductService {
             System.out.println("optInsertCnt: "+optInsertCnt);
             System.out.println("optUpdateCnt: "+optUpdateCnt);
 
+            int intPkProdCd = pkProdCd.intValue();
+            map.put("prod_cd", intPkProdCd);
             map.put("prodInsertCnt",prodInsertCnt);
             map.put("prodUpdateCnt",prodUpdateCnt);
             map.put("optInsertCnt",optInsertCnt);
@@ -203,6 +209,37 @@ public class AdminProductService {
             return map;
         }
     }
+
+
+    public HashMap<String, Integer> uploadAllImg(HashMap map, MultipartFile representativeImg,
+                                                 MultipartFile[] mainImgs, MultipartFile detailImg ) throws SQLException, IOException {
+        HashMap map2 = map;
+        Long prod_cd = (Long)map.get("pkProdCd");
+        int repreImgUploadInsertCnt = productImgService.uploadMultipleImageOne(representativeImg, prod_cd, "대표");
+        int mainImgUploadInsertCnt = productImgService.uploadMultipleImages(mainImgs, prod_cd);
+        int detailImgUploadInsertCnt = productImgService.uploadMultipleImageOne(detailImg, prod_cd, "상세");
+
+        map.put("repreImgUploadInsertCnt", repreImgUploadInsertCnt);
+        map.put("mainImgUploadInsertCnt", mainImgUploadInsertCnt);
+        map.put("detailImgUploadInsertCnt", detailImgUploadInsertCnt);
+
+        return map2;
+    }
+
+
+    @Transactional(rollbackFor = Exception.class)
+    public HashMap<String, Integer> registerProductAndUploadImage(ProductDto productDto, List<ProductOptionDto> productOptionDtos,
+                                                                  MultipartFile representativeImg, MultipartFile[] mainImgs, MultipartFile detailImg)
+                                                                  throws SQLException, IOException {
+        // 상품 및 옵션 등록
+        HashMap<String, Integer> map = prodAndOptionRegist(productDto, productOptionDtos);
+
+        // 이미지 등록
+        map = uploadAllImg(map, representativeImg, mainImgs, detailImg);
+
+        return map;
+    }
+
 
 
     /*-----------관리자용-------------------*/
