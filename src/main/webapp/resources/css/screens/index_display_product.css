@@ -4,6 +4,11 @@ body {
     font-family: 'NanumSquare', sans-serif;
 }
 
+* {
+  cursor: default;
+}
+
+
 /* Flexbox를 사용하여 수직 및 수평 정렬 */
 .recoprod_wrapper {
     display: flex;
@@ -76,7 +81,7 @@ body {
 
 .prod_outer {
     padding-top: 3px;
-    width: 150px;
+    width: 155px;
     height: 245px;
 }
 
