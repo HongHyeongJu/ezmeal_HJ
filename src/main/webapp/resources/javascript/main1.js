@@ -21,7 +21,7 @@ function displayImages() {
     "block"; /*하나의 이미지만 표시하도록 스타일을 block */
   setTimeout(
     displayImages,
-    2000
+    3000
   ); /*settime으로 displayimage호출하고 2초후에 함수 실행 */
 }
 

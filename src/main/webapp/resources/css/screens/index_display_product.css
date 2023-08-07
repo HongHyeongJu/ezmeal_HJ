@@ -119,11 +119,12 @@ span.dc_pt {
     margin-left: 7px;
     font-weight: 900;
     color: rgb(0,190,49);
+    margin-right: -8px;
 }
 
 span.sale_prc {
     font-size: 14px;
-    margin-left: 2px;
+    margin-left: 10px;
     font-weight: 900;
 }
 
