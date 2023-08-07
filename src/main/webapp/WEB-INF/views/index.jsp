@@ -26,23 +26,30 @@
     <div class="image-slideshow">
         <div class="image fade">
             <img
-                    src="/img/main/slideimg_1.jpg"
+                    src="/img/main/slideimg_1_ez.png"
                     style="width: 100%; height: auto"
-                    alt="7월신메뉴"
+                    alt="가정식"
             />
         </div>
         <div class="image fade">
             <img
-                    src="/img/main/slideimg_2.jpg"
-                    style="width: 100%; height: auto"
-                    alt="구독신청"
-            />
-        </div>
-        <div class="image fade">
-            <img
-                    src="/img/main/slideimg_3.jpg"
+                    src="/img/main/slideimg_2_ez.png"
                     style="width: 100%; height: auto"
                     alt="콘텐츠"
+            />
+        </div>
+        <div class="image fade">
+            <img
+                    src="/img/main/slideimg_4_ez.png"
+                    style="width: 100%; height: auto"
+                    alt="신메뉴"
+            />
+        </div>
+                <div class="image fade">
+            <img
+                    src="/img/main/slideimg_3_ez.png"
+                    style="width: 100%; height: auto"
+                    alt="ez배송"
             />
         </div>
     </div>
