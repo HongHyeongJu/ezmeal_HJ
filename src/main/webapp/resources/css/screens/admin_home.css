@@ -1,0 +1,17 @@
+.all {
+    display: grid;
+    width: 1200px;
+    grid-template-columns: 600px 600px;
+    grid-template-rows: 700px 700px;
+    gap: 30px;
+}
+
+.admin_graph {
+    border: 2px solid #000;
+    padding: 20px;
+}
+
+.chart_div {
+    border: 2px solid #000;
+    padding: 20px;
+}
