@@ -10,6 +10,17 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="/css/screens/ezdelivery.css" />
+    <style>
+        .delivery-region-map svg {
+            width: 580px;
+            height: 800px;
+            padding: 0px;
+            background-color: white;
+        }
+        path:hover {
+            fill: rgb(245, 249, 138);
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -84,7 +95,7 @@
             </div>
             <div class="column-eco">
                 <div class="itemBox" data-item="eco">
-                    <img src="./img/ezdelivery-paper.png" alt="친환경패키지" />
+                    <img src="./img/ezdelivery-paper.jpg" alt="친환경패키지" />
                     <div class="explain">
                         <h4>친환경 종이 포장재 사용</h4>
                         <p>
@@ -103,9 +114,10 @@
 <!--start : 우리집이 EZ배송지역인지 확인해보세요-->
 <div class="delivery-search-imgbox">
     <a href="#">
-        <img src="./img/ezdelivery-deliverysearch.png" class="delivery-search">
+        <img src="/img/ezdelivery-deliverysearch.png" class="delivery-search">
     </a>
 </div>
+
 
 
 
@@ -263,9 +275,7 @@
         <p id="info"></p>
     </div>
 </div>
-    </div>
-</div>
-<!--end :푸터 1,2 감싸는 박스( 위로 여유 공간포함)-->
+
 
 <!--start : scroll back to top-->
 <button id="backtotop-btn">
