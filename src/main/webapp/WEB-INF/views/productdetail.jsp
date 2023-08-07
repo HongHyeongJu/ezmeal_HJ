@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: hhju2
@@ -110,7 +111,8 @@
             <strong class="dc_pt">${optList.get(0).getDc_rate()}%</strong>
           </c:if>
 
-          <strong class="sale_prc">${sale_prc}&nbsp;원</strong>
+          <strong class="sale_prc"><fmt:formatNumber value="${sale_prc}" type="number" pattern="#,##0"/>원</strong>
+<%--          <strong class="sale_prc">${sale_prc}&nbsp;원</strong>--%>
 
           <c:if test="${cnsmr_prc != sale_prc}">
             <del class="cnsmr_prc">${cnsmr_prc}&nbsp;원</del>
@@ -124,8 +126,8 @@
           <c:if test="${cnsmr_prc != sale_prc}">
             <strong class="dc_pt">${product.getDc_rate()}%</strong>
           </c:if>
-
-          <strong class="sale_prc">${sale_prc}&nbsp;원</strong>
+          <strong class="sale_prc"><fmt:formatNumber value="${sale_prc}" type="number" pattern="#,##0"/>원</strong>
+<%--          <strong class="sale_prc">${sale_prc}&nbsp;원</strong>--%>
 
           <c:if test="${cnsmr_prc != sale_prc}">
             <del class="cnsmr_prc">${cnsmr_prc}&nbsp;원</del>

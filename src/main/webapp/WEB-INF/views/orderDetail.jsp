@@ -38,7 +38,7 @@
                 <!-- 주문 내역 detail 시작 -->
                 <div class="order-detail__main order-detail__products-main">
                     <div class="order-detail__products-main__products">
-                        <img src="/img/${orderDetailProduct.prod_cd}.png" class="order-detail__products-img"/>
+                        <img src="/img/${orderDetailProduct.url}" class="order-detail__products-img"/>
                         <div class="order-detail__products-main__products-definition">
                             <a href="/product/detail?prod_cd=${orderDetailProduct.prod_cd}" class="order-detail__products-header__detail-link">
                                 [${orderDetailProduct.prod_cd}] ${orderDetailProduct.name}
@@ -80,10 +80,11 @@
                 <span>배송중 단계부터 배송상태 확인이 가능합니다.</span>
             </c:if>
             <c:if test="${result eq 1}">
-                <span> 총 ${deliveryDataCount.get('totalDeliveryCnt')} 건 중 정상 배송 ${deliveryDataCount.get('normalDeliveryCnt')} 건,
+                <span> 총 ${deliveryDataCount.get('totalDeliveryCnt')} 건 중 정상 배송 ${deliveryDataCount.get('normalDeliveryCnt')} 건
                 <c:if test="${deliveryDataCount.get('waitDeliveryCnt') != 0 }">
-                    배송 보류 ${deliveryDataCount.get('waitDeliveryCnt')} 건 </span>
+                    , 배송 보류 ${deliveryDataCount.get('waitDeliveryCnt')} 건
                 </c:if>
+                </span>
                 <br/>
                 <c:forEach var="deliveryHistory" items="${deliveryHistoryList}">
                     <div class="order-detail__dlvar-hist">
@@ -91,7 +92,6 @@
                         <p> ${deliveryHistory.get("chg_rsn")}</p>
                     </div>
                 </c:forEach>
-                <span> ${dlvarHist} </span>
             </c:if>
 
         </div>
