@@ -44,7 +44,7 @@
                         <!--반복 시작 -->
                         <!--장바구니 식품 반복 시작 -->
                         <li class="order__item_list order_li_hidden" cart_prod_seq="${item.cart_prod_seq}">
-                            <img src="/img/${item.prod_cd}.png"/>
+                            <img src="/img/${item.url}"/>
                             <!--상품사진 끝-->
                             <div class="order__item_list_description">
                                     <p class="cart__item_list_prod_cd">[${item.prod_cd}]</p>

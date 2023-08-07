@@ -48,7 +48,7 @@ change this template use File | Settings | File Templates. --%>
                             <li class="cart__item_list  cart__item__soldout_${item.soldout_yn}" cart_prod_seq="${item.cart_prod_seq}" prod_cd="${item.prod_cd}"  opt_seq = ${item.opt_seq}>
                                 <input type="checkbox" ${item.soldout_yn eq 'y' ? 'disabled' : 'class="cart__item_nav__checkbox"'}/>
                                 <a href="/product/detail?prod_cd=${item.prod_cd}" class="cart__item_list__a">
-                                    <img src="/img/${item.prod_cd}.png"/>
+                                    <img src="/img/${item.url}"/>
                                 </a>
                                 <div class="cart__item_list_description">
                                     <a href="/product/detail?prod_cd=${item.prod_cd}">
@@ -91,7 +91,7 @@ change this template use File | Settings | File Templates. --%>
                             <li class="cart__item_list  cart__item__soldout_${item.soldout_yn}" cart_prod_seq="${item.cart_prod_seq}" prod_cd="${item.prod_cd}" opt_seq = ${item.opt_seq}>
                                 <input type="checkbox" ${item.soldout_yn eq 'y' ? 'disabled' : 'class="cart__item_nav__checkbox"'}/>
                                 <a href="/product/detail?prod_cd=${item.prod_cd}" class="cart__item_list__a">
-                                    <img src="/img/${item.prod_cd}.png"/>
+                                    <img src="/img/${item.url}"/>
                                 </a>
                                 <div class="cart__item_list_description">
                                     <a href="/product/detail?prod_cd=${item.prod_cd}">
@@ -133,7 +133,7 @@ change this template use File | Settings | File Templates. --%>
                             <li class="cart__item_list  cart__item__soldout_${item.soldout_yn}" cart_prod_seq="${item.cart_prod_seq}" prod_cd="${item.prod_cd}"  opt_seq = ${item.opt_seq}>
                                 <input type="checkbox" ${item.soldout_yn eq 'y' ? 'disabled' : 'class="cart__item_nav__checkbox"'}/>
                                 <a href="/product/detail?prod_cd=${item.prod_cd}" class="cart__item_list__a">
-                                    <img src="/img/${item.prod_cd}.png"/>
+                                    <img src="/img/${item.url}"/>
                                 </a>
                                 <div class="cart__item_list_description">
                                     <a href="/product/detail?prod_cd=${item.prod_cd}">

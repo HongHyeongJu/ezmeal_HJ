@@ -54,7 +54,7 @@
             <dl class="column coupon">
                 <dt>쿠폰</dt>
                 <dd>
-                    <a href="/mypage/myCoupon">
+                    <a href="/mypage/coupon">
                         <strong class="num" id="couponCountText">0</strong>
                         개
                     </a>
@@ -64,7 +64,7 @@
             <dl class="column point">
                 <dt>포인트</dt>
                 <dd class="text-primary">
-                    <a href="/mypage/myPoint">
+                    <a href="/mypage/point">
                         <strong class="num" id="pointText">0</strong>
                         p
                     </a>

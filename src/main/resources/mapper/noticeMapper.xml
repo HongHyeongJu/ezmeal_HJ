@@ -7,21 +7,25 @@
     <!--parameter 는 매개변수, 매개변수 타입을 noticeDto로 하면 noticeDto객체의 필드를 참조해서 쿼리에 필요한 파라미터 설정가능-->
 
     <insert id="insertNotice" parameterType="noticeDto">
-    INSERT INTO tb_notice (writer, status, typ, title, wrt_dt, stmt)
-    VALUES (#{writer}, #{status}, #{typ}, #{title}, #{wrt_dt}, #{stmt})
+        INSERT INTO tb_notice (writer, status, typ, title, wrt_dt, stmt, hide_yn, del_yn,
+                               in_dtm, in_id, up_dtm, up_id)
+        VALUES (#{writer}, #{status}, #{typ}, #{title},#{wrt_dt}, #{stmt},'n', 'n',
+                now(),'ezmeal',  now(), 'ezmeal')
 
     </insert>
 
 
     <update id="updateNotice" parameterType="noticeDto">
-    UPDATE tb_notice
-    SET writer  = #{writer},
-    status   = #{status},
-    typ     = #{typ},
-    title   = #{title},
-    wrt_dt  = #{wrt_dt},
-    stmt    = #{stmt},
-    WHERE notice_no = #{notice_no}
+        UPDATE tb_notice
+        SET writer  = #{writer},
+            status   = #{status},
+            typ     = #{typ},
+            title   = #{title},
+            wrt_dt  = #{wrt_dt},
+            stmt    = #{stmt},
+            hide_yn    = #{hide_yn},
+            stmt    = #{stmt},
+            WHERE notice_no = #{notice_no}
     </update>
 
 <delete id="deleteNotice" > <!--notice_no라는 이름으로 long 타입의 값을 전달-->

@@ -56,6 +56,49 @@
                     <input type="text" name="searchValue" class="fText" style="width: 130px;">
                   </td>
                 </tr>
+                <tr>
+                  <th scope="row">
+                    회원등급
+                  </th>
+                  <td>
+                    <select name="group_no" class="select">
+                      <option value="" selected="selected">전체</option>
+                      <option value="1">신규사과</option>
+                      <option value="2">깨끗한사과</option>
+                      <option value="3">맛있는사과</option>
+                    </select>
+                  </td>
+                  <th scope="row">
+                    회원유형
+                  </th>
+                  <td>
+                    <label class="gLabel eSelected">
+                      <input type="radio" name="member_auth" value="0" checked class="fChk">전체
+                    </label>
+                    <label class="gLabel">
+                      <input type="radio" name="member_auth" value="1" class="fChk">특별회원
+                    </label>
+                    <label class="gLabel">
+                      <input type="radio" name="member_auth" value="2" class="fChk">불량회원
+                    </label>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">
+                    성별
+                  </th>
+                  <td colspan="3">
+                    <label class="gLabel eSelected">
+                      <input type="radio" name="gender" value="1" checked class="fChk">전체
+                    </label>
+                    <label class="gLabel">
+                      <input type="radio" name="gender" value="2" class="fChk">남
+                    </label>
+                    <label class="gLabel">
+                      <input type="radio" name="gender" value="3" class="fChk">여
+                    </label>
+                  </td>
+                </tr>
                 </tbody>
               </table>
             </div>
@@ -75,11 +118,11 @@
           <div class="state">
             <div class="left">
               <p class="total">
-                [총 회원수
-                <strong>{n}</strong>
-                명] 검색결과
-                <strong>{n}</strong>
-                건
+<%--                [총 회원수--%>
+<%--                <strong>{n}</strong>--%>
+<%--                명] 검색결과--%>
+<%--                <strong>{n}</strong>--%>
+<%--                건--%>
               </p>
             </div>
             <div class="right">

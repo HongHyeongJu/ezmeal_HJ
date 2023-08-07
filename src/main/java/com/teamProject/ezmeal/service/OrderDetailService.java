@@ -27,4 +27,15 @@ public class OrderDetailService {
     public List<Long> getOrderDetailPk(Long orderId) {
         return orderDetailDao.selectOrderDetailPk(orderId);
     }
+
+    // 주문상세 page에서 구매확정으로 변경 시, od - stus update
+    public int setOrderFixed(Long orderDetailId) {
+        return orderDetailDao.updateOrderFixed(orderDetailId);
+    }
+
+    // 주문상세 page에서 리뷰작성 시, review_yn update
+    public int setOrderReview(Long orderDetailId) {
+        return orderDetailDao.updateOrderReview(orderDetailId);
+    }
+
 }

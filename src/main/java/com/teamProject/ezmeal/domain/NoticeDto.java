@@ -16,6 +16,7 @@ public class NoticeDto {
     private String wrt_dt_format;
     private String stmt;
 
+    private String hide_yn;
 
     // 기본 생성자
     public NoticeDto() {
@@ -25,20 +26,19 @@ public class NoticeDto {
     //Long, String 타입의 매개변수를 받는 생성자로, notice_no, writer, title, stmt 값을 설정하는 역할
 
 
-    public NoticeDto(Long notice_no, String writer, String title, String stmt) {
-        this.notice_no = notice_no;
+    public NoticeDto( String writer, String title, String stmt) {
         this.writer = writer;
         this.title = title;
         this.stmt = stmt;
     }
 
-    public NoticeDto(Long notice_no,String writer, String title, String stmt, String  wrt_dt_format ){
-        this.notice_no = notice_no;
+    public NoticeDto(String writer, String title, String stmt, String  wrt_dt_format ){
         this.writer = writer;
         this.title = title;
         this.stmt = stmt;
         this.wrt_dt_format = wrt_dt_format;
     }
+
 
 
 //    public NoticeDto(Long notice_no, String writer, String status,String typ, String title, String wrt_dt_format, String stmt) {
@@ -114,6 +114,14 @@ public class NoticeDto {
     public void setWrt_dt_format(String wrt_dt_format) {
 
         this.wrt_dt_format = wrt_dt_format;
+    }
+
+    public String getHide_yn() {
+        return hide_yn;
+    }
+
+    public void setHide_yn(String hide_yn) {
+        this.hide_yn = hide_yn;
     }
     @Override
     public String toString() {

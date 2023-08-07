@@ -32,23 +32,26 @@
 
     <!-- 일반 상품 : 냉장/냉동/상온 map으로 저장 -->
     <select id="product_list" resultMap="CartJoinProductDto" resultType="CartJoinProductDto">
-        SELECT cp.cart_prod_seq,
-               cp.prod_cd,
-               cp.opt_seq,
-               cp.typ,
-               cp.soldout_yn,
-               cp.qty                                                                    AS cpQty,
-               IFNULL(po.qty, 1)                                                         AS poQty,
-               IFNULL(CONCAT(p.name, ' ', po.name), p.name)                              AS name,
-               IFNULL(p.cnsmr_prc, po.cnsmr_prc)                                         AS cnsmr_prc,
-               IFNULL(p.sale_prc, po.sale_prc)                                           AS sale_prc,
-               IFNULL(FORMAT(p.cnsmr_prc * cp.qty, 0), FORMAT(po.cnsmr_prc * cp.qty, 0)) AS cnsmr_prc_format,
-               IFNULL(FORMAT(p.sale_prc * cp.qty, 0), FORMAT(po.sale_prc * cp.qty, 0))   AS sale_prc_format
-        FROM tb_cart_product cp
-                 JOIN tb_product p ON cp.prod_cd = p.prod_cd
-                 LEFT JOIN tb_product_option po ON cp.opt_seq = po.opt_seq
+    select cp.cart_prod_seq,
+       cp.prod_cd,
+       cp.opt_seq,
+       cp.typ,
+       cp.soldout_yn,
+       cp.qty                                                                    AS cpQty,
+       IFNULL(po.qty, 1)                                                         AS poQty,
+       IFNULL(CONCAT(p.name, ' ', po.name), p.name)                              AS name,
+       IFNULL(p.cnsmr_prc, po.cnsmr_prc)                                         AS cnsmr_prc,
+       IFNULL(p.sale_prc, po.sale_prc)                                           AS sale_prc,
+       IFNULL(FORMAT(p.cnsmr_prc * cp.qty, 0), FORMAT(po.cnsmr_prc * cp.qty, 0)) AS cnsmr_prc_format,
+       IFNULL(FORMAT(p.sale_prc * cp.qty, 0), FORMAT(po.sale_prc * cp.qty, 0))   AS sale_prc_format,
+       pi.url
+FROM tb_cart_product cp
+         JOIN tb_product p ON cp.prod_cd = p.prod_cd
+         LEFT JOIN tb_product_option po ON cp.opt_seq = po.opt_seq
+        join tb_product_img pi on pi.prod_cd = p.prod_cd
         WHERE cp.cart_seq = #{cartSeq}
-          AND cp.del_yn &lt;&gt; 'y'
+        AND cp.del_yn &lt;&gt; 'y'
+        and pi.typ = '대표'
         order by cp.typ
     </select>
 
@@ -107,13 +110,16 @@
                IFNULL(p.cnsmr_prc, po.cnsmr_prc)                       AS cnsmr_prc,
                IFNULL(p.sale_prc, po.sale_prc)                         AS sale_prc,
                IFNULL(FORMAT(p.cnsmr_prc * cp.qty, 0), FORMAT(po.cnsmr_prc * cp.qty, 0)) AS cnsmr_prc_format,
-               IFNULL(FORMAT(p.sale_prc * cp.qty, 0), FORMAT(po.sale_prc * cp.qty, 0))   AS sale_prc_format
+               IFNULL(FORMAT(p.sale_prc * cp.qty, 0), FORMAT(po.sale_prc * cp.qty, 0))   AS sale_prc_format,
+               pi.url
         FROM tb_cart_product cp
                  JOIN tb_product p ON cp.prod_cd = p.prod_cd
                  LEFT JOIN tb_product_option po ON cp.opt_seq = po.opt_seq
+                 join tb_product_img pi on pi.prod_cd = p.prod_cd
         WHERE cp.cart_seq = #{cartSeq}
           and cp.sel_prod = 'y'
           and cp.del_yn = 'n'
+          and pi.typ = '대표'
     </select>
 
     <!-- 주문할 상품 품절현황 확인 -->

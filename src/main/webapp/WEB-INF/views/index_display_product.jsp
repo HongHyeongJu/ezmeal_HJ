@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: hubaek
@@ -44,7 +45,9 @@
           </div>
           <div class="prod_number">
             <span class="dc_pt">${empl.dc_rate}%</span>
-            <span class="sale_prc">${empl.sale_prc}원</span>
+            <span class="sale_prc">
+            <fmt:formatNumber value="${empl.sale_prc}" type="number" pattern="#,##0"/>원</span>
+<%--            <span class="sale_prc">${empl.sale_prc}원</span>--%>
             <del class="cnsmr_prc">${empl.cnsmr_prc}원</del>
           </div>
         </div>
@@ -84,7 +87,8 @@
             </div>
             <div class="prod_number">
               <span class="dc_pt">${health.dc_rate}%</span>
-              <span class="sale_prc">${health.sale_prc}원</span>
+              <fmt:formatNumber value="${health.sale_prc}" type="number" pattern="#,##0"/>원</span>
+<%--              <span class="sale_prc">${health.sale_prc}원</span>--%>
               <del class="cnsmr_prc">${health.cnsmr_prc}원</del>
             </div>
           </div>
@@ -125,7 +129,8 @@
             </div>
             <div class="prod_number">
               <span class="dc_pt">${eat.dc_rate}%</span>
-              <span class="sale_prc">${eat.sale_prc}원</span>
+              <fmt:formatNumber value="${eat.sale_prc}" type="number" pattern="#,##0"/>원</span>
+<%--              <span class="sale_prc">${eat.sale_prc}원</span>--%>
               <del class="cnsmr_prc">${eat.cnsmr_prc}원</del>
             </div>
           </div>
@@ -167,7 +172,8 @@
             <c:set var="optIndexZero" value="${prodOptMap[home.prod_cd].get(0)}" />
             <div class="prod_number">
               <span class="dc_pt">${optIndexZero.dc_rate}%</span>
-              <span class="sale_prc">${optIndexZero.sale_prc}원</span>
+              <fmt:formatNumber value="${optIndexZero.sale_prc}" type="number" pattern="#,##0"/>원</span>
+<%--              <span class="sale_prc">${optIndexZero.sale_prc}원</span>--%>
               <del class="cnsmr_prc">${optIndexZero.cnsmr_prc}원</del>
             </div>
           </div>

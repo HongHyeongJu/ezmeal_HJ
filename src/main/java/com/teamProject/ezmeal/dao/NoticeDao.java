@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository
+@Repository // repository가 달린 클래스 찾아 빈 등록 하고 다른클래스에서 autowired 를 통해 doa를 주입해서사용
 public class NoticeDao {
 
     @Autowired
@@ -23,15 +23,18 @@ public class NoticeDao {
     public int select(long l) {
         return session.selectOne(namespace + "selectNotice");
     }
-//어진 long l 값을 이용하여 데이터베이스에서 특정 값을 조회
+
+    //어진 long l 값을 이용하여 데이터베이스에서 특정 값을 조회
     public int insert(NoticeDto noticeDto) {
         return session.insert(namespace + "insertNotice", noticeDto);
     }
-//주어진 NoticeDto noticeDto 객체를 데이터베이스에 삽입
+
+    //주어진 NoticeDto noticeDto 객체를 데이터베이스에 삽입
     public int delete(Long notice_no) {
         return session.delete(namespace + "deleteNotice", notice_no);
     }
-//주어진 Long notice_no에 해당하는 데이터를 데이터베이스에서 삭제
+
+    //주어진 Long notice_no에 해당하는 데이터를 데이터베이스에서 삭제
     public int deleteAll() {
         return session.delete(namespace + "deleteAll");
     }
@@ -61,17 +64,15 @@ public class NoticeDao {
 
 
     public List<NoticeDto> selectNoticeList() {
-
-        System.out.println(session.selectList(namespace + "selectNoticeList"));
         return session.selectList(namespace + "selectNoticeList");
     }
 
 
     public int save(NoticeDto noticeDto) { //값저장하려고 만든 메서드
-        return session.insert(namespace + "insertNotice",noticeDto );
+        return session.insert(namespace + "insertNotice", noticeDto);
     }
 
-    public List<NoticeDto> selectNoticeList(Map map){
+    public List<NoticeDto> selectNoticeList(Map map) {
         return session.selectList(namespace + "selectNoticeList", map);
     }
 
@@ -80,8 +81,9 @@ public class NoticeDao {
         return session.selectList(namespace + "selectNoticeListWithoutParams");
     }
 
-    public int selectTotalCnt(){
+    public int selectTotalCnt() {
         return session.selectOne(namespace + "gettotalCnt");
     }
-
 }
+
+

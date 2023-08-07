@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class OrderDetailDto {
     private Long ord_prod_dtl_id; // 주문상품상세번호 (Primary Key)
+    private String ord_prod_stus_cd; // 상태 코드 | h1, h2
     private Long prod_cd; //// 상품코드
     private Long ord_id; //// 주문번호 id
     private Integer prod_seq; // 상품일련번호
@@ -24,11 +25,15 @@ public class OrderDetailDto {
     private Integer tot_prc; //// 총상품금액, 개별상품의 수량*가격
     private Integer dc_prc; //// 상품할인금액, 상품자체할인 * 수량
     private Integer setl_expct_prc; //// 결제예정금액, 총상품금액-상품할인금액
+    private String  setl_expct_prc_format; // 숫자 포맷팅
+    private String  tot_prc_format; // 숫자 포맷팅
     private String stus; //// 상태코드, 취소~환불, 반품, 배송상태
+    private String review_yn; // 리뷰작성 여부
     private LocalDateTime in_dtm; // 최초등록일시
     private String in_id; // 최초등록식별번호
     private LocalDateTime up_dtm; // 최종수정일시
     private String up_id; // 최종수정_식별번호
+    private String url; // 상품이미지
 
     public OrderDetailDto(Long prod_cd, Long ord_id, Long opt_cd, String name,
                           Integer cnsmr_prc, Integer seler_prc, Integer qty,

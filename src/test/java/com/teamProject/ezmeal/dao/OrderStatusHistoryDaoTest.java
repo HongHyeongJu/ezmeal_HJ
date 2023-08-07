@@ -18,4 +18,9 @@ public class OrderStatusHistoryDaoTest {
         int i = orderStatusHistoryDao.insertOrderStatusHistory(2L);
         assertEquals(1, i);
     }
+
+    @Test
+    public void insert_fixed_complete() {
+        int i = orderStatusHistoryDao.insertFixedComplete(2023071794001L);
+    }
 }

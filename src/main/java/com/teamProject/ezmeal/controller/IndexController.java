@@ -40,6 +40,10 @@ public class IndexController {
     }
 
 
+    @GetMapping("/ezDelivery")
+    public String ezDelivery(){
+        return "ezdelivery";
+    }
 
 
 }

@@ -13,4 +13,7 @@ public class OrderStatusHistoryDao {
     public int insertOrderStatusHistory(Long ordId){
         return session.insert(namespace + "insertOrderStatusHistory", ordId);
     }
+    public int insertFixedComplete(Long ordDtlId) {
+        return session.insert(namespace + "insert_fixed_complete", ordDtlId);
+    }
 }

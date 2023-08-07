@@ -96,7 +96,7 @@ public class ProductImgService {
         System.out.println("uploadFileName = " + uploadFileName);
         //확장자 꺼내기
         String extns = uploadFileName.substring(uploadFileName.lastIndexOf(".") + 1);
-        System.out.println("확장자: " + uploadFileName);
+        System.out.println("확장자: " + extns);
 
         //파일이름 정제? 왜하는지 모르겠지만 일단 함
         uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
