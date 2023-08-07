@@ -412,4 +412,24 @@
         where od.stus = 'h6' # 배송완료 중 조건
           AND od.up_dtm &lt; DATE_SUB(NOW(), INTERVAL 7 DAY);
     </update>
+
+    <!-- 주문상세의 배송 이력을 가지고 오기전 배송 수량, 배송 대기 수량, 올바른 배송 상태 수량 미 list 가지고 오기 -->
+    <select id="select_dlvarId_data_list_for_order_detail" resultType="map">
+        SELECT
+            GROUP_CONCAT(dlvar_id) AS dlvar_id,
+            COUNT(bndl_yn) AS count,
+            stus
+        FROM tb_delivery_master
+        WHERE ord_id = #{ordId}
+        GROUP BY stus;
+    </select>
+
+    <!-- 주문 상세에 사용할 배송 이력 받아오기 -->
+    <select id="select_dlvar_hist" resultType="map">
+        select dh.stus, dsc.name, dh.chg_rsn, DATE_FORMAT(dh.chg_dtm, '%Y-%m-%d %H:%i:%s') as chg_dtm
+        from tb_delivary_history dh, tb_delivery_status_code dsc
+        where dh.dlvar_id = #{dlvarId}
+          and dh.stus = dsc.dlvar_stus_cd
+          and stus not in ('h1', 'h3')
+    </select>
 </mapper>

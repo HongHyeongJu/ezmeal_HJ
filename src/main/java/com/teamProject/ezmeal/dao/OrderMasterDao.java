@@ -24,4 +24,9 @@ public class OrderMasterDao {
     public Long selectOrderId(Long mbrId){
         return session.selectOne(namespace + "select_order_id", mbrId);
     }
+
+    // 주문 상세에 배송 상세 정보 보내줄지 말지 알리는 기준
+    public int selectShowDeliveryInfo(Long ordId){
+        return session.selectOne(namespace + "select_check_show_delivery_info", ordId);
+    }
 }
