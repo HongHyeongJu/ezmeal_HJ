@@ -33,6 +33,7 @@ public class OrderDetailDto {
     private String in_id; // 최초등록식별번호
     private LocalDateTime up_dtm; // 최종수정일시
     private String up_id; // 최종수정_식별번호
+    private String url; // 상품이미지
 
     public OrderDetailDto(Long prod_cd, Long ord_id, Long opt_cd, String name,
                           Integer cnsmr_prc, Integer seler_prc, Integer qty,
