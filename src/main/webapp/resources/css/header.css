@@ -56,37 +56,44 @@ a {
   letter-spacing: -0.3px;
 }
 
-/*검색창 안에있는 검색어 쓰는 box*/
-.search_inner_box {
-  position: absolute;
-  width: 100%;
-  height: 30px;
-  line-height: 30px;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  border-style: none;
+.search_box {
+  position: relative; /* 추가 */
+  width: 300px;
+  height: 48px;
+  padding: 6px 14px; /* 수정 */
+  border: 1px solid #65d674;
+  border-radius: 6px;
   font-size: 16px;
-  padding-left: 5px;
+  line-height: 30px;
+  letter-spacing: -0.3px;
 }
 
-/*검색창 안의 버튼 */
-/*.search-btn {*/
-/*  position: absolute;*/
-/*  right: 10px; */
-/*  top: 50%; */
-/*  transform: translateY(-50%); */
-/*  width: 30px;*/
-/*  height: 30px; */
-/*  border-style: none;*/
-/*}*/
+.search_inner_box {
+  position: absolute;
+  width: 100%; /* 추가 */
+  height: 30px;
+  line-height: 30px; /* 추가 */
+  left: 0; /* 추가 */
+  top: 50%; /* 추가 */
+  transform: translateY(-50%); /* 추가 */
+  border-style: none;
+  font-size: 16px;
+}
 
-/*.search_inner_box:hover,*/
-/*.search_inner_box:focus {*/
-/*  outline: none;*/
-/*}*/
+.search-btn {
+  position: absolute;
+  right: 10px; /* 수정 */
+  top: 50%; /* 수정 */
+  transform: translateY(-50%); /* 추가 */
+  width: 30px;
+  height: 30px; /* 수정 */
+  border-style: none;
+}
 
-
+.search_inner_box:hover,
+.search_inner_box:focus {
+  outline: none;
+}
 
 .search-btn svg {
   fill: rgb(179, 180, 182);
@@ -103,6 +110,7 @@ a {
   color: rgb(0, 199, 40); /* 초기 색상 */
   transition: color 0.3s ease; /* 색상 변화에 대한 트랜지션 효과 */
 }
+
 
 /*start : 아이콘(user, wishlist,cart)*/
 .icon_box {
