@@ -16,8 +16,17 @@
     padding: 20px;
 }
 
-.chart_div_order{
+.chart_div_order {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.chart_name_order{
+    width: 500px;
+    margin-bottom: 0;
+}
+
+.chart_sub_name_order{
+    margin-bottom: 0;
 }
