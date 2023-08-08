@@ -52,6 +52,25 @@ public class PageHandler {
         System.out.println(showNext ? " [NEXT]" : ""); //다음
     }
 
+//    public void goToFirstPage() {
+//        setPage(1);
+//        recalculate();
+//    }
+//
+//    public void goToLastPage() {
+//        setPage(totalPage);
+//        recalculate();
+//    }
+//
+//    private void recalculate() {
+//        totalPage = (int) Math.ceil(totalCnt / (double) pageSize);
+//        beginPage = (getPage() - 1) / naviSize * naviSize + 1;
+//        endPage = Math.min(beginPage + naviSize - 1, totalPage);
+//        showPrev = beginPage != 1;
+//        showNext = endPage != totalPage;
+//    }
+
+
     public int getTotalCnt() {
         return totalCnt;
     }
