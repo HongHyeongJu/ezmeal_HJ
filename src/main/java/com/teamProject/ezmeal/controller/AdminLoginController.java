@@ -42,7 +42,7 @@ public class AdminLoginController {
         HttpSession session = request.getSession();
         session.setAttribute("empId", empId);
         session.setAttribute("loginAdminInfo", loginAdminInfo);
-        return "admin_member_info";
+        return "redirect:/admin";
     }
 
 }

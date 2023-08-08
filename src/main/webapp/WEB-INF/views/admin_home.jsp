@@ -49,8 +49,8 @@
                     <h1>회원</h1>
                 </a>
                 <div class="chart_div">
-                    <h3 class="chart_name">회원관련 제목</h3>
-                    <h4 class="chart_sub_name chart_sub_name_order">부제</h4>
+                    <h3 class="chart_name">회원가입, 접속자 수</h3>
+                    <h4 class="chart_sub_name chart_sub_name_order">2023년 통계</h4>
                     <div id="chart_shape3"></div>
                 </div>
             </div>
