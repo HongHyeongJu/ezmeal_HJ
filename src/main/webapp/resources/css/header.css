@@ -26,6 +26,7 @@ a {
   align-items: center;
 }
 
+/*ez배송 */
 .logo-box {
   display: flex;
   align-items: center;
@@ -42,11 +43,12 @@ a {
   margin-bottom: 10px;
 }
 
+/*검색창 box*/
 .search_box {
-  position: relative; /* 추가 */
+  position: relative;
   width: 300px;
   height: 48px;
-  padding: 6px 14px; /* 수정 */
+  padding: 6px 14px;
   border: 1px solid #65d674;
   border-radius: 6px;
   font-size: 16px;
@@ -54,32 +56,35 @@ a {
   letter-spacing: -0.3px;
 }
 
+/*검색창 안에있는 검색어 쓰는 box*/
 .search_inner_box {
   position: absolute;
-  width: 100%; /* 추가 */
+  width: 100%;
   height: 30px;
-  line-height: 30px; /* 추가 */
-  left: 0; /* 추가 */
-  top: 50%; /* 추가 */
-  transform: translateY(-50%); /* 추가 */
+  line-height: 30px;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
   border-style: none;
   font-size: 16px;
+  padding-left: 5px;
 }
 
-.search-btn {
-  position: absolute;
-  right: 10px; /* 수정 */
-  top: 50%; /* 수정 */
-  transform: translateY(-50%); /* 추가 */
-  width: 30px;
-  height: 30px; /* 수정 */
-  border-style: none;
-}
+/*검색창 안의 버튼 */
+/*.search-btn {*/
+/*  position: absolute;*/
+/*  right: 10px; */
+/*  top: 50%; */
+/*  transform: translateY(-50%); */
+/*  width: 30px;*/
+/*  height: 30px; */
+/*  border-style: none;*/
+/*}*/
 
-.search_inner_box:hover,
-.search_inner_box:focus {
-  outline: none;
-}
+/*.search_inner_box:hover,*/
+/*.search_inner_box:focus {*/
+/*  outline: none;*/
+/*}*/
 
 
 

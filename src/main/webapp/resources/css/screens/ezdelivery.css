@@ -674,7 +674,6 @@ section ul li.active {
 .footer2-wrapper {
     display: flex;
     justify-content: center;
-    background-color: rgb(247, 247, 247);
     width: 100%;
 }
 .footer2_box {
@@ -682,7 +681,6 @@ section ul li.active {
     font-size: 10px;
     line-height: 15px;
     text-align: center;
-    background-color: rgb(247, 247, 247);
     color: rgb(153, 153, 153);
     width: 1050px;
 }
@@ -713,3 +711,6 @@ section ul li.active {
 #backtotop-btn:hover {
     background-color: rgb(33, 146, 255);
 }
+
+
+git
