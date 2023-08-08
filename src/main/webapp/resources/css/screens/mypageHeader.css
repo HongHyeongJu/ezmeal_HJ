@@ -175,3 +175,7 @@ a {
 .text-primary {
     color: rgb(0, 199, 40) !important;
 }
+
+.user-info {
+    height: 190px;
+}
