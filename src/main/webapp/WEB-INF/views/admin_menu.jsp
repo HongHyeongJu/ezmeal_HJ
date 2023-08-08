@@ -18,7 +18,7 @@
         <ul id="menu_list">
 
             <a href="/admin">
-                <li class="main_li" id="home">
+                <li class="main_li home_main_li" id="home">
                     <i class="fas fa-home"></i>&nbsp;&nbsp;&nbsp;홈
                 </li>
             </a>
