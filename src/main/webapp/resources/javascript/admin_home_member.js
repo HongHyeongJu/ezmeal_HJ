@@ -8,23 +8,34 @@ function drawChart() {
 
     var data = new google.visualization.DataTable();
     data.addColumn("date", "Month");
-    data.addColumn("number", "Average Temperature");
-    data.addColumn("number", "Average Hours of Daylight");
+    data.addColumn("number", "회원가입");
+    data.addColumn("number", "접속자");
 
     data.addRows([
-        [new Date(2014, 0), -0.5, 5.7],
-        [new Date(2014, 1), 0.4, 8.7],
-        [new Date(2014, 2), 0.5, 12],
-        [new Date(2014, 3), 2.9, 15.3],
-        [new Date(2014, 4), 6.3, 18.6],
-        [new Date(2014, 5), 9, 20.9],
-        [new Date(2014, 6), 10.6, 19.8],
-        [new Date(2014, 7), 10.3, 16.6],
-        [new Date(2014, 8), 7.4, 13.3],
-        [new Date(2014, 9), 4.4, 9.9],
-        [new Date(2014, 10), 1.1, 6.6],
-        [new Date(2014, 11), -0.2, 4.5],
+        [new Date(2023, 0), 530, 700],
+        [new Date(2023, 1), 340, 1300],
+        [new Date(2023, 2), 320, 1130],
+        [new Date(2023, 3), 410, 1350],
+        [new Date(2023, 4), 370, 1570],
+        [new Date(2023, 5), 564, 1790],
+        [new Date(2023, 6), 450, 1456],
+        [new Date(2023, 7), 645, 1653],
+        // [new Date(2023, 8), 7.4, 13.3],
+        // [new Date(2023, 9), 4.4, 9.9],
+        // [new Date(2023, 10), 1.1, 6.6],
+        // [new Date(2023, 11), -0.2, 4.5],
     ]);
+
+    var formatter = new google.visualization.DateFormat({
+        pattern: 'M월',
+        timeZone: 'UTC',  // 필요에 따라 타임존을 조정하세요
+    });
+
+    formatter.format(data,0);
+    formatter.format(data,1);
+    formatter.format(data,2);
+
+
 
     var options = {
         chart: {
