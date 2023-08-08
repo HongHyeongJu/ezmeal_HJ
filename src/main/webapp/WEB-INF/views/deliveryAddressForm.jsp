@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>ezMeal 배송지 </title>
+    <title>ezmeal | 배송지</title>
 </head>
 <body>
 <h1>배송지 ${previousAddress != null ? "수정" : "추가"}</h1>

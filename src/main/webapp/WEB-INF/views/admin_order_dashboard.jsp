@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title> ezmeal | admin_order-dashboard</title>
+    <title>ezmeal 관리자 | 주문 대시보드</title>
     <link rel="stylesheet" href="/css/screens/admin_order_dashboard.css">
 </head>
 <body>

@@ -13,7 +13,7 @@
 
 <html>
 <head>
-    <title>ezmeal_admin</title>
+
     <link rel="stylesheet" href="/css/screens/admin_header.css">
 </head>
 <body>

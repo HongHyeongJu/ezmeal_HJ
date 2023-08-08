@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>ezmeal_admin | 배송중 준비</title>
+    <title>ezmeal 관리자 | 배송중 준비</title>
     <link rel="stylesheet" href="/css/screens/admin_order.css">
     <link rel="stylesheet" href="/css/screens/admin_order_delivery.css">
 </head>

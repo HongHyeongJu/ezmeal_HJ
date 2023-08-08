@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>ezmeal_admin</title>
+    <title>ezmeal 관리자 | 게시판 등록</title>
     <link rel="stylesheet" href="/css/screens/admin_notice_write.css">
 <%--    <link rel="preconnect" href="https://fonts.googleapis.com">--%>
 <%--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>--%>

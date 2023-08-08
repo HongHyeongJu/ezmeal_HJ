@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 상품 CRUD</title>
+    <title>ezmeal 관리자 | 상품 등록</title>
     <link rel="stylesheet" href="/css/screens/productRegistration.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
