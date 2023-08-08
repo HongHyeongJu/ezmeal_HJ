@@ -141,17 +141,17 @@
               <span class="pord_name">${eat.name}</span>
             </div>
             <div class="prod_number">
-            <c:set var="dc_rate" value="${eat.dc_rate}"/>
-            <c:if test="${dc_rate != 0}">
-                <span class="dc_pt">${dc_rate}%</span>
-            </c:if>
-<%--            <span class="dc_pt">${empl.dc_rate}%</span>--%>
-            <span class="sale_prc">
-            <fmt:formatNumber value="${eat.sale_prc}" type="number" pattern="#,##0"/>원</span>
-<%--            <span class="sale_prc">${empl.sale_prc}원</span>--%>
-            <c:if test="${dc_rate != 0}">
-              <del class="cnsmr_prc">${eat.cnsmr_prc}원</del>
-            </c:if>
+              <c:set var="dc_rate" value="${eat.dc_rate}"/>
+              <c:if test="${dc_rate != 0}">
+                  <span class="dc_pt">${dc_rate}%</span>
+              </c:if>
+  <%--            <span class="dc_pt">${empl.dc_rate}%</span>--%>
+              <span class="sale_prc">
+              <fmt:formatNumber value="${eat.sale_prc}" type="number" pattern="#,##0"/>원</span>
+  <%--            <span class="sale_prc">${empl.sale_prc}원</span>--%>
+              <c:if test="${dc_rate != 0}">
+                <del class="cnsmr_prc">${eat.cnsmr_prc}원</del>
+              </c:if>
             </div>
           </div>
         </li>
@@ -191,17 +191,18 @@
             </div>
             <c:set var="optIndexZero" value="${prodOptMap[home.prod_cd].get(0)}" />
             <div class="prod_number">
-            <c:set var="dc_rate" value="${home.dc_rate}"/>
-            <c:if test="${dc_rate != 0}">
-                <span class="dc_pt">${dc_rate}%</span>
-            </c:if>
-<%--            <span class="dc_pt">${empl.dc_rate}%</span>--%>
-            <span class="sale_prc">
-            <fmt:formatNumber value="${home.sale_prc}" type="number" pattern="#,##0"/>원</span>
-<%--            <span class="sale_prc">${empl.sale_prc}원</span>--%>
-            <c:if test="${dc_rate != 0}">
-              <del class="cnsmr_prc">${home.cnsmr_prc}원</del>
-            </c:if>
+              <c:set var="dc_rate" value="${optIndexZero.dc_rate}"/>
+              <c:if test="${dc_rate != 0}">
+                  <span class="dc_pt">${dc_rate}%</span>
+              </c:if>
+  <%--            <span class="dc_pt">${empl.dc_rate}%</span>--%>
+              <span class="sale_prc">
+              <fmt:formatNumber value="${optIndexZero.sale_prc}" type="number" pattern="#,##0"/>원</span>
+  <%--            <span class="sale_prc">${empl.sale_prc}원</span>--%>
+              <c:if test="${dc_rate != 0}">
+                <del class="cnsmr_prc">${optIndexZero.cnsmr_prc}원</del>
+              </c:if>
+
             </div>
           </div>
         </li>

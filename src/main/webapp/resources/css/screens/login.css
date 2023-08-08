@@ -106,7 +106,10 @@ button {
     transition: transform 80ms ease-in;
 }
 .form_btn {
-    box-shadow: -5px -5px 10px #fff, 5px 5px 8px #fbfbf9;
+    box-shadow: -5px -5px 10px #ffff, 5px 5px 8px #fbfbf9;
+    background-color: #00c729;
+    color: white;
+    /* font-size: large; */
 }
 .form_btn:active { /*active: 사용자가 마우스로 클릭한 태그 선택*/
     box-shadow: inset 1px 1px 2px #babebc, inset -1px -1px 2px #fff;
@@ -114,7 +117,7 @@ button {
 .overlay_btn { /*overlay : 요소위에 요소가 겹쳐보이는것.*/
     background-color: #fbfbf9;
     color: black;
-    box-shadow: -5px -5px 10px  #fbfbf9, 5px 5px 8px  #fbfbf9;
+    /* box-shadow: -5px -5px 10px  #fbfbf9, 5px 5px 8px  #fbfbf9; */
 }
 .sign-in-container {  /*로그인 */
     position: absolute;
@@ -142,7 +145,7 @@ button {
     width: 50%;
     height: 100%;
     opacity: 0;
-    background-color: #e1eb61;
+    background-color: #00c728;
     color: #e3f9ee;
     transition: all 0.5s;
 }
@@ -156,7 +159,7 @@ button {
     right: 0;
     width: 50%;
     height: 100%;
-    background-color: #e1eb61;
+    background-color: #00c728;
     color: #fff;
     transition: all 0.5s;
 }
