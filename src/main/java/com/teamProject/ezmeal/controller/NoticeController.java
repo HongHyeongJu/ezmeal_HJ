@@ -41,6 +41,7 @@ public class NoticeController {
         List<NoticeDto> list = noticeService.getNoticeList(map);
         System.out.println("list = " + list);
         model.addAttribute("noticeList", list);
+        model.addAttribute("totalPage", pageHandler.getTotalPage()); // 전체 페이지 수 추가 지금추가
 
         model.addAttribute("ph", pageHandler);
 
