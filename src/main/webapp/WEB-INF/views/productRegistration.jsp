@@ -140,8 +140,8 @@
                     </tr>
                     <tr class="dc_input">
                         <td><input type="number" id="sale_prc" name="product.sale_prc" value="${product.getSale_prc()}" min="0" disabled><p>원</p></td>
-                        <td><input type="number" id="mgn_rate" name="product.mgn_rate" value="${product.getMgn_rate()}" disabled><p>%</p></td>
-                        <td><input type="number" id="dc_rate" name="product.dc_rate"  value="${product.getDc_rate()}"  disabled ><p>%</p></td>
+                        <td><input type="number" id="mgn_rate" name="product.mgn_rate" value="${product.getMgn_rate()}"  min="0" disabled><p>%</p></td>
+                        <td><input type="number" id="dc_rate" name="product.dc_rate"  value="${product.getDc_rate()}"  min="0" disabled ><p>%</p></td>
                     </tr>
                 </table>
             </div>
@@ -273,7 +273,7 @@
                     </tr>
                     <tr class="dscpt_set_tr_1">
                         <td><input type="number" id="min_qty" name="product.min_qty" value="${product.getMin_qty()}" min="1" value="1" ><p>개</p></td>
-                        <td><input type="number" id="weight" name="product.weight" value="${product.getWeight()}"><p>g</p></td>
+                        <td><input type="number" id="weight" name="product.weight" value="${product.getWeight()}" min="1"><p>g</p></td>
                         <td><input type="text" id="stnd" name="product.stnd" value="${product.getStnd()}" placeholder="가로*세로*너비" ></td>
 
                     </tr>
@@ -309,8 +309,8 @@
 
             <div class="right img_set_div">
                 <ul class="upload_img_thumnail img_ul_1">
-                    <li clas="img_li_title">상품 이미지 등록</li><br>
-                    <li clas="img_li_dtail">대표 이미지 1개, 상품 상세 메인 이미지 N개, 상세 이미지 1개 등록해주세요<br>
+                    <li clas="img_li_title">상품 이미지 등록</li><br><br>
+                    <li clas="img_li_dtail">대표 이미지 1개, 상품 상세 메인 이미지 5개 이하, 상세 이미지 1개 등록<br><br>
                         상세 이미지 권장 사이즈: 가로 1100px
                         </li><br><br>
                     <li clas="img_li_input"><input type="file" name="uploadProdImg" id="mainImgInput" multiple></li>
