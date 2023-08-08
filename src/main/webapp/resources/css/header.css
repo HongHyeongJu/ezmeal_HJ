@@ -70,10 +70,10 @@ a {
 
 .search_inner_box {
   position: absolute;
-  width: 100%; /* 추가 */
+  width: 80%; /* 추가 */
   height: 30px;
   line-height: 30px; /* 추가 */
-  left: 0; /* 추가 */
+  left: 20px; /* 추가 */
   top: 50%; /* 추가 */
   transform: translateY(-50%); /* 추가 */
   border-style: none;

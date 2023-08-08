@@ -17,6 +17,7 @@ async function handleOrderFixed(event) {
     event.target.previousElementSibling.textContent = '구매 확정'; // 상태 tag 변경
     event.target.className = 'order-detail__product_review'; // class명 변경
     event.target.textContent = '리뷰 작성하기'; // button 내용 변경
+    window.location.reload();
 }
 
 /*
