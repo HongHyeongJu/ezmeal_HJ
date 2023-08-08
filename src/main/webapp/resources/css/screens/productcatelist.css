@@ -262,6 +262,12 @@ span.sale_prc {
     text-align: center;
 }
 
+#qty_7 {
+    width: 60px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .min_btn {
     margin-left: 15px;
 }
@@ -276,6 +282,8 @@ span.sale_prc {
     cursor: pointer;
     border: 1px solid gainsboro;
     display: inline-block;
+    color: black;
+
 }
 
 
