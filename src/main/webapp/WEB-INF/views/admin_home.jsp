@@ -24,32 +24,43 @@
     <div class="admin_container_div">
         <div class="all">
             <div class="admin_graph">
-                <h1>주문</h1>
+                <a href="/admin/order/dashboard" class="chart_link">
+                    <h1>주문</h1>
+                </a>
                 <div class="chart_div chart_div_order">
                     <h3 class="chart_name chart_name_order">주문,교환,반품 추이</h3>
-                    <h4 class="chart_name chart_name_order">2023년 주문 통계</h4>
+                    <h4 class="chart_sub_name chart_sub_name_order">2023년 주문 통계</h4>
                     <div id="chart_shape1"></div>
                 </div>
             </div>
 
             <div class="admin_graph">
-                <h1>상품</h1>
+                <a href="/admin/prod/home" class="chart_link">
+                    <h1>상품</h1>
+                </a>
                 <div class="chart_div">
-                    <h2 class="chart_name">카테고리별 상품 판매량</h2>
+                    <h3 class="chart_name">카테고리별 상품 판매량</h3>
+                    <h4 class="chart_sub_name chart_sub_name_order">2023년 7월 상품판매 현황</h4>
                     <div id="chart_shape2"></div>
                 </div>
             </div>
             <div class="admin_graph">
-                <h1>회원</h1>
+                <a href="/admin/member" class="chart_link">
+                    <h1>회원</h1>
+                </a>
                 <div class="chart_div">
-                    <h2 class="chart_name">백현욱</h2>
+                    <h3 class="chart_name">회원관련 제목</h3>
+                    <h4 class="chart_sub_name chart_sub_name_order">부제</h4>
                     <div id="chart_shape3"></div>
                 </div>
             </div>
             <div class="admin_graph">
-                <h1>게시판</h1>
+                <a href="/admin/notice/dashboard" class="chart_link">
+                    <h1>게시판</h1>
+                </a>
                 <div class="chart_div">
-                    <h2 class="chart_name">이나경</h2>
+                    <h3 class="chart_name">게시판관련 제목</h3>
+                    <h4 class="chart_sub_name chart_sub_name_order">부제</h4>
                     <div id="chart_shape4"></div>
                 </div>
             </div>

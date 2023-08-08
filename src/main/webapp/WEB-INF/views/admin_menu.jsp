@@ -110,7 +110,7 @@
 
 
             <li class="board main_li" id="board"><i class="fas fa-clipboard"></i>&nbsp;&nbsp;&nbsp;&nbsp;게시판</li>
-            <a href="홈페이지_주소">
+            <a href="/admin/notice/dashboard">
                 <li class="hidden board_li sub_li">게시판 대시보드</li>
             </a>
             <a href="/admin/notice/write">
