@@ -1,0 +1,73 @@
+.all {
+    display: grid;
+    width: 1200px;
+    grid-template-columns: repeat(2, 600px); /* 2개의 열을 동일한 너비로 설정 */
+    grid-template-rows: repeat(2, 465px); /* 2개의 행을 동일한 높이로 설정 */
+    gap: 30px;
+}
+.admin_graph {
+    border: 2px solid #e0e0e0;
+    border-radius : 40px;
+    padding: 20px;
+}
+
+.admin_graph h1{
+    margin-bottom: 0px;
+    margin-left: 25px;
+    color:black;
+}
+
+.chart_div {
+    padding: 20px;
+}
+
+/* taewan */
+.chart_div_order {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chart_name,
+.chart_sub_name
+{
+    width: 500px;
+    margin: 5px;
+}
+.chart_sub_name{
+    color: darkgray;
+}
+
+.chart_link {
+    display: inline; /* a 요소를 인라인으로 설정 */
+    text-decoration: none; /* 링크의 밑줄 제거 (선택사항) */
+}
+
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+
+caption {
+    display: none;
+}/*해당 태그를 화면에 표시하지 않도록 설정*/
+
+
+colgroup {
+    display: table-column-group;
+}
+
+/*테이블 헤더*/
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+
+
