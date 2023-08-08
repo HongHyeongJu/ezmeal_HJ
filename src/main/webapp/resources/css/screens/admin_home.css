@@ -2,16 +2,45 @@
     display: grid;
     width: 1200px;
     grid-template-columns: 600px 600px;
-    grid-template-rows: 700px 700px;
+    grid-template-rows: 465px 465px;
     gap: 30px;
 }
 
 .admin_graph {
-    border: 2px solid #000;
+    border: 2px solid #e0e0e0;
+    border-radius : 40px;
     padding: 20px;
 }
 
+.admin_graph h1{
+    margin-bottom: 0px;
+    margin-left: 25px;
+    color:black;
+}
+
 .chart_div {
-    border: 2px solid #000;
     padding: 20px;
 }
+
+/* taewan */
+.chart_div_order {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chart_name,
+.chart_sub_name
+{
+    width: 500px;
+    margin: 5px;
+}
+.chart_sub_name{
+    color: darkgray;
+}
+
+.chart_link {
+    display: inline; /* a 요소를 인라인으로 설정 */
+    text-decoration: none; /* 링크의 밑줄 제거 (선택사항) */
+}
+

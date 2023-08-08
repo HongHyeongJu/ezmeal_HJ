@@ -64,9 +64,9 @@ public class TestController {
 //    public String goRegistAdmin(){
 //        return "admin_basic";
 //    }
-    @GetMapping("/testupup")
+    @GetMapping("/prodmaintest")
     public String goUploadTest() {
-        return "tttest";
+        return "admin_home";
     }
 
     @GetMapping("/testupuptwo")

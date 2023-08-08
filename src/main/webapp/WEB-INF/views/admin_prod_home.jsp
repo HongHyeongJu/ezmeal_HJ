@@ -20,13 +20,67 @@
 
         <%@ include file="admin_menu.jsp" %> <!-- 관리자 메뉴 인클루드 -->
 
-        <div class="admin_container_div">
-            <!-- admin_container_div 내용.
-            각자 맡은 관리자 페이지 내용 이 디브 안에 쓰면 됩니다.  -->
-<%--            <%@ include file="여기에 자신의 관리자 디브 가로 1200px.jsp" %>--%>
-            <p> 관리자 상품 대시보드 </p>
+
+    <div class="admin_container_div">
+        <div class="all">
+
+            <div class="admin_graph">
+                <h1>상품</h1>
+                <div class="chart_div">
+                    <h2 class="chart_name">카테고리별 상품 판매량</h2>
+                    <div id="chart_shape2"></div>
+                </div>
+            </div>
+
+            <div class="admin_graph">
+                <h1>주문</h1>
+                <div class="chart_div chart_div_order">
+                    <h2 class="chart_name">주문량</h2>
+                    <div id="chart_shape1"></div>
+                </div>
+            </div>
+
+
+            <div class="admin_graph">
+                <h1>회원</h1>
+                <div class="chart_div">
+                    <h2 class="chart_name">백현욱</h2>
+                    <div id="chart_shape3"></div>
+                </div>
+            </div>
+            <div class="admin_graph">
+                <h1>게시판</h1>
+                <div class="chart_div">
+                    <h2 class="chart_name">이나경</h2>
+                    <div id="chart_shape4"></div>
+                </div>
+            </div>
+
         </div>
 
+
     </div>
+
+
+<!--주문 그래프-->
+    <script
+            type="text/javascript"
+            src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <!--상품 그래프-->
+    <script
+            type="text/javascript"
+            src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <!--회원 그래프-->
+    <script
+            type="text/javascript"
+            src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <!--게시판 그래프-->
+    <script
+            type="text/javascript"
+            src="https://www.gstatic.com/charts/loader.js"
+    ></script>
 </body>
 </html>

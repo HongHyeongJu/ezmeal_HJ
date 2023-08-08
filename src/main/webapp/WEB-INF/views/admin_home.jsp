@@ -24,31 +24,43 @@
     <div class="admin_container_div">
         <div class="all">
             <div class="admin_graph">
-                <h1>주문</h1>
-                <div class="chart_div">
-                    <h2 class="chart_name">주문량</h2>
+                <a href="/admin/order/dashboard" class="chart_link">
+                    <h1>주문</h1>
+                </a>
+                <div class="chart_div chart_div_order">
+                    <h3 class="chart_name chart_name_order">주문,교환,반품 추이</h3>
+                    <h4 class="chart_sub_name chart_sub_name_order">2023년 주문 통계</h4>
                     <div id="chart_shape1"></div>
                 </div>
             </div>
 
             <div class="admin_graph">
-                <h1>상품</h1>
+                <a href="/admin/prod/home" class="chart_link">
+                    <h1>상품</h1>
+                </a>
                 <div class="chart_div">
-                    <h2 class="chart_name">홍형주</h2>
+                    <h3 class="chart_name">카테고리별 상품 판매량</h3>
+                    <h4 class="chart_sub_name chart_sub_name_order">2023년 7월 상품판매 현황</h4>
                     <div id="chart_shape2"></div>
                 </div>
             </div>
             <div class="admin_graph">
-                <h1>회원</h1>
+                <a href="/admin/member" class="chart_link">
+                    <h1>회원</h1>
+                </a>
                 <div class="chart_div">
-                    <h2 class="chart_name">백현욱</h2>
+                    <h3 class="chart_name">회원관련 제목</h3>
+                    <h4 class="chart_sub_name chart_sub_name_order">부제</h4>
                     <div id="chart_shape3"></div>
                 </div>
             </div>
             <div class="admin_graph">
-                <h1>게시판</h1>
+                <a href="/admin/notice/dashboard" class="chart_link">
+                    <h1>게시판</h1>
+                </a>
                 <div class="chart_div">
-                    <h2 class="chart_name">이나경</h2>
+                    <h3 class="chart_name">게시판관련 제목</h3>
+                    <h4 class="chart_sub_name chart_sub_name_order">부제</h4>
                     <div id="chart_shape4"></div>
                 </div>
             </div>
@@ -56,27 +68,9 @@
     </div>
 
 
-    <!--주문 그래프-->
-    <script
-            type="text/javascript"
-            src="https://www.gstatic.com/charts/loader.js"
-    ></script>
-    <!--상품 그래프-->
-    <script
-            type="text/javascript"
-            src="https://www.gstatic.com/charts/loader.js"
-    ></script>
-    <!--회원 그래프-->
-    <script
-            type="text/javascript"
-            src="https://www.gstatic.com/charts/loader.js"
-    ></script>
-    <!--게시판 그래프-->
-    <script
-            type="text/javascript"
-            src="https://www.gstatic.com/charts/loader.js"
-    ></script>
-    <!-- js 링크-->
+    <!--공통 그래프-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     <script src="/javascript/admin_home_member.js"></script>
     <script src="/javascript/admin_home_order.js"></script>
     <script src="/javascript/admin_home_board.js"></script>
