@@ -5,6 +5,10 @@ body {
     margin: 0;
     width: 100%;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 a {
@@ -53,16 +57,6 @@ a {
     line-height: 20px;
     letter-spacing: -0.3px;
     position: relative;
-}
-
-.search_inner_box {
-    position: absolute;
-    border-style: none;
-    align-items: center;
-    font-size: 16px;
-    width: 300px;
-    height: 30px;
-    margin-top: 10px;
 }
 
 .search_inner_box:hover,
@@ -472,7 +466,7 @@ section ul li.active {
 
 /*start : 우리집이 EZ배송지역인지 확인해보세요*/
 .delivery-search-imgbox {
-    max-width: 1000px;
+    max-width: 1100px;
     width: 100%;
     margin: 0 auto;
     margin-top: 200px;
@@ -484,11 +478,10 @@ section ul li.active {
 }
 
 .delivery-region {
-    width: 1400px;
+    width: 1100px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    transform: translate(20%, 20%);
+    justify-content: space-between;
 }
 
 .delivery-region-map {

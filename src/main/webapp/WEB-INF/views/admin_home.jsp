@@ -26,7 +26,8 @@
             <div class="admin_graph">
                 <h1>주문</h1>
                 <div class="chart_div chart_div_order">
-                    <h2 class="chart_name">주문량</h2>
+                    <h3 class="chart_name chart_name_order">주문,교환,반품 추이</h3>
+                    <h4 class="chart_name chart_name_order">2023년 주문 통계</h4>
                     <div id="chart_shape1"></div>
                 </div>
             </div>
@@ -56,27 +57,9 @@
     </div>
 
 
-    <!--주문 그래프-->
-    <script
-            type="text/javascript"
-            src="https://www.gstatic.com/charts/loader.js"
-    ></script>
-    <!--상품 그래프-->
-    <script
-            type="text/javascript"
-            src="https://www.gstatic.com/charts/loader.js"
-    ></script>
-    <!--회원 그래프-->
-    <script
-            type="text/javascript"
-            src="https://www.gstatic.com/charts/loader.js"
-    ></script>
-    <!--게시판 그래프-->
-    <script
-            type="text/javascript"
-            src="https://www.gstatic.com/charts/loader.js"
-    ></script>
-    <!-- js 링크-->
+    <!--공통 그래프-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     <script src="/javascript/admin_home_member.js"></script>
     <script src="/javascript/admin_home_order.js"></script>
     <script src="/javascript/admin_home_board.js"></script>
