@@ -64,4 +64,11 @@ public class AdminOrderController {
     public String getAdminOrderList(){
         return "admin_order_list";
     }
+
+
+    // 주문 대시 보드
+    @GetMapping("/dashboard")
+    public String getAdminOrderDashBoard() {
+        return "admin_order_dashboard";
+    }
 }
