@@ -105,7 +105,7 @@ public class ProductImgService {
         //파일 이름 저장 약속 : 오늘날짜_현재시간_prod_파일이름.확장자
         String today = new SimpleDateFormat("yyyyMMdd").format(new Date());
         String now = new SimpleDateFormat("HHmmssSSS").format(new Date());
-        uploadFileName = today + "_" + now + "_prod_" + uploadFileName;
+        uploadFileName = today + "_" + now + "_p_" + uploadFileName;
 
         //가로세로 사이즈
         BufferedImage image = ImageIO.read(uploadImg.getInputStream());
