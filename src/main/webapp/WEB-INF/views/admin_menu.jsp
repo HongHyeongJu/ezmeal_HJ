@@ -18,7 +18,7 @@
         <ul id="menu_list">
 
             <a href="/admin">
-                <li class="main_li">
+                <li class="main_li" id="home">
                     <i class="fas fa-home"></i>&nbsp;&nbsp;&nbsp;홈
                 </li>
             </a>
@@ -162,7 +162,7 @@
                         submenuItems[j].classList.add('hidden');
                     }
                 }
-                e.preventDefault(); //상위 메뉴 클릭시 페이지 전환 방지
+                if (targetElement.id != "home") e.preventDefault();  //상위 메뉴 클릭시 페이지 전환 방지
             }
         });
 

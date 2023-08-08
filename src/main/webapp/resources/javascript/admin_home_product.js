@@ -5,16 +5,16 @@ google.charts.setOnLoadCallback(drawLineChart);
 function drawLineChart() {
     var data = google.visualization.arrayToDataTable([
         ["카테고리", "CATEGORY"],
-        ["닭가슴살", 14],
-        ["도시락|볶음밥", 31],
-        ["샐러드", 17],
-        ["신선식품", 30],
+        ["닭가슴살", 13],
+        ["도시락|볶음밥", 4],
+        ["샐러드", 18],
+        ["신선식품", 7],
         ["즉석간편식", 27],
-        ["세트상품", 11],
+        ["세트상품", 12],
     ]);
 
     var options = {
-        title: "카테고리별 상품 품목",
+        title: "7월 ",
         width: 500, // 원하는 차트의 너비
         height: 300, // 원하는 차트의 높이
         titleTextStyle: {

@@ -34,7 +34,7 @@
             <div class="admin_graph">
                 <h1>상품</h1>
                 <div class="chart_div">
-                    <h2 class="chart_name">홍형주</h2>
+                    <h2 class="chart_name">카테고리별 상품 판매량</h2>
                     <div id="chart_shape2"></div>
                 </div>
             </div>
