@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>ezmeal 관리자 | 로그인</title>
     <link rel="stylesheet" href="/css/screens/adminLogin.css">
 </head>
 <body>

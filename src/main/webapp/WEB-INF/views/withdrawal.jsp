@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>EZMeal-회원탈퇴</title>
+    <title>ezmeal | 회원탈퇴</title>
     <link rel="stylesheet" href="/css/screens/withdrawal.css">
 </head>
 <body>
