@@ -268,9 +268,11 @@
     <li class="detail_navi"><a href="#section4">상품문의</a></li>
   </ul>
   <c:forEach var="img" items="${imgList}">
-    <c:if test="${img.typ=='상세'}">
-      <img class="detail_img" src="../ezmeal/${img.url}">
-    </c:if>
+    <div class="image-container">
+      <c:if test="${img.typ=='상세'}">
+        <img class="detail_img" src="/img/${img.url}" alt="Image">
+      </c:if>
+    </div>
   </c:forEach>
 
 </div>

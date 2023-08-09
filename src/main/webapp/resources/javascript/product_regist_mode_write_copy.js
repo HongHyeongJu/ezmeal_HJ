@@ -97,12 +97,7 @@ document.querySelector('#productForm').addEventListener('submit', function(event
 
     let opt_yn = productOptionDto.length > 0 ? 'y' : 'n';
 
-    //등록날짜
-    // const currentDate = new Date();
-    // const year = currentDate.getFullYear();
-    // const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-    // const day = String(currentDate.getDate()).padStart(2, '0');
-    // const formattedDate = `${year}-${month}-${day}`;
+
 
     // HTML 폼 요소에 접근하여 메인 상품 값을 가져오기
     const productDto = {
@@ -172,7 +167,7 @@ document.querySelector('#productForm').addEventListener('submit', function(event
             let inputFile = $("input[name='uploadProdImg']");
             let files = inputFile[0].files;
 
-            // console.log(files);
+            console.log(files);
             //콘솔에 찍어서 확인함.
 
             for(let i =0; i< files.length; i++){
