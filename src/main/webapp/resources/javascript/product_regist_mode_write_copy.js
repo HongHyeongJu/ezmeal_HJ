@@ -97,12 +97,7 @@ document.querySelector('#productForm').addEventListener('submit', function(event
 
     let opt_yn = productOptionDto.length > 0 ? 'y' : 'n';
 
-    //등록날짜
-    // const currentDate = new Date();
-    // const year = currentDate.getFullYear();
-    // const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-    // const day = String(currentDate.getDate()).padStart(2, '0');
-    // const formattedDate = `${year}-${month}-${day}`;
+
 
     // HTML 폼 요소에 접근하여 메인 상품 값을 가져오기
     const productDto = {
@@ -166,7 +161,7 @@ document.querySelector('#productForm').addEventListener('submit', function(event
             const prod_cd = response.prod_cd;
             // 이제 이미지 업로드 요청을 시작합니다.
 
-            console.log("등록성공하고 prod_cd 받아왔어요"+prod_cd);
+            // console.log("등록성공하고 prod_cd 받아왔어요"+prod_cd);
 
             let formData = new FormData();
             let inputFile = $("input[name='uploadProdImg']");
@@ -200,6 +195,8 @@ document.querySelector('#productForm').addEventListener('submit', function(event
                 console.log(response);
                 const prodInsertCnt = response.registImgResult;
                 alert("이미지 " + prodInsertCnt + "개 업로드 완료");
+                alert("등록이 완료되었습니다.");
+                window.location.href = "/admin/prod/list";
             },
             error: function(xhr, status, error) {
               alert("상태 코드: " + xhr.status);

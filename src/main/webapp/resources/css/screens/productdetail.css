@@ -542,7 +542,7 @@ button.order_btn, button.addcart_btn {
     margin-right: auto;
     padding-bottom: 50px;
     justify-content: space-between;
-    border-bottom: 1px solid rgb(31, 167, 115);
+    border-bottom: 5px solid #c6e2cd;
 }
 
 
@@ -560,7 +560,7 @@ button.order_btn, button.addcart_btn {
     height: 50px;
     max-width: 1100px; /* 최대 너비를 1100px로 제한 */
     margin: 0;
-    background-color: rgb(151, 233, 97);
+    background-color: #c6e2cd;
     border-radius: 10px;
     border: 2px solid rgb(255, 255, 255);
     color: white;
@@ -575,7 +575,7 @@ button.order_btn, button.addcart_btn {
     margin-left: auto;
     margin-right: auto;
     /* border-top: 1px solid rgb(31, 167, 115); */
-    border-bottom: 1px solid rgb(31, 167, 115);
+    border-bottom: 1px solid rgb(194 216 197);
     list-style-type: none;
     padding-left: 0;
     margin-top: 0;
@@ -683,7 +683,7 @@ button.order_btn, button.addcart_btn {
     height: 50px;
     max-width: 1100px; /* 최대 너비를 1100px로 제한 */
     margin: 0;
-    background-color: rgb(151, 233, 97);
+    background-color: #c6e2cd;
     border-radius: 10px;
     border: 2px solid rgb(255, 255, 255);
     color: white;
@@ -701,8 +701,8 @@ button.order_btn, button.addcart_btn {
 }
 
 .header {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    border-top: 5px solid #c6e2cd;
+    border-bottom: 5px solid #c6e2cd;
     height: 50px;
 }
 
@@ -725,13 +725,13 @@ button.order_btn, button.addcart_btn {
 }
 .inquiry_title, .answer {
     padding-left: 20px;
-    border-bottom: 1px solid gainsboro;
+    border-bottom: 1px solid #c6e2cd;;
 }
 
 .inquiry_title .inquiry_wrt, .inquiry_wrt_dt, .inquiry_stus, .inquiry_wrt{
     text-align: center;
     height: 50px;
-    border-bottom: 1px solid gainsboro;
+    border-bottom: 1px solid #c6e2cd;;
 }
 
 .answer {

@@ -90,6 +90,8 @@
         SELECT *
         FROM tb_product_review
         WHERE prod_cd = #{prod_cd} AND revw_opub_yn='y' AND del_yn='n'
+        ORDER BY wrt_dt
+        Limit 5
     </select>
 
     <!--해당 카테고리에 있는 별점 평균 받아오기 Map(prod_cd , round(avg(star),1))-->

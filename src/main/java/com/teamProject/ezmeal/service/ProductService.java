@@ -166,11 +166,13 @@ public class ProductService {
 
         /*할인,카테고리,거래처,상태  리스트 받아오기*/
         HashMap listMap = getListForProductRegist();
-
+        /*모든상품의 옵션 리스트*/
+        Map<Long,List<ProductOptionDto>> prodOptMap = prodCdListChangeToOptionMap("0");
 
         HashMap registProductMap = new HashMap();
         registProductMap.put("product",product);
         registProductMap.put("optList",optList);
+        registProductMap.put("prodOptMap",prodOptMap);
         registProductMap.put("imgList",imgList);
         registProductMap.put("dcList",listMap.get("dcList"));
         registProductMap.put("cateList",listMap.get("cateList"));

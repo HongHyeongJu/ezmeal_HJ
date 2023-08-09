@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>ezmeal_admin</title>
+    <title>ezmeal 관리자 | 상품 등록</title>
 </head>
 <body>
     <!-- 관리자 페이지 헤더 -->

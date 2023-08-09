@@ -111,11 +111,11 @@ public class AdminProductController {
         HashMap map = productService.getOneProductByProdCdForMng(prod_cd);
 
         /*모델에 담기*/
-        model.addAttribute("optList", map.get("optList"));
+        model.addAttribute("prodOptMap", map.get("prodOptMap"));
         model.addAttribute("cateList", map.get("cateList"));
         model.addAttribute("custList", map.get("custList"));
         model.addAttribute("stusList", map.get("stusList"));
-
+        System.out.println("optList = " + map.get("optList").toString());
         /*관리자 전체상품 리스트 받아오기*/
         List<ProductDto> allProdList = productService.getAllProdListForMng();
         model.addAttribute("allProdList", allProdList);

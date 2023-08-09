@@ -12,7 +12,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>상품 상세 페이지</title>
+  <title>ezmeal</title>
   <link rel="stylesheet" href="/css/screens/productdetail.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -268,9 +268,11 @@
     <li class="detail_navi"><a href="#section4">상품문의</a></li>
   </ul>
   <c:forEach var="img" items="${imgList}">
-    <c:if test="${img.typ=='상세'}">
-      <img class="detail_img" src="../ezmeal/${img.url}">
-    </c:if>
+    <div class="image-container">
+      <c:if test="${img.typ=='상세'}">
+        <img class="detail_img" src="/img/${img.url}" alt="Image">
+      </c:if>
+    </div>
   </c:forEach>
 
 </div>

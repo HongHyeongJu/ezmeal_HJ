@@ -11,6 +11,7 @@
     margin-bottom: 0;
     padding-left: 0;
     width: 190px;
+    min-height:2500px;
     height:auto;
     min-height: 950px;
     background-color: rgb(25, 38, 66);

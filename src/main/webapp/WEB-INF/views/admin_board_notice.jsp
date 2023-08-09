@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>ezmeal_admin</title>
+    <title>ezmeal 관리자 | 게시판 대시보드</title>
     <link rel="stylesheet" href="/css/screens/admin_board_notice.css">
 </head>
 <body>
@@ -84,4 +84,3 @@
 </html>
 
 
-  src/main/java/com/teamProject/ezmeal/controller/AdminNoticeController.java src/main/webapp/WEB-INF/views/admin_board_notice.jsp src/main/webapp/resources/css/header.css src/main/webapp/resources/css/screens/admin_board_notice.css src/main/webapp/resources/css/screens/ezdelivery.css src/main/webapp/resources/javascript/admin_board_notice.js

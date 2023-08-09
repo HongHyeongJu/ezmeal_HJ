@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+
     <link rel="stylesheet" href="/css/screens/mypageHeader.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>

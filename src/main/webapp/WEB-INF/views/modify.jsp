@@ -10,7 +10,7 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>ezmeal | 개인 정보 수정</title>
     <link rel="stylesheet" href="/css/screens/modify.css">
 </head>
 <body>

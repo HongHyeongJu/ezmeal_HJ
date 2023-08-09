@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: hhju2
@@ -12,7 +13,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 상품 CRUD</title>
+
     <link rel="stylesheet" href="/css/screens/admin_prod_list.css">
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
@@ -136,14 +137,31 @@
             <!-- 각 상품 정보를 <tr>으로 감싸서 표 형태로 출력 -->
             <c:forEach var="prod" items="${allProdList}" varStatus="status">
 
-                <c:choose>
-                    <c:when test="${prod.opt_yn == 'Y' and not empty optList[prod.prod_cd]}">
-                        <c:set var="optIndexZeroSalePrc" value="${optList[prod.prod_cd].get(0).sale_prc}"/>
-                    </c:when>
-                    <c:otherwise>
-                        <c:set var="optIndexZeroSalePrc" value="${prod.sale_prc}"/>
-                    </c:otherwise>
-                </c:choose>
+<%--                <c:choose>--%>
+<%--                    <c:when test="${prod.opt_yn == 'y' }">--%>
+<%--&lt;%&ndash;                    <c:when test="${prod.opt_yn == 'y' and not empty optList[prod.prod_cd]}">&ndash;%&gt;--%>
+<%--                        <c:set var="optIndexZeroSalePrc" value="${optList[prod.prod_cd].get(0).sale_prc}"/>--%>
+<%--                    </c:when>--%>
+<%--                    <c:otherwise>--%>
+<%--                        <c:set var="optIndexZeroSalePrc" value="${prod.sale_prc}"/>--%>
+<%--                    </c:otherwise>--%>
+<%--                </c:choose>--%>
+<c:choose>
+    <c:when test="${prod.opt_yn == 'y' }">
+        <c:set var="optIndexZeroSalePrc" value="${prodOptMap[prod.prod_cd].get(0).sale_prc}"/>
+        <script>
+            console.log("opt_yn is 'y'");
+            console.log("optIndexZeroSalePrc:", "${optIndexZeroSalePrc}");
+        </script>
+    </c:when>
+    <c:otherwise>
+        <c:set var="optIndexZeroSalePrc" value="${prod.sale_prc}"/>
+        <script>
+            console.log("opt_yn is not 'y'");
+            console.log("optIndexZeroSalePrc:", "${optIndexZeroSalePrc}");
+        </script>
+    </c:otherwise>
+</c:choose>
 
 
 
@@ -161,7 +179,8 @@
                     <td class="table_title_3 name">
                         <a class="product_link name" href="">${prod.name}</a>
                     </td>
-                    <td class="table_title_3 sale_prc">${optIndexZeroSalePrc}</td>
+
+                    <td class="table_title_3 sale_prc"><fmt:formatNumber value="${optIndexZeroSalePrc}" type="number" pattern="#,##0"/></td>
                     <td class="table_title_3 sfkp_stus">${prod.sfkp_stus}</td>
                     <td class="table_title_3 opt_yn">${prod.opt_yn}</td>
                     <td class="table_title_3 fst_reg_dt">${prod.fst_reg_dt}</td>
@@ -187,6 +206,8 @@
     </div>
 
 </div>
+
+<script src="/javascript/product_admin_list.js"></script>
 
 </body>
 </html>

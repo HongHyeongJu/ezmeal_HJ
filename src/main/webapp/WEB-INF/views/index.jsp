@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>ezmeal home</title>
+    <title>ezmeal</title>
     <link rel="stylesheet" href="/css/main.css">
 
     <style>

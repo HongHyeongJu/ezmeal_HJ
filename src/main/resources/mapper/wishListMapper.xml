@@ -23,6 +23,13 @@
         WHERE mbr_id = #{mbr_id} AND  prod_cd = #{prod_cd}
     </select>
 
+    <select id="select_Menbers_all_WishList" parameterType="Long" resultType="WishListDto">
+        SELECT *
+        FROM tb_wishlist
+        WHERE mbr_id = #{mbr_id}
+    </select>
+
+
 </mapper>
 
 
