@@ -90,7 +90,7 @@
         SELECT *
         FROM tb_product_review
         WHERE prod_cd = #{prod_cd} AND revw_opub_yn='y' AND del_yn='n'
-        ORDER BY wrt_dt
+        ORDER BY revw_id desc
         Limit 5
     </select>
 

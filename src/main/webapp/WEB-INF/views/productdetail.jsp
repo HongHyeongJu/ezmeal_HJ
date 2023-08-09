@@ -325,37 +325,37 @@
 </div>
 
 <!--------------------------------------  상품후기 (내용)  --------------------------------------------->
-<c:forEach var="review" items="${reviewList}">
+<c:forEach var="review" items="${reviewList}" varStatus="status">
   <ul class="rv_container">
     <li class="rv_set">
       <span class="rv_wrt">${review.writer}</span>
       <span class="rv_wrt_dt">${review.wrt_dt}</span>
       <span class="rv_star">${'★'.repeat(review.star)}</span>
-      <span class="rv_kword">여기 키워드리뷰.... 가져와야서 반복출력...</span>
+<%--      <span class="rv_kword">여기 키워드리뷰.... 가져와야서 반복출력...</span>--%>
       <span class="rv_title">${review.title}</span>
       <span class="rv_stmt">${review.stmt}</span>
-      <span class="rv_img"><img src="../../img/6.png" width="100px" height="100px" id="img01"></span>
+      <span class="rv_img"><img src="/img/${review.prod_cd}_${status.index}.png" width="100px" height="100px" id="img01"></span>
     </li>
   </ul>
 </c:forEach>
 
 
-<ul class="rv_container">
-  <li class="rv_set">
-    <span class="rv_wrt">강*바</span>
-    <span class="rv_wrt_dt">2023.06.12.</span>
-    <span class="rv_star">★★★★★</span>
-    <span class="rv_kword">가성비 굿</span>
-    <span class="rv_title">맛있어요</span>
-    <span class="rv_stmt">또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.
-                        또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.
-                        또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.
-                    </span>
-    <span class="rv_img"><img src="../../img/4.png" width="100px" height="100px" id="img02"></span>
+<%--<ul class="rv_container">--%>
+<%--  <li class="rv_set">--%>
+<%--    <span class="rv_wrt">강*바</span>--%>
+<%--    <span class="rv_wrt_dt">2023.06.12.</span>--%>
+<%--    <span class="rv_star">★★★★★</span>--%>
+<%--&lt;%&ndash;    <span class="rv_kword">가성비 굿</span>&ndash;%&gt;--%>
+<%--    <span class="rv_title">맛있어요</span>--%>
+<%--    <span class="rv_stmt">또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.--%>
+<%--                        또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.--%>
+<%--                        또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.또 먹고 싶어요 추천합니다.--%>
+<%--                    </span>--%>
+<%--    <span class="rv_img"><img src="../../img/4.png" width="100px" height="100px" id="img02"></span>--%>
 
-  </li>
+<%--  </li>--%>
 
-</ul>
+<%--</ul>--%>
 
 <!---------------------------------  상품문의  (상단)  ----------------------------------------------------->
 <div class="hidden_navi_div"  id="section4"></div>
