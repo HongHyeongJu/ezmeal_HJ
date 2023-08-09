@@ -55,6 +55,7 @@ public class OrderDetailController {
 
 
             List<Map> dlvarIdDataList = deliveryMasterService.getDlvarIdDataList(orderId);
+            System.out.println("dlvarIdDataList = " + dlvarIdDataList);
 
             // 2. data 수량 세기
             for (Map dlvarData : dlvarIdDataList) {
@@ -70,9 +71,25 @@ public class OrderDetailController {
             deliveryDataCount.put("waitDeliveryCnt", waitDeliveryCnt);
 
             // 3. 올바른 것들 중에서 dlvarId 1개 가져와서 delivery history 가지고 오기
-            String dlvarIdString = dlvarIdDataList.get(0).get("dlvar_id").toString();
+            String dlvarIdString = null;
+            for (Map<String, Object> dlvarData : dlvarIdDataList) {
+                Object stusValue = dlvarData.get("stus");
+                if (stusValue != null && !stusValue.equals("h3")) {
+                    dlvarIdString = dlvarData.get("dlvar_id").toString();
+                    break; // Exit the loop once we find the desired object
+                }
+            }
+            if (dlvarIdString != null) {
+                System.out.println("Found dlvar_id: " + dlvarIdString);
+            } else {
+                System.out.println("No matching object found.");
+            }
+
+            System.out.println("dlvarIdString = " + dlvarIdString);
             String[] numbers = dlvarIdString.split(",");
+            System.out.println("numbers = " + numbers);
             long dlvarId = Long.parseLong(numbers[0]);
+            System.out.println("dlvarId = " + dlvarId);
             List<Map> deliveryHistoryList = deliveryMasterService.getDlvarHist(dlvarId);
 
             // 중간 확인

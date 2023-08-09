@@ -143,7 +143,7 @@
         INSERT INTO tb_product_review (ord_id, ord_prod_dtl_id, title, stmt,star, mbr_id,
                                        prod_cd, writer, wrt_dt, revw_opub_yn)
         VALUES (#{ord_id}, #{ord_prod_dtl_id},  #{title}, #{stmt}, #{star}, #{mbr_id},
-                #{prod_cd}, '김*바', CURDATE(), 'y')
+                #{prod_cd}, '강*호', CURDATE(), 'y')
     </insert>
 
 </mapper>
