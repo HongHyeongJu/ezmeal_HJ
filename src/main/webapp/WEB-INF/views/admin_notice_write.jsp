@@ -60,8 +60,7 @@
                     <label style="margin-right: 20px;"><input type="radio" name="status" value="중요" ${product.getSfkp_stus().equals("중요") ? 'checked' : ''}>중요</label>
                     <label style="margin-right: 20px;"><input type="radio" name="status" value="일반" ${product.getSfkp_stus().equals("일반") ? 'checked' : ''}>일반</label>
                 </td>
-    </td>
-    </tr>
+            </tr>
     <tr> <!--typ : 공지유형-->
         <th class="admin-notice-resistration-table-right">공지 유형</th>
         <td class="admin-notice-resistration-table-left ">
@@ -78,7 +77,11 @@
             <textarea class="notice_stmt" name="stmt"></textarea>
         </td>
     </tr>
-
+        <%-- 이미지 첨부 파일 --%>
+    <tr>
+        <th class="admin-notice-resistration-table-right">첨부파일</th>
+        <td class="admin-notice-resistration-table-left "><input type="file"  id="notice_img" accept="image/*"/></td>
+    </tr>
 
     <tr> <!-- 공지 글 보이게 할지 안할지 여부-->
         <th class="admin-notice-resistration-table-right">글 게시여부</th>

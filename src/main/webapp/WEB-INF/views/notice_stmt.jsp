@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.teamProject.ezmeal.dao.NoticeDao" %><%--
   Created by IntelliJ IDEA.
   User: lee nakyeong
@@ -42,8 +43,12 @@
             <tr>
                 <td class="notice-board-title">작성 내용</td>
                 <td class="notice-board-explain">
-                    <img src="/img/ezmeal_notice_img.jpeg">
-                    <p> ${notice.stmt}</p>
+                    <c:if test="${notice.notice_no eq 110}">
+                        <img src="/img/ezmeal_notice_img.jpeg">
+                    </c:if>
+                    <c:if test="${notice.notice_no != 110}">
+                        <img src="/img/ezDeliveryNotice.jpeg">
+                    </c:if>
                 </td>
             </tr>
         </table>
