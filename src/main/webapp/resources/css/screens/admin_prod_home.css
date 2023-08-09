@@ -4,12 +4,15 @@
     grid-template-columns: 600px 600px;
     grid-template-rows: 465px 465px;
     gap: 30px;
+    align-items: flex-start;
 }
 
 .admin_graph {
     border: 2px solid #e0e0e0;
     border-radius : 40px;
     padding: 20px;
+    margin: 20px;
+    height: 430px;
 }
 
 .admin_graph h1{
@@ -59,4 +62,12 @@
     text-align: left;
     padding: 0 20px;
 }
+
+
+/*------------------------*/
+
+#chart_shape3 , #chart_shape4, #chart_shape6 {
+    margin-top: 20px;
+}
+
 

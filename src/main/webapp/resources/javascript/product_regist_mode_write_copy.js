@@ -166,13 +166,13 @@ document.querySelector('#productForm').addEventListener('submit', function(event
             const prod_cd = response.prod_cd;
             // 이제 이미지 업로드 요청을 시작합니다.
 
-            console.log("등록성공하고 prod_cd 받아왔어요"+prod_cd);
+            // console.log("등록성공하고 prod_cd 받아왔어요"+prod_cd);
 
             let formData = new FormData();
             let inputFile = $("input[name='uploadProdImg']");
             let files = inputFile[0].files;
 
-            console.log(files);
+            // console.log(files);
             //콘솔에 찍어서 확인함.
 
             for(let i =0; i< files.length; i++){
@@ -200,6 +200,8 @@ document.querySelector('#productForm').addEventListener('submit', function(event
                 console.log(response);
                 const prodInsertCnt = response.registImgResult;
                 alert("이미지 " + prodInsertCnt + "개 업로드 완료");
+                alert("등록이 완료되었습니다.");
+                window.location.href = "/admin/prod/list";
             },
             error: function(xhr, status, error) {
               alert("상태 코드: " + xhr.status);

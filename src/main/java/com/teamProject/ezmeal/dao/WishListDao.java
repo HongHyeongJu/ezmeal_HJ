@@ -38,6 +38,13 @@ public class WishListDao {
         return session.selectOne(namespace+"selectOneWishList", wishListDto);
     }
 
+    public List<WishListDto> selectMembersList(Long mbr_id) throws SQLException {
+        return session.selectList(namespace+"select_Menbers_all_WishList", mbr_id);
+    }
+
+
+
+
 
 }
 

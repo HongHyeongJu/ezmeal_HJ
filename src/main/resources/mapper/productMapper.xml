@@ -98,12 +98,15 @@
 
     <!--메인상품 [empl]-->
     <select id="select_5_product_main_empl" resultType="ProductDto">
-        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate
-        FROM main_product_common_view
-        WHERE cate_cd LIKE '02%'
-        ORDER BY sale_prc DESC
+        SELECT pd.prod_cd, pd.dc_cd, pd.name, pd.cnsmr_prc, pd.sale_prc, pd.sfkp_stus, pd.dc_rate
+        FROM main_product_common_view as pd
+        WHERE pd.prod_cd IN (SELECT prv.prod_cd
+                             FROM tb_product_review as prv
+                             GROUP BY prv.prod_cd
+                             HAVING COUNT(*) >= 20)
         LIMIT 5
     </select>
+
 
     <!--메인상품 [health]-->
     <select id="select_5_product_main_health" resultType="ProductDto">
@@ -118,6 +121,7 @@
     <select id="select_5_product_main_eat" resultType="ProductDto">
         SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate
         FROM main_product_common_view
+        WHERE cate_cd LIKE '05%' OR cate_cd LIKE '02%'
         ORDER BY fst_reg_dt DESC
         LIMIT 5
     </select>
@@ -129,15 +133,24 @@
         WHERE sale_yn = 'y' AND dp_yn = 'y' AND del_yn = 'n' AND prod_stus IN (1, 2) AND opt_yn = 'n';
 -->
 
-
-    <!--메인상품 [home]-->
+        <!--메인상품 [home]-->
     <select id="select_5_product_main_home" resultType="ProductDto">
         SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate
-        FROM tb_product USE INDEX (tb_product_fst_reg_dt_index)
-        WHERE opt_yn = 'y' AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)
+        FROM tb_product
+        WHERE cate_cd LIKE '06%'
         ORDER BY fst_reg_dt desc
         LIMIT 5
     </select>
+
+
+<!--    &lt;!&ndash;메인상품 [home]&ndash;&gt;-->
+<!--    <select id="select_5_product_main_home" resultType="ProductDto">-->
+<!--        SELECT prod_cd, dc_cd, name, cnsmr_prc, sale_prc, sfkp_stus, dc_rate-->
+<!--        FROM tb_product USE INDEX (tb_product_fst_reg_dt_index)-->
+<!--        WHERE opt_yn = 'y' AND sale_yn='y' AND dp_yn='y' AND del_yn='n' AND prod_stus IN (1,2)-->
+<!--        ORDER BY fst_reg_dt desc-->
+<!--        LIMIT 5-->
+<!--    </select>-->
 
 
 
@@ -284,6 +297,7 @@
         SELECT *
         FROM tb_product
         WHERE del_yn='n'
+        ORDER BY fst_reg_dt desc
     </select>
 
 <!--//필요한 값은 DB안에서 다 처리해서 나가기 (여러 함수나 SQL메서드를 사용해야 쎄보임!! 뭘좀 아는구나 ㅋㅋ good 구린건 안돼!! )-->
@@ -291,5 +305,11 @@
 <!--면접관이 보는 부분: 맵퍼, 컨트롤러 처리, 얼마나 깔끔한지-->
 <!--지원 회사 같은건 원장님께 조언얻기-->
 
+
+        <!--  위시리스트용 전체 상품 리스트   -->
+    <select id="all_prod_list_fot_wishList" resultType="ProductDto">
+        SELECT *
+        FROM tb_product
+    </select>
 
 </mapper>

@@ -9,7 +9,7 @@ public class MultipartConfig {
     @Bean
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(5242880);
+        multipartResolver.setMaxUploadSize(10485760);
         multipartResolver.setMaxUploadSizePerFile(1048576);
         return multipartResolver;
     }
