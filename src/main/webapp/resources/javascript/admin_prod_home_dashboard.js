@@ -89,21 +89,35 @@ google.charts.setOnLoadCallback(drawTable1);
 
 function drawTable1() {
     var data = new google.visualization.DataTable();
-    data.addColumn("string", "Name");
-    data.addColumn("number", "Salary");
-    data.addColumn("boolean", "Full Time Employee");
+    data.addColumn("string", "상품");
+    data.addColumn("string", "카테고리");
+    data.addColumn("number", "낱개상품 공급가");
     data.addRows([
-        ["Mike", { v: 10000, f: "$10,000" }, true],
-        ["Jim", { v: 8000, f: "$8,000" }, false],
-        ["Alice", { v: 12500, f: "$12,500" }, true],
-        ["Bob", { v: 7000, f: "$7,000" }, true],
+        ["떡볶이", "분식", 2500],
+        ["떡볶이", "분식", 2500],
+        ["떡볶이", "분식", 2500],
+        ["떡볶이", "분식", 2500],
+        ["떡볶이", "분식", 2500],
     ]);
 
     var table = new google.visualization.Table(
         document.getElementById("chart_shape3")
     );
+    var numColumns = data.getNumberOfColumns();
+    var tableWidth = numColumns * 150; // Adjust the column width as needed
 
-    table.draw(data, { showRowNumber: true, width: "500px", height: "200px" });
+    table.draw(data, {
+        showRowNumber: true,
+        width: tableWidth + "px",
+        height: "200px",
+        cssClassNames: {
+            headerCell: 'center-align',
+            tableCell: 'center-text' // Custom CSS class for center-aligned text
+        }
+    });
+
+    table.draw(data, options);
+
 }
 
 /*---------------------- [4] 재고 현황 : 표그래프 ------------------------------------------------------*/
@@ -113,26 +127,38 @@ google.charts.setOnLoadCallback(drawTable2);
 
 function drawTable2() {
     var data = new google.visualization.DataTable();
-    data.addColumn("string", "Name");
-    data.addColumn("number", "Salary");
-    data.addColumn("boolean", "Full Time Employee");
+    data.addColumn("string", "상품코드"); // Use lowercase 'string'
+    data.addColumn("string", "상품명");   // Use lowercase 'string'
+    data.addColumn("string", "재고 수량 - 재고 상태");
     data.addRows([
-        ["Mike", { v: 10000, f: "$10,000" }, true],
-        ["Jim", { v: 8000, f: "$8,000" }, false],
-        ["Alice", { v: 12500, f: "$12,500" }, true],
-        ["Bob", { v: 7000, f: "$7,000" }, true],
+        ["P0031233", "품절상품이름", " 0 - 위험 "],
+        ["P0031233", "품절상품이름", " 0 - 위험 "],
+        ["P0031233", "품절상품이름", " 27 - 주의 "],
+        ["P0031233", "품절상품이름", " 35 - 주의 "],
+        ["P0031233", "품절상품이름", " 45 - 주의 "],
+        ["P0031233", "품절상품이름", " 48 - 주의 "],
     ]);
 
     var table = new google.visualization.Table(
         document.getElementById("chart_shape4")
     );
 
-    table.draw(data, { showRowNumber: true, width: "500px", height: "300px" });
+    var options = {
+        showRowNumber: true,
+        width: "100%", // Change width to 100%
+        height: "200px",
+        cssClassNames: {
+            headerCell: 'center-align',
+            tableCell: 'center-text' // Custom CSS class for center-aligned text
+        }
+    };
+
+    table.draw(data, options);
 }
 
 
-/*---------------------- [5] 이벤트 상품 판매 추이 : 꺾은선 그래프 ------------------------------------------*/
 
+/*---------------------- [5] 이벤트 상품 판매 추이 : 꺾은선 그래프 ------------------------------------------*/
 
 google.charts.load("current", { packages: ["line", "corechart"] });
 google.charts.setOnLoadCallback(drawChart);
@@ -141,31 +167,38 @@ function drawChart() {
     var chartDiv = document.getElementById("chart_shape5");
 
     var data = new google.visualization.DataTable();
-    data.addColumn("date", "Month");
-    data.addColumn("number", "Average Temperature");
-    data.addColumn("number", "Average Hours of Daylight");
+    data.addColumn("date", "Date");
+    data.addColumn("number", "A세트");
+    data.addColumn("number", "B세트");
 
     data.addRows([
-        [new Date(2014, 0), -0.5, 5.7],
-        [new Date(2014, 1), 0.4, 8.7],
-        [new Date(2014, 2), 0.5, 12],
-        [new Date(2014, 3), 2.9, 15.3],
-        [new Date(2014, 4), 6.3, 18.6],
-        [new Date(2014, 5), 9, 20.9],
-        [new Date(2014, 6), 10.6, 19.8],
-        [new Date(2014, 7), 10.3, 16.6],
-        [new Date(2014, 8), 7.4, 13.3],
-        [new Date(2014, 9), 4.4, 9.9],
-        [new Date(2014, 10), 1.1, 6.6],
-        [new Date(2014, 11), -0.2, 4.5],
+        [new Date(2023, 6, 1), 5, 2],
+        [new Date(2023, 6, 10), 16, 13],
+        [new Date(2023, 6, 21), 11, 14],
+        [new Date(2023, 6, 30), 29, 35],
+        [new Date(2023, 7, 10), 31, 26],
+        [new Date(2023, 7, 21), 55, 37],
+        [new Date(2023, 7, 31), 56, 30],
+        [new Date(2023, 8, 9), 48, 50],
+        // Add more data points for each day
     ]);
 
     var options = {
         chart: {
-            title: "Average Temperatures and Daylight in Iceland Throughout the Year",
+            title: "Event Product Sales",
         },
-        width: 500, // 원하는 차트의 너비
-        height: 300, // 원하는 차트의 높이
+        width: 500,
+        height: 300,
+        series: {
+            0: { color: "blue" }, // Product A
+            1: { color: "red" },  // Product B
+        },
+        hAxis: {
+            format: "M/d", // Format for x-axis labels
+        },
+        vAxis: {
+            title: "Sales",
+        },
     };
 
     var chart = new google.visualization.LineChart(chartDiv);
@@ -173,157 +206,38 @@ function drawChart() {
 }
 
 
-/*---------------------- [6] 입고 예정 상품 : 표그래프 ------------------------------------------------------*/
 
+/*---------------------- [6] 입고 예정 상품 : 표그래프 ------------------------------------------------------*/
 google.charts.load("current", { packages: ["table"] });
 google.charts.setOnLoadCallback(drawTable3);
 
 function drawTable3() {
     var data = new google.visualization.DataTable();
-    data.addColumn("string", "Name");
-    data.addColumn("number", "Salary");
-    data.addColumn("boolean", "Full Time Employee");
+    data.addColumn("string", "상품명");
+    data.addColumn("string", "카테고리");
+    data.addColumn("string", "거래처 : 거래예정일");
     data.addRows([
-        ["Mike", { v: 10000, f: "$10,000" }, true],
-        ["Jim", { v: 8000, f: "$8,000" }, false],
-        ["Alice", { v: 12500, f: "$12,500" }, true],
-        ["Bob", { v: 7000, f: "$7,000" }, true],
+        ["천도복숭아", "과일", " 농부의 마음 : 2023-08-27 "],
+        ["로제 떡볶이 밀키트", "밀키트", " 대림당 : 2023-08-28 "],
+        ["3과일 요거트 소스", "소스", " 요거요트 : 2023-09-03 "],
+        ["큐브 아이스 홍시", "과일", " 아이셔스 : 2023-09-07 "],
+        ["청양야채볶음밥", "볶음밥", " 담담볶 : 2023-09-13 "],
     ]);
 
     var table = new google.visualization.Table(
         document.getElementById("chart_shape6")
     );
 
-    table.draw(data, { showRowNumber: true, width: "500px", height: "300px" });
-}
-
-
-/*---------------------- [7]   [8]   [9]  ------------------------------------------------------*/
-
-
-google.charts.load("current", { packages: ["corechart"] });
-google.charts.setOnLoadCallback(drawBarChart2);
-
-function drawBarChart2() {
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Category');
-    data.addColumn('number', 'Quantity');
-    data.addColumn({type: 'string', role: 'style'});
-
-    data.addRows([
-        ['닭가슴살', 11, '#FFB6C1'],
-        ['스테이크', 5, '#FFB6C1'],
-        ['소시지', 6, '#FFB6C1'],
-        ['도시락', 12, '#FFD700'],
-        ['볶음밥', 7, '#FFD700'],
-        ['샐러드', 14, '#c1ddb1'],
-        ['소스', 9, '#c1ddb1'],
-        ['채소/과일', 16, '#ADD8E6'],
-        ['달걀', 8, '#ADD8E6'],
-        ['분식', 8, '#FFA07A'],
-        ['반찬/밀키트', 16, '#FFA07A'],
-        ['면', 8, '#FFA07A'],
-        ['세트상품', 13, '#e5d3f2']
-    ]);
-
     var options = {
-        title: '상품 카테고리별 개수',
-        hAxis: {
-            title: '개수',
-        },
-        vAxis: {
-            title: '카테고리',
-        },
-        width: 500,
-        height: 300,
+        showRowNumber: true,
+        width: "100%", // Change width to 100%
+        height: "200px",
+        cssClassNames: {
+            headerCell: 'center-align',
+            tableCell: 'center-text' // Custom CSS class for center-aligned text
+        }
     };
 
-    var chart = new google.visualization.BarChart(document.getElementById('chart_shape7'));
-    chart.draw(data, options);
+    table.draw(data, options); // This line was missing in your code
 }
 
-//----------------------------------
-
-google.charts.load("current", { packages: ["corechart"] });
-google.charts.setOnLoadCallback(drawBarChart3);
-
-function drawBarChart3() {
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Category');
-    data.addColumn('number', 'Quantity');
-    data.addColumn({type: 'string', role: 'style'});
-
-    data.addRows([
-        ['닭가슴살', 11, '#FFB6C1'],
-        ['스테이크', 5, '#FFB6C1'],
-        ['소시지', 6, '#FFB6C1'],
-        ['도시락', 12, '#FFD700'],
-        ['볶음밥', 7, '#FFD700'],
-        ['샐러드', 14, '#c1ddb1'],
-        ['소스', 9, '#c1ddb1'],
-        ['채소/과일', 16, '#ADD8E6'],
-        ['달걀', 8, '#ADD8E6'],
-        ['분식', 8, '#FFA07A'],
-        ['반찬/밀키트', 16, '#FFA07A'],
-        ['면', 8, '#FFA07A'],
-        ['세트상품', 13, '#e5d3f2']
-    ]);
-
-    var options = {
-        title: '상품 카테고리별 개수',
-        hAxis: {
-            title: '개수',
-        },
-        vAxis: {
-            title: '카테고리',
-        },
-        width: 500,
-        height: 300,
-    };
-
-    var chart = new google.visualization.BarChart(document.getElementById('chart_shape8'));
-    chart.draw(data, options);
-}
-//--------------------------------
-google.charts.load("current", { packages: ["corechart"] });
-google.charts.setOnLoadCallback(drawBarChart4);
-
-function drawBarChart4() {
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Category');
-    data.addColumn('number', 'Quantity');
-    data.addColumn({type: 'string', role: 'style'});
-
-    data.addRows([
-        ['닭가슴살', 11, '#FFB6C1'],
-        ['스테이크', 5, '#FFB6C1'],
-        ['소시지', 6, '#FFB6C1'],
-        ['도시락', 12, '#FFD700'],
-        ['볶음밥', 7, '#FFD700'],
-        ['샐러드', 14, '#c1ddb1'],
-        ['소스', 9, '#c1ddb1'],
-        ['채소/과일', 16, '#ADD8E6'],
-        ['달걀', 8, '#ADD8E6'],
-        ['분식', 8, '#FFA07A'],
-        ['반찬/밀키트', 16, '#FFA07A'],
-        ['면', 8, '#FFA07A'],
-        ['세트상품', 13, '#e5d3f2']
-    ]);
-
-    var options = {
-        title: '상품 카테고리별 개수',
-        hAxis: {
-            title: '개수',
-        },
-        vAxis: {
-            title: '카테고리',
-        },
-        width: 500,
-        height: 300,
-    };
-
-    var chart = new google.visualization.BarChart(document.getElementById('chart_shape9'));
-    chart.draw(data, options);
-}
-
-//----------------------

@@ -89,11 +89,16 @@ public class ProductImgService {
     /*1. 이미지 업로드 (1개짜리)*/
     public ProductImgDto uploadImgAndMakeProdImg(MultipartFile uploadImg, Long prod_cd, String typ) throws IOException {
         String uploadFolderPath = uploadDir;
-        System.out.println("uploadFolder 주소 = " + uploadFolderPath);
+        System.out.println("이미지 등록 서비스 시작 : 업로드 폴더 주소 = " + uploadFolderPath);
 
         //파일이름 꺼내오기
         String uploadFileName = uploadImg.getOriginalFilename();
         System.out.println("uploadFileName = " + uploadFileName);
+
+        //파일이름 꺼내오기
+        Long filSize = uploadImg.getSize();
+        System.out.println("filSize = " + filSize);
+
         //확장자 꺼내기
         String extns = uploadFileName.substring(uploadFileName.lastIndexOf(".") + 1);
         System.out.println("확장자: " + extns);
@@ -104,7 +109,7 @@ public class ProductImgService {
 
         //파일 이름 저장 약속 : 오늘날짜_현재시간_prod_파일이름.확장자
         String today = new SimpleDateFormat("yyyyMMdd").format(new Date());
-        String now = new SimpleDateFormat("HHmmssSSS").format(new Date());
+        String now = new SimpleDateFormat("HmssSSS").format(new Date());
         uploadFileName = today + "_" + now + "_p_" + uploadFileName;
 
         //가로세로 사이즈

@@ -60,19 +60,6 @@ public class NoticeController {
 //        return "admin_notice_write";
     }*/
 
-    //값 받아오는 메서드
-    @PostMapping("/noticeresistration")
-    public String noticeResistration(NoticeDto noticeDto){
-
-        System.out.println(noticeDto.toString());
-        int notice = noticeService.NoticeResistration(noticeDto);
-        //int로 받기로 약속했으니까 약속지키기.
-        System.out.println("등록한 글수 " + notice);
-        return "redirect:/admin/notice/write";
-//        return "admin_notice_write";
-    }
-
-
 
 
     //  @GetMapping("/noticestmt")  링크걸 url을 ( ) 에 적기. 이름 안겹치게.

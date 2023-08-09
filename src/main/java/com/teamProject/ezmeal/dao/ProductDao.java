@@ -177,6 +177,12 @@ public class ProductDao {
         return session.selectList(namespace + "all_prod_list_fot_mng");
     }
 
+    public List<ProductDto> selectAllProdListForWishList() throws SQLException {
+        return session.selectList(namespace + "all_prod_list_fot_wishList");
+    }
+
+
+
 
 
     /* 상품 등록하기 */
