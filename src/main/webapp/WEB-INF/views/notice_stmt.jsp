@@ -44,10 +44,10 @@
                 <td class="notice-board-title">작성 내용</td>
                 <td class="notice-board-explain">
                     <c:if test="${notice.notice_no eq 110}">
-                        <img src="/img/ezmeal_notice_img.jpeg">
+                        <img src="/img/ezDeliveryNotice.jpeg">
                     </c:if>
                     <c:if test="${notice.notice_no != 110}">
-                        <img src="/img/ezDeliveryNotice.jpeg">
+                        <img src="/img/ezmeal_notice_img.jpeg">
                     </c:if>
                 </td>
             </tr>
