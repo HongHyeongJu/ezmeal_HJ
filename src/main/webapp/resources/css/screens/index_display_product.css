@@ -72,6 +72,11 @@ body {
     margin-top: 2px;
 }
 
+.recoprod_img_li:first-child {
+     width: 160px;
+     margin-right: 20px;   /*펭귄일러스트 오른쪽 마진*/
+}
+
 /*-------- 상품 출력하는 Li 태그 ---------*/
 .health_prod_li {
     display: flex;
