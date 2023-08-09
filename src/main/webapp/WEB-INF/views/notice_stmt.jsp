@@ -42,6 +42,7 @@
             <tr>
                 <td class="notice-board-title">작성 내용</td>
                 <td class="notice-board-explain">
+                    <img src="/img/ezmeal_notice_img.jpeg">
                     <p> ${notice.stmt}</p>
                 </td>
             </tr>
