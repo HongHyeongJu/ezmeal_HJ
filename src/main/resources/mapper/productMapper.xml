@@ -268,7 +268,7 @@
         SELECT *
         FROM tb_product
         WHERE fst_reg_dt >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
-          AND sale_yn = 'y' AND dp_yn = 'y' AND del_yn = 'n'
+          AND sale_yn = 'y' AND dp_yn = 'y' AND del_yn = 'n' AND NOT cate_cd LIKE '01%'
         ORDER BY fst_reg_dt desc
     </select>
 
@@ -298,6 +298,7 @@
         FROM tb_product
         WHERE del_yn='n'
         ORDER BY fst_reg_dt desc
+        Limit 20
     </select>
 
 <!--//필요한 값은 DB안에서 다 처리해서 나가기 (여러 함수나 SQL메서드를 사용해야 쎄보임!! 뭘좀 아는구나 ㅋㅋ good 구린건 안돼!! )-->
