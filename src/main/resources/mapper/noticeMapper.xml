@@ -7,9 +7,9 @@
     <!--parameter 는 매개변수, 매개변수 타입을 noticeDto로 하면 noticeDto객체의 필드를 참조해서 쿼리에 필요한 파라미터 설정가능-->
 
     <insert id="insertNotice" parameterType="noticeDto">
-        INSERT INTO tb_notice (writer, status, typ, title, wrt_dt, stmt, hide_yn, del_yn,
+        INSERT INTO tb_notice ( status, typ, title, wrt_dt, stmt, hide_yn, del_yn,
                                in_dtm, in_id, up_dtm, up_id)
-        VALUES (#{writer}, #{status}, #{typ}, #{title},#{wrt_dt}, #{stmt},'n', 'n',
+        VALUES ( #{status}, #{typ}, #{title},curdate(), #{stmt},'n', 'n',
                 now(),'ezmeal',  now(), 'ezmeal')
 
     </insert>

@@ -27,7 +27,7 @@
     </div>
 
     <!-- 글 등록 테이블 -->
-    <form action="/noticeresistration" method="post"> <!--post 방식으로 데이터 전송, action은 url주소-->
+    <form action="/admin/notice/write" method="post"> <!--post 방식으로 데이터 전송, action은 url주소-->
         <table class ="admin-notice-resistration-table">
 <%--            <colgroup>--%>
 <%--                <col style="width: 150px  !important" />--%>
@@ -50,7 +50,7 @@
     <tr> <!--status : 작성일-->
         <th class="admin-notice-resistration-table-right">작성일</th>
         <td class="admin-notice-resistration-table-left">
-            <input type="text" id="admin-notice-input2" name="wrt_dt" value="<%= currentDate %>" required style = "font-size: medium">
+            <input type="text" id="admin-notice-input2" name="wrt_dt_format" value="<%= currentDate %>" required style = "font-size: medium">
         </td>
     </tr>
             <tr> <!--status : 공지중요도-->

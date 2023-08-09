@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-
+    <title>ezmeal | 공지사항 상세</title>
    <link rel="stylesheet" href="/css/screens/notice_stmt.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,9 +40,9 @@
                 <td class="notice-board-explain">${notice.wrt_dt_format}</td>
             </tr>
             <tr>
-                <td class="notice-board-title"></td>
+                <td class="notice-board-title">작성 내용</td>
                 <td class="notice-board-explain">
-                    <img src="/img/notice1.jpg" class="notice_img">
+                    <p> ${notice.stmt}</p>
                 </td>
             </tr>
         </table>

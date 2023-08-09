@@ -1,0 +1,291 @@
+/*
+ 1. 모달 버튼(오픈, 클로즈)
+ 2.*/
+.overlay-left, .overlay-right {  /*헤더 검색창에 영향 줘서  class로 한정함. 영향범위는 연두div*/
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.wrapper {    /*최상위 컨테이너 =로그인창*/
+    width: 100%;
+    height: 100vh; /*vh 단위는 뷰포트의 높이를 기준으로 크기를 지정*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f7f8fc;
+    overflow: hidden; /*영역에서 벗어나는 부분 스크롤로 만듬 */
+}
+.container {  /*로그인 및 회원가입 양식*/
+    border-radius: 10px;
+    box-shadow: -5px -5px 10px #eae6e6, 5px 5px 10px #d3d6d4;
+    position: absolute;
+    width: 768px;
+    min-height: 480px;
+    overflow: hidden;
+}
+.login-modal__form {
+    background: #fbfbf9;
+    display: flex;
+    flex-direction: column; /*내부 요소 열방향 배치*/
+    padding: 0 50px;
+    height: 100%;
+    justify-content: center; /*수평 가운데 정렬*/
+    align-items: center;  /*수직 가운데 정렬*/
+}
+.remember {
+    margin: auto;
+    border: 0;
+    outline: none;
+    border-radius: 20px;
+    margin-right: 3px;
+    /*box-shadow: inset 7px 2px 10px #babebc, inset -5px -5px 12px #fff;*/
+}
+
+.remember-id input.remember{
+    display: block;
+}
+
+.login-modal__form .login { /*id, 비밀번호 적는란*/
+    background: #fbfbf9;
+    padding: 16px;
+    margin: 8px 0;
+    width: 85%;
+    border: 0;
+    outline: none;
+    border-radius: 20px;
+    box-shadow: inset 7px 2px 10px #babebc, inset -5px -5px 12px #fff;
+}
+
+.login-bottom {
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.remember-id {
+    display: flex;
+    padding-right: 30px;
+}
+
+.find {
+    /*position: absolute;*/
+    padding-left: 30px;
+    top: 0;
+    right: 0;
+}
+
+.find-a {
+    color: rgb(51, 51, 51);
+    cursor: pointer;
+}
+
+.find-span {
+    width: 1px;
+    height: 10px;
+    margin: 3px 6px 0px;
+    background-color: rgb(51, 51, 51);
+}
+
+.start_btn,
+.form_btn,
+.overlay_btn {
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 15px 45px;
+    margin: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 80ms ease-in;
+}
+.form_btn {
+    box-shadow: -5px -5px 10px #ffff, 5px 5px 8px #fbfbf9;
+    background-color: #00c729;
+    color: white;
+    /* font-size: large; */
+}
+.form_btn:active { /*active: 사용자가 마우스로 클릭한 태그 선택*/
+    box-shadow: inset 1px 1px 2px #babebc, inset -1px -1px 2px #fff;
+}
+.overlay_btn { /*overlay : 요소위에 요소가 겹쳐보이는것.*/
+    background-color: #fbfbf9;
+    color: black;
+    /* box-shadow: -5px -5px 10px  #fbfbf9, 5px 5px 8px  #fbfbf9; */
+}
+.sign-in-container {  /*로그인 */
+    position: absolute;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    transition: all 0.5s;
+}
+.sign-up-container {  /*가입*/
+    position: absolute;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    opacity: 0;
+    transition: all 0.5s;
+}
+.overlay-left {  /*신규 고객이 가입으로 넘어갈때*/
+    display: flex;
+    flex-direction: column;
+    padding: 0 50px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    opacity: 0;
+    background-color: #00c728;
+    color: #e3f9ee;
+    transition: all 0.5s;
+}
+.overlay-right { /*기존 고객이 로그인으로 갈때*/
+    display: flex;
+    flex-direction: column;
+    padding: 0 50px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background-color: #00c728;
+    color: #fff;
+    transition: all 0.5s;
+}
+.container.right-panel-active .sign-in-container {
+    transform: translateX(100%); /* X축(수평 방향)으로 요소를 이동*/
+    opacity: 0;
+}
+.container.right-panel-active .sign-up-container {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 2;
+}
+.container.right-panel-active .overlay-right {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+.container.right-panel-active .overlay-left {
+    transform: translateX(-100%);
+    opacity: 1;
+    z-index: 2;
+}
+
+.login-modal__form h1 { /*sign in,ㅊㄱㄷㅇ(제목) */
+    font-weight: bold;
+    margin: 0;
+    color: #000;
+}
+
+.login-modal__p {
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin: 20px 0 30px;
+}
+.find-span {
+    font-size: 12px;
+    color: #000;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+.start_btn a {
+    color: inherit; /* 현재 상속된 텍스트 색상을 유지합니다. */
+    text-decoration: none; /* 밑줄을 없앱니다. */
+}
+
+/*모달 관련 css*/
+/*.modal {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    position: fixed;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*}*/
+/* 모달 끄는 버튼(x) */
+/*.close {*/
+/*    position: absolute;*/
+/*    right: 50px;*/
+/*    top: 30px ;*/
+/*    color: #06531a;*/
+/*    font-size: 50px;*/
+/*    font-weight: bold;*/
+/*}*/
+
+/*.close:hover,*/
+/*.close:focus {*/
+/*    color: rgb(245, 240, 240);*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.hidden {*/
+/*    display: none;*/
+/*}*/
+
+/* .ss_login_img {
+    width: 300px;
+    height: 45px;
+} */
+/* .ss_start_img {
+    width: 300px;
+    height: 45px;
+} */
+
+
+
+/* 나경 모달 작업 수정*/
+/* modal 적용 전 */
+.wrapper {
+    z-index: 999999;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: none;
+
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* modal 적용 후 */
+.wrapper.show {
+    display: block;
+}
+
+.container {
+    /* main contents 중앙 정렬 */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+
+    /* 상황에 맞게 변경하는 부분 */
+    padding: 40px;
+    text-align: center;
+
+    /* design적 요소 */
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+}
+
+
