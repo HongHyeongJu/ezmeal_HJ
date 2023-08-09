@@ -339,8 +339,8 @@
             </table>
             <!-- Modal  table 끝 -->
             <div class="order__modal_btn">
-                <button class="order__modal_ok">확인</button>
-                <button class="order__modal_cancel">취소</button>
+                <button class="order__modal_ok_cpn">확인</button>
+                <button class="order__modal_cancel_cpn">취소</button>
             </div>
         </div>
         <!-- modal main contents-->

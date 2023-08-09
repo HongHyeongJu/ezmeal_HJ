@@ -37,6 +37,7 @@ function handleRemoveModal(event) {
   }
 }
 // show가 없는 경우 event
+if(btnOpenPopup != null)
 btnOpenPopup.addEventListener("click", handleShowModal);
 
 // show 있는 경우 event - show가 있어서 현재 body가 .modal로 뒤덮힌 상황

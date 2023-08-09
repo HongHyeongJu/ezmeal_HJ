@@ -3,8 +3,8 @@ const orderProdItemList = document.querySelectorAll(".order__item_list"); // 주
 const orderProdOpenClose = document.querySelector(".order__items_list__btn > i"); // 주문상품 토글 요소
 
 const clickRow = document.querySelector(".order__modal_table"); // modal 내부 쿠폰 table
-const selectOrderModal = document.querySelector(".order__modal_ok"); // modal 쿠폰선택
-const cancelOrderModal = document.querySelector(".order__modal_cancel"); // modal 쿠폰선택 취소
+const selectOrderModal = document.querySelector(".order__modal_ok_cpn"); // modal 쿠폰선택
+const cancelOrderModal = document.querySelector(".order__modal_cancel_cpn"); // modal 쿠폰선택 취소
 const orderCouponTitle = document.querySelector(".order__coupon"); // 선택된 쿠폰 나오는 버튼
 const initCouponData = orderCouponTitle.textContent; // 초기 셋팅 쿠폰 textContent
 const orderCouponPk = document.querySelector(".order__coupon_pk"); // hidden으로 처리된 쿠폰 번호
@@ -151,9 +151,9 @@ function handleClickRow(event) {
 // 쿠폰 적용 및 실제 결제창에 값 적용
 function handleSelectOrderModal(event) {
     if (event.target === selectOrderModal) {
-        modal.classList.toggle("show"); // 모달 적용
+        modalCpn.classList.toggle("show"); // 모달 적용
 
-        if (!modal.classList.contains("show")) body.style.overflow = "auto"; // body scroll 원상 복구
+        if (!modalCpn.classList.contains("show")) body.style.overflow = "auto"; // body scroll 원상 복구
         if (COUPON_NAME === undefined || COUPON_NAME === "") return;
 
         orderCouponTitle.innerHTML = COUPON_NAME + " " + COUPON_DC; // modal 밖 coupon에 적용
@@ -186,8 +186,8 @@ function handleCancelUseCoupon() {
 // 쿠폰 사용 취소
 function handleCancelOrderModal(event) {
     if (event.target === cancelOrderModal) {
-        modal.classList.toggle("show");
-        if (!modal.classList.contains("show")) body.style.overflow = "auto"; // body scroll 원상 복구
+        modalCpn.classList.toggle("show");
+        if (!modalCpn.classList.contains("show")) body.style.overflow = "auto"; // body scroll 원상 복구
     }
 }
 
