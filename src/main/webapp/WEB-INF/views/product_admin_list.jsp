@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>ezmeal_admin</title>
+    <title>ezmeal 관리자 | 상품 목록</title>
 </head>
 <body>
     <!-- 관리자 페이지 헤더 -->

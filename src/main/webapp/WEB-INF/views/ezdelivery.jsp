@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>ezmeal | ez배송</title>
     <link rel="stylesheet" href="/css/screens/ezdelivery.css" />
     <style>
         .delivery-region-map svg {

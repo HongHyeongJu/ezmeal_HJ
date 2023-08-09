@@ -10,7 +10,7 @@
 <%@ page import="java.net.URLDecoder"%>
 <html>
 <head>
-  <title>회원가입</title>
+  <title>ezmeal | 회원가입</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">

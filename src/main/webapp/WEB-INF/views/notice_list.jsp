@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>ezmeal | 공지사항</title>
     <link rel="stylesheet" href="/css/screens/notice_side.css">
 
 </head>
