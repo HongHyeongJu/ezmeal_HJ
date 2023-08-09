@@ -42,7 +42,7 @@
             <tr>
                 <td class="notice-board-title"></td>
                 <td class="notice-board-explain">
-                    <img src="/img/notice1.jpg" class="notice_img">
+                    <img src="/img/ezdelivery-upgrade.jpg" class="notice_img">
                 </td>
             </tr>
         </table>
