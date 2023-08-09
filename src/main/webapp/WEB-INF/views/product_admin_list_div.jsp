@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 상품 CRUD</title>
+
     <link rel="stylesheet" href="/css/screens/admin_prod_list.css">
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>

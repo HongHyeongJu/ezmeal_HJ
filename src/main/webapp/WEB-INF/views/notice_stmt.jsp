@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+
    <link rel="stylesheet" href="/css/screens/notice_stmt.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,7 +42,7 @@
             <tr>
                 <td class="notice-board-title"></td>
                 <td class="notice-board-explain">
-                    <img src="/img/notice1.jpg" class="notice_img">
+                    <img src="/img/ezdelivery-upgrade.jpg" class="notice_img">
                 </td>
             </tr>
         </table>

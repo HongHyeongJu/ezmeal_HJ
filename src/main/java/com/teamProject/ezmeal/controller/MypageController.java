@@ -87,7 +87,7 @@ public class MypageController {
                 memberService.modifyMember(memberDto);
                 model.addAttribute("modifyMsg","수정되었습니다.");
 //                rattr.addFlashAttribute("modifyMsg","수정되었습니다.");
-                return "mypage";
+                return "redirect:/mypage/modify";
             }
 
         } catch (Exception e) {

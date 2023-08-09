@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title> ezmeal | admin_home</title>
+    <title> ezmeal 관리자 | 홈</title>
     <link rel="stylesheet" href="/css/screens/admin_home.css">
 </head>
 <body>
@@ -59,8 +59,8 @@
                     <h1>게시판</h1>
                 </a>
                 <div class="chart_div">
-                    <h3 class="chart_name">게시판관련 제목</h3>
-                    <h4 class="chart_sub_name chart_sub_name_order">부제</h4>
+                    <h3 class="chart_name">공지사항</h3>
+                    <h4 class="chart_sub_name chart_sub_name_order">공지사항 글 숨김여부</h4>
                     <div id="chart_shape4"></div>
                 </div>
             </div>

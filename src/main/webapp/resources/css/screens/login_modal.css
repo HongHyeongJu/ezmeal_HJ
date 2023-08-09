@@ -27,7 +27,7 @@ body {
     min-height: 480px;
     overflow: hidden;
 }
-form {
+.login-modal__form {
     background: #fbfbf9;
     display: flex;
     flex-direction: column; /*내부 요소 열방향 배치*/
@@ -49,7 +49,7 @@ form {
     display: block;
 }
 
-form .login { /*id, 비밀번호 적는란*/
+.login-modal__form .login { /*id, 비밀번호 적는란*/
     background: #fbfbf9;
     padding: 16px;
     margin: 8px 0;
@@ -92,7 +92,9 @@ form .login { /*id, 비밀번호 적는란*/
     background-color: rgb(51, 51, 51);
 }
 
-button {
+.start_btn,
+.form_btn,
+.overlay_btn {
     border-radius: 20px;
     border: none;
     outline: none;
@@ -182,57 +184,60 @@ button {
     z-index: 2;
 }
 
-form h1 { /*sign in,ㅊㄱㄷㅇ(제목) */
+.login-modal__form h1 { /*sign in,ㅊㄱㄷㅇ(제목) */
     font-weight: bold;
     margin: 0;
     color: #000;
 }
 
-p {
+.login-modal__p {
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 0.5px;
     margin: 20px 0 30px;
 }
-span {
+.find-span {
     font-size: 12px;
     color: #000;
     letter-spacing: 0.5px;
     margin-bottom: 10px;
 }
 
+.start_btn a {
+    color: inherit; /* 현재 상속된 텍스트 색상을 유지합니다. */
+    text-decoration: none; /* 밑줄을 없앱니다. */
+}
+
 /*모달 관련 css*/
-.modal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-
+/*.modal {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    position: fixed;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*}*/
 /* 모달 끄는 버튼(x) */
-.close {
-    position: absolute;
-    right: 50px;
-    top: 30px ;
-    color: #06531a;
-    font-size: 50px;
-    font-weight: bold;
-}
+/*.close {*/
+/*    position: absolute;*/
+/*    right: 50px;*/
+/*    top: 30px ;*/
+/*    color: #06531a;*/
+/*    font-size: 50px;*/
+/*    font-weight: bold;*/
+/*}*/
 
-.close:hover,
-.close:focus {
-    color: rgb(245, 240, 240);
-    cursor: pointer;
-}
+/*.close:hover,*/
+/*.close:focus {*/
+/*    color: rgb(245, 240, 240);*/
+/*    cursor: pointer;*/
+/*}*/
 
-.hidden {
-    display: none;
-}
+/*.hidden {*/
+/*    display: none;*/
+/*}*/
 
 /* .ss_login_img {
     width: 300px;
@@ -243,7 +248,44 @@ span {
     height: 45px;
 } */
 
-.start_btn a {
-    color: inherit; /* 현재 상속된 텍스트 색상을 유지합니다. */
-    text-decoration: none; /* 밑줄을 없앱니다. */
+
+
+/* 나경 모달 작업 수정*/
+/* modal 적용 전 */
+.wrapper {
+    z-index: 999999;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: none;
+
+    background-color: rgba(0, 0, 0, 0.4);
 }
+
+/* modal 적용 후 */
+.wrapper.show {
+    display: block;
+}
+
+.container {
+    /* main contents 중앙 정렬 */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+
+    /* 상황에 맞게 변경하는 부분 */
+    padding: 40px;
+    text-align: center;
+
+    /* design적 요소 */
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+}
+
+

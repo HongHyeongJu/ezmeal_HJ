@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>ezmeal | 성공</title>
 </head>
 <body>
 <h2>비밀번호찾기 결과</h2> <br>

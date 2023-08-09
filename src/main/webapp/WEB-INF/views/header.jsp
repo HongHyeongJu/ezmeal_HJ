@@ -14,8 +14,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Title</title>
+
   <link rel="stylesheet" href="/css/header.css" />
+
+  <!-- todo 애때문에 일반로그인은 사라짐-->
+  <link rel="stylesheet" href="/css/screens/login_modal.css" />
+
 </head>
 <body>
 <!--start : 첫번째 헤더(top)-->
@@ -45,22 +49,26 @@
     <!--start : icon box-->
     <div class="icon_box">
       <div class="icon_inner_dropdown" for="user_menu">
-          <a href="<c:url value='${loginOutLink}'/>">
-            <svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 30 30">
-              <g data-name="그룹 4823">
-                <path data-name="패스 26" d="M52.156 32.352s.48-9.291 12.787-8.954 12.308 8.954 12.308 8.954" transform="translate(-49.156 -6.414)"
-                        style="
-                                stroke-linecap: round;
-                                stroke: #00c728;
-                                stroke-width: 3px;
-                                fill: ${not empty memberId ? '#00c728' : 'none'};"/>
-                <g data-name="타원 5" transform="translate(9.349 2)" style="stroke: #00c728; stroke-width: 3px; fill: none">
-                  <circle cx="6.349" cy="6.349" r="6.349" style="stroke: none"/>
-                  <circle cx="6.349" cy="6.349" r="5.349" style="fill: none"/>
-                </g>
+        <c:if test="${not empty memberId}"><a href="<c:url value='${loginOutLink}'/>">
+        <svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 30 30">
+          </c:if>
+          <c:if test="${empty memberId}">
+          <svg class="login_svg" xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 30 30">
+            </c:if>
+            <g data-name="그룹 4823">
+              <path data-name="패스 26" d="M52.156 32.352s.48-9.291 12.787-8.954 12.308 8.954 12.308 8.954" transform="translate(-49.156 -6.414)"
+                    style="
+                            stroke-linecap: round;
+                            stroke: #00c728;
+                            stroke-width: 3px;
+                            fill: ${not empty memberId ? '#00c728' : 'none'};"/>
+              <g data-name="타원 5" transform="translate(9.349 2)" style="stroke: #00c728; stroke-width: 3px; fill: none">
+                <circle cx="6.349" cy="6.349" r="6.349" style="stroke: none"/>
+                <circle cx="6.349" cy="6.349" r="5.349" style="fill: none"/>
               </g>
-            </svg>
-          </a>
+            </g>
+          </svg>
+      </a>
       </div>
 
       <c:if test="${not empty memberId}">
@@ -175,13 +183,13 @@
     </div>
   </ul>
 
-    <div class="horizonMenu-list" id="horizonMenu-list">
-      <li><a href="/product/headerlist?headertyp=new">신상품</a></li>
-      <li><a href="/product/headerlist?headertyp=best">베스트</a></li>
-      <li><a href="/ezDelivery"><img src="/img/main/ez_deli_logo_line.png" class="ezdeliveryimg"></a></li>
-      <li><a href="/product/headerlist?headertyp=bigdc">특가 | 혜택</a></li>
-      <li><a href="/notice">고객센터</a></li>
-    </div>
+  <div class="horizonMenu-list" id="horizonMenu-list">
+    <li><a href="/product/headerlist?headertyp=new">신상품</a></li>
+    <li><a href="/product/headerlist?headertyp=best">베스트</a></li>
+    <li><a href="/ezDelivery"><img src="/img/main/ez_deli_logo_line.png" class="ezdeliveryimg"></a></li>
+    <li><a href="/product/headerlist?headertyp=bigdc">특가 | 혜택</a></li>
+    <li><a href="/notice">고객센터</a></li>
+  </div>
 
 
 </div>
@@ -190,6 +198,58 @@
 
 <!--start : scroll back to top-->
 <button id="backtotop-btn"><a href="#top" style="color: white">Top</a></button>
+
+<%--login modal--%>
+
+<div class="wrapper">
+  <div class="container">
+    <div class="sign-up-container">
+      <form action="/member/signup" method="get" class="login-modal__form">
+        <h1>회원가입하기</h1>
+        <label>소셜 및 일반회원으로 가입할 수 있습니다</label>
+        <button class="start_btn"><a href="/member/signup">&gt;&gt;&nbsp;일반회원 가입하기&nbsp;&lt;&lt;</a></button>
+      </form>
+    </div>
+
+    <div class="sign-in-container">
+      <form action="/login?redirectURL=${redirectURL}" method="post" class="login-modal__form">
+        <h1 style="padding-top: 10px;" >로그인 하기</h1>
+        <input type="text" id="id" class="login" name="loginId" value="${cookie.id.value}" placeholder="아이디를 입력해 주세요">
+        <input type="password" id="pw" class="login" name="loginPw" placeholder="비밀번호를 입력해 주세요">
+        <button type="submit" class="form_btn" value="login">로그인</button>
+        <div class="login-bottom">
+          <div class="remember-id">
+            <input type="checkbox" name="remember" id="remember" class="remember" value="on" ${empty cookie.id.value ? "":"checked"}/>
+            아이디기억
+          </div>
+          <div class="find">
+            <a href="/member/find/id" class="find-a">아이디찾기</a>
+            <span class="find-span"></span>
+            <a href="/member/find/password" class="find-a">비밀번호찾기</a>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="overlay-container">
+      <div class="overlay-left">
+        <h1>기존고객이라면?</h1>
+        <p class="login-modal__p">로그인 하러가기</p>
+        <button id="signIn" class="overlay_btn">로그인</button>
+      </div>
+      <div class="overlay-right">
+        <figure class="ezmeal_log">
+          <img src="/img/main/ezmeal_logo.png" width="150px" height="150px" />
+        </figure>
+        <!-- <h1>EZ_MEAL</h1> -->
+        <p class="login-modal__p">EZ_MEAL이 처음이라면?</p>
+        <button id="signUp" class="overlay_btn">회원가입</button>
+
+      </div>
+    </div>
+  </div> <!-- container -->
+</div> <!-- wrapper -->
+<script  src="/javascript/login_modal.js"></script>
+
 
 <!--end : back to top button-->
 <script src="https://kit.fontawesome.com/3dd102f0de.js" crossorigin="anonymous"></script>

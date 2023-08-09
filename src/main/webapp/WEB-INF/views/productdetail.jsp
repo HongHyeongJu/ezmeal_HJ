@@ -12,7 +12,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>상품 상세 페이지</title>
+  <title>ezmeal</title>
   <link rel="stylesheet" href="/css/screens/productdetail.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -151,7 +151,30 @@
         </tr>
         <tr>
           <th>추가혜택</th>
-          <td>증정품 : 불닭소스</td>
+          <c:set var="cate_cd" value="${product.getCate_cd()}" />
+            <c:choose>
+              <c:when test="${cate_cd.contains('010') || cate_cd.contains('020')}">
+                <td>증정품 : 불닭소스 200g</td>
+              </c:when>
+              <c:when test="${cate_cd.contains('030')}">
+                <td>증정품 : 참깨소스 200g</td>
+              </c:when>
+              <c:when test="${cate_cd.contains('040')}">
+                <td>증정품 : 이지밀 펭귄 포크세트</td>
+              </c:when>
+              <c:when test="${cate_cd.contains('050')}">
+                <td>증정품 : 모짜렐라치즈 200g</td>
+              </c:when>
+              <c:when test="${cate_cd.contains('06')}">
+                <td>증정품 : 미니도시락 세트</td>
+              </c:when>
+              <c:when test="${cate_cd.contains('07')}">
+                <td>증정품 : 미니 샐러드 200g</td>
+              </c:when>
+              <c:otherwise>
+                <td>증정품 : 정보가 없습니다.</td>
+              </c:otherwise>
+            </c:choose>
         </tr>
         <tr>
           <th>보관방법</th>

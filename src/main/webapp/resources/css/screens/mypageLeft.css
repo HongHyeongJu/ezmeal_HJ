@@ -196,10 +196,10 @@
     color: rgb(51, 51, 51);
     letter-spacing: -1px;
 }
-*, :after, :before {
-    box-sizing: border-box;
-    margin: 0;
-}
+/**, :after, :before {*/
+/*    box-sizing: border-box;*/
+/*    margin: 0;*/
+/*}*/
 .left-ul {
     border: 1px solid rgb(242, 242, 242);
     padding-left: 0px;
