@@ -12,10 +12,10 @@
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
         <property name="url"
-                          value="jdbc:mysql://172.30.1.4:7288/ezmeal?useUnicode=true&amp;characterEncoding=utf8"/>
+                          value="jdbc:mysql://secret/ezmeal?useUnicode=true&amp;characterEncoding=utf8"/>
 <!--        value="jdbc:mysql://121.128.157.121:7288/ezmeal?useUnicode=true&amp;characterEncoding=utf8"/>-->
-        <property name="username" value="ezmeal2"></property>
-        <property name="password" value="1234"></property>
+        <property name="username" value="secret"></property>
+        <property name="password" value="secret"></property>
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
